@@ -25,37 +25,15 @@ export const fetchDocument = async (req, res) => {
 	}
 }
 
-// // Controller For Document Deletion
-// export const deleteDocument = async (req, res) => {
-// 	try {
-// 		const id = req.params.id
-
-// 		const result = await Document.deleteOne({ id: id })
-
-// 		if (result.deletedCount === 1) {
-// 			res.json({ success: "Document Deleted" })
-// 		} else {
-// 			res.status(404).json({ error: "Document not found" })
-// 		}
-// 	} catch (error) {
-// 		res.status(500).json({ error: "Internal Server Error" })
-// 	}
-// }
-
-// Assuming you have imported the 'Document' model properly.
-
 export const deleteDocument = async (req, res) => {
 	try {
 		const id = req.params.id;
 
-		// Use 'findOneAndDelete' to find the document by its '_id' and delete it.
 		const result = await Document.findOneAndDelete({ _id: id });
 
 		if (result) {
-			// 'findOneAndDelete' returns the deleted document or null if not found.
 			res.json({ success: "Document Deleted" });
 		} else {
-			// If the document is not found, 'result' will be null.
 			res.status(404).json({ error: "Document not found" });
 		}
 	} catch (error) {
@@ -64,23 +42,24 @@ export const deleteDocument = async (req, res) => {
 };
 
 
-// Controller For Document Endorsement
 export const endorseDocument = async (req, res) => {
 	try {
 		const { id } = req.params
-		const { endorserId, endorsementLetter } = req.body
+		const { endorseName, endorsementLetter, endorseComment, decision } = req.body
 
 		const document = await Document.findById(id)
 		if (!document) {
 			return res.status(404).json({ error: 'Document Not Found.' })
 		}
 
-		document.endorser = endorserId
+		document.endorserName = endorseName
 		document.endorsementDate = new Date()
-		document.endorseLetter = endorsementLetter;
+		document.endorsementLetter = endorsementLetter;
 		document.documentStatus = decision === 'approved' ? 'approved' : 'rejected'
 		if (decision === 'approved') {
-			document.workflowStatus = 'Endorsed'
+			document.documentStatus = 'Endorsed'
+		} else if (decision === 'rejected') {
+			document.documentStatus = 'rejected'
 		}
 
 		await document.save()
@@ -113,12 +92,14 @@ export const deanApproval = async (req, res) => {
 			console.log(document.documentStatus)
 		} else {
 			document.documentStatus = 'Rejected';
+			console.log(document.documentStatus)
 		}
 
 		await document.save();
 
-	} catch (e) {
-
+	} catch (error) {
+		console.error(error);
+		res.status(500).json({ error: 'Internal server error' });
 	}
 }
 

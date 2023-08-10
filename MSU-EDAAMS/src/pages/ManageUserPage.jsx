@@ -60,6 +60,24 @@ const TABLE_ROWS = [
 		designation: 'Student',
 		year: '2019 - 2024',
 		status: true,
+	},
+	{
+		userType: 'Administrator',
+		name: "Husaifa D. Dimacaling",
+		email: "something@something.com",
+		college: "CICS",
+		designation: 'Student',
+		year: '2020 - 2024',
+		status: false,
+	},
+	{
+		userType: 'OVCAA',
+		name: "Suhaina K. Tamano",
+		email: "something@something.com",
+		college: "CICS",
+		designation: 'OVCAA Special Assistant',
+		year: '2010 - 2024',
+		status: true,
 	}
 ];
 
@@ -70,8 +88,8 @@ const ManageUsers = () => {
 
 
 	return (
-		<Card className="h-full w-full">
-			<CardHeader floated={false} shadow={false} className="rounded-none">
+		<Card className='p-2 mt-2 rounded-lg bg-gray-100'>
+			<CardHeader floated={false} shadow={false} className="rounded-none bg-gray-100">
 				<div className="mb-8 flex items-center justify-between gap-8">
 					<div>
 						<Typography variant="h5" color="blue-gray">
@@ -196,19 +214,6 @@ const ManageUsers = () => {
 					</tbody>
 				</table>
 			</CardBody>
-			<CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
-				<Typography variant="small" color="blue-gray" className="font-normal">
-					Page 1 of 10
-				</Typography>
-				<div className="flex gap-2">
-					<Button variant="outlined" color="blue-gray" size="sm">
-						Previous
-					</Button>
-					<Button variant="outlined" color="blue-gray" size="sm">
-						Next
-					</Button>
-				</div>
-			</CardFooter>
 		</Card>
 	);
 }
