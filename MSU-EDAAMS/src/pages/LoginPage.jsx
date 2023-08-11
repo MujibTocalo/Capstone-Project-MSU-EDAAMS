@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios'
-// import { useToast } from '../components/ToastService';
+import { useToast } from '../components/ToastService';
 
 // import { Alert } from 'react-feather'
-// import { LuAlertCircle } from 'react-icons/lu';
-// import { Typography } from '@material-tailwind/react';
+import { LuAlertCircle } from 'react-icons/lu';
+import { Typography } from '@material-tailwind/react';
 
 const Login = () => {
 
-	// const toast = useToast()
+	const toast = useToast()
 
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
@@ -44,16 +44,16 @@ const Login = () => {
 					.then((userResponse) => {
 						const userDetails = userResponse.data;
 						localStorage.setItem('userDetails', JSON.stringify(userDetails));
-						// toast.open(
-						// 	<div className='flex gap-2 bg-green-500 text-white p-4 rounded-lg shadow-lg'>
-						// 		<LuAlertCircle size={40} />
-						// 		<div>
-						// 			<Typography variant={h3}>Success!</Typography>
-						// 			<Typography variant={paraghrap}>You have logged in Successfully.</Typography>
-						// 		</div>
+						toast.open(
+							<div className='flex gap-2 bg-green-500 text-white p-4 rounded-lg shadow-lg'>
+								<LuAlertCircle size={40} />
+								<div>
+									<Typography variant='h3'>Success!</Typography>
+									<Typography variant='paragraph'>You have logged in Successfully.</Typography>
+								</div>
 
-						// 	</div>
-						// )
+							</div>
+						)
 						// Redirect to profile page or protected route
 						navigate('/createDocument');
 					})

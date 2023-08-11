@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
+import { useToast } from '../components/ToastService';
+import { LuAlertCircle } from 'react-icons/lu';
+
 import {
 	Alert, Select, Option, Input, Textarea, Button, Dialog, DialogHeader, DialogBody, DialogFooter, Typography,
 } from '@material-tailwind/react'
@@ -16,8 +19,10 @@ const CreateDocument = () => {
 	const [approverName, setApproverName] = useState('')
 	const [uploaderName, setUploaderName] = useState('')
 
-	const [alertMessage, setAlertMessage] = useState('');
-	const [alertType, setAlertType] = useState('');
+	const toast = useToast()
+
+	// const [alertMessage, setAlertMessage] = useState('');
+	// const [alertType, setAlertType] = useState('');
 
 	const [open, setOpen] = React.useState(false);
 
@@ -49,12 +54,12 @@ const CreateDocument = () => {
 		setApproverName(e.target.value)
 	}
 
-	const hideAlertAfterDelay = () => {
-		setTimeout(() => {
-			setAlertMessage('');
-			setAlertType('');
-		}, 3000);
-	};
+	// const hideAlertAfterDelay = () => {
+	// 	setTimeout(() => {
+	// 		setAlertMessage('');
+	// 		setAlertType('');
+	// 	}, 3000);
+	// };
 
 	const handleSubmitAndOpen = () => {
 		handleOpen();
@@ -75,9 +80,19 @@ const CreateDocument = () => {
 			!approverName ||
 			!uploaderName
 		) {
-			setAlertMessage('Please fill in all the required fields.');
-			setAlertType('error');
-			hideAlertAfterDelay();
+			// setAlertMessage('Please fill in all the required fields.');
+			// setAlertType('error');
+			// hideAlertAfterDelay();
+			toast.open(
+				<div className='flex gap-2 bg-red-500 text-white p-4 rounded-lg shadow-lg'>
+					<LuAlertCircle size={40} />
+					<div>
+						<Typography variant='h4'>Incomplete Detail!</Typography>
+						<Typography variant='paragraph'>Please fill in all necessary details.</Typography>
+					</div>
+
+				</div>
+			)
 			return; // Prevent form submission
 		}
 
@@ -103,9 +118,19 @@ const CreateDocument = () => {
 			});
 
 			if (response.ok) {
-				setAlertMessage('Document Submitted.');
-				setAlertType('success');
-				hideAlertAfterDelay()
+				// setAlertMessage('Document Submitted.');
+				// setAlertType('success');
+				// hideAlertAfterDelay()
+				toast.open(
+					<div className='flex gap-2 bg-green-500 text-white p-4 rounded-lg shadow-lg'>
+						<LuAlertCircle size={40} />
+						<div>
+							<Typography variant='h4'>Success!</Typography>
+							<Typography variant='paragraph'>Document Submittion Successful</Typography>
+						</div>
+
+					</div>
+				)
 				setDocumentType('');
 				setCollegeName('');
 				setControlNumber('');
@@ -115,15 +140,36 @@ const CreateDocument = () => {
 				setApproverDesignation('');
 				setApproverName('');
 
+
 			} else {
-				setAlertMessage('Document Submission Failed.');
-				setAlertType('error');
-				hideAlertAfterDelay()
+				// setAlertMessage('Document Submission Failed.');
+				// setAlertType('error');
+				// hideAlertAfterDelay()
+				toast.open(
+					<div className='flex gap-2 bg-red-500 text-white p-4 rounded-lg shadow-lg'>
+						<LuAlertCircle size={40} />
+						<div>
+							<Typography variant='h4'>Failed!</Typography>
+							<Typography variant='paragraph'>Document Submittion Failed</Typography>
+						</div>
+
+					</div>
+				)
 			}
 		} catch (error) {
-			setAlertMessage('Document Submission Error.');
-			setAlertType('error');
-			hideAlertAfterDelay()
+			// setAlertMessage('Document Submission Error.');
+			// setAlertType('error');
+			// hideAlertAfterDelay()
+			toast.open(
+				<div className='flex gap-2 bg-red-800 text-white p-4 rounded-lg shadow-lg'>
+					<LuAlertCircle size={40} />
+					<div>
+						<Typography variant='h4'>Error!</Typography>
+						<Typography variant='paragraph'>Document Submittion Error</Typography>
+					</div>
+
+				</div>
+			)
 			console.error(error);
 		}
 	};
@@ -145,16 +191,16 @@ const CreateDocument = () => {
 
 	return (
 		<div>
-			{alertMessage && (
+			{/* {alertMessage && (
 				<Alert
 					className='flex justify-center'
 					color={alertType === 'success' ? 'green' : 'red'}
-					variant="text"
+					variant="filled"
 
 				>
 					<span>{alertMessage}</span>
 				</Alert>
-			)}
+			)} */}
 			<div className="flex flex-col p-10 gap-1.5 border shadow-xl rounded-lg">
 				<Typography variant='h3' className=' flex font-medium mb-4 justify-center'>Create Document</Typography>
 				<div className='flex gap-14'>

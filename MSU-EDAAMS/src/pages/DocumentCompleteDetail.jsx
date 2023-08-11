@@ -15,30 +15,23 @@ const DocumentCompleteDetail = ({ document }) => {
 		<div className="text-black">
 			<div key={document._id}>
 				<div className="flex m-2">
-					<Avatar
-						src={logo}
-						variant="circular"
-						size="md"
-						alt='Mujib Tocalo'
-						className="border border-cyan-800"
-					/>
 					<Typography variant='lead' className='m-2'>
 						{document.uploaderName}
 					</Typography>
 				</div>
 				<div className="flex flex-col p-2">
 					<div className="flex flex-row">
-						<Typography variant='paraghrap'>{document.controlNumber}</Typography>
-						<Typography variant='paraghrap'>{document.collegeName}</Typography>
+						<Typography variant='paragraph'>{document.controlNumber}</Typography>
+						<Typography variant='paragraph'>{document.collegeName}</Typography>
 					</div>
-					<Typography variant='paraghrap'>{document.createdAt}</Typography>
+					<Typography variant='paragraph'>{document.createdAt}</Typography>
 				</div>
 				<div className="p-2">
 					<div className="gap-3.5">
-						<Typography variant='paraghrap'>To: {document.header}</Typography>
-						<Typography variant='paraghrap'>Subject: {document.subject}</Typography>
+						<Typography variant='paragraph'>To: {document.header}</Typography>
+						<Typography variant='paragraph'>Subject: {document.subject}</Typography>
 					</div>
-					<Typography variant='paraghrap' className='h-64 overflow-auto m-3'>{document.content}</Typography>
+					<Typography variant='paragraph' className='h-64 overflow-auto m-3'>{document.content}</Typography>
 				</div>
 				<div className="flex flex-row-reverse">
 					<div className="flex flex-col">
