@@ -16,6 +16,7 @@ const Sidebar = () => {
 
   const menus = [
     { name: 'Dashboard', link: '/dashboard', icon: RiDashboardLine },
+    { name: 'Documents', link: '/documents', icon: HiOutlineDocumentText },
     { name: 'Create Document', link: '/createdocument', icon: LuFilePlus2 },
     { name: 'Approve Document', link: '/approvedocument', icon: BsFillClipboardCheckFill },
     { name: 'Endorse Document', link: '/endorsedocument', icon: RiAttachment2 },
@@ -25,14 +26,14 @@ const Sidebar = () => {
     { name: 'Logout', link: '/', icon: BiLogOut },
   ]
 
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(true)
 
   return (
-    <div>
-      <div className={`bg-gray-800 lg:h-[100vh] ${open ? 'w-48' : 'w-12'} duration-500 text-gray-100 px-1 lg:rounded-tr-lg`}>
+    <div  >
+      <div className={`bg-cyan-800 h-screen ${open ? 'w-48' : 'w-14'} duration-500 text-white px-2`}>
         <div className='py-4 flex justify-end'>
           <h1 className={`${!open && 'hidden'} mx-auto whitespace-pre font-semibold text-lg 0.5s ease-in-out`}>MSU EDAAMS</h1>
-          <TiThMenuOutline size={26} className='cursor-pointer mx-auto' onClick={() => setOpen(!open)} />
+          <TiThMenuOutline size={26} className='cursor-pointer mr-1.5' onClick={() => setOpen(!open)} />
         </div>
         <div className='mt-4 flex flex-col gap-4 relative'>
           {menus?.map((menu, i) => (
@@ -46,17 +47,13 @@ const Sidebar = () => {
                 }}
                 className={`whitespace-pre duration-500 ${!open && 'opacity-0 translate-x-28 overflow-hidden'}`}>
                 {menu?.name}</h2>
-              <h2 className={`${open && 'hidden'} absolute left-24 bg-gray-800 whitespace-pre text-white rounded-md drop-shadow-lg px-0 py-0 w-0 overflow-hidden group-hover:px-2 group-hover:py-1 group-hover:left-14 group-hover:duration-300 group-hover:w-fit`}>
+              <h2 className={`${open && 'hidden'} absolute left-24 bg-cyan-800 whitespace-pre text-white rounded-md drop-shadow-lg px-0 py-0 w-0 overflow-hidden group-hover:px-2 group-hover:py-1 group-hover:left-14 group-hover:duration-300 group-hover:w-fit`}>
                 {menu?.name}
               </h2>
             </Link>
 
           ))}
         </div>
-        {/* <div className='flex translate-y-28 justify-center p-18'>
-        <img className={`${!open && 'hidden'} w-20`} src={MSULogo} alt='MsuLogo' />
-        <img className={`${!open && 'hidden'} w-20`} src={CICSLogo} alt='CicsLogo' />
-      </div> */}
       </div>
     </div >
   )

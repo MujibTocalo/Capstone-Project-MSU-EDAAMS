@@ -23,18 +23,12 @@ const documentSchema = new mongoose.Schema({
 	deanApproverName: String,
 	dateDeanApproved: Date,
 	deanRemarks: String,
-	deanDecision: {
-		type: Boolean,
-		default: false
-	},
+	deanDecision: Boolean,
 
 	// OVCAA date
-	endorserID: {
-		type: mongoose.Schema.Types.ObjectId,
-		ref: 'User'
-	},
+	endorserName: String,
 	endorsementDate: Date,
-	endorseLetter: String,
+	endorsementLetter: String,
 	dateEndorsed: Date,
 	endorserESign: String,
 	EndorserRemarks: String,

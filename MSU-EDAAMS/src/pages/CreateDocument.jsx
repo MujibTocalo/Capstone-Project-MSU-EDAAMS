@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import {
-	Alert, Select, Option, Input, Textarea, Button, Dialog, DialogHeader, DialogBody, DialogFooter,
+	Alert, Select, Option, Input, Textarea, Button, Dialog, DialogHeader, DialogBody, DialogFooter, Typography,
 } from '@material-tailwind/react'
 
 const CreateDocument = () => {
@@ -28,7 +28,7 @@ const CreateDocument = () => {
 		setControlNumber(e.target.value);
 	}
 	const handleCollegeName = (e) => {
-		setCollegeName(e.target.value);
+		setCollegeName(e);
 	}
 	const handleDocumentType = (e) => {
 		setDocumentType(e)
@@ -147,47 +147,73 @@ const CreateDocument = () => {
 		<div>
 			{alertMessage && (
 				<Alert
-					className='flex mx-auto justify-center '
+					className='flex justify-center'
 					color={alertType === 'success' ? 'green' : 'red'}
-					variant="filled"
+					variant="text"
+
 				>
 					<span>{alertMessage}</span>
 				</Alert>
 			)}
-			<div className="flex flex-col mx-auto gap-1.5 border-black rounded-2xl p-10 mt-1 float-right shadow-lg shadow-black">
-				<h1 className='mx-auto font-semibold text-2xl'>CREATE DOCUMENT</h1>
+			<div className="flex flex-col p-10 gap-1.5 border shadow-xl rounded-lg">
+				<Typography variant='h3' className=' flex font-medium mb-4 justify-center'>Create Document</Typography>
 				<div className='flex gap-14'>
 					<Select
+						color='cyan'
 						variant='outlined'
 						label="Select Document Type"
 						onChange={(e) => handleDocumentType(e)}
 						value={documentType}
+						animate={{
+							mount: { y: 0 },
+							unmount: { y: 25 },
+						}}
 					>
 						<Option value="Memorandum">Memorandum</Option>
 						<Option value="Special Order">Special Order</Option>
 					</Select>
 
 					<Input
+						color='cyan'
 						variant="standard"
 						label="Control Number"
 						value={controlNumber}
 						onChange={handleControlName}
 					/>
-					<Input
-						variant="standard"
-						label="College Name"
-						value={collegeName}
-						onChange={handleCollegeName}
-					/>
+					<Select
+
+						color='cyan'
+						variant='outlined'
+						label="Select College"
+						onChange={(e) => handleCollegeName(e)}
+						value={documentType}
+
+						animate={{
+							mount: { y: 0 },
+							unmount: { y: 25 },
+						}}>
+						<Option value="CICS">College of Information and Computing Sciences</Option>
+						<Option value="COE">College of Engineering</Option>
+						<Option value="CED">College of Education</Option>
+						<Option value="COA">College of Agriculture</Option>
+						<Option value="CHARM">College of Hotel and Restaurant Management</Option>
+						<Option value="CSPEAR">CSPEAR</Option>
+						<Option value="CBAA">College of Business Administration and Accountancy</Option>
+						<Option value="CNSM">College of Natural Science and Mathematics</Option>
+						<Option value="CPA">College of Public Affairs</Option>
+
+					</Select>
 				</div>
 				<div className="flex flex-col gap-1.5">
 					<Input
+						color='cyan'
 						variant="standard"
 						label="Header"
 						value={header}
 						onChange={handleHeader}
 					/>
 					<Input
+						color='cyan'
 						variant="standard"
 						label="Subject"
 						value={subject}
@@ -196,24 +222,27 @@ const CreateDocument = () => {
 				</div>
 				<div className='flex mt-4 h-72'>
 					<Textarea
+						color='cyan'
 						label="Content" value={content} onChange={handleContent} />
 				</div>
 				<div className='flex mx-auto gap-1.5'>
 					<Input
+						color='cyan'
 						variant="outlined"
 						label="Approver Designation"
 						value={approverDesignation}
 						onChange={handleApproverDesignation}
 					/>
 					<Input
+						color='cyan'
 						variant="outlined"
 						label="Approver Name"
 						value={approverName}
 						onChange={handleApproverName}
 					/>
 				</div>
-				<div className='flex flex-col mx-10 mt-2'>
-					<Button onClick={handleOpen}
+				<div className='flex mx-auto mt-2'>
+					<Button variant='text' onClick={handleOpen} size='sm'
 						color='green'>Submit</Button>
 					<Dialog
 						open={open}
@@ -228,6 +257,9 @@ const CreateDocument = () => {
 							Make sure all the details entered are correct.
 						</DialogBody>
 						<DialogFooter>
+							<Button variant="text" color="green" onClick={handleSubmitAndOpen}>
+								<span>Confirm</span>
+							</Button>
 							<Button
 								variant="text"
 								color="red"
@@ -235,9 +267,6 @@ const CreateDocument = () => {
 								className="mr-1"
 							>
 								<span>Cancel</span>
-							</Button>
-							<Button variant="gradient" color="green" onClick={handleSubmitAndOpen}>
-								<span>Confirm</span>
 							</Button>
 						</DialogFooter>
 					</Dialog>
