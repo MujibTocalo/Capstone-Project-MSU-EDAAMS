@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 
+import LandingPage  from "./pages/LandingPage";
 import Login from "./pages/LoginPage";
 import Registration from './pages/RegistrationPage'
 import ProfilePage from './pages/ProfilePage'
@@ -32,7 +33,8 @@ const App = () => {
     <div>
       {isLoggedIn && <Sidebar />}
       <Routes>
-        <Route path="/" element={<Login onLogin={handleLogin} />} />
+        <Route path="/" element={<LandingPage/>}/>
+        <Route path="/login" element={<Login onLogin={handleLogin} />} />
         <Route path="/registration" element={<Registration />} />
         <Route path="/*" element={<MainRoutes />} />
       </Routes>
