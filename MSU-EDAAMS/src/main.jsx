@@ -5,13 +5,16 @@ import "./index.css";
 import { BrowserRouter } from 'react-router-dom';
 
 import { ThemeProvider } from "@material-tailwind/react";
+import ToastProvider from './components/ToastProvider'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>
     <React.StrictMode>
       <ThemeProvider>
-        <App />
+        <ToastProvider>
+          <App />
+        </ToastProvider>
       </ThemeProvider>
     </React.StrictMode>
   </BrowserRouter>

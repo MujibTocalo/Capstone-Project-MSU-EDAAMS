@@ -1,19 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Alert, Dialog, DialogHeader, DialogBody, DialogFooter, Typography } from '@material-tailwind/react';
+import { Button, Alert, Dialog, DialogHeader, DialogBody, DialogFooter, Typography, Input } from '@material-tailwind/react';
 import documentsStore from '../config/documentsStore';
 import DocumentDetail from './DocumentDetail';
 import DocumentCompleteDetail from './DocumentCompleteDetail';
-import { ArrowLongRightIcon, ArrowUpRightIcon, ArrowsPointingInIcon } from '@heroicons/react/24/outline';
+import { useToast } from '../components/ToastService';
+import { LuAlertCircle } from 'react-icons/lu';
+
 
 const ApproveDocument = () => {
 	const store = documentsStore();
+	const toast = useToast()
 
 	const [deanName, setDeanName] = useState('');
 	const [deanRemark, setDeanRemark] = useState('');
-	const [alertMessage, setAlertMessage] = useState('');
-	const [alertType, setAlertType] = useState('');
 	const [open, setOpen] = React.useState(false);
 	const [selectedDocument, setSelectedDocument] = useState(null);
+
+
+	const handleDeanRemark = (e) => {
+		setDeanRemark(e.target.value)
+	}
 
 	const handleApproverName = (userDetail) => {
 		const approverFirstName = userDetail.firstName;
@@ -84,19 +90,40 @@ const ApproveDocument = () => {
 			});
 
 			if (res.ok) {
-				setAlertMessage('Document Approved.');
-				setAlertType('success');
-				hideAlertAfterDelay();
+				toast.open(
+					<div className='flex gap-2 bg-green-500 text-white p-4 rounded-lg shadow-lg'>
+						<LuAlertCircle size={40} />
+						<div>
+							<Typography variant='h4'>Success!</Typography>
+							<Typography variant='paragraph'>Document Approved</Typography>
+						</div>
+
+					</div>
+				)
 			} else {
-				setAlertMessage('Document Approval Failed.');
-				setAlertType('error');
-				hideAlertAfterDelay();
+				toast.open(
+					<div className='flex gap-2 bg-red-500 text-white p-4 rounded-lg shadow-lg'>
+						<LuAlertCircle size={40} />
+						<div>
+							<Typography variant='h4'>Failed!</Typography>
+							<Typography variant='paragraph'>Document Rejected</Typography>
+						</div>
+
+					</div>
+				)
 			}
 		} catch (error) {
+			toast.open(
+				<div className='flex gap-2 bg-red-800 text-white p-4 rounded-lg shadow-lg'>
+					<LuAlertCircle size={40} />
+					<div>
+						<Typography variant='h4'>Error!</Typography>
+						<Typography variant='paragraph'>Document Error</Typography>
+					</div>
+
+				</div>
+			)
 			console.log(error);
-			setAlertMessage('Approval Error.');
-			setAlertType('error');
-			hideAlertAfterDelay();
 		}
 	};
 
@@ -133,13 +160,6 @@ const ApproveDocument = () => {
 
 	return (
 		<div className='flex flex-col mx-auto'>
-			{alertMessage && (
-				<Alert className='flex mx-auto justify-center ' color={alertType === 'success' ? 'green' : 'red'}
-					variant='outlined'
-					size='sm'>
-					<span>{alertMessage}</span>
-				</Alert>
-			)}
 			<Typography className='flex mx-auto font-bold text-2xl p-2 '>APPROVAL PAGE</Typography>
 			<div className='grid grid-cols-4'>
 				{Array.from({ length: numRows }, (_, rowIndex) => (
@@ -163,19 +183,26 @@ const ApproveDocument = () => {
 									</DialogBody>
 									<DialogFooter>
 										<div className='flex gap-1.5'>
-											<Button variant='outlined' color='green' onClick={(e) => handleApproveDocument(e, document._id)}>
+											<Button variant='text' color='green' onClick={(e) => handleApproveDocument(e, document._id)}>
 												Approve Document
 											</Button>
-											<Button variant='outlined' color='red' onClick={(e) => handleRejectDocument(e, document._id)}>
+											<Button size='sm' variant='text' color='red' onClick={(e) => handleRejectDocument(e, document._id)}>
 												Reject Document
 											</Button>
-											<Button variant='text' color='cyan' onClick={() => setOpen(false)} className='mr-1'>
+											<Input
+												color='cyan'
+												variant='static'
+												placeholder='Comment'
+												value={deanRemark}
+												onChange={handleDeanRemark}
+											/>
+											<Button size='sm' variant='text' color='cyan' onClick={() => setOpen(false)}>
 												<span>Return</span>
 											</Button>
 										</div>
 									</DialogFooter>
 								</Dialog>
-								<div className='flex'>
+								<div className='flex whitespace-pre'>
 									<Button className='flex flex-row items-center m-2' size='sm' variant='text' color='cyan'
 										onClick={() => handleOpen(document)}>
 										Read More{" "}
