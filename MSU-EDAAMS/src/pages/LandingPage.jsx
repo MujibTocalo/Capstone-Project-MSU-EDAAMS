@@ -1,65 +1,155 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./CSS Files/LandingPage.css";
-import cicslogo from "../pages/images/CICS Logo.png";
-import msulogo from "../pages/images/msulogo.png";
-import asset1 from "../pages/images/asset1.jpg";
+import axios from "axios";
+import { LuAlertCircle } from "react-icons/lu";
+import { useToast } from "../components/ToastService";
+import MSUimage from "../pages/images/MSUimage.jpg";
+// import "../pages/CSS Files/LandingPage.css";
+import {
+  Button,
+  Dialog,
+  Card,
+  CardHeader,
+  CardBody,
+  CardFooter,
+  Typography,
+  Input,
+  // Checkbox,
+} from "@material-tailwind/react";
 
 const LandingPage = () => {
-  const navigate = useNavigate();
+  const toast = useToast();
 
-  const handleGetStarted = () => {
-    navigate("/login");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
+
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
   };
 
-  return (
-    <div>
-      <div class="container"></div>
-      <div className="background-images">
-        <img className="asset1" src={asset1} alter="image1" />
-      </div>
-      <nav className="navbar">
-        <div className="logos">
-          <img src={cicslogo} alt="logo" />
-          <img src={msulogo} alt="logo" />
-        </div>
-        <div className="menu-items">
-          <a href="#about-us">About Us</a>
-          <a href="#mission-vision">Mission & Vision</a>
-          <a href="#address">Address</a>
-          <a href="#contact">Contact Number</a>
-        </div>
-      </nav>
-      <div className="landing-container">
-        <div className="landing-text-content">
-          <h1 className="typewriter">MSU - EDAAMS</h1>
-          <div className="landing-page-content">
-            <p>
-              An electronic document approval and archive management system is a
-              software solution designed to streamline the process of approving
-              and managing documents in digital format. It eliminates the need
-              for manual paper-based approvals and offers a secure and efficient
-              way to handle documents.
-            </p>
-          </div>
-          <div className="get-started-btn">
-            <button className="continue-application" onClick={handleGetStarted}>
-              GET STARTED
-              <div>
-                <div class="pencil"></div>
-                <div class="folder">
-                  <div class="top">
-                    <svg viewBox="0 0 24 27">
-                      <path d="M1,0 L23,0 C23.5522847,-1.01453063e-16 24,0.44771525 24,1  L24,8.17157288 C24,8.70200585 23.7892863,9.21071368 23.4142136,9.58578644 L20.5857864,12.4142136 C20.2107137,12.7892863 20,13.2979941 20,13.8284271 L20,26 C20,26.5522847 19.5522847,27 19,27 L1,27 C0.44771525,27 6.76353751e-17,26.5522847 0,26 L0,1 C-6.76353751e-17,0.44771525 0.44771525,1.01453063e-16 1,0 Z"></path>
-                    </svg>
-                  </div>
-                  <div class="paper"></div>
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
+
+  const handleLogin = (event) => {
+    event.preventDefault();
+
+    axios
+      .post("http://localhost:7000/user/login", { email, password })
+      .then((response) => {
+        const { token, userId } = response.data;
+        localStorage.setItem("token", token);
+
+        // Use the userId to fetch user details
+        axios
+          .get(`http://localhost:7000/user/${userId}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+          .then((userResponse) => {
+            const userDetails = userResponse.data;
+            localStorage.setItem("userDetails", JSON.stringify(userDetails));
+            toast.open(
+              <div className="flex gap-2 bg-green-500 text-white p-4 rounded-lg shadow-lg">
+                <LuAlertCircle size={40} />
+                <div>
+                  <Typography variant="h3">Success!</Typography>
+                  <Typography variant="paragraph">
+                    You have logged in Successfully.
+                  </Typography>
                 </div>
               </div>
-            </button>
+            );
+
+            // Redirect to profile page or protected route
+            navigate("/documents");
+          })
+          .catch((error) => {
+            console.error("Error fetching user details:", error);
+          });
+
+        // Redirect to dashboard or protected route
+        // navigate('/dashboard');
+      })
+      .catch((error) => {
+        toast.open(
+          <div className="flex gap-2 bg-red-800 text-white p-4 rounded-lg shadow-lg">
+            <LuAlertCircle size={40} />
+            <div>
+              <Typography variant="h4">Login Error!</Typography>
+              <Typography variant="paragraph">Login Error</Typography>
+            </div>
           </div>
-        </div>
+        );
+        setError(error.response.data.message);
+      });
+  };
+
+  const handleOpen = () => setOpen((cur) => !cur);
+
+  return (
+    <div className="relative h-screen">
+      {/* <img
+        src={MSUimage}
+        alt="msu image"
+        className=" mix-blend-overlay object-cover h-full w-full"
+      /> */}
+      <div className="absolute inset-0 flex items-center justify-center">
+        <Button onClick={handleOpen}>Sign in</Button>
       </div>
+      <Typography className="text-5xl font-bold mb-5 rounded-lg">
+        MSU - EDAAMS
+      </Typography>
+      <div className="text-center mt-1 mb-14 flex flex-col items-center">
+        <Typography className="mb-2">
+          "Electronic Document Approval and Archive Management System"
+        </Typography>
+        <Typography className="mb-0">
+          a software solution designed to streamline document approval processes
+          and efficiently manage document archives electronically.
+        </Typography>
+      </div>
+      <Dialog
+        size="xs"
+        open={open}
+        handler={handleOpen}
+        className="bg-transparent shadow-none"
+      >
+        <Card className="mx-auto w-full max-w-[24rem]">
+          <CardHeader
+            variant="gradient"
+            color="blue"
+            className="mb-4 grid h-28 place-items-center"
+          >
+            <Typography variant="h3" color="white">
+              Sign In
+            </Typography>
+          </CardHeader>
+          <CardBody className="flex flex-col gap-4">
+            <Input
+              value={email}
+              onChange={handleEmailChange}
+              label="Email"
+              size="lg"
+            />
+            <Input
+              value={password}
+              onChange={handlePasswordChange}
+              label="Password"
+              size="lg"
+              type="password"
+            />
+          </CardBody>
+          <CardFooter className="pt-0">
+            <Button variant="gradient" onClick={handleLogin} fullWidth>
+              Sign In
+            </Button>
+          </CardFooter>
+        </Card>
+      </Dialog>
     </div>
   );
 };
