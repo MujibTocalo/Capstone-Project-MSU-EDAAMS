@@ -45,22 +45,27 @@ export const deleteDocument = async (req, res) => {
 export const endorseDocument = async (req, res) => {
 	try {
 		const { id } = req.params
-		const { endorseName, endorsementLetter, endorseComment, decision } = req.body
+		const { endorserName, endorserDesignation, endorsementLetter, endorserRemark, decision, endorserSignature } = req.body
 
 		const document = await Document.findById(id)
 		if (!document) {
 			return res.status(404).json({ error: 'Document Not Found.' })
 		}
 
-		document.endorserName = endorseName
-		document.endorsementDate = new Date()
+		document.endorserName = endorserName
+		document.endorserDesignation = endorserDesignation
+		document.endorserSignature = endorserSignature
+		document.endorsementDate = Date.now();
 		document.endorsementLetter = endorsementLetter;
-		document.documentStatus = decision === 'approved' ? 'approved' : 'rejected'
-		if (decision === 'approved') {
+		document.endorserRemarks = endorserRemark
+
+		if (decision === 'true') {
 			document.documentStatus = 'Endorsed'
 		} else if (decision === 'rejected') {
-			document.documentStatus = 'rejected'
+			document.documentStatus = 'Rejected'
 		}
+
+		console.log(document);
 
 		await document.save()
 		res.json({ message: 'Document endorsed successfully' });
@@ -73,7 +78,7 @@ export const endorseDocument = async (req, res) => {
 export const deanApproval = async (req, res) => {
 	try {
 		const { id } = req.params
-		const { deanName, deanRemark, decision } = req.body
+		const { deanName, deanRemark, decision, deanDesignation, deanSignature } = req.body
 
 		const document = await Document.findById(id)
 
@@ -85,6 +90,8 @@ export const deanApproval = async (req, res) => {
 		document.dateDeanApproved = Date.now();
 		document.deanRemarks = deanRemark;
 		document.deanDecision = decision;
+		document.deanApproverSignature = deanSignature;
+		document.deanApproverDesignation = deanDesignation;
 		console.log(decision)
 
 		if (decision === 'true') {
@@ -152,7 +159,9 @@ export const updateDocument = async (req, res) => {
 
 export const createDocument = async (req, res) => {
 	try {
-		const { controlNumber, collegeName, documentType, header, subject, content, approverDesignation, approverName, uploaderName } = req.body
+		const { controlNumber, collegeName, documentType, header, subject, content, uploaderDesignation, uploaderName, uploaderSignature } = req.body
+
+
 
 		const document = await Document.create({
 			controlNumber,
@@ -161,9 +170,9 @@ export const createDocument = async (req, res) => {
 			header,
 			subject,
 			content,
-			approverDesignation,
-			approverName,
-			uploaderName
+			uploaderDesignation,
+			uploaderName,
+			uploaderSignature
 		})
 
 		res.json({ document })

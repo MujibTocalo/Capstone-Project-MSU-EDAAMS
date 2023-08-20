@@ -14,6 +14,14 @@ const documentsStore = create((set, get) => ({
 		}
 	},
 
+	fetchTableRows: async () => {
+		if (!get().fetchExecuted) { // execute only once before waiting for new document creation
+			const res = await axios.get('http://localhost:7000/document')
+			set({ documents: res.data.document })
+			set({ fetchExecuted: true }) // set flag after first execution
+		}
+	},
+
 
 	deleteDocument: async (_id) => {
 		await axios.delete(`http://localhost:7000/document/delete/${_id}`)

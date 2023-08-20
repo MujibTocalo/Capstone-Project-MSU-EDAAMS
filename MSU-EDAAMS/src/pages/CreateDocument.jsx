@@ -24,16 +24,12 @@ const CreateDocument = () => {
   const [header, setHeader] = useState("");
   const [subject, setSubject] = useState("");
   const [content, setContent] = useState("");
-  const [approverDesignation, setApproverDesignation] = useState("");
-  const [approverName, setApproverName] = useState("");
   const [uploaderName, setUploaderName] = useState("");
+  const [uploaderDesignation, setUploaderDesignation] = useState()
+  const [uploaderSignature, setUploaderSignature] = useState()
+  const [open, setOpen] = React.useState(false);
 
   const toast = useToast();
-
-  // const [alertMessage, setAlertMessage] = useState('');
-  // const [alertType, setAlertType] = useState('');
-
-  const [open, setOpen] = React.useState(false);
 
   const handleOpen = () => setOpen(!open);
 
@@ -56,19 +52,7 @@ const CreateDocument = () => {
   const handleContent = (e) => {
     setContent(e.target.value);
   };
-  const handleApproverDesignation = (e) => {
-    setApproverDesignation(e.target.value);
-  };
-  const handleApproverName = (e) => {
-    setApproverName(e.target.value);
-  };
 
-  // const hideAlertAfterDelay = () => {
-  // 	setTimeout(() => {
-  // 		setAlertMessage('');
-  // 		setAlertType('');
-  // 	}, 3000);
-  // };
 
   const handleSubmitAndOpen = () => {
     handleOpen();
@@ -84,13 +68,8 @@ const CreateDocument = () => {
       !header ||
       !subject ||
       !content ||
-      !approverDesignation ||
-      !approverName ||
       !uploaderName
     ) {
-      // setAlertMessage('Please fill in all the required fields.');
-      // setAlertType('error');
-      // hideAlertAfterDelay();
       toast.open(
         <div className="flex gap-2 bg-red-500 text-white p-4 rounded-lg shadow-lg">
           <LuAlertCircle size={40} />
@@ -112,9 +91,9 @@ const CreateDocument = () => {
       header,
       subject,
       content,
-      approverDesignation,
-      approverName,
       uploaderName,
+      uploaderDesignation,
+      uploaderSignature
     };
 
     try {
@@ -147,61 +126,56 @@ const CreateDocument = () => {
         setHeader("");
         setSubject("");
         setContent("");
-        setApproverDesignation("");
-        setApproverName("");
+
       } else {
         toast.open(
-          <div className="flex gap-2 bg-red-500 text-white p-4 rounded-lg shadow-lg">
+          <div className='flex gap-2 bg-red-500 text-white p-4 rounded-lg shadow-lg'>
             <LuAlertCircle size={40} />
             <div>
-              <Typography variant="h4">Failed!</Typography>
-              <Typography variant="paragraph">
-                Document Submittion Failed
-              </Typography>
+              <Typography variant='h4'>Failed!</Typography>
+              <Typography variant='paragraph'>Document Submittion Failed</Typography>
             </div>
+
           </div>
-        );
+        )
       }
     } catch (error) {
       toast.open(
-        <div className="flex gap-2 bg-red-800 text-white p-4 rounded-lg shadow-lg">
+        <div className='flex gap-2 bg-red-800 text-white p-4 rounded-lg shadow-lg'>
           <LuAlertCircle size={40} />
           <div>
-            <Typography variant="h4">Error!</Typography>
-            <Typography variant="paragraph">
-              Document Submittion Error
-            </Typography>
+            <Typography variant='h4'>Error!</Typography>
+            <Typography variant='paragraph'>Document Submittion Error</Typography>
           </div>
+
         </div>
-      );
+      )
       console.error(error);
     }
   };
 
   useEffect(() => {
-    const userDetail = JSON.parse(localStorage.getItem("userDetails"));
-    handleUploaderName(userDetail);
+    const userDetail = JSON.parse(localStorage.getItem('userDetails'));
+    handleUploaderDetail(userDetail)
   }, []);
 
-  const handleUploaderName = (userDetails) => {
+  const handleUploaderDetail = (userDetails) => {
+
     const uploaderFirstName = userDetails.firstName;
     const uploaderLastName = userDetails.lastName;
-    setUploaderName(uploaderFirstName + "  " + uploaderLastName);
-    //console.log(uploaderName)
+    setUploaderName(uploaderFirstName + '  ' + uploaderLastName);
+    setUploaderDesignation(userDetails.designation)
+    setUploaderSignature(userDetails.signature)
   };
+
 
   return (
     <div className="flex flex-col p-10 gap-1.5 border shadow-xl rounded-lg">
-      <Typography
-        variant="h3"
-        className=" flex font-medium mb-4 justify-center"
-      >
-        Create Document
-      </Typography>
-      <div className="flex gap-14">
+      <Typography variant='h3' className=' flex font-medium mb-4 justify-center'>Create Document</Typography>
+      <div className='flex gap-14'>
         <Select
-          color="cyan"
-          variant="outlined"
+          className='text-[#4477CE]'
+          variant='outlined'
           label="Select Document Type"
           onChange={(e) => handleDocumentType(e)}
           value={documentType}
@@ -215,86 +189,59 @@ const CreateDocument = () => {
         </Select>
 
         <Input
-          color="cyan"
+          color='cyan'
           variant="standard"
           label="Control Number"
           value={controlNumber}
           onChange={handleControlName}
         />
         <Select
-          color="cyan"
-          variant="outlined"
+          color='cyan'
+          variant='outlined'
           label="Select College"
           onChange={(e) => handleCollegeName(e)}
           value={documentType}
+
           animate={{
             mount: { y: 0 },
             unmount: { y: 25 },
-          }}
-        >
-          <Option value="CICS">
-            College of Information and Computing Sciences
-          </Option>
-          <Option value="COE">College of Engineering</Option>
-          <Option value="CED">College of Education</Option>
+          }}>
           <Option value="COA">College of Agriculture</Option>
-          <Option value="CHARM">
-            College of Hotel and Restaurant Management
-          </Option>
+          <Option value="CBAA">College of Business Administration and Accountancy</Option>
+          <Option value="CED">College of Education</Option>
+          <Option value="COE">College of Engineering</Option>
+          <Option value="CHARM">College of Hotel and Restaurant Management</Option>
+          <Option value="CICS">College of Information and Computing Sciences</Option>
           <Option value="CSPEAR">CSPEAR</Option>
-          <Option value="CBAA">
-            College of Business Administration and Accountancy
-          </Option>
-          <Option value="CNSM">
-            College of Natural Science and Mathematics
-          </Option>
+          <Option value="CNSM">College of Natural Science and Mathematics</Option>
           <Option value="CPA">College of Public Affairs</Option>
+
         </Select>
       </div>
       <div className="flex flex-col gap-1.5">
-        <Input
-          color="cyan"
+        <Textarea
+          color='cyan'
           variant="standard"
           label="Header"
           value={header}
           onChange={handleHeader}
         />
-        <Input
-          color="cyan"
+        <Textarea
+          color='cyan'
           variant="standard"
           label="Subject"
           value={subject}
           onChange={handleSubject}
         />
       </div>
-      <div className="flex mt-4 h-72">
+      <div className='flex mt-4 h-screen'>
         <Textarea
-          color="cyan"
-          label="Content"
-          value={content}
-          onChange={handleContent}
-        />
+          color='cyan'
+          label="Content" value={content} onChange={handleContent} />
       </div>
-      <div className="flex mx-auto gap-1.5">
-        <Input
-          color="cyan"
-          variant="outlined"
-          label="Approver Designation"
-          value={approverDesignation}
-          onChange={handleApproverDesignation}
-        />
-        <Input
-          color="cyan"
-          variant="outlined"
-          label="Approver Name"
-          value={approverName}
-          onChange={handleApproverName}
-        />
-      </div>
-      <div className="flex mx-auto mt-2">
-        <Button variant="text" onClick={handleOpen} size="sm" color="green">
-          Submit
-        </Button>
+      <div className='flex mx-auto mt-2'>
+        <Button variant='outlined' onClick={handleOpen} size='sm'
+          color='green'>Submit</Button>
         <Dialog
           open={open}
           handler={handleOpen}
@@ -323,7 +270,8 @@ const CreateDocument = () => {
         </Dialog>
       </div>
     </div>
-  );
-};
+  )
+
+}
 
 export default CreateDocument;

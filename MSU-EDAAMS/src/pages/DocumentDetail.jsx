@@ -12,20 +12,27 @@ const DocumentDetail = ({ document }) => {
 		store.fetchDocuments();
 	}, [store])
 
+	// if (document.documentStatus !== "Pending") {
+	// 	return null;
+	// }
+
 	return (
 		<div key={document._id}
-			className='flex flex-col p-4 border border-gray-100 shadow-md rounded-md'>
-			<div className="flex flex-row items-center whitespace-pre">
+			className='flex flex-col bg-white p-4 border rounded-md'>
+			<div className="flex flex-row items-center justify-start whitespace-pre">
 				<Typography
-					className='bg-cyan-700 text-sm rounded-lg m-2 p-2 text-white'>
+					className='bg-blue-500 text-sm rounded-lg m-1 p-1 text-white'>
 					{document.documentType}
 				</Typography>
 				<Typography
-					className='bg-cyan-700 text-sm rounded-lg p-2 text-white'>
+					className='bg-blue-500 text-sm rounded-lg p-1 text-white'>
 					{document.collegeName}
 				</Typography>
 			</div>
 			<div className="flex flex-col py-2 rounded-lg">
+				<Typography className='text-sm pl-2 py-1'>
+					No. {document.controlNumber}
+				</Typography>
 				<Typography className='text-sm pl-2 py-1'>
 					To: {document.header}
 				</Typography>

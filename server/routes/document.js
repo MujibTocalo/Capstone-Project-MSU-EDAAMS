@@ -28,7 +28,7 @@ documentRouter.get('/total', totalDocuments)
 
 documentRouter.put('/deanApproval/:id', deanApproval)
 documentRouter.put('/:id', approveDocument)
-documentRouter.put('/:id', endorseDocument)
+documentRouter.put('/endorseDocument/:id', endorseDocument)
 
 
 export default documentRouter

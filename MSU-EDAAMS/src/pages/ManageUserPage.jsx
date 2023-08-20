@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import documentsStore from "../config/documentsStore";
 import DocumentDetail from "./DocumentDetail";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
@@ -18,9 +19,11 @@ import {
   Tabs,
   TabsHeader,
   Tab,
+  Option,
   Avatar,
   IconButton,
   Tooltip,
+  Select,
 } from "@material-tailwind/react";
 
 const TABS = [
@@ -90,38 +93,73 @@ const TABLE_ROWS = [
 ];
 
 const ManageUsers = () => {
-  const [firstname, setfirstname] = useState("");
-  const [lastname, setlastname] = useState("");
-  const [office, setoffice] = useState("");
-  const [designation, setdesignation] = useState("");
+  const [userType, setUsertype] = useState('')
+  const [firstname, setFirstname] = useState("");
+  const [lastname, setLastname] = useState("");
+  const [office, setOffice] = useState("");
+  const [designation, setDesignation] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [signature, setsignature] = useState("");
+  const [signature, setSignature] = useState(null);
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
 
+
+  const handleUserType = (e) => {
+    setUsertype(e)
+  }
+
   const handleFirstNameChange = (e) => {
-    setfirstname(e.target.value);
+    setFirstname(e.target.value);
   };
   const handleLastNameChange = (e) => {
-    setlastname(e.target.value);
+    setLastname(e.target.value);
   };
   const handleOfficeChange = (e) => {
-    setoffice(e.target.value);
+    setOffice(e.target.value);
   };
   const handleDesignationChange = (e) => {
-    setdesignation(e.target.value);
+    setDesignation(e.target.value);
   };
   const handleEmailChange = (e) => {
-    setemail(e.target.value);
+    setEmail(e.target.value);
   };
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
   };
+
   const handleSignature = (e) => {
-    setsignature(e.target.files[0]);
+    setSignature(e.target.files[0])
+    console.log(signature)
   };
+
+  const AddUser = async () => {
+    const formData = new FormData();
+    formData.append('firstname', firstname);
+    formData.append('lastname', lastname);
+    formData.append('office', office);
+    formData.append('designation', designation);
+    formData.append('email', email);
+    formData.append('password', password);
+    formData.append('signature', signature);
+    try {
+      const response = await axios.post('http://localhost:7000/user/register', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      if (response.status === 200) {
+        console.log(response)
+        console.log('User registered successfully');
+      }
+    } catch (error) {
+      console.log('Error:', error.response?.data || 'Something went wrong');
+      console.log(error)
+    }
+  };
+
 
   return (
     <Card className="p-2 mt-2 rounded-lg bg-gray-100">
@@ -150,10 +188,10 @@ const ManageUsers = () => {
                 color="blue"
                 size="sm"
               >
-                + Add User
+                Register User
               </Button>
               <Dialog
-                size="xs"
+                size="sm"
                 open={open}
                 handler={handleOpen}
                 className="bg-transparent shadow-none"
@@ -162,60 +200,79 @@ const ManageUsers = () => {
                   <CardHeader
                     variant="gradient"
                     color="blue"
-                    className="mb-40 grid h-28 place-items-center"
+                    className="mb-4 grid h-28 place-items-center"
                   >
                     <Typography variant="h5" color="white">
-                      User Details
+                      Register New User
                     </Typography>
                   </CardHeader>
                   <CardBody
                     color="white"
-                    className="mb-50 grid h-28 gap-4 overflow-auto"
+                    className="flex flex-col h-96 gap-5 overflow-auto"
                   >
+
                     <Input
                       label="First Name"
                       size="lg"
                       value={firstname}
-                      OnChange={handleFirstNameChange}
+                      onChange={handleFirstNameChange}
                     />
                     <Input
-                      label="Last Name"
-                      size="lg"
+                      label='Last Name'
+                      size='lg'
                       value={lastname}
-                      OnChange={handleLastNameChange}
+                      onChange={handleLastNameChange}
                     />
                     <Input
-                      label="Office"
+                      label="Office / College"
                       size="lg"
                       value={office}
-                      OnChange={handleOfficeChange}
+                      onChange={handleOfficeChange}
                     />
                     <Input
                       label="Designation"
                       size="lg"
                       value={designation}
-                      OnChange={handleDesignationChange}
+                      onChange={handleDesignationChange}
                     />
                     <Input
                       label="Email"
                       size="lg"
                       value={email}
-                      OnChange={handleEmailChange}
+                      onChange={handleEmailChange}
                     />
                     <Input
                       label="Password"
                       size="lg"
                       value={password}
-                      OnChange={handlePasswordChange}
+                      onChange={handlePasswordChange}
                     />
+                    <Select
+                      className="h-10"
+                      variant="outlined"
+                      label="Select User Type"
+                      onChange={(e) => handleUserType(e)}
+                      value={userType}
+                      animate={{
+                        mount: { y: 0 },
+                        unmount: { y: 25 },
+                      }}>
+                      <Option value='chairperson'>Chairperson</Option>
+                      <Option value='collegedean'>College Dean</Option>
+                      <Option value='endorser'>OVCAA Endorser</Option>
+                      <Option value='opapprover'>OP Approver</Option>
+                    </Select>
                     <Input
                       label="Signature"
                       type="file"
                       size="lg"
-                      value={lastname}
-                      OnChange={handleLastNameChange}
+                      onChange={handleSignature}
                     />
-                    <Button>add user</Button>
+
+                    <Button
+                      variant="outlined"
+                      onClick={AddUser}
+                    >Register User</Button>
                   </CardBody>
                 </Card>
               </Dialog>

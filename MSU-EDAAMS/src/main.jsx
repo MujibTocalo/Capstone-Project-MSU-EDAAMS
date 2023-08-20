@@ -9,13 +9,13 @@ import ToastProvider from './components/ToastProvider'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <BrowserRouter>
-    <React.StrictMode>
-      <ThemeProvider>
-        <ToastProvider>
+  <React.StrictMode>
+    <ThemeProvider>
+      <ToastProvider>
+        <BrowserRouter>
           <App />
-        </ToastProvider>
-      </ThemeProvider>
-    </React.StrictMode>
-  </BrowserRouter>
+        </BrowserRouter>
+      </ToastProvider>
+    </ThemeProvider>
+  </React.StrictMode>
 );

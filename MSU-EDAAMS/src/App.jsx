@@ -9,12 +9,13 @@ import CreateDocument from "./pages/CreateDocument";
 import Sidebar from "./components/Sidebar";
 import ArchivePage from "./pages/ArchivePage";
 import ManageUsers from "./pages/ManageUserPage";
-import { CustomNavbar } from "./components/Navbar";
 import ApproveDocument from "./pages/ApproveDocument";
 import EndorseDocument from "./pages/EndorseDocument";
 import { Dashboard } from "./pages/Dashboard";
 import Documents from "./pages/Documents";
-import ReleasedDocument from "./pages/ReleasedDocument";
+import ReleasedDocument from "./pages/OPApprovalPage";
+import { DocumentsLists } from "./pages/DocumentsLists";
+import OPApprovalPage from "./pages/OPApprovalPage";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -37,17 +38,17 @@ const App = () => {
 };
 
 const MainRoutes = () => (
-  <div className="flex">
+  <div className="flex flex-row h-screen overflow-hidden">
     <Sidebar />
     <div className="p-2 mx-auto flex-grow bg-transparent overflow-auto">
       <Routes>
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/profilePage" element={<ProfilePage />} />
-        <Route path="/documents" element={<Documents />} />
+        <Route path="/documents" element={<DocumentsLists />} />
         <Route path="/createDocument" element={<CreateDocument />} />
         <Route path="/approvedocument" element={<ApproveDocument />} />
         <Route path="/endorsedocument" element={<EndorseDocument />} />
-        <Route path="/releasedocument" element={<ReleasedDocument />} />
+        <Route path="/opapproval" element={<OPApprovalPage />} />
         <Route path="/archive" element={<ArchivePage />} />
         <Route path="/manageusers" element={<ManageUsers />} />
       </Routes>

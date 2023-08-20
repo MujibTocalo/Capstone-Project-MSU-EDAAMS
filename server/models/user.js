@@ -8,7 +8,7 @@ const userSchema = new mongoose.Schema({
 	firstName: String,
 	lastName: String,
 	designation: String,
-	contactNumber: String,
+	office: String,
 	email: {
 		unique: true,
 		required: true,
@@ -25,6 +25,9 @@ const userSchema = new mongoose.Schema({
 	year: {
 		type: Date
 	},
+
+	signature: String,
+
 	status: {
 		type: String,
 		enum: ['Active', 'InActive']

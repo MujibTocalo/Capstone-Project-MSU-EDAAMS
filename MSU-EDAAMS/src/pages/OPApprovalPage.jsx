@@ -8,7 +8,7 @@ import { Button, Alert, Dialog, DialogHeader, DialogBody, DialogFooter, Typograp
 import { useToast } from '../components/ToastService';
 import { LuAlertCircle } from 'react-icons/lu';
 
-const EndorseDocument = () => {
+const OPApprovalPage = () => {
 
 	const store = documentsStore()
 	const toast = useToast()
@@ -84,7 +84,7 @@ const EndorseDocument = () => {
 	}
 
 	const endorseDocument = store.documents
-		.filter((document) => document.documentStatus === 'DeanApproved')
+		.filter((document) => document.documentStatus === 'Endorsed')
 		.sort((a, b) => b.createdAt.localeCompare(a.createdAt))
 
 
@@ -115,8 +115,9 @@ const EndorseDocument = () => {
 						<LuAlertCircle size={40} />
 						<div>
 							<Typography variant='h4'>Success!</Typography>
-							<Typography variant='paragraph'>Document Endorsed</Typography>
+							<Typography variant='paragraph'>Document Approved</Typography>
 						</div>
+
 					</div>
 				)
 			} else {
@@ -124,9 +125,10 @@ const EndorseDocument = () => {
 					<div className='flex gap-2 bg-red-500 text-white p-4 rounded-lg shadow-lg'>
 						<LuAlertCircle size={40} />
 						<div>
-							<Typography variant='h4'>Success!</Typography>
+							<Typography variant='h4'>Failed!</Typography>
 							<Typography variant='paragraph'>Document Rejected</Typography>
 						</div>
+
 					</div>
 				)
 			}
@@ -138,6 +140,7 @@ const EndorseDocument = () => {
 						<Typography variant='h4'>Error!</Typography>
 						<Typography variant='paragraph'>Document Error</Typography>
 					</div>
+
 				</div>
 			)
 			console.log(error);
@@ -166,10 +169,15 @@ const EndorseDocument = () => {
 			});
 
 			if (res.ok) {
-				console.log(res)
+				setAlertMessage('Document Rejected.');
+				setAlertType('error');
+				hideAlertAfterDelay();
 			}
 		} catch (error) {
 			console.log(error);
+			setAlertMessage('Document Rejection Error.');
+			setAlertType('error');
+			hideAlertAfterDelay();
 		}
 	};
 
@@ -285,4 +293,4 @@ const EndorseDocument = () => {
 	);
 };
 
-export default EndorseDocument
+export default OPApprovalPage

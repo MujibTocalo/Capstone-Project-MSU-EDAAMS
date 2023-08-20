@@ -9,11 +9,11 @@ import { Typography } from '@material-tailwind/react';
 
 const Login = () => {
 
-	const toast = useToast()
+  const toast = useToast()
 
-	const [email, setEmail] = useState('')
-	const [password, setPassword] = useState('')
-	const navigate = useNavigate();
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const navigate = useNavigate();
 
   // const navigate = useNavigate();
 
@@ -34,39 +34,39 @@ const Login = () => {
         const { token, userId } = response.data;
         localStorage.setItem("token", token);
 
-				// Use the userId to fetch user details
-				axios
-					.get(`http://localhost:7000/user/${userId}`, {
-						headers: {
-							Authorization: `Bearer ${token}`,
-						},
-					})
-					.then((userResponse) => {
-						const userDetails = userResponse.data;
-						localStorage.setItem('userDetails', JSON.stringify(userDetails));
-						toast.open(
-							<div className='flex gap-2 bg-green-500 text-white p-4 rounded-lg shadow-lg'>
-								<LuAlertCircle size={40} />
-								<div>
-									<Typography variant='h3'>Success!</Typography>
-									<Typography variant='paragraph'>You have logged in Successfully.</Typography>
-								</div>
+        // Use the userId to fetch user details
+        axios
+          .get(`http://localhost:7000/user/${userId}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+          .then((userResponse) => {
+            const userDetails = userResponse.data;
+            localStorage.setItem('userDetails', JSON.stringify(userDetails));
+            toast.open(
+              <div className='flex gap-2 bg-green-500 text-white p-4 rounded-lg shadow-lg'>
+                <LuAlertCircle size={40} />
+                <div>
+                  <Typography variant='h3'>Success!</Typography>
+                  <Typography variant='paragraph'>You have logged in Successfully.</Typography>
+                </div>
 
-							</div>
-						)
-						// Redirect to profile page or protected route
-						navigate('/createDocument');
-					})
-					.catch((error) => {
-						console.error('Error fetching user details:', error);
-					});
-
-            // Redirect to dashboard or protected route
-            // navigate('/dashboard');
+              </div>
+            )
+            // Redirect to profile page or protected route
+            navigate('/createDocument');
           })
           .catch((error) => {
-            setError(error.response.data.message);
+            console.error('Error fetching user details:', error);
           });
+
+        // Redirect to dashboard or protected route
+        // navigate('/dashboard');
+      })
+      .catch((error) => {
+        setError(error.response.data.message);
+      });
   };
 
   const handleRegister = async () => {

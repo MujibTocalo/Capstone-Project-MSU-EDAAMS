@@ -69,30 +69,48 @@ export const fetchUser = async (req, res) => {
 
 export const register = async (req, res) => {
   try {
-    const { firstName, lastName, designation, email, password, userType } =
-      req.body;
+    const {
+      firstname,
+      lastname,
+      office,
+      designation,
+      email,
+      password,
+      userType,
+    } = req.body;
+
+    let signature = '';
+    if (req.file) {
+      signature = `/assets/${req.file.filename}`
+    }
 
     // Hash password with bcrypt
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const user = new User({
-      firstName,
-      lastName,
+      firstName: firstname,
+      lastName: lastname,
       designation,
+      office,
       email,
       password: hashedPassword,
       userType,
-      //signImageUrl: req.file ? req.file.filename : undefined
+      signature,
     });
 
     await user.save();
+    console.log(user);
 
     res.json({ user });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: 'Server error' });
   }
 };
+
+
+
+
 
 export const updateUserType = async (userId, newUserType) => {
   try {
