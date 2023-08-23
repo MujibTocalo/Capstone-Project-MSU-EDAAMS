@@ -47,8 +47,8 @@ export const checkAuth = (req, res) => {
 
 export const fetchUsers = async (req, res) => {
   try {
-    const users = await User.find({});
-    res.json(users);
+    const user = await User.find();
+    res.json({ user });
   } catch (error) {
     console.error("Error fetching users:", error);
     res.status(500).json({ error: "Failed to fetch users" });

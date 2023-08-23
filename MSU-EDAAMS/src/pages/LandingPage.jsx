@@ -58,7 +58,7 @@ const LandingPage = () => {
                 <div>
                   <Typography variant="h3">Success!</Typography>
                   <Typography variant="paragraph">
-                    You have logged in Successfully.
+                    Welcome to EDAAMS.
                   </Typography>
                 </div>
               </div>

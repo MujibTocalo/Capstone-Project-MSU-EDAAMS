@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import MSULogo from '../assets/msulogo.png'
 import CICSLogo from '../assets/CICS_Logo.png'
@@ -8,12 +8,28 @@ import { LuFilePlus2 } from 'react-icons/lu'
 import { TiThMenu } from 'react-icons/ti'
 import { RiDashboardLine, RiAttachment2 } from 'react-icons/ri'
 import { HiOutlineCheck, HiOutlineDocumentText, HiOutlineUsers } from 'react-icons/hi'
-import { BsArchive, BsFillClipboardCheckFill } from 'react-icons/bs'
+import { BsArchive, BsFillClipboardCheckFill, BsLine } from 'react-icons/bs'
 import { BiLogOut } from 'react-icons/bi'
 import { Link } from 'react-router-dom'
 import { Typography } from '@material-tailwind/react'
+import { UserIcon } from '@heroicons/react/24/solid'
+import { UserCircleIcon } from '@heroicons/react/24/outline'
 
 const Sidebar = () => {
+
+  const [currentUser, setCurrentUser] = useState()
+  const [userDesignation, setUserDesignation] = useState()
+
+  const handleCurrentUser = (userDetail) => {
+    setCurrentUser(userDetail.firstName + ' ' + userDetail.lastName)
+    setUserDesignation(userDetail.designation)
+  }
+
+  useEffect(() => {
+    const userDetail = JSON.parse(localStorage.getItem('userDetails'))
+    handleCurrentUser(userDetail)
+  })
+
 
   const menus = [
     { name: 'Dashboard', link: '/dashboard', icon: RiDashboardLine },
@@ -31,7 +47,7 @@ const Sidebar = () => {
 
   return (
     <div  >
-      <div className={` bg-[#23074d] h-screen ${open ? 'w-56' : 'w-14'} duration-500 text-white px-2`}>
+      <div className={` bg-[#0C356A] h-screen ${open ? 'w-56' : 'w-14'} duration-500 text-white px-2`}>
         <div className='py-4 flex justify-end'>
           <h1 className={`${!open && 'hidden'} mx-auto whitespace-pre font-semibold text-lg 0.5s ease-in-out`}>MSU EDAAMS</h1>
           <TiThMenu size={26} className='cursor-pointer mr-1.5' onClick={() => setOpen(!open)} />
@@ -54,6 +70,19 @@ const Sidebar = () => {
             </Link>
 
           ))}
+
+          <div className='flex flex-col items-center mt-4 rounded-lg p-2.5'>
+            <UserCircleIcon size='lg' className='h-8 w-8' />
+            <div className={`flex flex-col items-center whitespace-pre p-2 ${open ? 'relative' : 'inherent'}`}>
+              <Typography className={`flex text-base font-semibold justify-center ${!open && ' hidden'} ease-in-out`}>
+                {currentUser}
+              </Typography>
+              <Typography className={`flex text-sm font-normal justify-center ${!open && 'hidden'} ease-in-out`}>
+                {userDesignation}
+              </Typography>
+            </div>
+          </div>
+
         </div>
       </div>
     </div >
