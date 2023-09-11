@@ -153,8 +153,8 @@ const EndorseDocument = () => {
 				endorserName,
 				endorserDesignation,
 				endorserRemark,
-				endorsementLetter: null,
-				endorserSignature: 'Rejected',
+				endorsementLetter,
+				endorserSignature: null,
 				decision: 'false',
 			};
 
@@ -214,7 +214,7 @@ const EndorseDocument = () => {
 											</div>
 										</DialogBody>
 										<DialogFooter className="space-x-2">
-											<Button variant="standard" color="green" onClick={(e) => handleEndorseDocument(e, 	document._id) && setEndorse(false) && setOpen(false)}>
+											<Button variant="standard" color="green" onClick={(e) => handleEndorseDocument(e, document._id) && setEndorse(false) && setOpen(false)}>
 												Endorse Document
 											</Button>
 											<Button variant="outlined" color="red" onClick={() => setReject(false)}>
@@ -262,7 +262,7 @@ const EndorseDocument = () => {
 							<Button className='flex flex-row text-black font-medium items-center m-2 hover:underline hover:text-blue-800' size='sm' color='white' variant='text'
 								onClick={() => handleOpen(document)}>
 								Read More{" "}
-									<svg
+								<svg
 									xmlns="http://www.w3.org/2000/svg"
 									fill="none"
 									viewBox="0 0 24 24"

@@ -14,13 +14,13 @@ const OPApprovalPage = () => {
 	const store = documentsStore()
 	const toast = useToast()
 
-	const [endorsementLetter, setEndorsementLetter] = useState()
+	// const [endorsementLetter, setEndorsementLetter] = useState()
 
-	const [endorserName, setEndorserName] = useState()
-	const [endorserDesignation, setEndorserDesignation] = useState()
+	// const [ApproverName, setName] = useState()
+	// const [ApproverDesignation, setDesignation] = useState()
 
-	const [endorserSignature, setEndorserSignature] = useState()
-	const [endorserRemark, setEndorserRemark] = useState()
+	// const [signature, setSignature] = useState()
+	// const [Remark, setEndorserRemark] = useState()
 
 	const [endorse, setEndorse] = useState(false)
 	const [endorseSelectedDocument, setEndorseSelectedDocument] = useState(null);
@@ -32,20 +32,24 @@ const OPApprovalPage = () => {
 	const [open, setOpen] = useState(false);
 
 
-	const handleEndorserName = (userDetail) => {
-		const EndorserFirstName = userDetail.firstName;
-		const EndorserLastName = userDetail.lastName;
+	const [ApproverName, setName] = useState()
+	const [ApproverDesignation, setDesignation] = useState()
+	const [Remark, setRemark] = useState()
+	const [signature, setSignature] = useState()
 
-		setEndorserName(EndorserFirstName + ' ' + EndorserLastName)
-		setEndorserDesignation(userDetail.designation)
-		setEndorserSignature(userDetail.signature)
+
+	const handleApproverName = (userDetail) => {
+
+		setName(userDetail.firstName + ' ' + userDetail.lastName)
+		setDesignation(userDetail.designation)
+		setSignature(userDetail.signature)
 	};
 
-	const handleEndorsementLetter = (e) => {
-		setEndorsementLetter(e.target.value);
-	}
-	const handleEndorserRemark = (e) => {
-		setEndorserRemark(e.target.value)
+	// const handleEndorsementLetter = (e) => {
+	// 	setEndorsementLetter(e.target.value);
+	// }
+	const handleRemark = (e) => {
+		setRemark(e.target.value)
 	}
 
 	const hideAlertAfterDelay = () => {
@@ -76,7 +80,7 @@ const OPApprovalPage = () => {
 	useEffect(() => {
 		store.fetchDocuments()
 		const userDetail = JSON.parse(localStorage.getItem('userDetails'));
-		handleEndorserName(userDetail)
+		handleApproverName(userDetail)
 	}, [store])
 
 
@@ -89,20 +93,19 @@ const OPApprovalPage = () => {
 		.sort((a, b) => b.createdAt.localeCompare(a.createdAt))
 
 
-	const handleEndorseDocument = async (e, documentId) => {
+	const handleApproveDocument = async (e, documentId) => {
 		e.preventDefault();
 
 		try {
 			const data = {
-				endorserName,
-				endorserDesignation,
-				endorserRemark,
-				endorsementLetter,
-				endorserSignature,
+				ApproverName,
+				ApproverDesignation,
+				Remark,
+				signature,
 				decision: 'true',
 			};
 
-			const res = await fetch(`http://localhost:7000/document/endorseDocument/${documentId}`, {
+			const res = await fetch(`http://localhost:7000/document/opApproval/${documentId}`, {
 				method: 'PUT',
 				headers: {
 					'Content-Type': 'application/json',
@@ -153,11 +156,10 @@ const OPApprovalPage = () => {
 
 		try {
 			const data = {
-				endorserName,
-				endorserDesignation,
-				endorserRemark,
-				endorsementLetter: null,
-				endorserSignature: 'Rejected',
+				ApproverName,
+				ApproverDesignation,
+				Remark,
+				signature: 'Rejected',
 				decision: 'false',
 			};
 
@@ -206,33 +208,9 @@ const OPApprovalPage = () => {
 							</DialogBody>
 							<DialogFooter>
 								<div className='flex gap-4'>
-									<Button variant='standard' color='green' onClick={() => handleOpenEndorsement(document)}>
-										EndorseDocument
+									<Button variant='standard' color='green' onClick={() => handleApproveDocument}>
+										Approve Document
 									</Button>
-
-									<Dialog
-										open={endorse && endorseSelectedDocument && endorseSelectedDocument._id === document._id}
-										handler={() => setEndorse(false)}>
-										<div className="flex items-center justify-between"
-										>
-											<DialogHeader>Endorsement</DialogHeader>
-										</div>
-										<DialogBody divider>
-											<div className="flex h-72">
-												<Textarea
-													label="Endorsement Content"
-													onChange={handleEndorsementLetter} />
-											</div>
-										</DialogBody>
-										<DialogFooter className="space-x-2">
-											<Button variant="standard" color="green" onClick={(e) => handleEndorseDocument(e, document._id) && setEndorse(false) && setOpen(false)}>
-												Endorse Document
-											</Button>
-											<Button variant="outlined" color="red" onClick={() => setReject(false)}>
-												close
-											</Button>
-										</DialogFooter>
-									</Dialog>
 
 
 									<Button size='sm' variant='standard' color='red' onClick={() => handleRejectOpen(document)}>
@@ -250,7 +228,7 @@ const OPApprovalPage = () => {
 											<div className="flex h-72">
 												<Textarea
 													label="Message"
-													onChange={handleEndorserRemark} />
+													onChange={handleRemark} />
 											</div>
 										</DialogBody>
 										<DialogFooter className="space-x-2">
