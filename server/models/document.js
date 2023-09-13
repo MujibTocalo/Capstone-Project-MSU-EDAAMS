@@ -36,7 +36,7 @@ const documentSchema = new mongoose.Schema({
 	opApproverDesignation: String,
 	opApprovalDate: Date,
 	opApprovalRemark: String,
-	opESign: String,
+	opSignature: String,
 
 	// RMO Data
 	releaseDate: Date,

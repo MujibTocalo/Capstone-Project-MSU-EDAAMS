@@ -171,7 +171,7 @@ const ApproveDocument = () => {
     <div className='flex flex-col mx-auto'>
       <div className='flex flex-wrap'>
         {pendingDocuments.map((document) => (
-          <div key={document._id} className='flex flex-col bg-gray-100 p-2 m-2 rounded-lg hover:shadow-md'>
+          <div key={document._id} className='flex flex-col bg-gray-200 p-2 m-2 rounded-lg shadow-md hover:shadow-xl'>
             <DocumentDetail document={document} />
             <Dialog
               className='flex flex-col overflow-scroll bg-white rounded-t-xl h-screen'
@@ -183,7 +183,7 @@ const ApproveDocument = () => {
                 unmount: { scale: 0.9, y: -100 },
               }}
             >
-              <DialogHeader className='bg-[#23074d] text-white'>{document.documentType}</DialogHeader>
+              <DialogHeader>{document.documentType}</DialogHeader>
               <DialogBody divider>
                 <DocumentCompleteDetail document={document} />
               </DialogBody>
@@ -226,15 +226,15 @@ const ApproveDocument = () => {
                 </div>
               </DialogFooter>
             </Dialog>
-            <div className='flex content-start whitespace-pre'>
-              <Button className='flex flex-row items-center m-2' size='sm' variant='text'
+            <div className='flex content-start whitespace-pre '>
+              <Button className='flex flex-row text-black font-medium items-center m-2 hover:underline hover:text-blue-800' size='sm' color='white' variant='text'
                 onClick={() => handleOpen(document)}>
                 Read More{" "}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
-                  strokeWidth={2}
+                  strokeWidth={1.5}
                   stroke="currentColor"
                   className="h-5 w-5"
                 >

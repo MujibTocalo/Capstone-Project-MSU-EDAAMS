@@ -7,6 +7,7 @@ import { Button, Alert, Dialog, DialogHeader, DialogBody, DialogFooter, Typograp
 
 import { useToast } from '../components/ToastService';
 import { LuAlertCircle } from 'react-icons/lu';
+import DocumentDetail from './DocumentDetail';
 
 const EndorseDocument = () => {
 
@@ -177,8 +178,8 @@ const EndorseDocument = () => {
 		<div className='flex flex-col mx-auto'>
 			<div className='grid grid-cols-4'>
 				{endorseDocument.map((document) => (
-					<div key={document._id} className='flex flex-col bg-gray-100 p-2 m-2 rounded-lg hover:shadow-md'>
-						<DocumentForEndorsement document={document} /><Dialog
+					<div key={document._id} className='flex flex-col bg-gray-200 p-2 m-2 rounded-lg shadow-md hover:shadow-xl'>
+						<DocumentDetail document={document} /><Dialog
 							className='flex flex-col overflow-scroll bg-white rounded-t-xl h-screen'
 							size='md'
 							open={open && selectedDocument && selectedDocument._id === document._id}
@@ -188,7 +189,7 @@ const EndorseDocument = () => {
 								unmount: { scale: 0.9, y: -100 },
 							}}
 						>
-							<DialogHeader className='bg-[#23074d] text-white'>{document.documentType}</DialogHeader>
+							<DialogHeader>{document.documentType}</DialogHeader>
 							<DialogBody divider>
 								<DocumentCompleteDetail document={document} />
 							</DialogBody>
@@ -213,7 +214,7 @@ const EndorseDocument = () => {
 											</div>
 										</DialogBody>
 										<DialogFooter className="space-x-2">
-											<Button variant="standard" color="green" onClick={(e) => handleEndorseDocument(e, document._id) && setEndorse(false) && setOpen(false)}>
+											<Button variant="standard" color="green" onClick={(e) => handleEndorseDocument(e, 	document._id) && setEndorse(false) && setOpen(false)}>
 												Endorse Document
 											</Button>
 											<Button variant="outlined" color="red" onClick={() => setReject(false)}>
@@ -257,15 +258,15 @@ const EndorseDocument = () => {
 								</div>
 							</DialogFooter>
 						</Dialog>
-						<div className='flex content-start whitespace-pre'>
-							<Button className='flex flex-row items-center m-2' size='sm' variant='text'
+						<div className='flex content-start whitespace-pre '>
+							<Button className='flex flex-row text-black font-medium items-center m-2 hover:underline hover:text-blue-800' size='sm' color='white' variant='text'
 								onClick={() => handleOpen(document)}>
 								Read More{" "}
-								<svg
+									<svg
 									xmlns="http://www.w3.org/2000/svg"
 									fill="none"
 									viewBox="0 0 24 24"
-									strokeWidth={2}
+									strokeWidth={1.5}
 									stroke="currentColor"
 									className="h-5 w-5"
 								>

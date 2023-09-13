@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import documentsStore from "../config/documentsStore";
 import logo from '../assets/msulogo.png'
 import { Avatar, Typography } from "@material-tailwind/react";
+import { format } from "date-fns";
 
 const DocumentCompleteDetail = ({ document }) => {
 
@@ -10,12 +11,14 @@ const DocumentCompleteDetail = ({ document }) => {
 	const [signature, setSignature] = useState()
 	const [deanSignature, setDeanSignature] = useState()
 	const [endorserSignature, setEndorserSignature] = useState()
+	const [opSignature, setOPSignature] = useState()
 
 	useEffect(() => {
 		store.fetchDocuments();
 		setSignature(document.uploaderSignature);
 		setDeanSignature(document.deanApproverSignature)
 		setEndorserSignature(document.endorserSignature)
+		setOPSignature(document.opSignature)
 	}, [store, document.uploaderSignature]);
 
 
@@ -24,11 +27,8 @@ const DocumentCompleteDetail = ({ document }) => {
 		<div className="text-black">
 			<div key={document._id}>
 				<div className="flex flex-col p-2">
-					<div className="flex flex-row">
-						<Typography variant='paragraph'>{document.controlNumber}</Typography>
-						<Typography variant='paragraph'>{document.collegeName}</Typography>
-					</div>
-					<Typography variant='paragraph'>{document.createdAt}</Typography>
+					<Typography variant='paragraph'>{'Control No. ' + document.controlNumber + ' - ' + document.collegeName}</Typography>
+					<Typography variant='paragraph'>Date: {format(new Date(document.createdAt), 'yyyy-MM-dd')}</Typography>
 				</div>
 				<div className="p-2">
 					<div className="gap-3.5">
@@ -60,6 +60,9 @@ const DocumentCompleteDetail = ({ document }) => {
 						<Typography variant='paragraph'>{document.endorserDesignation}</Typography>
 					</div>
 					<div className="flex flex-col gap-1.5">
+						{opSignature && (
+							<img className="flex mx-auto translate-y-8 w-24 h-24" src={`http://localhost:7000${opSignature}`} alt="signature" />
+						)}
 						<Typography variant='paragraph'><u>{document.opApproverName}</u></Typography>
 						<Typography variant='paragraph'>{document.opApproverDesignation}</Typography>
 					</div>

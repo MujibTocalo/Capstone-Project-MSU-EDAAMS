@@ -33,7 +33,6 @@ import { useEffect, useState } from "react";
 import { LuMenu } from "react-icons/lu";
 
 import axios from "axios";
-import { create } from "zustand";
 
 const TABS = [
 	{
@@ -61,19 +60,6 @@ const TABS = [
 
 const TABLE_HEAD = ["Document Type", 'User Detail', "College/Office", "Document Status", 'Date Uploaded', 'Action'];
 
-// const TABLE_ROWS = [
-// 	{
-// 		documentType: 'Memorandum',
-// 		uploaderName: 'Mohammad Mujib B. Tocalo',
-// 		controlNumber: "070501",
-// 		email: "tocalo.mb71@s.msumain.edu.ph",
-// 		collegeName: "CICS",
-// 		designation: "Student",
-// 		status: true,
-// 		date: "23/04/18",
-// 	},
-// ];
-
 export const DocumentsLists = () => {
 
 	const store = documentsStore()
@@ -86,7 +72,7 @@ export const DocumentsLists = () => {
 				const response = await axios.get('http://localhost:7000/document');
 				const responseData = response.data;
 				const documentArray = responseData.document;
-
+				console.log(documentArray);
 				// Sort the documents by createdAt in descending order
 				const sortedDocuments = documentArray.sort((a, b) =>
 					new Date(b.createdAt) - new Date(a.createdAt)
@@ -94,7 +80,7 @@ export const DocumentsLists = () => {
 
 				setTableRows(sortedDocuments);
 			} catch (error) {
-				console.error('Error fetching data:', error);
+
 			}
 		};
 
@@ -112,8 +98,8 @@ export const DocumentsLists = () => {
 	const navigate = useNavigate()
 
 	return (
-		<Card className="h-full w-full">
-			<CardHeader floated={false} shadow={false} className="rounded-none">
+		<Card className="h-full w-full bg-gray-100">
+			<CardHeader floated={false} shadow={false} className="rounded-none bg-gray-100">
 				<div className="mb-2 flex items-center justify-between gap-8">
 					<div>
 						<Typography variant="h5" color="blue-gray">
@@ -124,10 +110,10 @@ export const DocumentsLists = () => {
 						</Typography>
 					</div>
 					<div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-						<Button className="flex items-center gap-2" variant="text" size="sm" onClick={handleArchive}>
+						<Button className="flex items-center gap-2" size="sm" variant="outlined" color="blue-gray" onClick={handleArchive}>
 							Archive
 						</Button>
-						<Button className="flex items-center gap-2" size="sm" onClick={handleCreateNewDocument}>
+						<Button className="flex items-center gap-1.5" size="sm" color="blue" onClick={handleCreateNewDocument}>
 							<DocumentPlusIcon strokeWidth={3} className="h-4 w-4" /> Add Document
 						</Button>
 					</div>
@@ -254,7 +240,7 @@ export const DocumentsLists = () => {
 																	documentStatus === 'Pending' ? 'Pending' : 'Rejected'
 													}
 													color={
-														documentStatus === 'Rejected' ? 'red' : 'green'
+														documentStatus === 'Rejected' ? 'red' : documentStatus === 'Pending' ? 'orange' : 'green'
 													}
 												/>
 											</div>
@@ -296,7 +282,7 @@ export const DocumentsLists = () => {
 				</table>
 			</CardBody>
 			<CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
-				<Typography variant="small" color="blue-gray" className="font-normal">
+				{/* <Typography variant="small" color="blue-gray" className="font-normal">
 					Page 1 of 10
 				</Typography>
 				<div className="flex gap-2">
@@ -306,7 +292,7 @@ export const DocumentsLists = () => {
 					<Button variant="outlined" size="sm">
 						Next
 					</Button>
-				</div>
+				</div> */}
 			</CardFooter>
 		</Card>
 	);

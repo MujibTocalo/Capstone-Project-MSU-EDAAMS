@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import documentsStore from "../config/documentsStore";
-import DocumentDetail from "./DocumentDetail";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { PencilIcon, UserPlusIcon } from "@heroicons/react/24/solid";
 import {
@@ -26,6 +24,8 @@ import {
   Select,
 } from "@material-tailwind/react";
 
+import { format } from 'date-fns'
+
 const TABS = [
   {
     label: "All",
@@ -36,16 +36,16 @@ const TABS = [
     value: "chairperson",
   },
   {
-    label: "Dean",
-    value: "dean",
+    label: "College Dean",
+    value: "College Dean",
   },
   {
     label: "OVCAA",
-    value: "ovcaa",
+    value: "Office of Vice Chancellor for Academic Affairs",
   },
   {
     label: "OP",
-    value: "op",
+    value: "Office of the President",
   },
   {
     label: "Administrator",
@@ -58,41 +58,14 @@ const TABLE_HEAD = [
   "Name",
   "College/Office",
   "Designation",
-  "Year",
-  "Status",
+  "Action"
 ];
 
-const TABLE_ROWS = [
-  {
-    userType: "Administrator",
-    name: "Mohammad Mujib B. Tocalo",
-    email: "tocalo.mb71@s.msumain.edu.ph",
-    college: "CICS",
-    designation: "Student",
-    year: "2019 - 2024",
-    status: true,
-  },
-  {
-    userType: "Administrator",
-    name: "Husaifa D. Dimacaling",
-    email: "something@something.com",
-    college: "CICS",
-    designation: "Student",
-    year: "2020 - 2024",
-    status: false,
-  },
-  {
-    userType: "OVCAA",
-    name: "Suhaina K. Tamano",
-    email: "something@something.com",
-    college: "CICS",
-    designation: "OVCAA Special Assistant",
-    year: "2010 - 2024",
-    status: true,
-  },
-];
 
 const ManageUsers = () => {
+
+  const [tableRows, setTableRows] = useState([]);
+
   const [userType, setUsertype] = useState('')
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
@@ -106,6 +79,24 @@ const ManageUsers = () => {
   const handleOpen = () => setOpen((cur) => !cur);
 
 
+  useEffect(() => {
+    const fetchTableRows = async () => {
+      try {
+        const response = await axios.get('http://localhost:7000/user');
+        const responseData = response.data;
+        const userArray = responseData.user;
+
+        const sortedUsers = userArray.sort((a, b) =>
+          new Date(b.createdAt) - new Date(a.createdAt))
+        setTableRows(sortedUsers)
+      } catch (error) {
+
+      }
+    }
+    fetchTableRows()
+  }, [])
+
+
   const handleUserType = (e) => {
     setUsertype(e)
   }
@@ -117,7 +108,7 @@ const ManageUsers = () => {
     setLastname(e.target.value);
   };
   const handleOfficeChange = (e) => {
-    setOffice(e.target.value);
+    setOffice(e);
   };
   const handleDesignationChange = (e) => {
     setDesignation(e.target.value);
@@ -142,6 +133,7 @@ const ManageUsers = () => {
     formData.append('designation', designation);
     formData.append('email', email);
     formData.append('password', password);
+    formData.append('userType', userType);
     formData.append('signature', signature);
     try {
       const response = await axios.post('http://localhost:7000/user/register', formData, {
@@ -210,6 +202,45 @@ const ManageUsers = () => {
                     color="white"
                     className="flex flex-col h-96 gap-5 overflow-auto"
                   >
+                    <Select
+                      className="h-10"
+                      variant="outlined"
+                      label="Select User Type"
+                      onChange={(e) => handleUserType(e)}
+                      value={userType}
+                      animate={{
+                        mount: { y: 0 },
+                        unmount: { y: -25 },
+                      }}>
+                      <Option value='Uploader'>Department Chairperson</Option>
+                      <Option value='Approver - Dean'>Approver - Dean</Option>
+                      <Option value='Endorser - OVCAA'>Office of the Vice Chancellor for Academic Affairs</Option>
+                      <Option value='Approver - OP'>Office of the President</Option>
+                    </Select>
+
+                    <Select
+                      className="h-10"
+                      variant="outlined"
+                      label="Select College/Office"
+                      onChange={(e) => handleOfficeChange(e)}
+                      value={office}
+                      animate={{
+                        mount: { y: 0 },
+                        unmount: { y: -25 },
+                      }}>
+                      <Option value="OP">Office of the President</Option>
+                      <Option value="OVCAA">Office of Vice Chancellor for Academic Affairs</Option>
+                      <Option value="COA">College of Agriculture</Option>
+                      <Option value="CBAA">College of Business Administration and Accountancy</Option>
+                      <Option value="CED">College of Education</Option>
+                      <Option value="COE">College of Engineering</Option>
+                      <Option value="CHARM">College of Hotel and Restaurant Management</Option>
+                      <Option value="CICS">College of Information and Computing Sciences</Option>
+                      <Option value="CSPEAR">CSPEAR</Option>
+                      <Option value="CNSM">College of Natural Science and Mathematics</Option>
+                      <Option value="CPA">College of Public Affairs</Option>
+
+                    </Select>
 
                     <Input
                       label="First Name"
@@ -223,12 +254,7 @@ const ManageUsers = () => {
                       value={lastname}
                       onChange={handleLastNameChange}
                     />
-                    <Input
-                      label="Office / College"
-                      size="lg"
-                      value={office}
-                      onChange={handleOfficeChange}
-                    />
+
                     <Input
                       label="Designation"
                       size="lg"
@@ -247,21 +273,6 @@ const ManageUsers = () => {
                       value={password}
                       onChange={handlePasswordChange}
                     />
-                    <Select
-                      className="h-10"
-                      variant="outlined"
-                      label="Select User Type"
-                      onChange={(e) => handleUserType(e)}
-                      value={userType}
-                      animate={{
-                        mount: { y: 0 },
-                        unmount: { y: 25 },
-                      }}>
-                      <Option value='chairperson'>Chairperson</Option>
-                      <Option value='collegedean'>College Dean</Option>
-                      <Option value='endorser'>OVCAA Endorser</Option>
-                      <Option value='opapprover'>OP Approver</Option>
-                    </Select>
                     <Input
                       label="Signature"
                       type="file"
@@ -269,18 +280,21 @@ const ManageUsers = () => {
                       onChange={handleSignature}
                     />
 
-                    <Button
+                  </CardBody>
+                  <CardFooter className="flex mx-auto">
+
+                    <Button className="flex"
                       variant="outlined"
                       onClick={AddUser}
-                    >Register User</Button>
-                  </CardBody>
+                    >Save User Detail</Button>
+                  </CardFooter>
                 </Card>
               </Dialog>
             </div>
           </div>
         </div>
         <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-          <Tabs value="all" className="w-full md:w-max">
+          <Tabs value="all" className="w-full md:w-max whitespace-pre">
             <TabsHeader>
               {TABS.map(({ label, value }) => (
                 <Tab key={value} value={value}>
@@ -318,24 +332,31 @@ const ManageUsers = () => {
             </tr>
           </thead>
           <tbody>
-            {TABLE_ROWS.map(
+            {tableRows.map(
               (
-                { userType, name, email, college, designation, status, year },
+                { _id, userType, firstName, lastName, email, office, designation, status },
                 index
               ) => {
-                const isLast = index === TABLE_ROWS.length - 1;
+                const isLast = index === tableRows.length - 1;
                 const classes = isLast
-                  ? "p-4"
-                  : "p-4 border-b border-blue-gray-50";
+                  ? "p-2"
+                  : "p-2 border-b border-blue-gray-50";
 
                 return (
-                  <tr key={name}>
+                  <tr key={_id}>
                     <td className={classes}>
-                      <div className="flex items-center gap-3">
+                      <div className="flex flex-col items-start gap-1">
                         <Typography
                           variant="small"
                           color="blue-gray"
-                          className="font-normal"
+                          className="font-light"
+                        >
+                          ID: {_id}
+                        </Typography>
+                        <Typography
+                          variant="small"
+                          color="blue-gray"
+                          className="font-normal opacity-70"
                         >
                           {userType}
                         </Typography>
@@ -348,7 +369,7 @@ const ManageUsers = () => {
                           color="blue-gray"
                           className="font-normal"
                         >
-                          {name}
+                          {firstName + ' ' + lastName}
                         </Typography>
                         <Typography
                           variant="small"
@@ -360,13 +381,13 @@ const ManageUsers = () => {
                       </div>
                     </td>
                     <td className={classes}>
-                      <div className="flex flex-col">
+                      <div className="flex flex-col ">
                         <Typography
                           variant="small"
                           color="blue-gray"
-                          className="font-normal"
+                          className="font-medium mx-auto"
                         >
-                          {college}
+                          {office}
                         </Typography>
                       </div>
                     </td>
@@ -374,29 +395,10 @@ const ManageUsers = () => {
                       <Typography
                         variant="small"
                         color="blue-gray"
-                        className="font-normal"
+                        className="font-medium"
                       >
                         {designation}
                       </Typography>
-                    </td>
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {year}
-                      </Typography>
-                    </td>
-                    <td className={status}>
-                      <div className="w-max">
-                        <Chip
-                          variant="ghost"
-                          size="sm"
-                          value={status ? "Active" : "InActive"}
-                          color={status ? "green" : "blue-gray"}
-                        />
-                      </div>
                     </td>
                     <td className={classes}>
                       <Tooltip content="Edit User">
@@ -412,7 +414,7 @@ const ManageUsers = () => {
           </tbody>
         </table>
       </CardBody>
-    </Card>
+    </Card >
   );
 };
 

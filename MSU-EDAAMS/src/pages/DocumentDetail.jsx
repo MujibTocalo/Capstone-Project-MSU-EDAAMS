@@ -18,27 +18,30 @@ const DocumentDetail = ({ document }) => {
 
 	return (
 		<div key={document._id}
-			className='flex flex-col bg-white p-4 border rounded-md'>
+			className='flex flex-col bg-white p-4 rounded-md'>
 			<div className="flex flex-row items-center justify-start whitespace-pre">
 				<Typography
-					className='bg-blue-500 text-sm rounded-lg m-1 p-1 text-white'>
+					className='bg-[#64CCC5] font-semibold text-sm rounded-lg m-1 p-1 text-white'>
 					{document.documentType}
 				</Typography>
 				<Typography
-					className='bg-blue-500 text-sm rounded-lg p-1 text-white'>
+					className='text-sm rounded-lg p-1 text-black font-bold'>
 					{document.collegeName}
 				</Typography>
 			</div>
 			<div className="flex flex-col py-2 rounded-lg">
 				<Typography className='text-sm pl-2 py-1'>
-					No. {document.controlNumber}
+					<b>No.</b> {document.controlNumber}
 				</Typography>
 				<Typography className='text-sm pl-2 py-1'>
+					<b>No.</b> {document.createdAt}
+				</Typography>
+				{/* <Typography className='text-sm pl-2 py-1'>
 					To: {document.header}
 				</Typography>
 				<Typography className='text-sm pl-2 py-1'>
 					Subject: {document.subject}
-				</Typography>
+				</Typography> */}
 			</div>
 		</div>
 	)

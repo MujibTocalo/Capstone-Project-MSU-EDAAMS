@@ -7,6 +7,7 @@ import { Button, Alert, Dialog, DialogHeader, DialogBody, DialogFooter, Typograp
 
 import { useToast } from '../components/ToastService';
 import { LuAlertCircle } from 'react-icons/lu';
+import DocumentDetail from './DocumentDetail';
 
 const OPApprovalPage = () => {
 
@@ -183,10 +184,13 @@ const OPApprovalPage = () => {
 
 	return (
 		<div className='flex flex-col mx-auto'>
+			{/* <Typography className='flex justify-center text-white p-3 bg-[#64CCC5] rounded-lg shadow-lg m-2' variant='h2'>
+				Office of the President Approval Page
+			</Typography> */}
 			<div className='grid grid-cols-4'>
 				{endorseDocument.map((document) => (
 					<div key={document._id} className='flex flex-col bg-gray-100 p-2 m-2 rounded-lg hover:shadow-md'>
-						<DocumentForEndorsement document={document} /><Dialog
+						<DocumentDetail document={document} /><Dialog
 							className='flex flex-col overflow-scroll bg-white rounded-t-xl h-screen'
 							size='md'
 							open={open && selectedDocument && selectedDocument._id === document._id}
@@ -265,15 +269,15 @@ const OPApprovalPage = () => {
 								</div>
 							</DialogFooter>
 						</Dialog>
-						<div className='flex content-start whitespace-pre'>
-							<Button className='flex flex-row items-center m-2' size='sm' variant='text'
+						<div className='flex content-start whitespace-pre '>
+							<Button className='flex flex-row text-black font-medium items-center m-2 hover:underline hover:text-blue-800' size='sm' color='white' variant='text'
 								onClick={() => handleOpen(document)}>
 								Read More{" "}
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
 									fill="none"
 									viewBox="0 0 24 24"
-									strokeWidth={2}
+									strokeWidth={1.5}
 									stroke="currentColor"
 									className="h-5 w-5"
 								>
