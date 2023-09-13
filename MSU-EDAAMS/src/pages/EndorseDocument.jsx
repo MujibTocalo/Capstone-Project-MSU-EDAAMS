@@ -153,8 +153,8 @@ const EndorseDocument = () => {
 				endorserName,
 				endorserDesignation,
 				endorserRemark,
-				endorsementLetter: null,
-				endorserSignature: 'Rejected',
+				endorsementLetter,
+				endorserSignature: null,
 				decision: 'false',
 			};
 

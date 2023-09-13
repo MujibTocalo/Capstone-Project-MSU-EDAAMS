@@ -41,12 +41,17 @@ const Sidebar = () => {
     // { name: 'Archive', link: '/archive', icon: BsArchive },
     { name: 'Manage Users', link: '/manageusers', icon: HiOutlineUsers },
     { name: 'Logout', link: '/', icon: BiLogOut },
+
   ]
 
   const [open, setOpen] = useState(true)
 
   return (
+<<<<<<< HEAD
     <div  >
+=======
+    <div className='flex flex-col bg-[#0C356A] duration-500 justify-evenly'>
+>>>>>>> e0404d7e18913301b0a8160380006c729f8dd58c
       <div className={` bg-[#0C356A] h-screen ${open ? 'w-56' : 'w-14'} duration-500 text-white px-2`}>
         <div className='py-4 flex justify-end'>
           <h1 className={`${!open && 'hidden'} mx-auto whitespace-pre font-semibold text-lg 0.5s ease-in-out`}>MSU EDAAMS</h1>
@@ -71,7 +76,11 @@ const Sidebar = () => {
 
           ))}
 
+<<<<<<< HEAD
           <div className='flex flex-col items-center mt-4 rounded-lg p-2.5'>
+=======
+          {/* <div className='flex flex-col items-center mt-4 rounded-lg p-2.5'>
+>>>>>>> e0404d7e18913301b0a8160380006c729f8dd58c
             <UserCircleIcon size='lg' className='h-8 w-8' />
             <div className={`flex flex-col items-center whitespace-pre p-2 ${open ? 'relative' : 'inherent'}`}>
               <Typography className={`flex text-base font-semibold justify-center ${!open && ' hidden'} ease-in-out`}>
@@ -81,8 +90,24 @@ const Sidebar = () => {
                 {userDesignation}
               </Typography>
             </div>
+<<<<<<< HEAD
           </div>
 
+=======
+          </div> */}
+
+        </div>
+      </div>
+      <div className='flex flex-col bg-[#0C356A] text-white items-center duration-500 p-2'>
+        <UserCircleIcon className='h-10 w-10' />
+        <div className={`flex flex-col items-center whitespace-pre p-2 ${open ? 'relative' : 'inherent'}`}>
+          <Typography className={`flex text-base font-semibold justify-center ${!open && ' hidden'} ease-in-out`}>
+            {currentUser}
+          </Typography>
+          <Typography className={`flex text-sm font-normal justify-center ${!open && 'hidden'} ease-in-out`}>
+            {userDesignation}
+          </Typography>
+>>>>>>> e0404d7e18913301b0a8160380006c729f8dd58c
         </div>
       </div>
     </div >
