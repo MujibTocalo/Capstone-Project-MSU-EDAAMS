@@ -57,12 +57,14 @@ export const endorseDocument = async (req, res) => {
 		document.endorserSignature = endorserSignature
 		document.endorsementDate = Date.now();
 		document.endorsementLetter = endorsementLetter;
-		document.endorserRemarks = endorserRemark
+		document.EndorserRemarks = endorserRemark
 
 		if (decision === 'true') {
 			document.documentStatus = 'Endorsed'
-		} else if (decision === 'rejected') {
+			console.log("documentStatus: " + document.documentStatus)
+		} else if (decision === 'false') {
 			document.documentStatus = 'Rejected'
+			console.log("documentStatus: " + document.documentStatus)
 		}
 
 		console.log(document);
@@ -96,10 +98,10 @@ export const deanApproval = async (req, res) => {
 
 		if (decision === 'true') {
 			document.documentStatus = 'DeanApproved';
-			console.log(document.documentStatus)
-		} else {
+			console.log("documentStatus: " + document.documentStatus)
+		} else if (decision === 'false') {
 			document.documentStatus = 'Rejected';
-			console.log(document.documentStatus)
+			console.log("documentStatus: " + document.documentStatus)
 		}
 
 		await document.save();
@@ -121,9 +123,9 @@ export const approveDocument = async (req, res) => {
 		}
 
 		document.approver = approverId;
-		document.approvalDate = new Date();
-		document.approvalRemark = approvalRemarks;
-		document.status = decision === 'approved' ? 'approved' : 'rejected'
+		document.opApprovalDate = new Date();
+		document.opApprovalRemark = approvalRemarks;
+		document.documentStatus = decision === 'approved' ? 'approved' : 'rejected'
 
 		await document.save()
 		res.json({ message: 'Document approved successfully' });

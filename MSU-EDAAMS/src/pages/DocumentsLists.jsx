@@ -72,7 +72,7 @@ export const DocumentsLists = () => {
 				const response = await axios.get('http://localhost:7000/document');
 				const responseData = response.data;
 				const documentArray = responseData.document;
-				console.log(documentArray);
+				// console.log(documentArray);
 				// Sort the documents by createdAt in descending order
 				const sortedDocuments = documentArray.sort((a, b) =>
 					new Date(b.createdAt) - new Date(a.createdAt)

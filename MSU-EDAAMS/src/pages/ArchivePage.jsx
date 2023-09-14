@@ -2,7 +2,12 @@ import {
 	MagnifyingGlassIcon,
 	ChevronUpDownIcon,
 	DocumentPlusIcon,
+	DocumentChartBarIcon,
+	DocumentMagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
+import { PDFDownloadLink, Document, Page, Text, Image, View, PDFViewer } from '@react-pdf/renderer';
+
+import styles from "../components/styles";
 
 import {
 	Card,
@@ -30,7 +35,7 @@ import { format } from 'date-fns'
 import { useNavigate } from 'react-router-dom'
 import documentsStore from "../config/documentsStore";
 import { useEffect, useState } from "react";
-import { LuMenu } from "react-icons/lu";
+import { LuArrowDown, LuCopySlash, LuDiamond, LuDownload, LuEdit, LuHistory, LuLoader, LuMenu, LuTrain, LuTrash } from "react-icons/lu";
 
 import axios from "axios";
 
@@ -59,13 +64,20 @@ const ArchivePage = () => {
 	const [tableRows, setTableRows] = useState([])
 	const [rejectedSelected, setRejectedSelected] = useState()
 	const [releasedSelected, setReleasedSelected] = useState()
+	const [selectedDocument, setSelectedDocument] = useState(null);
+	const [generatePdf, setGeneratePdf] = useState(false);
+
+	const handleGeneratePdfClick = () => {
+		setGeneratePdf(true);
+	};
+
 
 	useEffect(() => {
 		const fetchTableRows = async () => {
 			try {
 				const response = await axios.get('http://localhost:7000/document');
-				const responseData = response.data;
 
+				const responseData = response.data;
 				const documentArray = responseData.document;
 				// Sort the documents by createdAt in descending order
 				const sortedDocuments = documentArray
@@ -84,17 +96,7 @@ const ArchivePage = () => {
 	}, [store]);
 
 
-	// const archiveDocuments = store.documents
-	// 	.filter((document) => document.documentStatus === 'Rejected')
-	// 	.sort((a, b) => b.createdAt.localCompare(a.createdAt))
 
-
-	// const handleCreateNewDocument = () => {
-	// 	navigate('/createDocument')
-	// }
-	// const handleArchive = () => {
-	// 	navigate('/archive')
-	// }
 	const navigate = useNavigate()
 
 	return (
@@ -109,14 +111,6 @@ const ArchivePage = () => {
 							See all information about archived documents
 						</Typography>
 					</div>
-					{/* <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-						<Button className="flex items-center gap-2" size="sm" variant="outlined" color="blue-gray" onClick={handleArchive}>
-							Archive
-						</Button>
-						<Button className="flex items-center gap-1.5" size="sm" color="blue" onClick={handleCreateNewDocument}>
-							<DocumentPlusIcon strokeWidth={3} className="h-4 w-4" /> Add Document
-						</Button>
-					</div> */}
 				</div>
 				<div className="flex mb-16 whitespace-pre flex-col items-center justify-between gap-4 md:flex-row">
 					<Tabs value="all" className="w-full md:w-max">
@@ -165,7 +159,12 @@ const ArchivePage = () => {
 									controlNumber,
 									documentStatus,
 									collegeName,
-									createdAt
+									createdAt,
+									header,
+									subject,
+									uploaderSignature,
+									content,
+									uploaderDesignation
 								},
 								index
 							) => {
@@ -201,13 +200,6 @@ const ArchivePage = () => {
 												>
 													{uploaderName}
 												</Typography>
-												{/* <Typography
-													variant="small"
-													color="blue-gray"
-													className="font-normal opacity-70"
-												>
-													{email}
-												</Typography> */}
 											</div>
 										</td>
 										<td className={classes}>
@@ -219,13 +211,6 @@ const ArchivePage = () => {
 												>
 													{collegeName}
 												</Typography>
-												{/* <Typography
-													variant="small"
-													color="blue-gray"
-													className="font-normal opacity-70"
-												>
-													{designation}
-												</Typography> */}
 											</div>
 										</td>
 										<td className={classes}>
@@ -255,21 +240,44 @@ const ArchivePage = () => {
 											</Typography>
 										</td>
 										<td className={classes}>
-											<Menu>
-												<MenuHandler>
-													<Button size="sm" variant="text">
-														<LuMenu className="h-4 w-4" />
-													</Button>
-												</MenuHandler>
-												<MenuList>
-													<MenuItem>Edit</MenuItem>
-													<MenuItem>Download</MenuItem>
-													<MenuItem>Remove</MenuItem>
-													<MenuItem>Track</MenuItem>
-													<MenuItem>Details</MenuItem>
-												</MenuList>
-											</Menu>
+											<div className="flex gap-1.5">
+												<PDFDownloadLink document={
+													<Document>
+														<Page size="A4" style={styles.page}>
+															{/* Document Details */}
+															<Text style={styles.documentDetailText}>Control No. {controlNumber + ' - ' + collegeName}</Text>
+															<Text style={styles.documentDetailText}>Date: {createdAt}</Text>
+															{/* Header */}
+															<Text style={styles.headerText}>To: {header}</Text>
 
+															{/* Subject */}
+															<Text style={styles.subjectText}>Subject: {subject}</Text>
+
+															{/* Content */}
+															<Text style={styles.content}>
+																{content}
+															</Text>
+
+															{/* Signature */}
+															<Image
+																src={`http://localhost:7000${uploaderSignature}`}
+																style={styles.signature}
+															/>
+
+															{/* Name and Designation */}
+															<Text style={styles.name}>{uploaderName}</Text>
+															<Text style={styles.designation}>{uploaderDesignation}</Text>
+														</Page>
+													</Document>
+												} fileName="Generated PDF.pdf">
+													{({ blob, url, loading, error }) =>
+														loading ? <LuLoader /> : error ? 'Error generating PDF' : <LuDownload />
+													}
+												</PDFDownloadLink>
+												<LuEdit />
+												<LuHistory />
+												<LuTrash />
+											</div>
 										</td>
 									</tr>
 								);
@@ -279,19 +287,9 @@ const ArchivePage = () => {
 				</table>
 			</CardBody>
 			<CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
-				{/* <Typography variant="small" color="blue-gray" className="font-normal">
-					Page 1 of 10
-				</Typography>
-				<div className="flex gap-2">
-					<Button variant="outlined" size="sm">
-						Previous
-					</Button>
-					<Button variant="outlined" size="sm">
-						Next
-					</Button>
-				</div> */}
 			</CardFooter>
 		</Card>
+
 	);
 }
 

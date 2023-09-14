@@ -27,7 +27,7 @@ documentRouter.put('/:id', updateDocument)
 documentRouter.get('/total', totalDocuments)
 
 documentRouter.put('/deanApproval/:id', deanApproval)
-documentRouter.put('/:id', approveDocument)
+documentRouter.put('/opApproval/:id', approveDocument)
 documentRouter.put('/endorseDocument/:id', endorseDocument)
 
 

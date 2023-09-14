@@ -1,5 +1,4 @@
 import mongoose from 'mongoose'
-import User from './user.js'
 
 
 const documentSchema = new mongoose.Schema({
@@ -45,7 +44,7 @@ const documentSchema = new mongoose.Schema({
 	// Workflow Status
 	documentStatus: {
 		type: String,
-		enum: ['Pending', 'DeanApproved', 'Endorsed', 'PresidentApproved', 'Released', 'Rejected'],
+		enum: ['Pending', 'DeanApproved', 'Endorsed', 'PresidentApproved', 'Released', 'Rejected | OVCAA', 'Rejected | Dean', 'Rejected | OP', 'Rejected'],
 		default: 'Pending'
 	}
 
