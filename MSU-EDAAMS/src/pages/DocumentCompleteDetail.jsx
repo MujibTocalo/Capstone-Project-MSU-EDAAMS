@@ -16,10 +16,19 @@ const DocumentCompleteDetail = ({ document }) => {
 	useEffect(() => {
 		store.fetchDocuments();
 		setSignature(document.uploaderSignature);
+<<<<<<< HEAD
+		setDeanSignature(document.deanApproverSignature)
+		setEndorserSignature(document.endorserSignature)
+		setOPSignature(document.opSignature)
+	}, [store, document.uploaderSignature]);
+
+
+=======
 		setDeanSignature(document.deanApproverSignature);
 		setEndorserSignature(document.endorserSignature);
 		setOPSignature(document.opSignature);
 	}, [store]);
+>>>>>>> e0404d7e18913301b0a8160380006c729f8dd58c
 
 	return (
 		<div className="text-black">
