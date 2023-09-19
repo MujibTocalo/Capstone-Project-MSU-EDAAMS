@@ -115,17 +115,21 @@ export const deanApproval = async (req, res) => {
 export const approveDocument = async (req, res) => {
 	try {
 		const { id } = req.params
-		const { approverId, decision, approvalRemarks } = req.body
+		const { ApproverName, ApproverDesignation, Remark, signature, decision } = req.body
 
 		const document = await Document.findById(id)
 		if (!document) {
 			return res.status(404).json({ error: 'Document not found' });
 		}
 
-		document.approver = approverId;
-		document.opApprovalDate = new Date();
-		document.opApprovalRemark = approvalRemarks;
-		document.documentStatus = decision === 'approved' ? 'approved' : 'rejected'
+		document.opApproverName = ApproverName;
+		document.opApproverDesignation = ApproverDesignation;
+		document.opApprovalDate = Date.now();
+		document.Remark = Remark;
+		document.opSignature = signature;
+		document.documentStatus = decision == true ? 'OP Approved' : 'Rejected | OP'
+
+		console.log(document.documentStatus)
 
 		await document.save()
 		res.json({ message: 'Document approved successfully' });

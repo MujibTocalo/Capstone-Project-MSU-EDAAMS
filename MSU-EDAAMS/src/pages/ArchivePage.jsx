@@ -5,7 +5,7 @@ import {
 	DocumentChartBarIcon,
 	DocumentMagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
-import { PDFDownloadLink, Document, Page, Text, Image, View, PDFViewer } from '@react-pdf/renderer';
+import { PDFDownloadLink, Document, Page, Text, Image, View, PDFViewer, Line } from '@react-pdf/renderer';
 
 import styles from "../components/styles";
 
@@ -81,7 +81,7 @@ const ArchivePage = () => {
 				const documentArray = responseData.document;
 				// Sort the documents by createdAt in descending order
 				const sortedDocuments = documentArray
-					.filter((document) => document.documentStatus === 'Rejected' || document.documentStatus === 'Released')
+					.filter((document) => document.documentStatus === 'Rejected' || document.documentStatus === 'Released' || document.documentStatus === 'OP Approved')
 					.sort((a, b) =>
 						new Date(b.createdAt) - new Date(a.createdAt)
 					);
@@ -222,7 +222,8 @@ const ArchivePage = () => {
 														: documentStatus === 'Endorsed' ? 'Endorsed'
 															: documentStatus === 'OP Approved' ? 'OP Approved'
 																: documentStatus === 'Created' ? 'Created' :
-																	documentStatus === 'Pending' ? 'Pending' : 'Rejected'
+																	documentStatus === 'Pending' ? 'Pending' :
+																		documentStatus === 'Released' ? 'Released' : 'Rejected'
 													}
 													color={
 														documentStatus === 'Rejected' ? 'red' : documentStatus === 'Pending' ? 'orange' : 'green'
@@ -244,27 +245,17 @@ const ArchivePage = () => {
 												<PDFDownloadLink document={
 													<Document>
 														<Page size="A4" style={styles.page}>
-															{/* Document Details */}
 															<Text style={styles.documentDetailText}>Control No. {controlNumber + ' - ' + collegeName}</Text>
 															<Text style={styles.documentDetailText}>Date: {createdAt}</Text>
-															{/* Header */}
 															<Text style={styles.headerText}>To: {header}</Text>
-
-															{/* Subject */}
 															<Text style={styles.subjectText}>Subject: {subject}</Text>
-
-															{/* Content */}
 															<Text style={styles.content}>
 																{content}
 															</Text>
-
-															{/* Signature */}
 															<Image
 																src={`http://localhost:7000${uploaderSignature}`}
 																style={styles.signature}
 															/>
-
-															{/* Name and Designation */}
 															<Text style={styles.name}>{uploaderName}</Text>
 															<Text style={styles.designation}>{uploaderDesignation}</Text>
 														</Page>

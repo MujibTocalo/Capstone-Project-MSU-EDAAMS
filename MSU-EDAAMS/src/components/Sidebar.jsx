@@ -7,7 +7,7 @@ import CICSLogo from '../assets/CICS_Logo.png'
 import { LuFilePlus2 } from 'react-icons/lu'
 import { TiThMenu } from 'react-icons/ti'
 import { RiDashboardLine, RiAttachment2 } from 'react-icons/ri'
-import { HiOutlineCheck, HiOutlineDocumentText, HiOutlineUsers } from 'react-icons/hi'
+import { HiOutlineCheck, HiOutlineDocumentText, HiOutlineUsers, HiUpload } from 'react-icons/hi'
 import { BsArchive, BsFillClipboardCheckFill, BsLine } from 'react-icons/bs'
 import { BiLogOut } from 'react-icons/bi'
 import { Link } from 'react-router-dom'
@@ -39,6 +39,7 @@ const Sidebar = () => {
     { name: 'Endorse Document', link: '/endorsedocument', icon: RiAttachment2 },
     { name: 'OP Approval', link: '/opapproval', icon: HiOutlineDocumentText },
     // { name: 'Archive', link: '/archive', icon: BsArchive },
+    { name: 'Releasing', link: '/release', icon: HiUpload },
     { name: 'Manage Users', link: '/manageusers', icon: HiOutlineUsers },
     { name: 'Logout', link: '/', icon: BiLogOut },
 

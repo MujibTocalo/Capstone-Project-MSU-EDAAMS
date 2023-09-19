@@ -44,7 +44,7 @@ const documentSchema = new mongoose.Schema({
 	// Workflow Status
 	documentStatus: {
 		type: String,
-		enum: ['Pending', 'DeanApproved', 'Endorsed', 'PresidentApproved', 'Released', 'Rejected | OVCAA', 'Rejected | Dean', 'Rejected | OP', 'Rejected'],
+		enum: ['Pending', 'Dean Approved', 'Endorsed', 'OP Approved', 'Released', 'Rejected | OVCAA', 'Rejected | Dean', 'Rejected | OP', 'Rejected'],
 		default: 'Pending'
 	}
 

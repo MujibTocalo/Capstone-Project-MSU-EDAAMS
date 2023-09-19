@@ -14,17 +14,6 @@ const OPApprovalPage = () => {
 	const store = documentsStore()
 	const toast = useToast()
 
-	// const [endorsementLetter, setEndorsementLetter] = useState()
-
-	// const [ApproverName, setName] = useState()
-	// const [ApproverDesignation, setDesignation] = useState()
-
-	// const [signature, setSignature] = useState()
-	// const [Remark, setEndorserRemark] = useState()
-
-	const [endorse, setEndorse] = useState(false)
-	const [endorseSelectedDocument, setEndorseSelectedDocument] = useState(null);
-
 	const [reject, setReject] = useState(false);
 	const [rejectSelected, setRejectSelected] = useState(null);
 
@@ -58,12 +47,6 @@ const OPApprovalPage = () => {
 			setAlertType('');
 		}, 5000);
 	};
-
-
-	const handleOpenEndorsement = (document) => {
-		setEndorseSelectedDocument(document)
-		setEndorse(true)
-	}
 
 
 	const handleRejectOpen = (document) => {
@@ -102,7 +85,7 @@ const OPApprovalPage = () => {
 				ApproverDesignation,
 				Remark,
 				signature,
-				decision: 'true',
+				decision: true,
 			};
 
 			const res = await fetch(`http://localhost:7000/document/opApproval/${documentId}`, {
@@ -159,7 +142,7 @@ const OPApprovalPage = () => {
 				ApproverName,
 				ApproverDesignation,
 				Remark,
-				signature: 'Rejected',
+				signature: Null,
 				decision: 'false',
 			};
 
@@ -208,7 +191,7 @@ const OPApprovalPage = () => {
 							</DialogBody>
 							<DialogFooter>
 								<div className='flex gap-4'>
-									<Button variant='standard' color='green' onClick={() => handleApproveDocument}>
+									<Button variant='standard' color='green' onClick={(e) => handleApproveDocument(e, document._id) && setOpen(false)}>
 										Approve Document
 									</Button>
 

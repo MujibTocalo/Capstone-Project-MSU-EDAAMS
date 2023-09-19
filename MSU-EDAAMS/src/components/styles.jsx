@@ -3,45 +3,52 @@ import { StyleSheet } from "@react-pdf/renderer";
 const styles = StyleSheet.create({
 	page: {
 		flexDirection: 'column',
-		alignItems: 'start',
+		justifyContent: 'flex-start',
 		margin: 20,
 	},
 	documentDetailText: {
-		fontSize: 12,
-		marginTop: 10,
-		marginBottom: 10,
+		fontSize: 11.5,
+		marginTop: 5,
+		marginBottom: 5,
 	},
 	headerText: {
-		fontSize: 12,
-		marginTop: 10,
+		fontSize: 11.5,
+		margin: 20,
 		fontWeight: 'normal',
-		marginBottom: 20,
+		paddingRight: 10,
+
 	},
 	subjectText: {
-		fontSize: 12,
-		marginTop: 5,
-		marginBottom: 10,
+		fontSize: 11.5,
+		margin: 20,
+		paddingRight: 10,
+		marginBottom: 5
 	},
 	content: {
 		fontSize: 11,
+		padding: 10,
 		margin: 20,
 	},
 	signature: {
-		width: 100, // Set the width of the signature image
-		height: 60, // Set the height of the signature image
-		alignSelf: 'flex-end',
-		marginRight: 120
+		width: 100,
+		height: 60,
+		alignSelf: 'center',
+		marginLeft: 250,
+
 	},
 	name: {
-		fontSize: 12,
-		marginRight: 95,
-		marginBottom: 5,
-		textAlign: 'right',
+		fontSize: 11.5,
+		marginBottom: 4,
+		textAlign: 'center',
+		marginLeft: 250,
+
+
 	},
 	designation: {
-		fontSize: 12,
-		marginRight: 120,
-		textAlign: 'right',
+		fontSize: 11.5,
+		textAlign: 'center',
+		marginLeft: 250,
+
 	},
 
 });

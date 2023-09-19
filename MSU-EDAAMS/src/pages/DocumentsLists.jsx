@@ -71,12 +71,15 @@ export const DocumentsLists = () => {
 			try {
 				const response = await axios.get('http://localhost:7000/document');
 				const responseData = response.data;
-				const documentArray = responseData.document;
+				const documentArray = responseData.document
 				// console.log(documentArray);
 				// Sort the documents by createdAt in descending order
-				const sortedDocuments = documentArray.sort((a, b) =>
-					new Date(b.createdAt) - new Date(a.createdAt)
-				);
+				const sortedDocuments = documentArray
+					.sort((a, b) =>
+						new Date(b.createdAt) - new Date(a.createdAt)
+					)
+					.filter((document) => document.documentStatus === 'DeanApproved' ||
+						document.documentStatus === 'Endorsed' || document.documentStatus === 'Dean Approved' || document.documentStatus === 'Pending' || document.documentStatus === 'OP Approved')
 
 				setTableRows(sortedDocuments);
 			} catch (error) {
