@@ -246,7 +246,7 @@ const ArchivePage = () => {
 													<Document>
 														<Page size="A4" style={styles.page}>
 															<Text style={styles.documentDetailText}>Control No. {controlNumber + ' - ' + collegeName}</Text>
-															<Text style={styles.documentDetailText}>Date: {createdAt}</Text>
+															<Text style={styles.documentDetailText}>Date: {format(new Date(createdAt), 'yyyy-MM-dd')}</Text>
 															<Text style={styles.headerText}>To: {header}</Text>
 															<Text style={styles.subjectText}>Subject: {subject}</Text>
 															<Text style={styles.content}>

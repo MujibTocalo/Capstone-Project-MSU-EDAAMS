@@ -4,44 +4,57 @@ const styles = StyleSheet.create({
 	page: {
 		flexDirection: 'column',
 		justifyContent: 'flex-start',
-		margin: 20,
+		margin: 5,
+
 	},
 	documentDetailText: {
 		fontSize: 11.5,
-		marginTop: 5,
+		marginTop: 10,
+		marginLeft: 20,
 		marginBottom: 5,
+		fontWeight: 'medium',
 	},
 	headerText: {
 		fontSize: 11.5,
-		margin: 20,
-		fontWeight: 'normal',
-		paddingRight: 10,
-
+		marginLeft: 20,
+		marginTop: 10,
+		marginRight: 10,
+		marginBottom: 5,
+		fontWeight: 'medium',
+		paddingRight: 20,
+		textAlign: 'justify'
 	},
 	subjectText: {
 		fontSize: 11.5,
-		margin: 20,
-		paddingRight: 10,
-		marginBottom: 5
+		fontWeight: 'medium',
+		marginLeft: 20,
+		marginRight: 10,
+		marginBottom: 5,
+		marginTop: 5,
+		paddingRight: 20,
+		textAlign: 'justify'
 	},
 	content: {
 		fontSize: 11,
-		padding: 10,
-		margin: 20,
+		marginRight: 10,
+		marginTop: 10,
+		paddingRight: 20,
+		marginLeft: 30,
+		textAlign: 'justify'
 	},
 	signature: {
 		width: 100,
 		height: 60,
 		alignSelf: 'center',
+		paddingTop: 15,
 		marginLeft: 250,
 
 	},
 	name: {
 		fontSize: 11.5,
-		marginBottom: 4,
 		textAlign: 'center',
 		marginLeft: 250,
-
+		textDecoration: 'underline'
 
 	},
 	designation: {
