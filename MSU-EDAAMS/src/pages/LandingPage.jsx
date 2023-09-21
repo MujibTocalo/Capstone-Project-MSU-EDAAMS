@@ -3,8 +3,9 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { LuAlertCircle } from "react-icons/lu";
 import { useToast } from "../components/ToastService";
-import MSUimage from "../pages/images/MSUimage.jpg";
+import image from "../pages/images/image3.png"
 // import "../pages/CSS Files/LandingPage.css";
+
 import {
   Button,
   Dialog,
@@ -91,66 +92,74 @@ const LandingPage = () => {
   const handleOpen = () => setOpen((cur) => !cur);
 
   return (
-    <div className="relative h-screen">
-      {/* <img
-        src={MSUimage}
-        alt="msu image"
-        className=" mix-blend-overlay object-cover h-full w-full"
-      /> */}
-      <div className="absolute inset-0 flex items-center justify-center">
-        <Button onClick={handleOpen}>Sign in</Button>
-      </div>
-      <Typography className="text-5xl font-bold mb-5 rounded-lg">
-        MSU - EDAAMS
+    <div className="relative h-screen flex">
+  <div className="flex flex-col items-start w-1/2">
+    <div className="flex flex-col mt-40 ml-20">
+      <Typography className="text-4xl mb-2 rounded-lg text-gray-900 tracking-tight font-extrabold">
+        Mindanao State University
       </Typography>
-      <div className="text-center mt-1 mb-14 flex flex-col items-center">
-        <Typography className="mb-2">
-          "Electronic Document Approval and Archive Management System"
-        </Typography>
-        <Typography className="mb-0">
-          a software solution designed to streamline document approval processes
-          and efficiently manage document archives electronically.
-        </Typography>
-      </div>
-      <Dialog
-        size="xs"
-        open={open}
-        handler={handleOpen}
-        className="bg-transparent shadow-none"
-      >
-        <Card className="mx-auto w-full max-w-[24rem]">
-          <CardHeader
-            variant="gradient"
-            color="blue"
-            className="mb-4 grid h-28 place-items-center"
-          >
-            <Typography variant="h3" color="white">
-              Sign In
-            </Typography>
-          </CardHeader>
-          <CardBody className="flex flex-col gap-4">
-            <Input
-              value={email}
-              onChange={handleEmailChange}
-              label="Email"
-              size="lg"
-            />
-            <Input
-              value={password}
-              onChange={handlePasswordChange}
-              label="Password"
-              size="lg"
-              type="password"
-            />
-          </CardBody>
-          <CardFooter className="pt-0">
-            <Button variant="gradient" onClick={handleLogin} fullWidth>
-              Sign In
-            </Button>
-          </CardFooter>
-        </Card>
-      </Dialog>
+      <Typography className="flex flex-col text-7xl mb-5 text-indigo-600 font-extrabold">
+        EDAAMS
+      </Typography>
+      <Typography className="mb-1 text-gray-700">
+      Electronic Document Approval and Archive Management System
+      </Typography>
+      <Typography className="mb-0 text-gray-700">
+        A software solution designed to streamline document approval & track
+        processes and efficiently manage document archives electronically.
+      </Typography>
     </div>
+    <div className="absolute inset-0 flex items-center ml-20 mt-64">
+      <Button className="bg-indigo-600 hover-indigo-900" onClick={handleOpen}>Sign in</Button>
+    </div>
+  </div>
+  <Dialog
+            size="xs"
+            open={open}
+            handler={handleOpen}
+            className="bg-transparent shadow-none"
+          >
+            <Card className="mx-auto w-full max-w-[24rem]">
+              <CardHeader
+                variant="gradient"
+                color="blue"
+                className="mb-4 grid h-28 place-items-center"
+              >
+                <Typography variant="h3" color="white">
+                  Sign In
+                </Typography>
+              </CardHeader>
+              <CardBody className="flex flex-col gap-4">
+                <Input
+                  value={email}
+                  onChange={handleEmailChange}
+                  label="Email"
+                  size="lg"
+                />
+                <Input
+                  value={password}
+                  onChange={handlePasswordChange}
+                  label="Password"
+                  size="lg"
+                  type="password"
+                />
+              </CardBody>
+              <CardFooter className="pt-0">
+                <Button variant="gradient" onClick={handleLogin} fullWidth>
+                  Sign In
+                </Button>
+              </CardFooter>
+            </Card>
+          </Dialog>
+  <div className="w-1/2 mt-12 mr-5">
+    <img
+      src={image}
+      alt="image"
+      className="h-auto w-full"
+    />
+  </div>
+</div>
+
   );
 };
 
