@@ -110,18 +110,8 @@ const ArchivePage = () => {
 						<Typography color="gray" className="mt-1 font-normal">
 							See all information about archived documents
 						</Typography>
+
 					</div>
-				</div>
-				<div className="flex mb-16 whitespace-pre flex-col items-center justify-between gap-4 md:flex-row">
-					<Tabs value="all" className="w-full md:w-max">
-						<TabsHeader>
-							{TABS.map(({ label, value }) => (
-								<Tab key={value} value={value}>
-									&nbsp;&nbsp;{label}&nbsp;&nbsp;
-								</Tab>
-							))}
-						</TabsHeader>
-					</Tabs>
 					<div className="w-full md:w-72">
 						<Input label="Search" icon={<MagnifyingGlassIcon className="h-5 w-5" />} />
 					</div>
@@ -134,12 +124,12 @@ const ArchivePage = () => {
 							{TABLE_HEAD.map((head, index) => (
 								<th
 									key={head}
-									className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50  p-4 transition-colors hover:bg-blue-gray-50 "
+									className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50  p-4 transition-colors sticky -top-8 hover:bg-blue-gray-50 "
 								>
 									<Typography
 										variant="small"
 										color="blue-gray"
-										className="flex items-center  justify-between gap-2 font-bold leading-none"
+										className="flex items-center justify-between gap-2 font-bold leading-none opacity-90"
 									>
 										{head}{" "}
 										{index !== TABLE_HEAD.length - 1 && (

@@ -33,29 +33,35 @@ const DocumentCompleteDetail = ({ document }) => {
 						<Typography variant='paragraph'>To: {document.header}</Typography>
 						<Typography variant='paragraph'>Subject: {document.subject}</Typography>
 					</div>
-					<Typography variant='paragraph' className='m-3 whitespace-break-spaces'>{document.content}</Typography>
+					<Typography variant='paragraph' className='m-3 whitespace-break-spaces text-justify'>{document.content}</Typography>
 				</div>
 				<div className="flex flex-row justify-evenly">
 					<div className="flex flex-col">
 						{signature && (
 							<img className="flex mx-auto translate-y-8 w-24 h-24" src={`http://localhost:7000${signature}`} alt="signature" />
 						)}
-						<Typography variant='paragraph'><u>{document.uploaderName}</u></Typography>
-						<Typography variant='paragraph'>{document.uploaderDesignation}</Typography>
+						<div className="text-center">
+							<Typography variant='paragraph'><u>{document.uploaderName}</u></Typography>
+							<Typography variant='paragraph'>{document.uploaderDesignation}</Typography>
+						</div>
 					</div>
 					<div className="flex flex-col">
 						{deanSignature && (
 							<img className="flex mx-auto translate-y-8 w-24 h-24" src={`http://localhost:7000${deanSignature}`} alt="signature" />
 						)}
-						<Typography variant='paragraph'><u>{document.deanApproverName}</u></Typography>
-						<Typography variant='paragraph'>{document.deanApproverDesignation}</Typography>
+						<div className="text-center">
+							<Typography variant='paragraph'><u>{document.deanApproverName}</u></Typography>
+							<Typography variant='paragraph'>{document.deanApproverDesignation}</Typography>
+						</div>
 					</div>
 					<div className="flex flex-col">
 						{endorserSignature && (
 							<img className="flex mx-auto translate-y-8 w-24 h-24" src={`http://localhost:7000${endorserSignature}`} alt="signature" />
 						)}
-						<Typography variant='paragraph'><u>{document.endorserName}</u></Typography>
-						<Typography variant='paragraph'>{document.endorserDesignation}</Typography>
+						<div className="text-center">
+							<Typography variant='paragraph'><u>{document.endorserName}</u></Typography>
+							<Typography variant='paragraph'>{document.endorserDesignation}</Typography>
+						</div>
 					</div>
 					<div className="flex flex-col gap-1.5">
 						{opSignature && (

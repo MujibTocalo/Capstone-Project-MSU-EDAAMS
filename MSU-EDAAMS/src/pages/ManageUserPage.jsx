@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import { MagnifyingGlassIcon, PencilSquareIcon } from "@heroicons/react/24/outline";
 import { PencilIcon, UserPlusIcon } from "@heroicons/react/24/solid";
 import {
   Card,
@@ -25,6 +25,7 @@ import {
 } from "@material-tailwind/react";
 
 import { format } from 'date-fns'
+import { LuCheckSquare, LuDelete, LuEdit, LuPenTool, LuTrash } from "react-icons/lu";
 
 const TABS = [
   {
@@ -154,7 +155,7 @@ const ManageUsers = () => {
 
 
   return (
-    <Card className="p-2 mt-2 rounded-lg bg-gray-100">
+    <Card className="h-full w-full rounded-lg bg-gray-100">
       <CardHeader
         floated={false}
         shadow={false}
@@ -170,17 +171,16 @@ const ManageUsers = () => {
             </Typography>
           </div>
           <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-            <Button variant="outlined" color="blue-gray" size="sm">
+            {/* <Button variant="outlined" color="blue-gray" size="sm">
               view all
-            </Button>
+            </Button> */}
             <div className="add-user">
               <Button
                 onClick={handleOpen}
                 className="flex items-center gap-3"
                 color="blue"
-                size="sm"
-              >
-                Register User
+                size="md"
+              > Register User
               </Button>
               <Dialog
                 size="sm"
@@ -194,7 +194,7 @@ const ManageUsers = () => {
                     color="blue"
                     className="mb-4 grid h-28 place-items-center"
                   >
-                    <Typography variant="h5" color="white">
+                    <Typography variant="h3" color="white">
                       Register New User
                     </Typography>
                   </CardHeader>
@@ -291,9 +291,15 @@ const ManageUsers = () => {
                 </Card>
               </Dialog>
             </div>
+            <div className="w-full md:w-72">
+              <Input
+                label="Search"
+                icon={<MagnifyingGlassIcon className="h-5 w-5" />}
+              />
+            </div>
           </div>
         </div>
-        <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
+        {/* <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
           <Tabs value="all" className="w-full md:w-max whitespace-pre">
             <TabsHeader>
               {TABS.map(({ label, value }) => (
@@ -303,27 +309,21 @@ const ManageUsers = () => {
               ))}
             </TabsHeader>
           </Tabs>
-          <div className="w-full md:w-72">
-            <Input
-              label="Search"
-              icon={<MagnifyingGlassIcon className="h-5 w-5" />}
-            />
-          </div>
-        </div>
+        </div> */}
       </CardHeader>
       <CardBody className="overflow-scroll px-0">
-        <table className="mt-4 w-full min-w-max table-auto text-left">
+        <table className="w-full min-w-max table-auto text-left">
           <thead>
             <tr>
               {TABLE_HEAD.map((head) => (
                 <th
                   key={head}
-                  className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4"
+                  className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 sticky -top-8"
                 >
                   <Typography
                     variant="small"
                     color="blue-gray"
-                    className="font-normal leading-none opacity-70"
+                    className="font-bold leading-none opacity-90"
                   >
                     {head}
                   </Typography>
@@ -381,11 +381,11 @@ const ManageUsers = () => {
                       </div>
                     </td>
                     <td className={classes}>
-                      <div className="flex flex-col ">
+                      <div className="flex">
                         <Typography
                           variant="small"
                           color="blue-gray"
-                          className="font-medium mx-auto"
+                          className="font-medium"
                         >
                           {office}
                         </Typography>
@@ -395,17 +395,17 @@ const ManageUsers = () => {
                       <Typography
                         variant="small"
                         color="blue-gray"
-                        className="font-medium"
+                        className="font-medium text-start"
                       >
                         {designation}
                       </Typography>
                     </td>
                     <td className={classes}>
-                      <Tooltip content="Edit User">
-                        <IconButton variant="text" color="blue-gray">
-                          <PencilIcon className="h-4 w-4" />
-                        </IconButton>
-                      </Tooltip>
+                      <div className="flex gap-1.5">
+                        <LuEdit />
+                        {/* <LuCheckSquare /> */}
+                        <LuTrash />
+                      </div>
                     </td>
                   </tr>
                 );

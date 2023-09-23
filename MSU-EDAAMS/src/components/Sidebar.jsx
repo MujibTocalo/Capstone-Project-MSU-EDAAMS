@@ -6,10 +6,10 @@ import CICSLogo from '../assets/CICS_Logo.png'
 
 import { LuFilePlus2 } from 'react-icons/lu'
 import { TiThMenu } from 'react-icons/ti'
-import { RiDashboardLine, RiAttachment2 } from 'react-icons/ri'
+import { RiDashboardLine, RiAttachment2, RiNotificationBadgeFill, RiNotificationLine, RiNotification2Line, RiNotificationBadgeLine, RiNotification3Fill, RiNotification3Line } from 'react-icons/ri'
 import { HiOutlineCheck, HiOutlineDocumentText, HiOutlineUsers, HiUpload } from 'react-icons/hi'
 import { BsArchive, BsFillClipboardCheckFill, BsLine } from 'react-icons/bs'
-import { BiLogOut } from 'react-icons/bi'
+import { BiLogOut, BiNotification, BiNotificationOff, BiSolidNotification } from 'react-icons/bi'
 import { Link } from 'react-router-dom'
 import { Typography } from '@material-tailwind/react'
 import { UserIcon } from '@heroicons/react/24/solid'
@@ -48,15 +48,18 @@ const Sidebar = () => {
   const [open, setOpen] = useState(true)
 
   return (
-    <div className='flex flex-col bg-[#0C356A] duration-500 justify-evenly'>
-      <div className={` bg-[#0C356A] h-screen ${open ? 'w-56' : 'w-14'} duration-500 text-white px-2`}>
-        <div className='py-4 flex justify-end'>
-          <h1 className={`${!open && 'hidden'} mx-auto whitespace-pre font-semibold text-lg 0.5s ease-in-out`}>MSU EDAAMS</h1>
-          <TiThMenu size={26} className='cursor-pointer mr-1.5' onClick={() => setOpen(!open)} />
+    <div className='flex flex-col bg-[#0C356A] duration-500'>
+      <div className={` bg-[#0C356A] h-screen ${open ? 'w-56' : 'w-14'} duration-500 text-white p-2`}>
+        <div className='py-4 flex duration-500 justify-between'>
+          <h1 className={`${!open && 'hidden'} whitespace-pre font-semibold text-md 0.5s ease-in-out ml-2.5`}>MSU EDAAMS</h1>
+          <div className='flex'>
+            <RiNotification3Line size={23} className={`${!open && 'hidden'} cursor-pointer mr-2`} />
+            < TiThMenu size={23} className={`${!open && 'ml-2'} mr-3 cursor-pointer `} onClick={() => setOpen(!open)} />
+          </div>
         </div>
         <div className='mt-4 flex flex-col gap-4 relative'>
           {menus?.map((menu, i) => (
-            <Link to={menu?.link} key={i} className='group flex items-center text-sm gap-3.5 fbg-[#23074d]ont-medium p-2 hover:border rounded-lg'>
+            <Link to={menu?.link} key={i} className='group flex items-center text-sm gap-3.5 font-medium p-2 hover:border rounded-lg'>
               <div>
                 {React.createElement(menu?.icon, { size: '24' })}
               </div>
@@ -66,9 +69,9 @@ const Sidebar = () => {
                 }}
                 className={`whitespace-pre text-sm duration-500 ${!open && 'opacity-0 translate-x-28 overflow-hidden'}`}>
                 {menu?.name}</Typography>
-              <Typography className={`${open && 'hidden'} absolute  text-sm left-24 bg-[#512B81] whitespace-pre text-white rounded-md drop-shadow-lg px-0 py-0 w-0 overflow-hidden group-hover:px-2 group-hover:py-1 group-hover:left-14 group-hover:duration-300 group-hover:w-fit`}>
+              {/* <Typography className={`${open && 'hidden'} absolute  text-sm left-24 bg-[#512B81] whitespace-pre text-white rounded-md drop-shadow-lg px-0 py-0 w-0 overflow-hidden group-hover:px-2 group-hover:py-1 group-hover:left-14 group-hover:duration-300 group-hover:w-fit`}>
                 {menu?.name}
-              </Typography>
+              </Typography> */}
             </Link>
 
           ))}

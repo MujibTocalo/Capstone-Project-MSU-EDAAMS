@@ -3,8 +3,9 @@ import documentsStore from "../config/documentsStore";
 import { Avatar, Typography } from "@material-tailwind/react";
 
 import logo from '../assets/msulogo.png'
+import { format } from "date-fns";
 
-const DocumentDetail = ({ document }) => {
+const DocumentApproverDetail = ({ document }) => {
 
 	const store = documentsStore();
 
@@ -25,7 +26,7 @@ const DocumentDetail = ({ document }) => {
 					{document.documentType}
 				</Typography>
 				<Typography
-					className='text-sm rounded-lg p-1 text-black font-bold'>
+					className='text-md rounded-lg p-1 text-black font-bold '>
 					{document.collegeName}
 				</Typography>
 			</div>
@@ -34,7 +35,10 @@ const DocumentDetail = ({ document }) => {
 					<b>No.</b> {document.controlNumber}
 				</Typography>
 				<Typography className='text-sm pl-2 py-1'>
-					<b>No.</b> {document.createdAt}
+					<b>Date: </b> {format(new Date(document.createdAt), 'yyyy-MM-dd')}
+				</Typography>
+				<Typography className='text-sm pl-2 py-1'>
+					Uploaded By: {document.uploaderName}
 				</Typography>
 				{/* <Typography className='text-sm pl-2 py-1'>
 					To: {document.header}
@@ -48,4 +52,4 @@ const DocumentDetail = ({ document }) => {
 
 }
 
-export default DocumentDetail;
+export default DocumentApproverDetail;

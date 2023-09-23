@@ -7,7 +7,7 @@ import { Button, Alert, Dialog, DialogHeader, DialogBody, DialogFooter, Typograp
 
 import { useToast } from '../components/ToastService';
 import { LuAlertCircle } from 'react-icons/lu';
-import DocumentDetail from './DocumentDetail';
+import DocumentEndorsementDetail from './DocumentEndorsementDetail';
 
 const EndorseDocument = () => {
 
@@ -85,7 +85,7 @@ const EndorseDocument = () => {
 	}
 
 	const endorseDocument = store.documents
-		.filter((document) => document.documentStatus === 'DeanApproved')
+		.filter((document) => document.documentStatus === 'DeanApproved' || document.documentStatus === 'Dean Approved')
 		.sort((a, b) => b.createdAt.localeCompare(a.createdAt))
 
 
@@ -179,9 +179,9 @@ const EndorseDocument = () => {
 			<div className='grid grid-cols-4'>
 				{endorseDocument.map((document) => (
 					<div key={document._id} className='flex flex-col bg-gray-200 p-2 m-2 rounded-lg shadow-md hover:shadow-xl'>
-						<DocumentDetail document={document} /><Dialog
+						<DocumentEndorsementDetail document={document} /><Dialog
 							className='flex flex-col overflow-scroll bg-white rounded-t-xl h-screen'
-							size='md'
+							size='lg'
 							open={open && selectedDocument && selectedDocument._id === document._id}
 							handler={() => setOpen(false)}
 							animate={{
@@ -259,7 +259,7 @@ const EndorseDocument = () => {
 							</DialogFooter>
 						</Dialog>
 						<div className='flex content-start whitespace-pre '>
-							<Button className='flex flex-row text-black font-medium items-center m-2 hover:underline hover:text-blue-800' size='sm' color='white' variant='text'
+							<Button className='flex flex-row text-black font-medium items-center m-2 hover:font-semibold' size='sm' color='white' variant='text'
 								onClick={() => handleOpen(document)}>
 								Read More{" "}
 								<svg

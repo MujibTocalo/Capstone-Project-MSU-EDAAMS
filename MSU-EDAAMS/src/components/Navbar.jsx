@@ -27,6 +27,7 @@ import {
 } from "@heroicons/react/24/outline";
 
 import logo from '../assets/msulogo.png'
+import { DrawerDefault } from "./Drawer";
 
 // profile menu component
 const profileMenuItems = [
@@ -115,8 +116,9 @@ const ProfileMenu = () => {
 export const CustomNavbar = () => {
 
 	return (
-		<Navbar className="bg-gray-800 p-2 lg:pl-6">
+		<Navbar className="bg-[#0C356A] p-2 lg:pl-6">
 			<div className="relative flex items-center mx-auto justify-between text-white">
+				<DrawerDefault />
 				<Typography
 					as="a"
 					href="#"

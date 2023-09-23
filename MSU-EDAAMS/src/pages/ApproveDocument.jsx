@@ -11,7 +11,7 @@ import {
   Textarea
 } from "@material-tailwind/react";
 import documentsStore from "../config/documentsStore";
-import DocumentDetail from "./DocumentDetail";
+import DocumentApproverDetail from "./DocumentApproverDetail";
 import DocumentCompleteDetail from "./DocumentCompleteDetail";
 import { useToast } from "../components/ToastService";
 import { LuAlertCircle } from "react-icons/lu";
@@ -169,13 +169,13 @@ const ApproveDocument = () => {
 
   return (
     <div className='flex flex-col mx-auto'>
-      <div className='flex flex-wrap'>
+      <div className='grid grid-cols-4'>
         {pendingDocuments.map((document) => (
           <div key={document._id} className='flex flex-col bg-gray-200 p-2 m-2 rounded-lg shadow-md hover:shadow-xl'>
-            <DocumentDetail document={document} />
+            <DocumentApproverDetail document={document} />
             <Dialog
               className='flex flex-col overflow-scroll bg-white rounded-t-xl h-screen'
-              size='md'
+              size='lg'
               open={open && selectedDocument && selectedDocument._id === document._id}
               handler={() => setOpen(false)}
               animate={{
@@ -221,13 +221,13 @@ const ApproveDocument = () => {
                   </Dialog>
 
                   <Button size='sm' variant='text' onClick={() => setOpen(false)}>
-                    <span>Back</span>
+                    <span>Close</span>
                   </Button>
                 </div>
               </DialogFooter>
             </Dialog>
             <div className='flex content-start whitespace-pre '>
-              <Button className='flex flex-row text-black font-medium items-center m-2 hover:underline hover:text-blue-800' size='sm' color='white' variant='text'
+              <Button className='flex flex-row text-black font-medium items-center m-2 hover:font-semibold' size='sm' color='white' variant='text'
                 onClick={() => handleOpen(document)}>
                 Read More{" "}
                 <svg

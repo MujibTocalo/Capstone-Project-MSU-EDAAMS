@@ -97,7 +97,7 @@ export const deanApproval = async (req, res) => {
 		console.log(decision)
 
 		if (decision === 'true') {
-			document.documentStatus = 'DeanApproved';
+			document.documentStatus = 'Dean Approved';
 			console.log("documentStatus: " + document.documentStatus)
 		} else if (decision === 'false') {
 			document.documentStatus = 'Rejected';

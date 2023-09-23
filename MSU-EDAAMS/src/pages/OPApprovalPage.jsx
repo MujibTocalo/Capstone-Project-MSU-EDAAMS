@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import documentsStore from '../config/documentsStore'
-import DocumentForEndorsement from './DocumentForEndorsement'
+import DocumentOPDetail from './DocumentOPDetail';
 import DocumentCompleteDetail from './DocumentCompleteDetail';
 
 import { Button, Alert, Dialog, DialogHeader, DialogBody, DialogFooter, Typography, Input, Textarea } from '@material-tailwind/react';
 
 import { useToast } from '../components/ToastService';
 import { LuAlertCircle } from 'react-icons/lu';
-import DocumentDetail from './DocumentDetail';
+import DocumentDetail from './DocumentApproverDetail';
 
 const OPApprovalPage = () => {
 
@@ -169,15 +169,13 @@ const OPApprovalPage = () => {
 
 	return (
 		<div className='flex flex-col mx-auto'>
-			{/* <Typography className='flex justify-center text-white p-3 bg-[#64CCC5] rounded-lg shadow-lg m-2' variant='h2'>
-				Office of the President Approval Page
-			</Typography> */}
 			<div className='grid grid-cols-4'>
 				{endorseDocument.map((document) => (
-					<div key={document._id} className='flex flex-col bg-gray-100 p-2 m-2 rounded-lg hover:shadow-md'>
-						<DocumentDetail document={document} /><Dialog
+					<div key={document._id} className='flex flex-col bg-gray-200 p-2 m-2 rounded-lg shadow-md hover:shadow-xl'>
+						<DocumentOPDetail document={document} />
+						<Dialog
 							className='flex flex-col overflow-scroll bg-white rounded-t-xl h-screen'
-							size='md'
+							size='lg'
 							open={open && selectedDocument && selectedDocument._id === document._id}
 							handler={() => setOpen(false)}
 							animate={{
@@ -231,7 +229,7 @@ const OPApprovalPage = () => {
 							</DialogFooter>
 						</Dialog>
 						<div className='flex content-start whitespace-pre '>
-							<Button className='flex flex-row text-black font-medium items-center m-2 hover:underline hover:text-blue-800' size='sm' color='white' variant='text'
+							<Button className='flex flex-row text-black font-medium items-center m-2 hover:font-semibold' size='sm' color='white' variant='text'
 								onClick={() => handleOpen(document)}>
 								Read More{" "}
 								<svg
