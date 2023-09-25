@@ -171,7 +171,7 @@ const ApproveDocument = () => {
     <div className='flex flex-col mx-auto'>
       <div className='grid grid-cols-4'>
         {pendingDocuments.map((document) => (
-          <div key={document._id} className='flex flex-col bg-gray-200 p-2 m-2 rounded-lg shadow-md hover:shadow-xl'>
+          <div key={document._id} className='flex flex-col bg-indigo-50/50 p-1.5 m-1.5 rounded-lg shadow-md hover:shadow-xl'>
             <DocumentApproverDetail document={document} />
             <Dialog
               className='flex flex-col overflow-scroll bg-white rounded-t-xl h-screen'

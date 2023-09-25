@@ -139,6 +139,31 @@ export const approveDocument = async (req, res) => {
 	}
 }
 
+export const releaseDocument = async (req, res) => {
+
+	try {
+		const { id } = req.params
+		const { ReleaserName, Remark, decision } = req.body
+
+		const document = await Document.findById(id)
+		if (!document) {
+			return res.status(404).json({ error: 'Document not found' });
+		}
+
+
+		document.rmoRemark = Remark;
+		document.releaserName = ReleaserName;
+		document.releaseDate = Date.now();
+		document.documentStatus = decision == true ? 'Released' : 'Not Released'
+
+		await document.save()
+		res.json({ message: 'Document Released on ' });
+	} catch (error) {
+		console.error(error);
+		res.status(500).json({ error: 'Internal server error' });
+	}
+}
+
 
 export const updateDocument = async (req, res) => {
 	try {

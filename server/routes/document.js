@@ -10,7 +10,7 @@ import {
 	approveDocument,
 	deanApproval,
 	endorseDocument,
-
+	releaseDocument
 
 } from '../controllers/document.js'
 
@@ -29,6 +29,7 @@ documentRouter.get('/total', totalDocuments)
 documentRouter.put('/deanApproval/:id', deanApproval)
 documentRouter.put('/opApproval/:id', approveDocument)
 documentRouter.put('/endorseDocument/:id', endorseDocument)
+documentRouter.put('/releaseDocument/:id', releaseDocument)
 
 
 export default documentRouter

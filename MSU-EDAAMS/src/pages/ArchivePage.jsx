@@ -14,20 +14,9 @@ import {
 	CardHeader,
 	Input,
 	Typography,
-	Button,
 	CardBody,
 	Chip,
 	CardFooter,
-	Tabs,
-	TabsHeader,
-	Tab,
-	Avatar,
-	IconButton,
-	Tooltip,
-	Menu,
-	MenuHandler,
-	MenuList,
-	MenuItem,
 } from "@material-tailwind/react";
 
 import { format } from 'date-fns'
@@ -35,7 +24,7 @@ import { format } from 'date-fns'
 import { useNavigate } from 'react-router-dom'
 import documentsStore from "../config/documentsStore";
 import { useEffect, useState } from "react";
-import { LuArrowDown, LuCopySlash, LuDiamond, LuDownload, LuEdit, LuHistory, LuLoader, LuMenu, LuTrain, LuTrash } from "react-icons/lu";
+import { LuDownload, LuEdit, LuHistory, LuLoader, LuTrash } from "react-icons/lu";
 
 import axios from "axios";
 
@@ -62,15 +51,6 @@ const ArchivePage = () => {
 	const store = documentsStore()
 
 	const [tableRows, setTableRows] = useState([])
-	const [rejectedSelected, setRejectedSelected] = useState()
-	const [releasedSelected, setReleasedSelected] = useState()
-	const [selectedDocument, setSelectedDocument] = useState(null);
-	const [generatePdf, setGeneratePdf] = useState(false);
-
-	const handleGeneratePdfClick = () => {
-		setGeneratePdf(true);
-	};
-
 
 	useEffect(() => {
 		const fetchTableRows = async () => {
@@ -79,9 +59,9 @@ const ArchivePage = () => {
 
 				const responseData = response.data;
 				const documentArray = responseData.document;
-				// Sort the documents by createdAt in descending order
+
 				const sortedDocuments = documentArray
-					.filter((document) => document.documentStatus === 'Rejected' || document.documentStatus === 'Released' || document.documentStatus === 'OP Approved')
+					.filter((document) => document.documentStatus === 'Rejected' || document.documentStatus === 'Released')
 					.sort((a, b) =>
 						new Date(b.createdAt) - new Date(a.createdAt)
 					);
@@ -100,12 +80,12 @@ const ArchivePage = () => {
 	const navigate = useNavigate()
 
 	return (
-		<Card className="h-full w-full bg-gray-100">
-			<CardHeader floated={false} shadow={false} className="rounded-none bg-gray-100">
+		<Card className="h-full w-full bg-white">
+			<CardHeader floated={false} shadow={false} className="rounded-none bg-white">
 				<div className="mb-2 flex items-center justify-between gap-8">
 					<div>
 						<Typography variant="h5" color="blue-gray">
-							Document Archive List
+							Document Archive
 						</Typography>
 						<Typography color="gray" className="mt-1 font-normal">
 							See all information about archived documents
@@ -124,17 +104,15 @@ const ArchivePage = () => {
 							{TABLE_HEAD.map((head, index) => (
 								<th
 									key={head}
-									className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50  p-4 transition-colors sticky -top-8 hover:bg-blue-gray-50 "
+									className="border-y border-blue-gray-100 bg-indigo-50/50  p-4 transition-colors sticky -top-8"
 								>
 									<Typography
 										variant="small"
 										color="blue-gray"
-										className="flex items-center justify-between gap-2 font-bold leading-none opacity-90"
+										className="flex font-bold leading-none"
 									>
 										{head}{" "}
-										{index !== TABLE_HEAD.length - 1 && (
-											<ChevronUpDownIcon strokeWidth={2} className="h-4 w-4" />
-										)}
+										{index !== TABLE_HEAD.length - 1}
 									</Typography>
 								</th>
 							))}
@@ -175,7 +153,7 @@ const ArchivePage = () => {
 												<Typography
 													variant="small"
 													color="blue-gray"
-													className="font-normal opacity-70"
+													className="font-normal opacity-80"
 												>
 													No. {controlNumber}
 												</Typography>

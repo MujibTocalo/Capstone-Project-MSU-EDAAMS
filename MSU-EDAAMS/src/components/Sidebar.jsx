@@ -3,17 +3,15 @@ import React, { useEffect, useState } from 'react'
 import MSULogo from '../assets/msulogo.png'
 import CICSLogo from '../assets/CICS_Logo.png'
 
-
-import { LuFilePlus2 } from 'react-icons/lu'
-import { TiThMenu } from 'react-icons/ti'
-import { RiDashboardLine, RiAttachment2, RiNotificationBadgeFill, RiNotificationLine, RiNotification2Line, RiNotificationBadgeLine, RiNotification3Fill, RiNotification3Line } from 'react-icons/ri'
-import { HiOutlineCheck, HiOutlineDocumentText, HiOutlineUsers, HiUpload } from 'react-icons/hi'
-import { BsArchive, BsFillClipboardCheckFill, BsLine } from 'react-icons/bs'
-import { BiLogOut, BiNotification, BiNotificationOff, BiSolidNotification } from 'react-icons/bi'
+import { TiThMenuOutline } from 'react-icons/ti'
+import { RiDashboardLine, RiAttachment2, RiNotification3Line } from 'react-icons/ri'
+import { HiOutlineArchive, HiOutlineDocumentText, HiOutlineUsers, HiUpload } from 'react-icons/hi'
+import { BiLogOut, } from 'react-icons/bi'
 import { Link } from 'react-router-dom'
 import { Typography } from '@material-tailwind/react'
-import { UserIcon } from '@heroicons/react/24/solid'
 import { UserCircleIcon } from '@heroicons/react/24/outline'
+import { LuClipboardCheck } from 'react-icons/lu'
+
 
 const Sidebar = () => {
 
@@ -34,12 +32,11 @@ const Sidebar = () => {
   const menus = [
     { name: 'Dashboard', link: '/dashboard', icon: RiDashboardLine },
     { name: 'Documents', link: '/documents', icon: HiOutlineDocumentText },
-    // { name: 'Create Document', link: '/createdocument', icon: LuFilePlus2 },
-    { name: 'Approve Document', link: '/approvedocument', icon: BsFillClipboardCheckFill },
+    { name: 'Approve Document', link: '/approvedocument', icon: LuClipboardCheck },
     { name: 'Endorse Document', link: '/endorsedocument', icon: RiAttachment2 },
     { name: 'OP Approval', link: '/opapproval', icon: HiOutlineDocumentText },
-    // { name: 'Archive', link: '/archive', icon: BsArchive },
-    { name: 'Releasing', link: '/release', icon: HiUpload },
+    { name: 'Releasing Document', link: '/releasedocument', icon: HiUpload },
+    { name: 'Archive', link: '/archive', icon: HiOutlineArchive },
     { name: 'Manage Users', link: '/manageusers', icon: HiOutlineUsers },
     { name: 'Logout', link: '/', icon: BiLogOut },
 
@@ -48,13 +45,13 @@ const Sidebar = () => {
   const [open, setOpen] = useState(true)
 
   return (
-    <div className='flex flex-col bg-[#0C356A] duration-500'>
-      <div className={` bg-[#0C356A] h-screen ${open ? 'w-56' : 'w-14'} duration-500 text-white p-2`}>
+    <div className='flex flex-col bg-indigo-900 duration-500'>
+      <div className={`h-screen ${open ? 'w-56' : 'w-14'} duration-500 text-white p-2`}>
         <div className='py-4 flex duration-500 justify-between'>
           <h1 className={`${!open && 'hidden'} whitespace-pre font-semibold text-md 0.5s ease-in-out ml-2.5`}>MSU EDAAMS</h1>
           <div className='flex'>
             <RiNotification3Line size={23} className={`${!open && 'hidden'} cursor-pointer mr-2`} />
-            < TiThMenu size={23} className={`${!open && 'ml-2'} mr-3 cursor-pointer `} onClick={() => setOpen(!open)} />
+            < TiThMenuOutline size={23} className={`${!open && 'ml-2'} mr-3 cursor-pointer `} onClick={() => setOpen(!open)} />
           </div>
         </div>
         <div className='mt-4 flex flex-col gap-4 relative'>
@@ -75,22 +72,9 @@ const Sidebar = () => {
             </Link>
 
           ))}
-
-          {/* <div className='flex flex-col items-center mt-4 rounded-lg p-2.5'>
-            <UserCircleIcon size='lg' className='h-8 w-8' />
-            <div className={`flex flex-col items-center whitespace-pre p-2 ${open ? 'relative' : 'inherent'}`}>
-              <Typography className={`flex text-base font-semibold justify-center ${!open && ' hidden'} ease-in-out`}>
-                {currentUser}
-              </Typography>
-              <Typography className={`flex text-sm font-normal justify-center ${!open && 'hidden'} ease-in-out`}>
-                {userDesignation}
-              </Typography>
-            </div>
-          </div> */}
-
         </div>
       </div>
-      <div className='flex flex-col bg-[#0C356A] text-white items-center duration-500 p-2'>
+      <div className='flex flex-col bg-indigo-1000 text-white items-center duration-500 p-2'>
         <UserCircleIcon className='h-10 w-10' />
         <div className={`flex flex-col items-center whitespace-pre p-2 ${open ? 'relative' : 'inherent'}`}>
           <Typography className={`flex text-base font-semibold justify-center ${!open && ' hidden'} ease-in-out`}>

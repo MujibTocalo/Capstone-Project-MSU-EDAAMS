@@ -155,11 +155,11 @@ const ManageUsers = () => {
 
 
   return (
-    <Card className="h-full w-full rounded-lg bg-gray-100">
+    <Card className="h-full w-full rounded-lg bg-white">
       <CardHeader
         floated={false}
         shadow={false}
-        className="rounded-none bg-gray-100"
+        className="rounded-none bg-white"
       >
         <div className="mb-8 flex items-center justify-between gap-8">
           <div>
@@ -178,7 +178,7 @@ const ManageUsers = () => {
               <Button
                 onClick={handleOpen}
                 className="flex items-center gap-3"
-                color="blue"
+                color="indigo"
                 size="md"
               > Register User
               </Button>
@@ -318,7 +318,7 @@ const ManageUsers = () => {
               {TABLE_HEAD.map((head) => (
                 <th
                   key={head}
-                  className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 sticky -top-8"
+                  className="border-y border-blue-gray-100 bg-indigo-50/50 p-4 sticky -top-8"
                 >
                   <Typography
                     variant="small"
@@ -360,6 +360,12 @@ const ManageUsers = () => {
                         >
                           {userType}
                         </Typography>
+                        {/* <Chip
+                          variant="ghost"
+                          size="md"
+                          value={userType}
+                          color={'green'}
+                        /> */}
                       </div>
                     </td>
                     <td className={classes}>
@@ -399,6 +405,20 @@ const ManageUsers = () => {
                       >
                         {designation}
                       </Typography>
+                      {/* <div className="flex gap-2 justify-center">
+                        <Chip
+                          variant="ghost"
+                          size="md"
+                          value={designation}
+                          color={'blue'}
+                        />
+                        <Chip
+                          variant="ghost"
+                          size="md"
+                          value={office}
+                          color={'green'}
+                        />
+                      </div> */}
                     </td>
                     <td className={classes}>
                       <div className="flex gap-1.5">

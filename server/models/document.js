@@ -29,7 +29,6 @@ const documentSchema = new mongoose.Schema({
 	endorserSignature: String,
 	EndorserRemarks: String,
 
-
 	// Office of the President Data
 	opApproverName: String,
 	opApproverDesignation: String,
@@ -38,13 +37,14 @@ const documentSchema = new mongoose.Schema({
 	opSignature: String,
 
 	// RMO Data
+	releaserName: String,
 	releaseDate: Date,
 	rmoRemark: String,
 
 	// Workflow Status
 	documentStatus: {
 		type: String,
-		enum: ['Pending', 'Dean Approved', 'Endorsed', 'OP Approved', 'Released', 'Rejected | OVCAA', 'Rejected | Dean', 'Rejected | OP', 'Rejected'],
+		enum: ['Pending', 'Dean Approved', 'Endorsed', 'OP Approved', 'Released', 'Rejected | OVCAA', 'Rejected | Dean', 'Rejected | OP', 'Not Released', 'Rejected'],
 		default: 'Pending'
 	}
 

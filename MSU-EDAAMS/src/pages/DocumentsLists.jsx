@@ -1,11 +1,8 @@
 import {
 	MagnifyingGlassIcon,
 	ChevronUpDownIcon,
-	DocumentPlusIcon,
-	DocumentCheckIcon,
 } from "@heroicons/react/24/outline";
 
-import documentTrackingIcon from '../assets/icons8-sign-document-24.png'
 
 import {
 	Card,
@@ -16,16 +13,7 @@ import {
 	CardBody,
 	Chip,
 	CardFooter,
-	Tabs,
-	TabsHeader,
-	Tab,
-	Avatar,
-	IconButton,
 	Tooltip,
-	Menu,
-	MenuHandler,
-	MenuList,
-	MenuItem,
 } from "@material-tailwind/react";
 
 import { format } from 'date-fns'
@@ -35,11 +23,9 @@ import documentsStore from "../config/documentsStore";
 import { useEffect, useState } from "react";
 
 import axios from "axios";
-import { BiArchive, BiDetail, BiEdit, BiSolidArchiveOut, BiTrash } from "react-icons/bi";
+import { BiDetail, BiEdit, BiTrash } from "react-icons/bi";
 import { BsCardChecklist } from "react-icons/bs";
-import { ArchiveBoxIcon } from "@heroicons/react/24/solid";
-import { LuArchive } from "react-icons/lu";
-import { HiArchive, HiDocumentAdd, HiOutlineArchive, HiOutlineDocumentAdd } from "react-icons/hi";
+import { HiOutlineDocumentAdd } from "react-icons/hi";
 
 const TABS = [
 	{
@@ -65,7 +51,7 @@ const TABS = [
 
 ];
 
-const TABLE_HEAD = ["Document Type", 'User Detail', "College/Office", "Document Status", 'Date Uploaded', 'Action'];
+const TABLE_HEAD = ["Document Type", 'Uploader Detail', "College / Office", "Document Status", 'Date Uploaded', 'Action'];
 
 export const DocumentsLists = () => {
 
@@ -79,8 +65,6 @@ export const DocumentsLists = () => {
 				const response = await axios.get('http://localhost:7000/document');
 				const responseData = response.data;
 				const documentArray = responseData.document
-				// console.log(documentArray);
-				// Sort the documents by createdAt in descending order
 				const sortedDocuments = documentArray
 					.sort((a, b) =>
 						new Date(b.createdAt) - new Date(a.createdAt)
@@ -108,8 +92,8 @@ export const DocumentsLists = () => {
 	const navigate = useNavigate()
 
 	return (
-		<Card className="h-full w-full bg-gray-100">
-			<CardHeader floated={false} shadow={false} className="rounded-none bg-gray-100">
+		<Card className="h-full w-full bg-white">
+			<CardHeader floated={false} shadow={false} className="rounded-none bg-white">
 				<div className="flex items-center justify-between gap-8">
 					<div>
 						<Typography variant="h4" color="blue-gray">
@@ -127,18 +111,16 @@ export const DocumentsLists = () => {
 						<Button className="flex items-center gap-2" size="sm" variant="outlined" color="blue-gray" onClick={handleArchive}>
 						</Button> */}
 						<div className="flex gap-2">
-							<Button className="flex gap-2" color="blue" onClick={handleCreateNewDocument}>
+							<Button className="flex gap-2" color="indigo" onClick={handleCreateNewDocument}>
 								<HiOutlineDocumentAdd size={16} /> Add Document
 							</Button>
-							<Button className="flex gap-2" color="blue" onClick={handleArchive}>
+							{/* <Button className="flex gap-2" color="blue" onClick={handleArchive}>
 								<HiOutlineArchive size={16} /> Archive
-							</Button>
+							</Button> */}
 						</div>
 						<div className="w-full md:w-72">
 							<Input label="Search" icon={<MagnifyingGlassIcon className="h-5 w-5" />} />
 						</div>
-
-
 					</div>
 				</div>
 				<div className="flex mb-16 whitespace-pre flex-col items-center justify-between gap-4 md:flex-row">
@@ -154,13 +136,13 @@ export const DocumentsLists = () => {
 				</div>
 			</CardHeader>
 			<CardBody className="overflow-scroll px-0">
-				<table className="w-full min-w-max table-auto text-left">
+				<table className="w-full min-w-max table-auto">
 					<thead>
 						<tr>
 							{TABLE_HEAD.map((head, index) => (
 								<th
 									key={head}
-									className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50  p-4 transition-colors sticky -top-8 hover:bg-blue-gray-50"
+									className="border-y border-blue-gray-100 bg-indigo-50/50 p-4 transition-colors sticky -top-8 "
 								>
 									<Typography
 										variant="small"
@@ -168,9 +150,7 @@ export const DocumentsLists = () => {
 										className="flex items-center justify-between gap-2 font-bold leading-none"
 									>
 										{head}{" "}
-										{index !== TABLE_HEAD.length - 1 && (
-											<ChevronUpDownIcon strokeWidth={2} className="h-4 w-4" />
-										)}
+										{index !== TABLE_HEAD.length - 1}
 									</Typography>
 								</th>
 							))}
@@ -207,9 +187,9 @@ export const DocumentsLists = () => {
 												<Typography
 													variant="small"
 													color="blue-gray"
-													className="font-normal opacity-70"
+													className="font-normal opacity-80"
 												>
-													No. {controlNumber}
+													Control No. {controlNumber}
 												</Typography>
 											</div>
 										</td>
@@ -228,7 +208,7 @@ export const DocumentsLists = () => {
 													color="blue-gray"
 													className="font-normal opacity-70"
 												>
-													{collegeName}  {uploaderDesignation}
+													{uploaderDesignation}
 												</Typography>
 											</div>
 										</td>

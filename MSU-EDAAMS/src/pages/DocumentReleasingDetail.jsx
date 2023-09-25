@@ -5,7 +5,7 @@ import { Avatar, Typography } from "@material-tailwind/react";
 import logo from '../assets/msulogo.png'
 import { format } from "date-fns";
 
-const DocumentEndorsementDetail = ({ document }) => {
+const DocumentReleasingDetail = ({ document }) => {
 
 	const store = documentsStore();
 
@@ -26,7 +26,7 @@ const DocumentEndorsementDetail = ({ document }) => {
 					{document.documentType}
 				</Typography>
 				<Typography
-					className='text-md rounded-lg p-1 text-black font-bold text-indigo-900'>
+					className='text-md rounded-lg p-1 text-indigo-900 font-bold '>
 					{document.collegeName}
 				</Typography>
 			</div>
@@ -38,10 +38,10 @@ const DocumentEndorsementDetail = ({ document }) => {
 					<b>Date: </b> {format(new Date(document.createdAt), 'yyyy-MM-dd')}
 				</Typography>
 				<Typography className='text-sm pl-2 py-1'>
-					Approved By: {document.deanApproverName}
+					Approved By: {document.opApproverName}
 				</Typography>
 				<Typography className='text-sm pl-2 py-1'>
-					<b>Date Approved: </b> {format(new Date(document.dateDeanApproved), 'yyyy-MM-dd')}
+					<b>Date Approved: </b> {format(new Date(document.opApprovalDate), 'yyyy-MM-dd')}
 				</Typography>
 			</div>
 		</div>
@@ -49,4 +49,4 @@ const DocumentEndorsementDetail = ({ document }) => {
 
 }
 
-export default DocumentEndorsementDetail;
+export default DocumentReleasingDetail;

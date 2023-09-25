@@ -15,6 +15,7 @@ import { Dashboard } from "./pages/Dashboard";
 import { DocumentsLists } from "./pages/DocumentsLists";
 import OPApprovalPage from "./pages/OPApprovalPage";
 import TestingPage from "./pages/TestingPage";
+import ReleasingDocumentPage from "./pages/ReleasingDocumentPage";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -50,6 +51,7 @@ const MainRoutes = () => (
         <Route path="/opapproval" element={<OPApprovalPage />} />
         <Route path="/archive" element={<ArchivePage />} />
         <Route path="/manageusers" element={<ManageUsers />} />
+        <Route path="/releasedocument" element={<ReleasingDocumentPage />} />
         <Route path="/testing" element={<TestingPage />} />
       </Routes>
     </div>

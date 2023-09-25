@@ -95,11 +95,11 @@ const LandingPage = () => {
     <div className="relative h-screen flex">
       <div className="flex flex-col items-start w-1/2">
         <div className="flex flex-col mt-40 ml-20">
-          <Typography className="text-4xl mb-2 rounded-lg text-gray-900 tracking-tight font-extrabold">
-            MSU Main Campus - Marawi City
+          <Typography className="text-5xl mb-2 rounded-lg text-gray-900 tracking-tight font-extrabold">
+            Mindanao State University
           </Typography>
-          <Typography className="flex flex-col text-7xl mb-2 text-indigo-600 font-extrabold">
-            MSU-EDAAMS
+          <Typography className="flex flex-col text-8xl mb-2 text-indigo-600 font-extrabold">
+            EDAAMS
           </Typography>
 
           <Typography className="mb-1 text-gray-700">
@@ -110,8 +110,8 @@ const LandingPage = () => {
             processes and efficiently manage document archives <br /> electronically.
           </Typography>
         </div>
-        <div className="absolute inset-0 flex items-center ml-20 mt-64">
-          <Button className="bg-indigo-600 hover-indigo-900" onClick={handleOpen}>Sign in</Button>
+        <div className="absolute inset-0 flex items-center ml-20 mt-48">
+          <Button className="bg-indigo-600 hover-indigo-900" onClick={handleOpen}>Get Started</Button>
         </div>
       </div>
       <Dialog
@@ -127,7 +127,7 @@ const LandingPage = () => {
             className="mb-4 grid h-28 place-items-center"
           >
             <Typography variant="h3" color="white">
-              Sign In
+              Account Login
             </Typography>
           </CardHeader>
           <CardBody className="flex flex-col gap-4">
