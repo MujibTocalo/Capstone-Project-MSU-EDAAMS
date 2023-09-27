@@ -177,7 +177,7 @@ const ManageUsers = () => {
             <div className="add-user">
               <Button
                 onClick={handleOpen}
-                className="flex items-center gap-3"
+                className="flex items-center gap-3 hover:scale-105"
                 color="indigo"
                 size="md"
               > Register User
@@ -283,8 +283,8 @@ const ManageUsers = () => {
                   </CardBody>
                   <CardFooter className="flex mx-auto">
 
-                    <Button className="flex"
-                      variant="outlined"
+                    <Button className="flex hover:scale-105"
+                      variant="standard"
                       onClick={AddUser}
                     >Save User Detail</Button>
                   </CardFooter>

@@ -111,7 +111,7 @@ export const DocumentsLists = () => {
 						<Button className="flex items-center gap-2" size="sm" variant="outlined" color="blue-gray" onClick={handleArchive}>
 						</Button> */}
 						<div className="flex gap-2">
-							<Button className="flex gap-2" color="indigo" onClick={handleCreateNewDocument}>
+							<Button className="flex gap-2 hover:scale-105" color="indigo" onClick={handleCreateNewDocument}>
 								<HiOutlineDocumentAdd size={16} /> Add Document
 							</Button>
 							{/* <Button className="flex gap-2" color="blue" onClick={handleArchive}>

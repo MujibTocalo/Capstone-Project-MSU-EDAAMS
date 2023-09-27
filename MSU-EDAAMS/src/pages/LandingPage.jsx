@@ -6,6 +6,9 @@ import { useToast } from "../components/ToastService";
 import image from "../pages/images/image3.png"
 // import "../pages/CSS Files/LandingPage.css";
 
+import MSULogo from '../assets/msulogo.png'
+import CICSLogo from '../assets/CICS_Logo.png'
+
 import {
   Button,
   Dialog,
@@ -92,38 +95,40 @@ const LandingPage = () => {
   const handleOpen = () => setOpen((cur) => !cur);
 
   return (
-    <div className="relative h-screen flex">
-      <div className="flex flex-col items-start w-1/2">
-        <div className="flex flex-col mt-40 ml-20">
-          <Typography className="text-5xl mb-2 rounded-lg text-gray-900 tracking-tight font-extrabold">
+    <div className="relative h-screen overflow-hidden flex">
+      <div className="flex flex-col items-start">
+        <div className="flex flex-row h-24 w-24 m-5 items-center">
+          <img src={MSULogo} alt="Logo" />
+          <img src={CICSLogo} alt="Logo" />
+        </div>
+        <div className="flex flex-col mt-8 ml-14 text-center gap-1.5">
+          <Typography className="text-5xl whitespace-pre mb-2 rounded-lg text-gray-900 tracking-tight font-bold">
             Mindanao State University
           </Typography>
           <Typography className="flex flex-col text-8xl mb-2 text-indigo-600 font-extrabold">
             EDAAMS
           </Typography>
 
-          <Typography className="mb-1 text-gray-700">
+          <Typography className="font-semibold text-xl whitespace-pre text-gray-700">
             Electronic Document Approval and Archive Management System
           </Typography>
-          <Typography className="mb-0 text-gray-700">
+          <Typography className="mb-0 text-xl text-gray-700">
             A software solution designed to streamline document approval <br /> & track
             processes and efficiently manage document archives <br /> electronically.
           </Typography>
-        </div>
-        <div className="absolute inset-0 flex items-center ml-20 mt-48">
-          <Button className="bg-indigo-600 hover-indigo-900" onClick={handleOpen}>Get Started</Button>
+          <Button className="flex mx-auto mt-10 bg-indigo-600 hover:bg-indigo-900 hover:scale-110 text-sm" onClick={handleOpen}>Get Started</Button>
         </div>
       </div>
       <Dialog
-        size="xs"
+        size="sm"
         open={open}
         handler={handleOpen}
-        className="bg-transparent shadow-none"
+        className="flex bg-transparent shadow-none"
       >
         <Card className="mx-auto w-full max-w-[24rem]">
           <CardHeader
-            variant="gradient"
-            color="blue"
+            variant='standard'
+            color="indigo"
             className="mb-4 grid h-28 place-items-center"
           >
             <Typography variant="h3" color="white">
@@ -145,14 +150,14 @@ const LandingPage = () => {
               type="password"
             />
           </CardBody>
-          <CardFooter className="pt-0">
+          <CardFooter className="pt-0 hover:scale-105">
             <Button variant="gradient" onClick={handleLogin} fullWidth>
               Sign In
             </Button>
           </CardFooter>
         </Card>
       </Dialog>
-      <div className="w-1/2 mt-12 mr-5">
+      <div className='flex p-10'>
         <img
           src={image}
           alt="image"

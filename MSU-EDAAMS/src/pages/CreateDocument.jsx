@@ -239,7 +239,7 @@ const CreateDocument = () => {
           color='cyan'
           label="Content" value={content} onChange={handleContent} />
       </div>
-      <div className='flex mx-auto mt-2'>
+      <div className='flex mx-auto mt-2 hover:scale-105'>
         <Button variant='outlined' onClick={handleOpen} size='sm'
           color='green'>Submit</Button>
         <Dialog

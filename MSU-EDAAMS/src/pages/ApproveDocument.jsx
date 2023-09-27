@@ -171,7 +171,7 @@ const ApproveDocument = () => {
     <div className='flex flex-col mx-auto'>
       <div className='grid grid-cols-4'>
         {pendingDocuments.map((document) => (
-          <div key={document._id} className='flex flex-col bg-indigo-50/50 p-1.5 m-1.5 rounded-lg shadow-md hover:shadow-xl'>
+          <div key={document._id} className='flex flex-col bg-indigo-50/50 p-1.5 m-2 rounded-lg shadow-md hover:scale-105'>
             <DocumentApproverDetail document={document} />
             <Dialog
               className='flex flex-col overflow-scroll bg-white rounded-t-xl h-screen'
@@ -189,10 +189,10 @@ const ApproveDocument = () => {
               </DialogBody>
               <DialogFooter>
                 <div className='flex gap-3'>
-                  <Button variant='standard' color='green' onClick={(e) => handleApproveDocument(e, document._id) && setOpen(false)}>
+                  <Button className="hover:scale-105" variant='standard' color='green' onClick={(e) => handleApproveDocument(e, document._id) && setOpen(false)}>
                     Approve Document
                   </Button>
-                  <Button size='sm' variant='standard' color='red' onClick={() => handleRejectOpen(document)}>
+                  <Button className="hover:scale-105" size='sm' variant='standard' color='red' onClick={() => handleRejectOpen(document)}>
                     Reject Document
                   </Button>
 
@@ -227,7 +227,7 @@ const ApproveDocument = () => {
               </DialogFooter>
             </Dialog>
             <div className='flex content-start whitespace-pre '>
-              <Button className='flex flex-row text-black font-medium items-center m-2 hover:font-semibold' size='sm' color='white' variant='text'
+              <Button className='flex flex-row text-black font-medium items-center m-2 hover:font-semibold hover:scale-105' size='sm' color='white' variant='text'
                 onClick={() => handleOpen(document)}>
                 Read More{" "}
                 <svg
