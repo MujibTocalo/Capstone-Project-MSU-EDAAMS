@@ -13,10 +13,6 @@ const DocumentApproverDetail = ({ document }) => {
 		store.fetchDocuments();
 	}, [store])
 
-	// if (document.documentStatus !== "Pending") {
-	// 	return null;
-	// }
-
 	return (
 		<div key={document._id}
 			className='flex flex-col bg-white p-3 rounded-md'>

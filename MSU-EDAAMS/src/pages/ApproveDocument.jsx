@@ -17,6 +17,7 @@ import { useToast } from "../components/ToastService";
 import { LuAlertCircle } from "react-icons/lu";
 
 const ApproveDocument = () => {
+
   const store = documentsStore();
   const toast = useToast();
 
@@ -59,6 +60,7 @@ const ApproveDocument = () => {
   const handleOpen = (document) => {
     setSelectedDocument(document);
     setOpen(true);
+
   };
 
   useEffect(() => {
@@ -86,7 +88,7 @@ const ApproveDocument = () => {
         decision: "true",
       };
 
-      const response = await fetch(
+      const res = await fetch(
         `http://localhost:7000/document/deanApproval/${documentId}`,
         {
           method: "PUT",
@@ -94,27 +96,24 @@ const ApproveDocument = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(data),
-
-        },
-      );
-
-      if (response.ok) {
+        });
+      if (res.ok) {
         toast.open(
-          <div className="flex absolute gap-2 bg-green-500 text-white p-4 rounded-lg shadow-lg">
-            <LuAlertCircle size={40} />
+          <div className="flex gap-2 bg-green-500 text-white p-4 rounded-lg shadow-lg">
+            <LuAlertCircle size={55} />
             <div>
-              <Typography variant="h4">Success!</Typography>
-              <Typography variant="paragraph">Document Approved</Typography>
+              <Typography variant="h5">Approved!</Typography>
+              <Typography variant="paragraph">Document Approved Successfully</Typography>
             </div>
           </div>
-        );
+        )
       } else {
         toast.open(
-          <div className="flex absolute gap-2 bg-red-500 text-white p-4 rounded-lg shadow-lg">
-            <LuAlertCircle size={40} />
+          <div className="flex gap-2 bg-red-500 text-white p-4 rounded-lg shadow-lg">
+            <LuAlertCircle size={55} />
             <div>
-              <Typography variant="h4">Failed!</Typography>
-              <Typography variant="paragraph">Document Rejected</Typography>
+              <Typography variant="h5">Failed!</Typography>
+              <Typography variant="paragraph">Document Rejection Failed</Typography>
             </div>
           </div>
         );
@@ -122,10 +121,10 @@ const ApproveDocument = () => {
 
     } catch (error) {
       toast.open(
-        <div className="flex absolute gap-2 bg-red-800 text-white p-4 rounded-lg shadow-lg">
-          <LuAlertCircle size={40} />
+        <div className="flex gap-2 bg-red-800 text-white p-4 rounded-lg shadow-lg">
+          <LuAlertCircle size={55} />
           <div>
-            <Typography variant="h4">Error!</Typography>
+            <Typography variant="h5">Error!</Typography>
             <Typography variant="paragraph">Document Error</Typography>
           </div>
         </div>
@@ -155,20 +154,38 @@ const ApproveDocument = () => {
       });
 
       if (res.ok) {
-        setAlertMessage('Document Rejected.');
-        setAlertType('error');
-        hideAlertAfterDelay();
+        toast.open(
+          <div className='flex gap-2 bg-blue-500 text-white p-4 rounded-lg shadow-lg'>
+            <LuAlertCircle size={55} />
+            <div>
+              <Typography variant='h5'>Rejected!</Typography>
+              <Typography variant='paragraph'>Document Rejection Successful.</Typography>
+            </div>
+          </div>
+        )
       }
     } catch (error) {
+      toast.open(
+        <div className='flex gap-2 bg-red-800 text-white p-4 rounded-lg shadow-lg'>
+          <LuAlertCircle size={55} />
+          <div>
+            <Typography variant='h5'>Error!</Typography>
+            <Typography variant='paragraph'>Document Rejection Error</Typography>
+          </div>
+        </div>
+      )
       console.log(error);
-      setAlertMessage('Document Rejection Error.');
-      setAlertType('error');
-      hideAlertAfterDelay();
+
     }
   };
 
   return (
     <div className='flex flex-col mx-auto'>
+      <div>
+        <Typography className='flex justify-center p-2 rounded-md font-semibold text-xl bg-indigo-800 text-white'>
+          Approval Page 
+        </Typography>
+      </div>
       <div className='grid grid-cols-4'>
         {pendingDocuments.map((document) => (
           <div key={document._id} className='flex flex-col bg-indigo-50/50 p-1.5 m-2 rounded-lg shadow-md hover:scale-105'>

@@ -113,7 +113,7 @@ const CreateDocument = () => {
           <div className="flex gap-2 bg-green-500 text-white p-4 rounded-lg shadow-lg">
             <LuAlertCircle size={40} />
             <div>
-              <Typography variant="h4">Success!</Typography>
+              <Typography variant="h5">Success!</Typography>
               <Typography variant="paragraph">
                 Document Submittion Successful
               </Typography>
@@ -132,7 +132,7 @@ const CreateDocument = () => {
           <div className='flex gap-2 bg-red-500 text-white p-4 rounded-lg shadow-lg'>
             <LuAlertCircle size={40} />
             <div>
-              <Typography variant='h4'>Failed!</Typography>
+              <Typography variant='h5'>Failed!</Typography>
               <Typography variant='paragraph'>Document Submittion Failed</Typography>
             </div>
 
@@ -144,7 +144,7 @@ const CreateDocument = () => {
         <div className='flex gap-2 bg-red-800 text-white p-4 rounded-lg shadow-lg'>
           <LuAlertCircle size={40} />
           <div>
-            <Typography variant='h4'>Error!</Typography>
+            <Typography variant='h5'>Error!</Typography>
             <Typography variant='paragraph'>Document Submittion Error</Typography>
           </div>
 

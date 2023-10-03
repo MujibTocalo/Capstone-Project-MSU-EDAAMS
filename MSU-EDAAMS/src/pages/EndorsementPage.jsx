@@ -112,20 +112,10 @@ const EndorseDocument = () => {
 			if (res.ok) {
 				toast.open(
 					<div className='flex gap-2 bg-green-500 text-white p-4 rounded-lg shadow-lg'>
-						<LuAlertCircle size={40} />
+						<LuAlertCircle size={55} />
 						<div>
-							<Typography variant='h4'>Success!</Typography>
-							<Typography variant='paragraph'>Document Endorsed</Typography>
-						</div>
-					</div>
-				)
-			} else {
-				toast.open(
-					<div className='flex gap-2 bg-red-500 text-white p-4 rounded-lg shadow-lg'>
-						<LuAlertCircle size={40} />
-						<div>
-							<Typography variant='h4'>Success!</Typography>
-							<Typography variant='paragraph'>Document Rejected</Typography>
+							<Typography variant='h5'>Endorsed!</Typography>
+							<Typography variant='paragraph'>Document Endorsement Successful.</Typography>
 						</div>
 					</div>
 				)
@@ -133,9 +123,9 @@ const EndorseDocument = () => {
 		} catch (error) {
 			toast.open(
 				<div className='flex gap-2 bg-red-800 text-white p-4 rounded-lg shadow-lg'>
-					<LuAlertCircle size={40} />
+					<LuAlertCircle size={55} />
 					<div>
-						<Typography variant='h4'>Error!</Typography>
+						<Typography variant='h5'>Error!</Typography>
 						<Typography variant='paragraph'>Document Error</Typography>
 					</div>
 				</div>
@@ -166,15 +156,35 @@ const EndorseDocument = () => {
 			});
 
 			if (res.ok) {
-				console.log(res)
+				toast.open(
+					<div className='flex gap-2 bg-blue-500 text-white p-4 rounded-lg shadow-lg'>
+						<LuAlertCircle size={55} />
+						<div>
+							<Typography variant='h5'>Rejected!</Typography>
+							<Typography variant='paragraph'>Document Rejection Successful.</Typography>
+						</div>
+					</div>
+				)
 			}
 		} catch (error) {
+			toast.open(
+				<div className='flex gap-2 bg-red-800 text-white p-4 rounded-lg shadow-lg'>
+					<LuAlertCircle size={55} />
+					<div>
+						<Typography variant='h5'>Error!</Typography>
+						<Typography variant='paragraph'>Document Rejection Error</Typography>
+					</div>
+				</div>
+			)
 			console.log(error);
 		}
 	};
 
 	return (
 		<div className='flex flex-col mx-auto'>
+			<Typography className='flex justify-center p-2 rounded-md font-semibold text-xl bg-indigo-800 text-white'>
+				Endorsement Page
+			</Typography>
 			<div className='grid grid-cols-4'>
 				{endorseDocument.map((document) => (
 					<div key={document._id} className='flex flex-col bg-indigo-50/50 p-1.5 m-2 rounded-lg shadow-md hover:scale-105'>

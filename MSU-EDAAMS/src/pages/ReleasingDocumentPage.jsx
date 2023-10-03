@@ -7,38 +7,26 @@ import { Button, Alert, Dialog, DialogHeader, DialogBody, DialogFooter, Typograp
 
 import { useToast } from '../components/ToastService';
 import { LuAlertCircle } from 'react-icons/lu';
-import DocumentDetail from './DocumentApproverDetail';
-import { HiDownload } from 'react-icons/hi';
 
 const ReleasingDocumentPage = () => {
 
 	const store = documentsStore()
 	const toast = useToast()
 
-	const [reject, setReject] = useState(false);
-	const [rejectSelected, setRejectSelected] = useState(null);
-
 	const [selectedDocument, setSelectedDocument] = useState(null);
 	const [open, setOpen] = useState(false);
 
 
 	const [ReleaserName, setName] = useState()
-	const [ReleaserDesignation, setDesignation] = useState()
 	const [Remark, setRemark] = useState()
-	const [signature, setSignature] = useState()
 
 
 
 	const handleReleaserName = (userDetail) => {
 
 		setName(userDetail.firstName + ' ' + userDetail.lastName)
-		setDesignation(userDetail.designation)
-		setSignature(userDetail.signature)
 	};
 
-	const handleRemark = (e) => {
-		setRemark(e.target.value)
-	}
 
 	const hideAlertAfterDelay = () => {
 		setTimeout(() => {
@@ -46,12 +34,6 @@ const ReleasingDocumentPage = () => {
 			setAlertType('');
 		}, 5000);
 	};
-
-
-	const handleRejectOpen = (document) => {
-		setRejectSelected(document)
-		setReject(true)
-	}
 
 
 	const handleOpen = (document) => {
@@ -96,21 +78,10 @@ const ReleasingDocumentPage = () => {
 			if (res.ok) {
 				toast.open(
 					<div className='flex gap-2 bg-green-500 text-white p-4 rounded-lg shadow-lg'>
-						<LuAlertCircle size={40} />
+						<LuAlertCircle size={55} />
 						<div>
 							<Typography variant='h4'>Success!</Typography>
-							<Typography variant='paragraph'>Document Approved</Typography>
-						</div>
-
-					</div>
-				)
-			} else {
-				toast.open(
-					<div className='flex gap-2 bg-red-500 text-white p-4 rounded-lg shadow-lg'>
-						<LuAlertCircle size={40} />
-						<div>
-							<Typography variant='h4'>Failed!</Typography>
-							<Typography variant='paragraph'>Document Rejected</Typography>
+							<Typography variant='paragraph'>Archived as Not Released</Typography>
 						</div>
 
 					</div>
@@ -119,10 +90,10 @@ const ReleasingDocumentPage = () => {
 		} catch (error) {
 			toast.open(
 				<div className='flex gap-2 bg-red-800 text-white p-4 rounded-lg shadow-lg'>
-					<LuAlertCircle size={40} />
+					<LuAlertCircle size={55} />
 					<div>
 						<Typography variant='h4'>Error!</Typography>
-						<Typography variant='paragraph'>Document Error</Typography>
+						<Typography variant='paragraph'>Archive Error</Typography>
 					</div>
 
 				</div>
@@ -164,6 +135,9 @@ const ReleasingDocumentPage = () => {
 
 	return (
 		<div className='flex flex-col mx-auto'>
+			<Typography className='flex justify-center p-2 rounded-md font-semibold text-xl bg-indigo-800 text-white'>
+				Releasing Page
+			</Typography>
 			<div className='grid grid-cols-4'>
 				{endorseDocument.map((document) => (
 					<div key={document._id} className='flex flex-col bg-indigo-50/50 p-1.5 m-2 rounded-lg shadow-md hover:scale-105'>

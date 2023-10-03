@@ -61,9 +61,9 @@ const LandingPage = () => {
               <div className="flex gap-2 bg-green-500 text-white p-4 rounded-lg shadow-lg">
                 <LuAlertCircle size={40} />
                 <div>
-                  <Typography variant="h3">Success!</Typography>
+                  <Typography variant="h5">Authenticated!</Typography>
                   <Typography variant="paragraph">
-                    Welcome to EDAAMS.
+                    You are logged in successfully.
                   </Typography>
                 </div>
               </div>
