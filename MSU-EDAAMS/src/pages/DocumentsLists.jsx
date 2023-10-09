@@ -57,29 +57,37 @@ export const DocumentsLists = () => {
 
 	const store = documentsStore()
 
-	const [tableRows, setTableRows] = useState([])
+	const [tableRows, setTableRows] = useState([]);
+	const [searchQuery, setSearchQuery] = useState("");
+	const [filteredTableRows, setFilteredTableRows] = useState([]);
 
 	useEffect(() => {
 		const fetchTableRows = async () => {
 			try {
-				const response = await axios.get('http://localhost:7000/document');
+				const response = await axios.get("http://localhost:7000/document");
 				const responseData = response.data;
-				const documentArray = responseData.document
+				const documentArray = responseData.document;
 				const sortedDocuments = documentArray
-					.sort((a, b) =>
-						new Date(b.createdAt) - new Date(a.createdAt)
-					)
-					.filter((document) => document.documentStatus === 'DeanApproved' ||
-						document.documentStatus === 'Endorsed' || document.documentStatus === 'Dean Approved' || document.documentStatus === 'Pending' || document.documentStatus === 'OP Approved')
+					.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+					.filter(
+						(document) =>
+							document.documentStatus === "DeanApproved" ||
+							document.documentStatus === "Endorsed" ||
+							document.documentStatus === "Dean Approved" ||
+							document.documentStatus === "Pending" ||
+							document.documentStatus === "OP Approved"
+					);
 
+				// Populate tableRows with the fetched data
 				setTableRows(sortedDocuments);
+				setFilteredTableRows(sortedDocuments); // Set filteredTableRows initially
 			} catch (error) {
-
+				console.log(error);
 			}
 		};
 
 		fetchTableRows();
-	}, [store]);
+	}, []);
 
 
 
@@ -89,6 +97,19 @@ export const DocumentsLists = () => {
 	const handleArchive = () => {
 		navigate('/archive')
 	}
+
+	const handleSearch = (e) => {
+		const query = e.target.value;
+		setSearchQuery(query);
+
+		// Filter the tableRows based on the uploader's detail (uploaderName)
+		const filteredRows = tableRows.filter((row) =>
+			row.uploaderName.toLowerCase().includes(query.toLowerCase())
+		);
+
+		setFilteredTableRows(filteredRows);
+	};
+
 	const navigate = useNavigate()
 
 	return (
@@ -119,7 +140,12 @@ export const DocumentsLists = () => {
 							</Button> */}
 						</div>
 						<div className="w-full md:w-72">
-							<Input label="Search" icon={<MagnifyingGlassIcon className="h-5 w-5" />} />
+							<Input
+								label="Search"
+								icon={<MagnifyingGlassIcon className="h-5 w-5" />}
+								onChange={handleSearch}
+								value={searchQuery}
+							/>
 						</div>
 					</div>
 				</div>
@@ -157,7 +183,7 @@ export const DocumentsLists = () => {
 						</tr>
 					</thead>
 					<tbody>
-						{tableRows.map(
+						{filteredTableRows.map(
 							(
 								{
 									documentType,
@@ -270,7 +296,8 @@ export const DocumentsLists = () => {
 									</tr>
 								);
 							},
-						)}
+						)
+						}
 					</tbody>
 				</table>
 			</CardBody>

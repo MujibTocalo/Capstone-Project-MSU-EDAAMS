@@ -31,7 +31,7 @@ const Sidebar = () => {
 
   const menus = [
     { name: 'Dashboard', link: '/dashboard', icon: RiDashboardLine },
-    { name: 'Documents', link: '/documents', icon: HiOutlineDocumentText },
+    { name: 'Document', link: '/documents', icon: HiOutlineDocumentText },
     { name: 'Approve Document', link: '/approvedocument', icon: LuClipboardCheck },
     { name: 'Endorse Document', link: '/endorsedocument', icon: RiAttachment2 },
     { name: 'OP Approval', link: '/opapproval', icon: HiOutlineDocumentText },
@@ -45,7 +45,7 @@ const Sidebar = () => {
   const [open, setOpen] = useState(true)
 
   return (
-    <div className='flex flex-col bg-indigo-900 duration-500'>
+    <div className='flex flex-col overflow-auto bg-indigo-900 duration-500'>
       <div className={`h-screen ${open ? 'w-56' : 'w-14'} duration-500 text-white p-2`}>
         <div className='py-4 flex duration-500 justify-between'>
           <h1 className={`${!open && 'hidden'} whitespace-pre font-semibold text-md 0.5s ease-in-out ml-2.5`}>MSU EDAAMS</h1>

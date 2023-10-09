@@ -51,6 +51,8 @@ const ArchivePage = () => {
 	const store = documentsStore()
 
 	const [tableRows, setTableRows] = useState([])
+	const [searchQuery, setSearchQuery] = useState("");
+	const [filteredTableRows, setFilteredTableRows] = useState([]);
 
 	useEffect(() => {
 		const fetchTableRows = async () => {
@@ -66,16 +68,28 @@ const ArchivePage = () => {
 						new Date(b.createdAt) - new Date(a.createdAt)
 					);
 
+				// Populate tableRows with the fetched data
 				setTableRows(sortedDocuments);
+				setFilteredTableRows(sortedDocuments); // Set filteredTableRows initially
 			} catch (error) {
-
+				console.log(error);
 			}
 		};
 
 		fetchTableRows();
 	}, [store]);
 
+	const handleSearch = (e) => {
+		const query = e.target.value;
+		setSearchQuery(query);
 
+		// Filter the tableRows based on the uploader's detail (uploaderName)
+		const filteredRows = tableRows.filter((row) =>
+			row.uploaderName.toLowerCase().includes(query.toLowerCase())
+		);
+
+		setFilteredTableRows(filteredRows);
+	};
 
 	const navigate = useNavigate()
 
@@ -93,7 +107,12 @@ const ArchivePage = () => {
 
 					</div>
 					<div className="w-full md:w-72">
-						<Input label="Search" icon={<MagnifyingGlassIcon className="h-5 w-5" />} />
+						<Input
+							label="Search"
+							icon={<MagnifyingGlassIcon className="h-5 w-5" />}
+							onChange={handleSearch}
+							value={searchQuery}
+						/>
 					</div>
 				</div>
 			</CardHeader>
@@ -119,7 +138,7 @@ const ArchivePage = () => {
 						</tr>
 					</thead>
 					<tbody>
-						{tableRows.map(
+						{filteredTableRows.map(
 							(
 								{
 									documentType,

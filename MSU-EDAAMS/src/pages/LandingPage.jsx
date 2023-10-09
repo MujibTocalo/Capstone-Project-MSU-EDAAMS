@@ -96,7 +96,7 @@ const LandingPage = () => {
   const handleOpen = () => setOpen((cur) => !cur);
 
   return (
-    <div className="relative h-screen bg-indigo-50/50 overflow-hidden flex flex-col">
+    <div className="relative h-screen bg-indigo-50/50 overflow-x-hidden overflow-y-scroll flex flex-col">
       <div className="flex flex-col items-start">
         <div className="flex mx-auto bg-indigo-700 h-14 items-center w-screen justify-center">
           <ul className="flex flex-row mr-10 m-4 gap-6 text-white font-medium">

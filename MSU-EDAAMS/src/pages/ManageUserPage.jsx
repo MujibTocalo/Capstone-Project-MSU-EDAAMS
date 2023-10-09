@@ -76,6 +76,10 @@ const ManageUsers = () => {
   const [password, setPassword] = useState("");
   const [signature, setSignature] = useState(null);
 
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredTableRows, setFilteredTableRows] = useState([]);
+
+
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
 
@@ -89,13 +93,25 @@ const ManageUsers = () => {
 
         const sortedUsers = userArray.sort((a, b) =>
           new Date(b.createdAt) - new Date(a.createdAt))
-        setTableRows(sortedUsers)
+        setFilteredTableRows(sortedUsers);
       } catch (error) {
 
       }
     }
     fetchTableRows()
   }, [])
+
+  const handleSearch = (e) => {
+    const query = e.target.value;
+    setSearchQuery(query);
+
+    // Filter the tableRows based on the uploader's name
+    const filteredRows = tableRows.filter((row) =>
+      `${row.firstName} ${row.lastName}`.toLowerCase().includes(query.toLowerCase())
+    );
+
+    setFilteredTableRows(filteredRows);
+  };
 
 
   const handleUserType = (e) => {
@@ -293,8 +309,10 @@ const ManageUsers = () => {
             </div>
             <div className="w-full md:w-72">
               <Input
-                label="Search"
+                label="Search by Name"
                 icon={<MagnifyingGlassIcon className="h-5 w-5" />}
+                onChange={handleSearch}
+                value={searchQuery}
               />
             </div>
           </div>
@@ -332,7 +350,7 @@ const ManageUsers = () => {
             </tr>
           </thead>
           <tbody>
-            {tableRows.map(
+            {filteredTableRows.map(
               (
                 { _id, userType, firstName, lastName, email, office, designation, status },
                 index
