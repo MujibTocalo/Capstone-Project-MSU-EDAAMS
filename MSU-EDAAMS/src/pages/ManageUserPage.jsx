@@ -87,25 +87,30 @@ const ManageUsers = () => {
   useEffect(() => {
     const fetchTableRows = async () => {
       try {
-        const response = await axios.get('http://localhost:7000/user');
+        const response = await axios.get("http://localhost:7000/user");
         const responseData = response.data;
         const userArray = responseData.user;
 
-        const sortedUsers = userArray.sort((a, b) =>
-          new Date(b.createdAt) - new Date(a.createdAt))
-        setFilteredTableRows(sortedUsers);
-      } catch (error) {
+        const sortedUsers = userArray.sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        );
 
+        setTableRows(sortedUsers); // Populate tableRows with the fetched data
+        setFilteredTableRows(sortedUsers); // Set filteredTableRows initially
+      } catch (error) {
+        console.log(error);
       }
-    }
-    fetchTableRows()
-  }, [])
+    };
+
+    fetchTableRows();
+  }, []);
+
 
   const handleSearch = (e) => {
     const query = e.target.value;
     setSearchQuery(query);
 
-    // Filter the tableRows based on the uploader's name
+    // Filter the tableRows based on the user's name
     const filteredRows = tableRows.filter((row) =>
       `${row.firstName} ${row.lastName}`.toLowerCase().includes(query.toLowerCase())
     );
