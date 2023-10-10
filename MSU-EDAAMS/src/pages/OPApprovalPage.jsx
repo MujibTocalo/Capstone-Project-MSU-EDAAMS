@@ -8,6 +8,7 @@ import { Button, Alert, Dialog, DialogHeader, DialogBody, DialogFooter, Typograp
 import { useToast } from '../components/ToastService';
 import { LuAlertCircle } from 'react-icons/lu';
 import DocumentDetail from './DocumentApproverDetail';
+import DocumentDetailForOP from './DocumentDetailForOP';
 
 const OPApprovalPage = () => {
 
@@ -178,7 +179,7 @@ const OPApprovalPage = () => {
 					<div key={document._id} className='flex flex-col bg-indigo-50/50 p-1.5 m-2 rounded-lg shadow-md hover:scale-105'>
 						<DocumentOPDetail document={document} />
 						<Dialog
-							className='flex flex-col overflow-scroll bg-white rounded-t-xl h-screen'
+							className='flex flex-col overflow-scroll bg-white rounded-t-xl max-h-[100vh]'
 							size='lg'
 							open={open && selectedDocument && selectedDocument._id === document._id}
 							handler={() => setOpen(false)}
@@ -189,7 +190,7 @@ const OPApprovalPage = () => {
 						>
 							<DialogHeader className='bg-[#23074d] text-white'>{document.documentType}</DialogHeader>
 							<DialogBody divider>
-								<DocumentCompleteDetail document={document} />
+								<DocumentDetailForOP document={document} />
 							</DialogBody>
 							<DialogFooter>
 								<div className='flex gap-4'>

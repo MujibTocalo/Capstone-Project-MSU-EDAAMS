@@ -180,10 +180,10 @@ const ApproveDocument = () => {
   };
 
   return (
-    <div className='flex flex-col mx-auto'>
+    <div className='flex flex-col mx-auto '>
       <div>
         <Typography className='flex justify-center p-2 rounded-md font-semibold text-xl bg-indigo-800 text-white'>
-          Approval Page 
+          Approval Page
         </Typography>
       </div>
       <div className='grid grid-cols-4'>
@@ -191,7 +191,7 @@ const ApproveDocument = () => {
           <div key={document._id} className='flex flex-col bg-indigo-50/50 p-1.5 m-2 rounded-lg shadow-md hover:scale-105'>
             <DocumentApproverDetail document={document} />
             <Dialog
-              className='flex flex-col overflow-scroll bg-white rounded-t-xl h-screen'
+              className='flex flex-col overflow-y-scroll bg-white rounded-t-xl max-h-[100vh]'
               size='lg'
               open={open && selectedDocument && selectedDocument._id === document._id}
               handler={() => setOpen(false)}

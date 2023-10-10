@@ -143,7 +143,7 @@ const ReleasingDocumentPage = () => {
 					<div key={document._id} className='flex flex-col bg-indigo-50/50 p-1.5 m-2 rounded-lg shadow-md hover:scale-105'>
 						<DocumentReleasingDetail document={document} />
 						<Dialog
-							className='flex flex-col overflow-scroll bg-white rounded-t-xl h-screen'
+							className='flex flex-col overflow-y-scroll bg-white rounded-t-xl max-h-screen'
 							size='lg'
 							open={open && selectedDocument && selectedDocument._id === document._id}
 							handler={() => setOpen(false)}

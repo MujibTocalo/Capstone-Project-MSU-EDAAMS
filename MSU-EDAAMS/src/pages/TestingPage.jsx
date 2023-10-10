@@ -5,10 +5,12 @@ import { PDFDownloadLink } from '@react-pdf/renderer'
 import { Button, Typography } from '@material-tailwind/react'
 import { DrawerDefault } from '../components/Drawer'
 import { CustomNavbar } from '../components/Navbar'
+import TrackDocumentContent from '../components/TrackingContent'
 
 const TestingPage = () => {
 	return (
 		<div>
+			<TrackDocumentContent />
 		</div>
 	)
 }

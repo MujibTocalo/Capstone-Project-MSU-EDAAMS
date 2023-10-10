@@ -14,7 +14,17 @@ import {
 	Chip,
 	CardFooter,
 	Tooltip,
+	Dialog,
+	DialogHeader,
+	Timeline,
+	TimelineItem,
+	TimelineConnector,
+	TimelineHeader,
+	TimelineIcon,
+	TimelineBody,
 } from "@material-tailwind/react";
+
+import { HomeIcon, BellIcon, CurrencyDollarIcon } from "@heroicons/react/24/solid";
 
 import { format } from 'date-fns'
 
@@ -26,6 +36,7 @@ import axios from "axios";
 import { BiDetail, BiEdit, BiTrash } from "react-icons/bi";
 import { BsCardChecklist } from "react-icons/bs";
 import { HiOutlineDocumentAdd } from "react-icons/hi";
+import TrackDocumentContent from "../components/TrackingContent";
 
 const TABS = [
 	{
@@ -60,6 +71,7 @@ export const DocumentsLists = () => {
 	const [tableRows, setTableRows] = useState([]);
 	const [searchQuery, setSearchQuery] = useState("");
 	const [filteredTableRows, setFilteredTableRows] = useState([]);
+	const [isTimelineDialogOpen, setIsTimelineDialogOpen] = useState(false);
 
 	useEffect(() => {
 		const fetchTableRows = async () => {
@@ -78,18 +90,22 @@ export const DocumentsLists = () => {
 							document.documentStatus === "OP Approved"
 					);
 
-				// Populate tableRows with the fetched data
 				setTableRows(sortedDocuments);
-				setFilteredTableRows(sortedDocuments); // Set filteredTableRows initially
+				setFilteredTableRows(sortedDocuments);
 			} catch (error) {
 				console.log(error);
 			}
 		};
 
+
 		fetchTableRows();
 	}, []);
 
 
+
+	const handleTimelineClick = () => {
+		setIsTimelineDialogOpen(!isTimelineDialogOpen);
+	};
 
 	const handleCreateNewDocument = () => {
 		navigate('/createDocument')
@@ -114,6 +130,115 @@ export const DocumentsLists = () => {
 
 	return (
 		<Card className="h-full w-full bg-white">
+			<div>
+				<Dialog
+					size="md"
+					open={isTimelineDialogOpen}
+					handler={setIsTimelineDialogOpen}
+					className="bg-white shadow-none">
+					<Card
+						className="mx-auto w-full">
+						<CardHeader
+							className="mb-4 grid h-16 place-items-center bg-indigo-800">
+							<Typography variant='h4' className='text-white'>
+								Document Tracking
+							</Typography>
+						</CardHeader>
+						<CardBody
+							className="flex flex-col h-96 overflow-y-scroll">
+							<Timeline>
+								<TimelineItem>
+									<TimelineConnector />
+									<TimelineHeader>
+										<TimelineIcon className="p-2">
+											<HomeIcon className="h-4 w-4" />
+										</TimelineIcon>
+										<Typography variant="h5" color="blue-gray">
+											Department of Something
+										</Typography>
+									</TimelineHeader>
+									<TimelineBody className="pb-8">
+										<Typography color="gray" className="font-normal text-gray-600">
+											Date Uploaded: <br />
+											Uploaded By:
+										</Typography>
+									</TimelineBody>
+								</TimelineItem>
+								<TimelineItem>
+									<TimelineConnector />
+									<TimelineHeader>
+										<TimelineIcon className="p-2">
+											<HomeIcon className="h-4 w-4" />
+										</TimelineIcon>
+										<Typography variant="h5" color="blue-gray">
+											College of Something
+										</Typography>
+									</TimelineHeader>
+									<TimelineBody className="pb-8">
+										<Typography color="gray" className="font-normal text-gray-600">
+											Date Approved By Dean: <br />
+											Approved By:
+										</Typography>
+									</TimelineBody>
+								</TimelineItem>
+								<TimelineItem>
+									<TimelineConnector />
+									<TimelineHeader>
+										<TimelineIcon className="p-2">
+											<BellIcon className="h-4 w-4" />
+										</TimelineIcon>
+										<Typography variant="h5" color="blue-gray">
+											Office of Vice Chancellor for Academic Affairs
+										</Typography>
+									</TimelineHeader>
+									<TimelineBody className="pb-8">
+										<Typography color="gray" className="font-normal text-gray-600">
+											Date Endorsed: <br />
+											Endorsed By:
+										</Typography>
+									</TimelineBody>
+								</TimelineItem>
+								<TimelineItem>
+									<TimelineConnector />
+									<TimelineHeader>
+										<TimelineIcon className="p-2">
+											<BellIcon className="h-4 w-4" />
+										</TimelineIcon>
+										<Typography variant="h5" color="blue-gray">
+											Office of the President
+										</Typography>
+									</TimelineHeader>
+									<TimelineBody className="pb-8">
+										<Typography color="gray" className="font-normal text-gray-600">
+											Date Approved: <br />
+											Approved By:
+										</Typography>
+									</TimelineBody>
+								</TimelineItem>
+								<TimelineItem>
+									<TimelineHeader>
+										<TimelineIcon className="p-2">
+											<CurrencyDollarIcon className="h-4 w-4" />
+										</TimelineIcon>
+										<Typography variant="h5" color="blue-gray">
+											Pending for Release
+										</Typography>
+									</TimelineHeader>
+									<TimelineBody>
+									</TimelineBody>
+								</TimelineItem>
+							</Timeline>
+						</CardBody>
+						<CardFooter className="flex border bg-indigo-50/50 rounded-lg p-1 w-full mx-auto">
+							<Button className="flex mx-auto hover:scale-105"
+								variant="text"
+								size='lg'
+								onClick={handleTimelineClick}
+							>Close</Button>
+						</CardFooter>
+					</Card>
+				</Dialog>
+			</div>
 			<CardHeader floated={false} shadow={false} className="rounded-none bg-white">
 				<div className="flex items-center justify-between gap-8">
 					<div>
@@ -125,19 +250,10 @@ export const DocumentsLists = () => {
 						</Typography>
 					</div>
 					<div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-						{/* <Button className="flex items-center gap-1.5" size="sm" color="blue" onClick={handleCreateNewDocument}>
-							<DocumentPlusIcon strokeWidth={3} className="h-4 w-4" />
-						</Button>
-						<ArchiveBoxIcon />
-						<Button className="flex items-center gap-2" size="sm" variant="outlined" color="blue-gray" onClick={handleArchive}>
-						</Button> */}
 						<div className="flex gap-2">
 							<Button className="flex gap-2 hover:scale-105" color="indigo" onClick={handleCreateNewDocument}>
 								<HiOutlineDocumentAdd size={16} /> Add Document
 							</Button>
-							{/* <Button className="flex gap-2" color="blue" onClick={handleArchive}>
-								<HiOutlineArchive size={16} /> Archive
-							</Button> */}
 						</div>
 						<div className="w-full md:w-72">
 							<Input
@@ -284,13 +400,14 @@ export const DocumentsLists = () => {
 										</td>
 										<td className={classes}>
 											<div className="flex gap-1 cursor-pointer">
-												<Tooltip content="Track Document" placement="top">
-													<BsCardChecklist size={20} />
-												</Tooltip>
+												<BsCardChecklist size={20} onClick={handleTimelineClick} />
+
 												<BiDetail size={20} />
 												<BiEdit size={20} />
 												<BiTrash size={20} />
+
 											</div>
+
 
 										</td>
 									</tr>
@@ -315,5 +432,6 @@ export const DocumentsLists = () => {
 				</div> */}
 			</CardFooter>
 		</Card>
+
 	);
 }

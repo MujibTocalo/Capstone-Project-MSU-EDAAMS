@@ -195,7 +195,7 @@ const ManageUsers = () => {
             {/* <Button variant="outlined" color="blue-gray" size="sm">
               view all
             </Button> */}
-            <div className="add-user">
+            <div>
               <Button
                 onClick={handleOpen}
                 className="flex items-center gap-3 hover:scale-105"
@@ -211,11 +211,9 @@ const ManageUsers = () => {
               >
                 <Card className="mx-auto w-full max-w-[24rem]">
                   <CardHeader
-                    variant="gradient"
-                    color="blue"
-                    className="mb-4 grid h-28 place-items-center"
+                    className="mb-4 grid h-16 place-items-center bg-indigo-800"
                   >
-                    <Typography variant="h3" color="white">
+                    <Typography variant="h4" color="white">
                       Register New User
                     </Typography>
                   </CardHeader>
@@ -304,7 +302,7 @@ const ManageUsers = () => {
                   </CardBody>
                   <CardFooter className="flex mx-auto">
 
-                    <Button className="flex hover:scale-105"
+                    <Button className="flex text-white bg-indigo-800 hover:scale-105"
                       variant="standard"
                       onClick={AddUser}
                     >Save User Detail</Button>

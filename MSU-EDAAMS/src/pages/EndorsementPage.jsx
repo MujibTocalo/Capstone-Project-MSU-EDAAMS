@@ -188,8 +188,9 @@ const EndorseDocument = () => {
 			<div className='grid grid-cols-4'>
 				{endorseDocument.map((document) => (
 					<div key={document._id} className='flex flex-col bg-indigo-50/50 p-1.5 m-2 rounded-lg shadow-md hover:scale-105'>
-						<DocumentEndorsementDetail document={document} /><Dialog
-							className='flex flex-col overflow-scroll bg-white rounded-t-xl h-screen'
+						<DocumentEndorsementDetail document={document} />
+						<Dialog
+							className='flex flex-col overflow-y-scroll bg-white rounded-t-xl max-h-[100vh]'
 							size='lg'
 							open={open && selectedDocument && selectedDocument._id === document._id}
 							handler={() => setOpen(false)}
