@@ -83,7 +83,7 @@ const EndorseDocument = () => {
 		return null
 	}
 
-	const endorseDocument = store.documents
+	const deanApproved = store.documents
 		.filter((document) => document.documentStatus === 'DeanApproved' || document.documentStatus === 'Dean Approved')
 		.sort((a, b) => b.createdAt.localeCompare(a.createdAt))
 
@@ -181,12 +181,12 @@ const EndorseDocument = () => {
 	};
 
 	return (
-		<div className='flex flex-col mx-auto'>
+		<div className='flex flex-col'>
 			<Typography className='flex justify-center p-2 rounded-md font-semibold text-xl bg-indigo-800 text-white'>
 				Endorsement Page
 			</Typography>
 			<div className='grid grid-cols-4'>
-				{endorseDocument.map((document) => (
+				{deanApproved.map((document) => (
 					<div key={document._id} className='flex flex-col bg-indigo-50/50 p-1.5 m-2 rounded-lg shadow-md hover:scale-105'>
 						<DocumentEndorsementDetail document={document} />
 						<Dialog

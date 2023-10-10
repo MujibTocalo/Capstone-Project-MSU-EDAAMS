@@ -170,7 +170,7 @@ const OPApprovalPage = () => {
 	};
 
 	return (
-		<div className='flex flex-col mx-auto'>
+		<div className='flex flex-col'>
 			<Typography className='flex justify-center p-2 rounded-md font-semibold text-xl bg-indigo-800 text-white'>
 				OP Approval Page
 			</Typography>

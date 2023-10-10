@@ -153,14 +153,15 @@ export const DocumentsLists = () => {
 										<TimelineIcon className="p-2">
 											<HomeIcon className="h-4 w-4" />
 										</TimelineIcon>
-										<Typography variant="h5" color="blue-gray">
+										<Typography variant="h6" color="blue-gray">
 											Department of Something
 										</Typography>
 									</TimelineHeader>
 									<TimelineBody className="pb-8">
-										<Typography color="gray" className="font-normal text-gray-600">
+										<Typography color="gray" className="font-normal text-sm text-gray-600">
 											Date Uploaded: <br />
-											Uploaded By:
+											Uploaded By: <br />
+											Remarks:
 										</Typography>
 									</TimelineBody>
 								</TimelineItem>
@@ -170,14 +171,15 @@ export const DocumentsLists = () => {
 										<TimelineIcon className="p-2">
 											<HomeIcon className="h-4 w-4" />
 										</TimelineIcon>
-										<Typography variant="h5" color="blue-gray">
+										<Typography variant="h6" color="blue-gray">
 											College of Something
 										</Typography>
 									</TimelineHeader>
 									<TimelineBody className="pb-8">
-										<Typography color="gray" className="font-normal text-gray-600">
+										<Typography color="gray" className="font-normal text-sm text-gray-600">
 											Date Approved By Dean: <br />
-											Approved By:
+											Approved By: <br />
+											Remarks:
 										</Typography>
 									</TimelineBody>
 								</TimelineItem>
@@ -187,14 +189,15 @@ export const DocumentsLists = () => {
 										<TimelineIcon className="p-2">
 											<BellIcon className="h-4 w-4" />
 										</TimelineIcon>
-										<Typography variant="h5" color="blue-gray">
+										<Typography variant="h6" color="blue-gray">
 											Office of Vice Chancellor for Academic Affairs
 										</Typography>
 									</TimelineHeader>
 									<TimelineBody className="pb-8">
-										<Typography color="gray" className="font-normal text-gray-600">
+										<Typography color="gray" className="font-normal text-sm text-gray-600">
 											Date Endorsed: <br />
-											Endorsed By:
+											Endorsed By: <br />
+											Remarks:
 										</Typography>
 									</TimelineBody>
 								</TimelineItem>
@@ -204,14 +207,15 @@ export const DocumentsLists = () => {
 										<TimelineIcon className="p-2">
 											<BellIcon className="h-4 w-4" />
 										</TimelineIcon>
-										<Typography variant="h5" color="blue-gray">
+										<Typography variant="h6" color="blue-gray">
 											Office of the President
 										</Typography>
 									</TimelineHeader>
 									<TimelineBody className="pb-8">
-										<Typography color="gray" className="font-normal text-gray-600">
+										<Typography color="gray" className="font-normal text-sm text-gray-600">
 											Date Approved: <br />
-											Approved By:
+											Approved By: <br />
+											Remarks:
 										</Typography>
 									</TimelineBody>
 								</TimelineItem>
@@ -220,7 +224,7 @@ export const DocumentsLists = () => {
 										<TimelineIcon className="p-2">
 											<CurrencyDollarIcon className="h-4 w-4" />
 										</TimelineIcon>
-										<Typography variant="h5" color="blue-gray">
+										<Typography variant="h6" color="blue-gray">
 											Pending for Release
 										</Typography>
 									</TimelineHeader>
@@ -232,7 +236,7 @@ export const DocumentsLists = () => {
 						<CardFooter className="flex border bg-indigo-50/50 rounded-lg p-1 w-full mx-auto">
 							<Button className="flex mx-auto hover:scale-105"
 								variant="text"
-								size='lg'
+								size='md'
 								onClick={handleTimelineClick}
 							>Close</Button>
 						</CardFooter>
@@ -257,7 +261,7 @@ export const DocumentsLists = () => {
 						</div>
 						<div className="w-full md:w-72">
 							<Input
-								label="Search"
+								label="Search by Uploader Detail"
 								icon={<MagnifyingGlassIcon className="h-5 w-5" />}
 								onChange={handleSearch}
 								value={searchQuery}

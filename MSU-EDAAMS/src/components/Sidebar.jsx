@@ -45,7 +45,7 @@ const Sidebar = () => {
   const [open, setOpen] = useState(true)
 
   return (
-    <div className='flex flex-col overflow-auto bg-indigo-900 duration-500'>
+    <div className='flex flex-col overflow-x-clip overflow-y-scroll bg-indigo-900 duration-500'>
       <div className={`h-screen ${open ? 'w-56' : 'w-14'} duration-500 text-white p-2`}>
         <div className='py-4 flex duration-500 justify-between'>
           <h1 className={`${!open && 'hidden'} whitespace-pre font-semibold text-md 0.5s ease-in-out ml-2.5`}>MSU EDAAMS</h1>
@@ -74,7 +74,7 @@ const Sidebar = () => {
           ))}
         </div>
       </div>
-      <div className='flex flex-col bg-indigo-1000 text-white items-center duration-500 p-2'>
+      <div className='flex flex-col mt-5 bg-indigo-1000 text-white items-center duration-500 p-2'>
         <UserCircleIcon className='h-10 w-10' />
         <div className={`flex flex-col items-center whitespace-pre p-2 ${open ? 'relative' : 'inherent'}`}>
           <Typography className={`flex text-base font-semibold justify-center ${!open && ' hidden'} ease-in-out`}>

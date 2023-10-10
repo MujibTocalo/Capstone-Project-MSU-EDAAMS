@@ -108,7 +108,7 @@ const ArchivePage = () => {
 					</div>
 					<div className="w-full md:w-72">
 						<Input
-							label="Search"
+							label="Search by User Detail"
 							icon={<MagnifyingGlassIcon className="h-5 w-5" />}
 							onChange={handleSearch}
 							value={searchQuery}

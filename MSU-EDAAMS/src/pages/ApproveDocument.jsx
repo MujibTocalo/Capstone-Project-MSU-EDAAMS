@@ -180,7 +180,7 @@ const ApproveDocument = () => {
   };
 
   return (
-    <div className='flex flex-col mx-auto '>
+    <div className='flex flex-col'>
       <div>
         <Typography className='flex justify-center p-2 rounded-md font-semibold text-xl bg-indigo-800 text-white'>
           Approval Page
