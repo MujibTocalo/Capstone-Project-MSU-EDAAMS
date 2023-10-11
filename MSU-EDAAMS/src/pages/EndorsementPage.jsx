@@ -227,7 +227,7 @@ const EndorseDocument = () => {
 											<Button variant="standard" color="green" onClick={(e) => handleEndorseDocument(e, document._id) && setEndorse(false) && setOpen(false)}>
 												Endorse Document
 											</Button>
-											<Button variant="outlined" color="red" onClick={() => setReject(false)}>
+											<Button variant="outlined" color="red" onClick={() => setEndorse(false) && setOpen(false)}>
 												close
 											</Button>
 										</DialogFooter>
@@ -243,7 +243,7 @@ const EndorseDocument = () => {
 										handler={() => setReject(false)}>
 										<div className="flex items-center justify-between"
 										>
-											<DialogHeader>Cause of Rejection</DialogHeader>
+											<DialogHeader>Remarks</DialogHeader>
 										</div>
 										<DialogBody divider>
 											<div className="flex h-72">

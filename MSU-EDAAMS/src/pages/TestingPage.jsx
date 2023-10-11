@@ -10,7 +10,7 @@ import TrackDocumentContent from '../components/TrackingContent'
 const TestingPage = () => {
 	return (
 		<div>
-			<TrackDocumentContent />
+
 		</div>
 	)
 }

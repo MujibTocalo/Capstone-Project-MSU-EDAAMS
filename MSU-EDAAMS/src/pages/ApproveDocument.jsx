@@ -218,7 +218,7 @@ const ApproveDocument = () => {
                     handler={() => setReject(false)}>
                     <div className="flex items-center justify-between"
                     >
-                      <DialogHeader>Cause of Rejection</DialogHeader>
+                      <DialogHeader>Remarks</DialogHeader>
                     </div>
                     <DialogBody divider>
                       <div className="flex h-72">
