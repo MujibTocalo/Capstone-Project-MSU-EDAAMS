@@ -26,7 +26,7 @@ const DocumentEndorsementDetail = ({ document }) => {
 					{document.documentType}
 				</Typography>
 				<Typography
-					className='text-md rounded-lg p-1 text-black font-bold text-indigo-900'>
+					className='text-md rounded-lg p-1 font-bold text-indigo-900'>
 					{document.collegeName}
 				</Typography>
 			</div>

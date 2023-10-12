@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from "react";
 import {
 	Navbar,
-	MobileNav,
 	Typography,
 	Button,
 	Menu,
 	MenuHandler,
 	MenuList,
 	MenuItem,
-	Avatar,
-	Card,
-	IconButton,
+	Avatar
 } from "@material-tailwind/react";
 import {
 	CubeTransparentIcon,
@@ -116,18 +113,17 @@ const ProfileMenu = () => {
 export const CustomNavbar = () => {
 
 	return (
-		<Navbar className="bg-[#0C356A] p-2 lg:pl-6">
-			<div className="relative flex items-center mx-auto justify-between text-white">
-				<DrawerDefault />
-				<Typography
-					as="a"
-					href="#"
-					className="mr-4 ml-2 cursor-pointer py-1.5 font-medium"
-				>
-					MSU EDAAMS
-				</Typography>
-				<ProfileMenu />
-			</div>
+		<Navbar className="flex max-w-screen items-center mx-auto justify-between text-white p-1 my-1">
+
+			{/* <DrawerDefault /> */}
+			<Typography
+				as="a"
+				href="#"
+				className="mr-4 ml-2 cursor-pointer text-indigo-800 py-1.5 font-semibold"
+			>
+				MSU EDAAMS
+			</Typography>
+			<ProfileMenu />
 		</Navbar>
 	);
 }

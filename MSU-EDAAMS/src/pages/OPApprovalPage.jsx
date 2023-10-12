@@ -171,9 +171,9 @@ const OPApprovalPage = () => {
 
 	return (
 		<div className='flex flex-col'>
-			<Typography className='flex justify-center p-2 rounded-md font-semibold text-xl bg-indigo-800 text-white'>
+			{/* <Typography className='flex justify-center p-2 rounded-md font-semibold text-xl bg-indigo-800 text-white'>
 				OP Approval Page
-			</Typography>
+			</Typography> */}
 			<div className='grid grid-cols-4'>
 				{endorseDocument.map((document) => (
 					<div key={document._id} className='flex flex-col bg-indigo-50/50 p-1.5 m-2 rounded-lg shadow-md hover:scale-105'>

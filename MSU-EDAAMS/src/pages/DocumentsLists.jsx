@@ -72,6 +72,8 @@ export const DocumentsLists = () => {
 	const [searchQuery, setSearchQuery] = useState("");
 	const [filteredTableRows, setFilteredTableRows] = useState([]);
 	const [isTimelineDialogOpen, setIsTimelineDialogOpen] = useState(false);
+	const [selectedDocument, setSelectedDocument] = useState(false);
+
 
 	useEffect(() => {
 		const fetchTableRows = async () => {
@@ -97,22 +99,22 @@ export const DocumentsLists = () => {
 			}
 		};
 
-
 		fetchTableRows();
 	}, []);
 
-
-
-	const handleTimelineClick = () => {
-		setIsTimelineDialogOpen(!isTimelineDialogOpen);
+	const handleTimelineClick = (index) => {
+		const selectedDocument = tableRows[index]; // Access the document data using the index
+		setSelectedDocument(selectedDocument); // Set the selected document
+		setIsTimelineDialogOpen(true); // Open the dialog
 	};
+
 
 	const handleCreateNewDocument = () => {
 		navigate('/createDocument')
 	}
-	const handleArchive = () => {
-		navigate('/archive')
-	}
+	// const handleArchive = () => {
+	// 	navigate('/archive')
+	// }
 
 	const handleSearch = (e) => {
 		const query = e.target.value;
@@ -146,6 +148,26 @@ export const DocumentsLists = () => {
 						</CardHeader>
 						<CardBody
 							className="flex flex-col h-96 overflow-y-scroll">
+							{selectedDocument && (
+								<TimelineItem>
+									<TimelineConnector />
+									<TimelineHeader>
+										<TimelineIcon className="p-2">
+											<HomeIcon className="h-4 w-4" />
+										</TimelineIcon>
+										<Typography variant="h6" color="blue-gray">
+											{selectedDocument.collegeName} : {selectedDocument.documentType} - Approved
+										</Typography>
+									</TimelineHeader>
+									<TimelineBody className="pb-8">
+										<Typography color="gray" className="font-normal text-sm text-gray-600">
+											Date Uploaded: {selectedDocument.createdAt ? format(new Date(selectedDocument.createdAt), 'yyyy-MM-dd') : ''} <br />
+											Uploaded By: {selectedDocument.uploaderName ? selectedDocument.uploaderName : ''} <br />
+											Remarks: {selectedDocument.remarks ? selectedDocument.remarks : ''}
+										</Typography>
+									</TimelineBody>
+								</TimelineItem>
+							)}
 							<Timeline>
 								<TimelineItem>
 									<TimelineConnector />
@@ -281,6 +303,7 @@ export const DocumentsLists = () => {
 					</Tabs> */}
 				</div>
 			</CardHeader>
+
 			<CardBody className="overflow-scroll px-0">
 				<table className="w-full min-w-max table-auto">
 					<thead>
@@ -404,7 +427,7 @@ export const DocumentsLists = () => {
 										</td>
 										<td className={classes}>
 											<div className="flex gap-1 cursor-pointer">
-												<BsCardChecklist size={20} onClick={handleTimelineClick} />
+												<BsCardChecklist size={20} onClick={() => handleTimelineClick(index)} />
 
 												<BiDetail size={20} />
 												<BiEdit size={20} />

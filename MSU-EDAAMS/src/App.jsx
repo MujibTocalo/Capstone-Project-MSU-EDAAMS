@@ -16,6 +16,7 @@ import { DocumentsLists } from "./pages/DocumentsLists";
 import OPApprovalPage from "./pages/OPApprovalPage";
 import TestingPage from "./pages/TestingPage";
 import ReleasingDocumentPage from "./pages/ReleasingDocumentPage";
+import { CustomNavbar } from "./components/Navbar";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -40,7 +41,8 @@ const App = () => {
 const MainRoutes = () => (
   <div className="flex flex-row h-screen overflow-hidden">
     <Sidebar />
-    <div className="p-2 mx-auto flex-grow bg-transparent overflow-auto">
+    <div className="flex flex-col p-2 mx-auto flex-grow bg-transparent">
+      <CustomNavbar  />
       <Routes>
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/profilePage" element={<ProfilePage />} />
