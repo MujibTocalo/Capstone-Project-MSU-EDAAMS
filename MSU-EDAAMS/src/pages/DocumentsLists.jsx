@@ -181,7 +181,7 @@ export const DocumentsLists = () => {
 										<TimelineBody className="pb-8">
 											<Typography color="gray" className="font-normal text-sm text-gray-600">
 												Date Approved: {selectedDocument.dateDeanApproved ? format(new Date(selectedDocument.dateDeanApproved), 'yyyy-MM-dd') : 'Waiting'} <br />
-												Approved By: {selectedDocument.deanApproverName ? selectedDocument.uploaderName : 'Pending'} <br />
+												Approved By: {selectedDocument.deanApproverName ? selectedDocument.deanApproverName : 'Pending'} <br />
 												Remarks: {selectedDocument.deanRemarks ? selectedDocument.remarks : ''}
 											</Typography>
 										</TimelineBody>
@@ -199,7 +199,7 @@ export const DocumentsLists = () => {
 										<TimelineBody className="pb-8">
 											<Typography color="gray" className="font-normal text-sm text-gray-600">
 												Date Endorsed: {selectedDocument.endorsementDate ? format(new Date(selectedDocument.endorsementDate), 'yyyy-MM-dd') : 'Waiting'} <br />
-												Endorsed By: {selectedDocument.endorserName ? selectedDocument.uploaderName : 'Pending'} <br />
+												Endorsed By: {selectedDocument.endorserName ? selectedDocument.endorserName : 'Pending'} <br />
 												Remarks: {selectedDocument.EndorserRemarks ? selectedDocument.remarks : ''}
 											</Typography>
 										</TimelineBody>
