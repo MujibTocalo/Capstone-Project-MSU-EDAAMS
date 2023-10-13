@@ -25,6 +25,7 @@ import {
 
 import logo from '../assets/msulogo.png'
 import { DrawerDefault } from "./Drawer";
+import { RiNotification3Fill,  } from "react-icons/ri";
 
 // profile menu component
 const profileMenuItems = [
@@ -114,16 +115,18 @@ export const CustomNavbar = () => {
 
 	return (
 		<Navbar className="flex max-w-screen items-center mx-auto justify-between text-white p-1 my-1">
-
 			{/* <DrawerDefault /> */}
-			<Typography
-				as="a"
-				href="#"
-				className="mr-4 ml-2 cursor-pointer text-indigo-800 py-1.5 font-semibold"
-			>
-				MSU EDAAMS
-			</Typography>
-			<ProfileMenu />
+			<div>
+				<Typography
+					className="ml-6 text-xl text-indigo-800 py-1.5 font-bold"
+				>
+					MSU EDAAMS
+				</Typography>
+			</div>
+			<div className="flex flex-row items-center gap-3.5">
+				<RiNotification3Fill color='grey' size={24} />
+				<ProfileMenu />
+			</div>
 		</Navbar>
 	);
 }

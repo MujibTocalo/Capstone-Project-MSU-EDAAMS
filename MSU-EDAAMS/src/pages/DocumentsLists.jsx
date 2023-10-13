@@ -149,111 +149,99 @@ export const DocumentsLists = () => {
 						<CardBody
 							className="flex flex-col h-96 overflow-y-scroll">
 							{selectedDocument && (
-								<TimelineItem>
-									<TimelineConnector />
-									<TimelineHeader>
-										<TimelineIcon className="p-2">
-											<HomeIcon className="h-4 w-4" />
-										</TimelineIcon>
-										<Typography variant="h6" color="blue-gray">
-											{selectedDocument.collegeName} : {selectedDocument.documentType} - Approved
-										</Typography>
-									</TimelineHeader>
-									<TimelineBody className="pb-8">
-										<Typography color="gray" className="font-normal text-sm text-gray-600">
-											Date Uploaded: {selectedDocument.createdAt ? format(new Date(selectedDocument.createdAt), 'yyyy-MM-dd') : ''} <br />
-											Uploaded By: {selectedDocument.uploaderName ? selectedDocument.uploaderName : ''} <br />
-											Remarks: {selectedDocument.remarks ? selectedDocument.remarks : ''}
-										</Typography>
-									</TimelineBody>
-								</TimelineItem>
+								<Timeline>
+									<TimelineItem>
+										<TimelineConnector />
+										<TimelineHeader>
+											<TimelineIcon className="p-2">
+												<HomeIcon className="h-4 w-4" />
+											</TimelineIcon>
+											<Typography variant="h6" color="blue-gray">
+												{selectedDocument.collegeName} : {selectedDocument.documentType}
+											</Typography>
+										</TimelineHeader>
+										<TimelineBody className="pb-8">
+											<Typography color="gray" className="font-normal text-sm text-gray-600">
+												Date Uploaded: {selectedDocument.createdAt ? format(new Date(selectedDocument.createdAt), 'yyyy-MM-dd') : 'Waiting'} <br />
+												Uploaded By: {selectedDocument.uploaderName ? selectedDocument.uploaderName : 'Pending'} <br />
+												Remarks: {selectedDocument.remarks ? selectedDocument.remarks : ''}
+											</Typography>
+										</TimelineBody>
+									</TimelineItem>
+									<TimelineItem>
+										<TimelineConnector />
+										<TimelineHeader>
+											<TimelineIcon className="p-2">
+												<BellIcon className="h-4 w-4" />
+											</TimelineIcon>
+											<Typography variant="h6" color="blue-gray">
+												{selectedDocument.collegeName} : {selectedDocument.documentType} - Approval
+											</Typography>
+										</TimelineHeader>
+										<TimelineBody className="pb-8">
+											<Typography color="gray" className="font-normal text-sm text-gray-600">
+												Date Approved: {selectedDocument.dateDeanApproved ? format(new Date(selectedDocument.dateDeanApproved), 'yyyy-MM-dd') : 'Waiting'} <br />
+												Approved By: {selectedDocument.deanApproverName ? selectedDocument.uploaderName : 'Pending'} <br />
+												Remarks: {selectedDocument.deanRemarks ? selectedDocument.remarks : ''}
+											</Typography>
+										</TimelineBody>
+									</TimelineItem>
+									<TimelineItem>
+										<TimelineConnector />
+										<TimelineHeader>
+											<TimelineIcon className="p-2">
+												<BellIcon className="h-4 w-4" />
+											</TimelineIcon>
+											<Typography variant="h6" color="blue-gray">
+												{selectedDocument.collegeName} : {selectedDocument.documentType} - Endorsement
+											</Typography>
+										</TimelineHeader>
+										<TimelineBody className="pb-8">
+											<Typography color="gray" className="font-normal text-sm text-gray-600">
+												Date Endorsed: {selectedDocument.endorsementDate ? format(new Date(selectedDocument.endorsementDate), 'yyyy-MM-dd') : 'Waiting'} <br />
+												Endorsed By: {selectedDocument.endorserName ? selectedDocument.uploaderName : 'Pending'} <br />
+												Remarks: {selectedDocument.EndorserRemarks ? selectedDocument.remarks : ''}
+											</Typography>
+										</TimelineBody>
+									</TimelineItem>
+									<TimelineItem>
+										<TimelineConnector />
+										<TimelineHeader>
+											<TimelineIcon className="p-2">
+												<BellIcon className="h-4 w-4" />
+											</TimelineIcon>
+											<Typography variant="h6" color="blue-gray">
+												{selectedDocument.collegeName} : {selectedDocument.documentType} - Final Approval
+											</Typography>
+										</TimelineHeader>
+										<TimelineBody className="pb-8">
+											<Typography color="gray" className="font-normal text-sm text-gray-600">
+												Final Approval Date: {selectedDocument.opApprovalDate ? format(new Date(selectedDocument.opApprovalDate), 'yyyy-MM-dd') : 'Waiting'} <br />
+												Approved By: {selectedDocument.opApproverName ? selectedDocument.opApproverName : 'Pending'} <br />
+												Remarks: {selectedDocument.EndorserRemarks ? selectedDocument.remarks : ''}
+											</Typography>
+										</TimelineBody>
+									</TimelineItem>
+									<TimelineItem>
+
+										<TimelineHeader>
+											<TimelineIcon className="p-2">
+												<BellIcon className="h-4 w-4" />
+											</TimelineIcon>
+											<Typography variant="h6" color="blue-gray">
+												{selectedDocument.collegeName} : {selectedDocument.documentType} - Releasing
+											</Typography>
+										</TimelineHeader>
+										<TimelineBody className="pb-8">
+											<Typography color="gray" className="font-normal text-sm text-gray-600">
+												Release Date: {selectedDocument.releaseDate ? format(new Date(selectedDocument.releaseDate), 'yyyy-MM-dd') : 'Waiting'} <br />
+												{/* Released By: {selectedDocument.opApproverName ? selectedDocument.opApproverName : 'Pending'} <br />
+												Remarks: {selectedDocument.EndorserRemarks ? selectedDocument.remarks : ''} */}
+											</Typography>
+										</TimelineBody>
+									</TimelineItem>
+								</Timeline>
 							)}
-							<Timeline>
-								<TimelineItem>
-									<TimelineConnector />
-									<TimelineHeader>
-										<TimelineIcon className="p-2">
-											<HomeIcon className="h-4 w-4" />
-										</TimelineIcon>
-										<Typography variant="h6" color="blue-gray">
-											Department of Something
-										</Typography>
-									</TimelineHeader>
-									<TimelineBody className="pb-8">
-										<Typography color="gray" className="font-normal text-sm text-gray-600">
-											Date Uploaded: <br />
-											Uploaded By: <br />
-											Remarks:
-										</Typography>
-									</TimelineBody>
-								</TimelineItem>
-								<TimelineItem>
-									<TimelineConnector />
-									<TimelineHeader>
-										<TimelineIcon className="p-2">
-											<HomeIcon className="h-4 w-4" />
-										</TimelineIcon>
-										<Typography variant="h6" color="blue-gray">
-											College of Something
-										</Typography>
-									</TimelineHeader>
-									<TimelineBody className="pb-8">
-										<Typography color="gray" className="font-normal text-sm text-gray-600">
-											Date Approved By Dean: <br />
-											Approved By: <br />
-											Remarks:
-										</Typography>
-									</TimelineBody>
-								</TimelineItem>
-								<TimelineItem>
-									<TimelineConnector />
-									<TimelineHeader>
-										<TimelineIcon className="p-2">
-											<BellIcon className="h-4 w-4" />
-										</TimelineIcon>
-										<Typography variant="h6" color="blue-gray">
-											Office of Vice Chancellor for Academic Affairs
-										</Typography>
-									</TimelineHeader>
-									<TimelineBody className="pb-8">
-										<Typography color="gray" className="font-normal text-sm text-gray-600">
-											Date Endorsed: <br />
-											Endorsed By: <br />
-											Remarks:
-										</Typography>
-									</TimelineBody>
-								</TimelineItem>
-								<TimelineItem>
-									<TimelineConnector />
-									<TimelineHeader>
-										<TimelineIcon className="p-2">
-											<BellIcon className="h-4 w-4" />
-										</TimelineIcon>
-										<Typography variant="h6" color="blue-gray">
-											Office of the President
-										</Typography>
-									</TimelineHeader>
-									<TimelineBody className="pb-8">
-										<Typography color="gray" className="font-normal text-sm text-gray-600">
-											Date Approved: <br />
-											Approved By: <br />
-											Remarks:
-										</Typography>
-									</TimelineBody>
-								</TimelineItem>
-								<TimelineItem>
-									<TimelineHeader>
-										<TimelineIcon className="p-2">
-											<CurrencyDollarIcon className="h-4 w-4" />
-										</TimelineIcon>
-										<Typography variant="h6" color="blue-gray">
-											Pending for Release
-										</Typography>
-									</TimelineHeader>
-									<TimelineBody>
-									</TimelineBody>
-								</TimelineItem>
-							</Timeline>
 						</CardBody>
 						<CardFooter className="flex border bg-indigo-50/50 rounded-lg p-1 w-full mx-auto">
 							<Button className="flex mx-auto hover:scale-105"
