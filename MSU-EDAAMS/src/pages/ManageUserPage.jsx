@@ -253,11 +253,14 @@ const ManageUsers = () => {
                       <Option value="CBAA">College of Business Administration and Accountancy</Option>
                       <Option value="CED">College of Education</Option>
                       <Option value="COE">College of Engineering</Option>
+                      <Option value="CFAS">College of Fisheries and Aquatic Sciences</Option>
+                      <Option value="CFES">College of Forestry and Environmental Sciences</Option>
                       <Option value="CHARM">College of Hotel and Restaurant Management</Option>
                       <Option value="CICS">College of Information and Computing Sciences</Option>
                       <Option value="CSPEAR">CSPEAR</Option>
                       <Option value="CNSM">College of Natural Science and Mathematics</Option>
                       <Option value="CPA">College of Public Affairs</Option>
+
 
                     </Select>
 

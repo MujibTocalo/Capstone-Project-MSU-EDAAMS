@@ -24,7 +24,7 @@ import {
 	TimelineBody,
 } from "@material-tailwind/react";
 
-import { HomeIcon, BellIcon, CurrencyDollarIcon } from "@heroicons/react/24/solid";
+import { HomeIcon, BellIcon } from "@heroicons/react/24/solid";
 
 import { format } from 'date-fns'
 
@@ -76,12 +76,21 @@ export const DocumentsLists = () => {
 
 
 	useEffect(() => {
+
 		const fetchTableRows = async () => {
 			try {
+
+				const userDetail = JSON.parse(localStorage.getItem('userDetails'))
+
 				const response = await axios.get("http://localhost:7000/document");
 				const responseData = response.data;
 				const documentArray = responseData.document;
-				const sortedDocuments = documentArray
+
+				const currentUserCollege = userDetail.office
+				const filteredDocuments = documentArray.filter(document => document.collegeName === currentUserCollege);
+
+
+				const sortedDocuments = filteredDocuments
 					.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
 					.filter(
 						(document) =>
@@ -91,6 +100,7 @@ export const DocumentsLists = () => {
 							document.documentStatus === "Pending" ||
 							document.documentStatus === "OP Approved"
 					);
+				console.log(sortedDocuments)
 
 				setTableRows(sortedDocuments);
 				setFilteredTableRows(sortedDocuments);
@@ -102,10 +112,11 @@ export const DocumentsLists = () => {
 		fetchTableRows();
 	}, []);
 
+
 	const handleTimelineClick = (index) => {
-		const selectedDocument = tableRows[index]; // Access the document data using the index
-		setSelectedDocument(selectedDocument); // Set the selected document
-		setIsTimelineDialogOpen(true); // Open the dialog
+		const selectedDocument = tableRows[index];
+		setSelectedDocument(selectedDocument);
+		setIsTimelineDialogOpen(true);
 	};
 
 

@@ -48,11 +48,12 @@ const Sidebar = () => {
     <div className='flex flex-col overflow-x-clip overflow-y-scroll bg-indigo-900 duration-500'>
       <div className={`h-screen ${open ? 'w-56' : 'w-14'} duration-500 text-white p-2`}>
         <div className='py-4 flex duration-500 justify-end'>
-          {/* <h1 className={`${!open && 'hidden'} whitespace-pre font-semibold text-md 0.5s ease-in-out ml-2.5`}>MSU EDAAMS</h1> */}
-          <div className='flex ml-2'>
-            {/* <RiNotification3Line size={23} className={`${!open && 'hidden'} cursor-pointer mr-2`} /> */}
-            < TiThMenuOutline size={23} className={`${!open && 'ml-12'} mr-3 cursor-pointer `} onClick={() => setOpen(!open)} />
-          </div>
+          {/* <h1 className={`${!open && 'hidden'} whitespace-pre font-semibold text-md 0.5s ease-in-out ml-2.5`}>MSU EDAAMS</h1>
+          <div className='flex'>
+            <RiNotification3Line size={23} className={`${!open && 'hidden'} cursor-pointer mr-2`} />
+
+          </div> */}
+          < TiThMenuOutline size={23} className={`${!open && 'flex transform-transition rotate-90'} flex mr-2.5 cursor-pointer transform-transition`} onClick={() => setOpen(!open)} />
         </div>
         <div className='mt-4 flex flex-col gap-4 relative'>
           {menus?.map((menu, i) => (
