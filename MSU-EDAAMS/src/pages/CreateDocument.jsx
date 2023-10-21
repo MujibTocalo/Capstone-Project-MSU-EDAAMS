@@ -170,7 +170,7 @@ const CreateDocument = () => {
 
 
   return (
-    <div className="flex flex-col p-10 gap-1.5 border shadow-xl rounded-lg bg-white">
+    <div className="flex flex-col p-10 gap-1.5 border shadow-xl rounded-lg bg-white overflow-auto">
       <Typography variant='h3' className=' flex font-medium mb-4 justify-center'>Create Document</Typography>
       <div className='flex gap-14'>
         <Select

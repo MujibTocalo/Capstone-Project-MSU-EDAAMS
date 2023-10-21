@@ -8,7 +8,7 @@ import { RiDashboardLine, RiAttachment2, RiNotification3Line } from 'react-icons
 import { HiOutlineArchive, HiOutlineDocumentText, HiOutlineUsers, HiUpload } from 'react-icons/hi'
 import { BiLogOut, } from 'react-icons/bi'
 import { Link } from 'react-router-dom'
-import { Typography } from '@material-tailwind/react'
+import { Avatar, Typography } from '@material-tailwind/react'
 import { UserCircleIcon } from '@heroicons/react/24/outline'
 import { LuClipboardCheck } from 'react-icons/lu'
 
@@ -45,15 +45,12 @@ const Sidebar = () => {
   const [open, setOpen] = useState(true)
 
   return (
-    <div className='flex flex-col overflow-x-clip overflow-y-scroll bg-indigo-900 duration-500'>
-      <div className={`h-screen ${open ? 'w-56' : 'w-14'} duration-500 text-white p-2`}>
-        <div className='py-4 flex duration-500 justify-end'>
-          {/* <h1 className={`${!open && 'hidden'} whitespace-pre font-semibold text-md 0.5s ease-in-out ml-2.5`}>MSU EDAAMS</h1>
-          <div className='flex'>
-            <RiNotification3Line size={23} className={`${!open && 'hidden'} cursor-pointer mr-2`} />
-
-          </div> */}
-          < TiThMenuOutline size={23} className={`${!open && 'flex transform-transition rotate-90'} flex mr-2.5 cursor-pointer transform-transition`} onClick={() => setOpen(!open)} />
+    <div className='flex flex-col overflow-x-clip overflow-y-scroll bg-indigo-900 duration-500 '>
+      <div className={`h-screen ${open ? 'w-52' : 'w-12'} duration-500 text-white p-1`}>
+        <div className='py-4 flex duration-500 justify-between'>
+          {/* <Avatar className='flex h-6 w-6 border rounded-none ml-2' /> */}
+          <h1 className={`${!open && '0.5s ease-in-out hidden'} flex 3s ease-in-out mx-auto whitespace-pre font-semibold text-lg `}>MSU EDAAMS</h1>
+          < TiThMenuOutline size={23} className={`${!open && 'flex ml-2'} flex mr-2.5 cursor-pointer transition`} onClick={() => setOpen(!open)} />
         </div>
         <div className='mt-4 flex flex-col gap-4 relative'>
           {menus?.map((menu, i) => (
@@ -75,7 +72,7 @@ const Sidebar = () => {
           ))}
         </div>
       </div>
-      <div className='flex flex-col mt-5 bg-indigo-1000 text-white items-center duration-500 p-2'>
+      {/* <div className='flex flex-col mt-5 bg-indigo-1000 text-white items-center duration-500 p-2'>
         <UserCircleIcon className='h-10 w-10' />
         <div className={`flex flex-col items-center whitespace-pre p-2 ${open ? 'relative' : 'inherent'}`}>
           <Typography className={`flex text-base font-semibold justify-center ${!open && ' hidden'} ease-in-out`}>
@@ -85,7 +82,7 @@ const Sidebar = () => {
             {userDesignation}
           </Typography>
         </div>
-      </div>
+      </div> */}
     </div >
   )
 }

@@ -10,22 +10,17 @@ import {
 	Avatar
 } from "@material-tailwind/react";
 import {
-	CubeTransparentIcon,
 	UserCircleIcon,
-	CodeBracketSquareIcon,
-	Square3Stack3DIcon,
 	ChevronDownIcon,
 	Cog6ToothIcon,
-	InboxArrowDownIcon,
-	LifebuoyIcon,
 	PowerIcon,
-	RocketLaunchIcon,
-	Bars2Icon,
 } from "@heroicons/react/24/outline";
 
 import logo from '../assets/msulogo.png'
 import { DrawerDefault } from "./Drawer";
 import { RiNotification3Fill, } from "react-icons/ri";
+
+import Notification from '../assets/notification.svg'
 
 // profile menu component
 const profileMenuItems = [
@@ -54,7 +49,10 @@ const profileMenuItems = [
 const ProfileMenu = () => {
 	const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
+
 	const closeMenu = () => setIsMenuOpen(false);
+
+
 
 	return (
 		<Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
@@ -113,18 +111,38 @@ const ProfileMenu = () => {
 
 export const CustomNavbar = () => {
 
+	const [currentUser, setCurrentUser] = useState()
+	const [userDesignation, setUserDesignation] = useState()
+
+
+	useEffect(() => {
+		const userDetail = JSON.parse(localStorage.getItem('userDetails'))
+		setUserDesignation(userDetail.designation)
+		setCurrentUser(userDetail.firstName + ' ' + userDetail.lastName)
+	})
+
 	return (
-		<Navbar className="flex max-w-screen items-center mx-auto justify-between text-white p-1 my-1">
+		<Navbar className="flex max-w-screen items-center mx-auto justify-between bg-indigo-900 bg-blend-hard-light text-white p-1 my-1">
 			{/* <DrawerDefault /> */}
 			<div>
-				<Typography
-					className="ml-6 text-xl text-indigo-800 py-1.5 font-bold"
+				{/* <Typography
+					className="ml-6 text-xl py-1.5 font-bold"
 				>
 					MSU EDAAMS
-				</Typography>
+				</Typography> */}
+
 			</div>
-			<div className="flex flex-row items-center cursor-pointer gap-4">
-				<RiNotification3Fill color='lightblue' size={28} />
+			<div className="flex flex-row items-center gap-5">
+				<div className="flex relative">
+					<RiNotification3Fill className="cursor-pointer" color='white' size={28} />
+					<div className='flex bg-red-600 text-xs font-light border rounded-lg p-1.5 h-4 w-4 items-center justify-center translate-x-4 -translate-y-1	absolute '>4</div>
+				</div>
+				<div className="flex flex-col justify-center items-center	">
+					<Typography className='flex text-md'>{currentUser}</Typography>
+					{/* <Typography className='flex text-xs opacity-80 -translate-y-1'>{userDesignation}</Typography> */}
+				</div>
+				{/* <img className="flex h-8 w-8" src={Notification} alt="" /> */}
+
 				<ProfileMenu />
 			</div>
 		</Navbar>
