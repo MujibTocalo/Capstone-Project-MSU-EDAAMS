@@ -11,7 +11,7 @@ import ArchivePage from "./pages/ArchivePage";
 import ManageUsers from "./pages/ManageUserPage";
 import ApproveDocument from "./pages/ApproveDocument";
 import EndorseDocument from "./pages/EndorsementPage";
-import { Dashboard } from "./pages/Dashboard";
+import Dashboard  from "./pages/Dashboard";
 import { DocumentsLists } from "./pages/DocumentsLists";
 import OPApprovalPage from "./pages/OPApprovalPage";
 import TestingPage from "./pages/TestingPage";
