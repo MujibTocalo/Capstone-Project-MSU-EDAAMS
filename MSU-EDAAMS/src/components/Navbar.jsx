@@ -122,7 +122,7 @@ export const CustomNavbar = () => {
 	})
 
 	return (
-		<Navbar className="flex max-w-screen items-center mx-auto justify-between bg-indigo-900 bg-blend-hard-light text-white p-1 my-1">
+		<Navbar className="flex max-w-screen items-center mx-auto justify-between  p-1 my-1">
 			{/* <DrawerDefault /> */}
 			<div>
 				{/* <Typography
@@ -134,11 +134,11 @@ export const CustomNavbar = () => {
 			</div>
 			<div className="flex flex-row items-center gap-5">
 				<div className="flex relative">
-					<RiNotification3Fill className="cursor-pointer" color='white' size={28} />
+					<RiNotification3Fill className="cursor-pointer" color='gray' size={28} />
 					<div className='flex bg-red-600 text-xs font-light border rounded-lg p-1.5 h-4 w-4 items-center justify-center translate-x-4 -translate-y-1	absolute '>4</div>
 				</div>
 				<div className="flex flex-col justify-center items-center	">
-					<Typography className='flex text-md'>{currentUser}</Typography>
+					<Typography className='flex text-md text-gray-700'>{currentUser}</Typography>
 					{/* <Typography className='flex text-xs opacity-80 -translate-y-1'>{userDesignation}</Typography> */}
 				</div>
 				{/* <img className="flex h-8 w-8" src={Notification} alt="" /> */}
