@@ -10,6 +10,7 @@ import { fileURLToPath } from "url";
 import { register } from "./controllers/user.js";
 import userRouter from "./routes/user.js";
 import documentRouter from "./routes/document.js";
+import { Server } from "socket.io";
 
 // CONFIGURATION
 const app = express();
@@ -18,7 +19,7 @@ dotenv.config();
 // Middleware
 app.use(
   cors({
-    origin: "http://127.0.0.1:5173",
+    origin: ["http://127.0.0.1:5173", "http://localhost:7000"],
     credentials: true,
   })
 );
@@ -63,12 +64,75 @@ app.post("/user/register", upload.single("signature"), register);
 // DATABASE CONFIGURATION
 const PORT = process.env.PORT || 2300;
 
+// mongoose
+//   .connect(process.env.MONGODB_URI, {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+//   })
+//   .then(() => {
+//     app.listen(PORT, () => console.log(`Server Port: ${PORT}`));
+//   })
+//   .catch((error) => console.log(`${error} did not connect`));
+
+let onlineUsers = [];
+
+const addNewUser = (username, socketId) => {
+  !onlineUsers.some((user) => user.username === username) && onlineUsers.push({ username, socketId })
+}
+
+const removeUser = (socketId) => {
+  onlineUsers = onlineUsers.filter((user) => user.socketId !== socketId);
+};
+
+const getUser = (username) => {
+  return onlineUsers.find((user) => user.username === username);
+};
+
+
 mongoose
   .connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
   .then(() => {
-    app.listen(PORT, () => console.log(`Server Port: ${PORT}`));
+    const httpServer = app.listen(PORT, () => console.log(`Server Port: ${PORT}`));
+
+    const io = new Server(httpServer, {
+      cors: {
+        origin: ["http://127.0.0.1:5173", "http://localhost:7000"],
+        credentials: true,
+      },
+    });
+
+    io.on('connection', (socket) => {
+
+      socket.on('onlineUser', (username) => {
+        // Add the user to the onlineUsers list
+        addNewUser(username, socket.id);
+        console.log('User connected:', socket.id);
+      });
+
+      socket.on('disconnect', () => {
+        // Remove the user from the onlineUsers list
+        removeUser(socket.id);
+        console.log('User disconnected:', socket.id);
+      });
+
+
+      socket.on('sendNotification', ({ senderName, receiverName, type }) => {
+        const receiver = getUser(receiverName);
+        if (receiver) {
+          // Send the notification to the receiver
+          io.to(receiver.socketId).emit('getNotification', {
+            senderName,
+            type,
+          });
+        }
+      });
+
+    });
   })
   .catch((error) => console.log(`${error} did not connect`));
+
+
+

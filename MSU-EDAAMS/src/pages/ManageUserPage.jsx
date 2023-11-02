@@ -235,6 +235,8 @@ const ManageUsers = () => {
                       <Option value='Approver - Dean'>Approver - Dean</Option>
                       <Option value='Endorser - OVCAA'>Office of the Vice Chancellor for Academic Affairs</Option>
                       <Option value='Approver - OP'>Office of the President</Option>
+                      <Option value='Administrator'>Administrator</Option>
+
                     </Select>
 
                     <Select

@@ -18,7 +18,7 @@ export const login = async (req, res) => {
     }
 
     // Create and send JSON Web Token (JWT)
-    const exp = Date.now() + 1000 * 60 * 60 * 24 * 30;
+    const exp = Date.now() + 1000 * 60 * 60 * 24 * 7;
     const token = jwt.sign({ sub: user._id, exp }, process.env.JWT_SECRET);
 
     res.status(200).json({ token, userId: user._id });

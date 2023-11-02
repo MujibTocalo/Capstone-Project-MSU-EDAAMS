@@ -89,7 +89,7 @@ export const DocumentsLists = () => {
         const currentUserCollege = userDetail.office
         const filteredDocuments = documentArray.filter(document => document.collegeName === currentUserCollege);
 
-        const sortedDocuments = filteredDocuments
+        const sortedDocuments = documentArray
           .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
           .filter(
             (document) =>

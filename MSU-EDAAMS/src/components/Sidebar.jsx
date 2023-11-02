@@ -9,24 +9,15 @@ import { HiOutlineArchive, HiOutlineDocumentText, HiOutlineUsers, HiUpload } fro
 import { BiLogOut, } from 'react-icons/bi'
 import { Link } from 'react-router-dom'
 import { Avatar, Typography } from '@material-tailwind/react'
-import { UserCircleIcon } from '@heroicons/react/24/outline'
 import { LuClipboardCheck } from 'react-icons/lu'
 
 
 const Sidebar = () => {
 
-  const [currentUser, setCurrentUser] = useState()
-  const [userDesignation, setUserDesignation] = useState()
-
-  const handleCurrentUser = (userDetail) => {
-    setCurrentUser(userDetail.firstName + ' ' + userDetail.lastName)
-    setUserDesignation(userDetail.designation)
-  }
-
-  useEffect(() => {
-    const userDetail = JSON.parse(localStorage.getItem('userDetails'))
-    handleCurrentUser(userDetail)
-  })
+  // useEffect(() => {
+  //   const userDetail = JSON.parse(localStorage.getItem('userDetails'))
+  //   handleCurrentUser(userDetail)
+  // })
 
 
   const menus = [

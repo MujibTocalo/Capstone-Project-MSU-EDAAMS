@@ -19,13 +19,14 @@ import TestingPage from "./pages/TestingPage";
 import ReleasingDocumentPage from "./pages/ReleasingDocumentPage";
 import { CustomNavbar } from "./components/Navbar";
 import { io } from "socket.io-client";
+import RestrictedPage from "./pages/RestrictedPage";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [socket, setSocket] = useState(null);
 
   useEffect(() => {
-    setSocket(io("http://localhost:5000"));
+    setSocket(io("http://localhost:7000"));
   }, []);
 
   const handleLogin = () => {
@@ -57,9 +58,9 @@ const MainRoutes = ({ socket }) => {
   }, []);
   console.log(userType)
 
-  // useEffect(() => {
-  //   socket?.emit("newUser", user);
-  // }, [socket, user]);
+  useEffect(() => {
+    socket?.emit("newUser");
+  }, [socket]);
 
 
 
@@ -79,7 +80,17 @@ const MainRoutes = ({ socket }) => {
           <Route path="/endorsedocument" element={<EndorseDocument />} />
           <Route path="/opapproval" element={<OPApprovalPage />} />
           <Route path="/archive" element={<ArchivePage />} />
-          <Route path="/manageusers" element={<ManageUsers />} />
+          {/* <Route path="/manageusers" element={<ManageUsers />} /> */}
+          <Route
+            path="/manageusers"
+            element={
+              userType === 'Administrator' ? (
+                <ManageUsers />
+              ) : (
+                <Navigate to="/restricted" />
+              )
+            }
+          />
           {/* <Route path="/releasedocument" element={<ReleasingDocumentPage />} /> */}
           <Route
             path="/releasedocument"
@@ -101,7 +112,7 @@ const MainRoutes = ({ socket }) => {
               )
             }
           />
-          <Route path="/restricted" element={<div>Access Restricted</div>} />
+          <Route path="/restricted" element={<RestrictedPage />} />
           {/* <Route path="/dashboard" element={user && user.userType === 'admin' ? <Dashboard /> : <Navigate to="/restricted" />} />
           <Route path="/profilePage" element={<ProfilePage />} />
           <Route path="/documents" element={<DocumentsLists />} />
