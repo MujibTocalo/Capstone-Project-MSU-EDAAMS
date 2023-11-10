@@ -1,3 +1,4 @@
+// Import necessary components and icons
 import React from "react";
 import PropTypes from 'prop-types';
 import ArrowDownIcon from '@heroicons/react/24/solid/ArrowDownIcon';
@@ -5,8 +6,9 @@ import ArrowUpIcon from '@heroicons/react/24/solid/ArrowUpIcon';
 import CurrencyDollarIcon from '@heroicons/react/24/solid/CurrencyDollarIcon';
 import { Avatar, Card, CardContent, Stack, SvgIcon, Typography } from '@mui/material';
 
-const OverviewBudget = (props) => {
-  const { difference, positive = false, sx, value } = props;
+// Document component
+const Document = (props) => {
+  const { difference, positive = false, sx, value, category, initialCount } = props;
 
   return (
     <Card sx={{ width: '250px', ...sx }}>
@@ -22,10 +24,10 @@ const OverviewBudget = (props) => {
               color="text.secondary"
               variant="overline"
             >
-              Budget
+              MSU EDAAMS
             </Typography>
-            <Typography variant="h4">
-              {value}
+            <Typography variant="h5">
+              {category} Documents ({initialCount})
             </Typography>
           </Stack>
           <Avatar
@@ -35,9 +37,9 @@ const OverviewBudget = (props) => {
               width: 56
             }}
           >
-            <SvgIcon>
+            {/* <SvgIcon>
               <CurrencyDollarIcon />
-            </SvgIcon>
+            </SvgIcon> */}
           </Avatar>
         </Stack>
         {difference && (
@@ -56,21 +58,21 @@ const OverviewBudget = (props) => {
                 color={positive ? 'success' : 'error'}
                 fontSize="small"
               >
-                {positive ? <ArrowUpIcon /> : <ArrowDownIcon />}
+                {/* {positive ? <ArrowUpIcon /> : <ArrowDownIcon />} */}
               </SvgIcon>
-              <Typography
+              {/* <Typography
                 color={positive ? 'success.main' : 'error.main'}
                 variant="body2"
               >
                 {difference}%
-              </Typography>
+              </Typography> */}
             </Stack>
-            <Typography
+            {/* <Typography
               color="text.secondary"
               variant="caption"
             >
               Since last month
-            </Typography>
+            </Typography> */}
           </Stack>
         )}
       </CardContent>
@@ -78,41 +80,45 @@ const OverviewBudget = (props) => {
   );
 };
 
-OverviewBudget.propTypes = {
-  difference: PropTypes.number,
-  positive: PropTypes.bool,
-  sx: PropTypes.object,
-  value: PropTypes.string.isRequired
-};
-
+// Dashboard component
 const Dashboard = () => {
   return (
     <div>
       <h1 className="text-2xl font-bold mb-5 mt-10 ml-5">
         Welcome to Your Dashboard
       </h1>
-      
-      {/* Four OverviewBudget components */}
-      <OverviewBudget
-        value="Budget 1"
-        difference={10}
-        positive={true}
-      />
-      <OverviewBudget
-        value="Budget 2"
-        difference={15}
-        positive={false}
-      />
-      <OverviewBudget
-        value="Budget 3"
-        difference={5}
-        positive={true}
-      />
-      <OverviewBudget
-        value="Budget 4"
-        difference={-8}
-        positive={false}
-      />
+      {/* Four Document components with different categories and initial counts */}
+      <div className="flex gap-10">
+        <Document
+          value="Budget 1"
+          difference={10}
+          positive={true}
+          category="All"
+          initialCount={50} // Example initial count
+        />
+        <Document
+          className=""
+          value="Budget 2"
+          difference={15}
+          positive={false}
+          category="Approved"
+          initialCount={20} // Example initial count
+        />
+        <Document
+          value="Budget 3"
+          difference={5}
+          positive={true}
+          category="Pending"
+          initialCount={30} // Example initial count
+        />
+        <Document
+          value="Budget 4"
+          difference={-8}
+          positive={false}
+          category="Reject"
+          initialCount={10} // Example initial count
+        />
+      </div>
     </div>
   );
 };

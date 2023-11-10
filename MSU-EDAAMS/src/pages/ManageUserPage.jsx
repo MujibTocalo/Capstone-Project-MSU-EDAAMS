@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { MagnifyingGlassIcon, PencilSquareIcon } from "@heroicons/react/24/outline";
+import {
+  MagnifyingGlassIcon,
+  PencilSquareIcon,
+} from "@heroicons/react/24/outline";
 import { PencilIcon, UserPlusIcon } from "@heroicons/react/24/solid";
 import {
   Card,
@@ -25,8 +28,14 @@ import {
   Switch,
 } from "@material-tailwind/react";
 
-import { format } from 'date-fns'
-import { LuCheckSquare, LuDelete, LuEdit, LuPenTool, LuTrash } from "react-icons/lu";
+import { format } from "date-fns";
+import {
+  LuCheckSquare,
+  LuDelete,
+  LuEdit,
+  LuPenTool,
+  LuTrash,
+} from "react-icons/lu";
 
 const TABS = [
   {
@@ -64,13 +73,12 @@ const TABLE_HEAD = [
   "Action"
 ];
 
-
 const ManageUsers = () => {
-
   const [tableRows, setTableRows] = useState([]);
 
 
-  const [userType, setUsertype] = useState('')
+
+  const [userType, setUsertype] = useState("");
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [office, setOffice] = useState("");
@@ -133,23 +141,23 @@ const ManageUsers = () => {
     fetchTableRows();
   }, []);
 
-
   const handleSearch = (e) => {
     const query = e.target.value;
     setSearchQuery(query);
 
     // Filter the tableRows based on the user's name
     const filteredRows = tableRows.filter((row) =>
-      `${row.firstName} ${row.lastName}`.toLowerCase().includes(query.toLowerCase())
+      `${row.firstName} ${row.lastName}`
+        .toLowerCase()
+        .includes(query.toLowerCase())
     );
 
     setFilteredTableRows(filteredRows);
   };
 
-
   const handleUserType = (e) => {
-    setUsertype(e)
-  }
+    setUsertype(e);
+  };
 
   const handleFirstNameChange = (e) => {
     setFirstname(e.target.value);
@@ -171,8 +179,59 @@ const ManageUsers = () => {
   };
 
   const handleSignature = (e) => {
-    setSignature(e.target.files[0])
-    console.log(signature)
+    setSignature(e.target.files[0]);
+    console.log(signature);
+  };
+
+  const handleToggleStatus = (userId, currentStatus) => {
+    setConfirmDialog({
+      open: true,
+      userId,
+      currentStatus,
+    });
+  };
+
+  const handleConfirmStatusToggle = async () => {
+    try {
+      const { userId, currentStatus } = confirmDialog;
+
+      // Determine the new status based on the current status
+      const newStatusValue = currentStatus ? "InActive" : "Active";
+
+      // Send a request to the backend to toggle the status using fetch
+      const response = await fetch(`http://localhost:7000/user/${userId}/toggle-status`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          newStatus: newStatusValue,
+        }),
+      });
+
+      console.log('API Response:', response);
+
+      if (response.ok) {
+        // Update the status locally in the state
+        setTableRows((prevRows) =>
+          prevRows.map((user) =>
+            user._id === userId ? { ...user, status: newStatusValue } : user
+          )
+        );
+      } else {
+        // Handle the case where the response indicates an error
+        console.error('Error toggling user status:', response.status);
+      }
+    } catch (error) {
+      console.error('Error toggling user status:', error);
+    } finally {
+      // Close the confirmation dialog
+      setConfirmDialog({
+        open: false,
+        userId: null,
+        currentStatus: null,
+      });
+    }
   };
 
   const handleToggleStatus = (userId, currentStatus) => {
@@ -238,11 +297,15 @@ const ManageUsers = () => {
     formData.append('signature', signature);
 
     try {
-      const response = await axios.post('http://localhost:7000/user/register', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+      const response = await axios.post(
+        "http://localhost:7000/user/register",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
 
       if (response.status === 200) {
         console.log('User registered successfully');
@@ -361,7 +424,9 @@ const ManageUsers = () => {
                 className="flex items-center gap-3 hover:scale-105"
                 color="indigo"
                 size="md"
-              > Register User
+              >
+                {" "}
+                Register User
               </Button>
               <Dialog
                 size="sm"
@@ -370,9 +435,7 @@ const ManageUsers = () => {
                 className="bg-transparent shadow-none"
               >
                 <Card className="mx-auto w-full max-w-[24rem]">
-                  <CardHeader
-                    className="mb-4 grid h-16 place-items-center bg-indigo-800"
-                  >
+                  <CardHeader className="mb-4 grid h-16 place-items-center bg-indigo-800">
                     <Typography variant="h4" color="white">
                       Register New User
                     </Typography>
@@ -408,22 +471,35 @@ const ManageUsers = () => {
                       animate={{
                         mount: { y: 0 },
                         unmount: { y: -25 },
-                      }}>
+                      }}
+                    >
                       <Option value="OP">Office of the President</Option>
-                      <Option value="OVCAA">Office of Vice Chancellor for Academic Affairs</Option>
+                      <Option value="OVCAA">
+                        Office of Vice Chancellor for Academic Affairs
+                      </Option>
                       <Option value="COA">College of Agriculture</Option>
-                      <Option value="CBAA">College of Business Administration and Accountancy</Option>
+                      <Option value="CBAA">
+                        College of Business Administration and Accountancy
+                      </Option>
                       <Option value="CED">College of Education</Option>
                       <Option value="COE">College of Engineering</Option>
-                      <Option value="CFAS">College of Fisheries and Aquatic Sciences</Option>
-                      <Option value="CFES">College of Forestry and Environmental Sciences</Option>
-                      <Option value="CHARM">College of Hotel and Restaurant Management</Option>
-                      <Option value="CICS">College of Information and Computing Sciences</Option>
+                      <Option value="CFAS">
+                        College of Fisheries and Aquatic Sciences
+                      </Option>
+                      <Option value="CFES">
+                        College of Forestry and Environmental Sciences
+                      </Option>
+                      <Option value="CHARM">
+                        College of Hotel and Restaurant Management
+                      </Option>
+                      <Option value="CICS">
+                        College of Information and Computing Sciences
+                      </Option>
                       <Option value="CSPEAR">CSPEAR</Option>
-                      <Option value="CNSM">College of Natural Science and Mathematics</Option>
+                      <Option value="CNSM">
+                        College of Natural Science and Mathematics
+                      </Option>
                       <Option value="CPA">College of Public Affairs</Option>
-
-
                     </Select>
 
                     <Input
@@ -433,8 +509,8 @@ const ManageUsers = () => {
                       onChange={handleFirstNameChange}
                     />
                     <Input
-                      label='Last Name'
-                      size='lg'
+                      label="Last Name"
+                      size="lg"
                       value={lastname}
                       onChange={handleLastNameChange}
                     />
@@ -463,14 +539,15 @@ const ManageUsers = () => {
                       size="lg"
                       onChange={handleSignature}
                     />
-
                   </CardBody>
                   <CardFooter className="flex mx-auto">
-
-                    <Button className="flex text-white bg-indigo-800 hover:scale-105"
+                    <Button
+                      className="flex text-white bg-indigo-800 hover:scale-105"
                       variant="standard"
                       onClick={AddUser}
-                    >Save User Detail</Button>
+                    >
+                      Save User Detail
+                    </Button>
                   </CardFooter>
                 </Card>
               </Dialog>
@@ -520,7 +597,16 @@ const ManageUsers = () => {
           <tbody>
             {filteredTableRows.map(
               (
-                { _id, userType, firstName, lastName, email, office, designation, status },
+                {
+                  _id,
+                  userType,
+                  firstName,
+                  lastName,
+                  email,
+                  office,
+                  designation,
+                  status,
+                },
                 index
               ) => {
                 const isLast = index === tableRows.length - 1;
@@ -537,7 +623,7 @@ const ManageUsers = () => {
                           color="blue-gray"
                           className="font-normal"
                         >
-                          {firstName + ' ' + lastName}
+                          {firstName + " " + lastName}
                         </Typography>
                         <Typography
                           variant="small"
@@ -616,7 +702,7 @@ const ManageUsers = () => {
           </tbody>
         </table>
       </CardBody>
-    </Card >
+    </Card>
   );
 };
 
