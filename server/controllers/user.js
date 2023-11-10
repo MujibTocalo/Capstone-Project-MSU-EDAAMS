@@ -12,6 +12,10 @@ export const login = async (req, res) => {
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
+    if (user.status === 'InActive') {
+      return res.status(403).json({ message: "User is inactive, contact administrator" });
+    }
+
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(401).json({ message: "Invalid credentials" });
@@ -96,6 +100,7 @@ export const register = async (req, res) => {
       password: hashedPassword,
       userType,
       signature,
+      status: 'Active'
     });
 
     await user.save();
@@ -108,6 +113,46 @@ export const register = async (req, res) => {
   }
 };
 
+export const updateUserStatus = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const { newStatus } = req.body;
+
+
+    // Validate if the new status is one of the allowed values
+    if (!['Active', 'InActive'].includes(newStatus)) {
+      return res.status(400).send({ error: 'Invalid status value' });
+    }
+
+    // Find the current user to get the current status
+    const currentUser = await User.findById(userId);
+    if (!currentUser) {
+      return res.status(404).send({ error: 'User not found' });
+    }
+
+    // Toggle the status based on the current status
+    const toggledStatus = currentUser.status === 'Active' ? 'InActive' : 'Active';
+
+    // Update the user's status in the database based on the toggled status
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { status: toggledStatus },
+      { new: true } // Return the updated document
+    );
+
+    console.log(updatedUser)
+
+
+    if (!updatedUser) {
+      return res.status(404).send({ error: 'User not found' });
+    }
+
+    res.status(200).send({ message: 'User status updated successfully', updatedUser });
+  } catch (error) {
+    console.error('Error toggling user status:', error);
+    res.status(500).send({ error: 'Internal Server Error' });
+  }
+};
 
 
 
