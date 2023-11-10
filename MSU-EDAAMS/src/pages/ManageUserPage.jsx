@@ -182,58 +182,6 @@ const ManageUsers = () => {
     setSignature(e.target.files[0]);
     console.log(signature);
   };
-
-  const handleToggleStatus = (userId, currentStatus) => {
-    setConfirmDialog({
-      open: true,
-      userId,
-      currentStatus,
-    });
-  };
-
-  const handleConfirmStatusToggle = async () => {
-    try {
-      const { userId, currentStatus } = confirmDialog;
-
-      // Determine the new status based on the current status
-      const newStatusValue = currentStatus ? "InActive" : "Active";
-
-      // Send a request to the backend to toggle the status using fetch
-      const response = await fetch(`http://localhost:7000/user/${userId}/toggle-status`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          newStatus: newStatusValue,
-        }),
-      });
-
-      console.log('API Response:', response);
-
-      if (response.ok) {
-        // Update the status locally in the state
-        setTableRows((prevRows) =>
-          prevRows.map((user) =>
-            user._id === userId ? { ...user, status: newStatusValue } : user
-          )
-        );
-      } else {
-        // Handle the case where the response indicates an error
-        console.error('Error toggling user status:', response.status);
-      }
-    } catch (error) {
-      console.error('Error toggling user status:', error);
-    } finally {
-      // Close the confirmation dialog
-      setConfirmDialog({
-        open: false,
-        userId: null,
-        currentStatus: null,
-      });
-    }
-  };
-
   const handleToggleStatus = (userId, currentStatus) => {
     setConfirmDialog({
       open: true,
