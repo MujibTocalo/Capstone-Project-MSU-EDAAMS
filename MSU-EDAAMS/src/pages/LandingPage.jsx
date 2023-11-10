@@ -74,21 +74,51 @@ const LandingPage = () => {
           .catch((error) => {
             console.error("Error fetching user details:", error);
           });
-
-        // Redirect to dashboard or protected route
-        // navigate('/dashboard');
       })
       .catch((error) => {
-        toast.open(
-          <div className="flex gap-2 bg-red-800 text-white p-4 rounded-lg shadow-lg">
-            <LuAlertCircle size={40} />
-            <div>
-              <Typography variant="h4">Login Error!</Typography>
-              <Typography variant="paragraph">Login Error</Typography>
-            </div>
-          </div>
-        );
-        setError(error.response.data.message);
+        if (error.response) {
+          // The request was made and the server responded with a status code
+          const { status, data } = error.response;
+          if (status === 401) {
+            toast.open(
+              <div className="flex gap-2 bg-red-800 text-white p-4 rounded-lg shadow-lg">
+                <LuAlertCircle size={40} />
+                <div>
+                  <Typography variant="h4">Login Error!</Typography>
+                  <Typography variant="paragraph">{data.message}</Typography>
+                </div>
+              </div>
+            );
+          } else if (status === 403) {
+            toast.open(
+              <div className="flex gap-2 bg-yellow-500 text-white p-4 rounded-lg shadow-lg">
+                <LuAlertCircle size={40} />
+                <div>
+                  <Typography variant="h4">Inactive User!</Typography>
+                  <Typography variant="paragraph">{data.message}</Typography>
+                </div>
+              </div>
+            );
+          } else {
+            toast.open(
+              <div className="flex gap-2 bg-red-800 text-white p-4 rounded-lg shadow-lg">
+                <LuAlertCircle size={40} />
+                <div>
+                  <Typography variant="h4">Server Error!</Typography>
+                  <Typography variant="paragraph">
+                    An unexpected error occurred. Please try again later.
+                  </Typography>
+                </div>
+              </div>
+            );
+          }
+        } else if (error.request) {
+          // The request was made but no response was received
+          console.error("No response received:", error.request);
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          console.error("Error setting up the request:", error.message);
+        }
       });
   };
 

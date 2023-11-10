@@ -25,6 +25,7 @@ import {
   IconButton,
   Tooltip,
   Select,
+  Switch,
 } from "@material-tailwind/react";
 
 import { format } from "date-fns";
@@ -64,15 +65,18 @@ const TABS = [
 ];
 
 const TABLE_HEAD = [
-  "User Type",
   "Name",
+  "User Type",
   "College/Office",
   "Designation",
-  "Action",
+  "Status",
+  "Action"
 ];
 
 const ManageUsers = () => {
   const [tableRows, setTableRows] = useState([]);
+
+
 
   const [userType, setUsertype] = useState("");
   const [firstname, setFirstname] = useState("");
@@ -86,8 +90,35 @@ const ManageUsers = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredTableRows, setFilteredTableRows] = useState([]);
 
+  const [confirmRegistrationDialog, setConfirmRegistrationDialog] = useState(false);
+
+  const handleOpenRegistrationConfirmation = () => {
+    setConfirmRegistrationDialog(true);
+  };
+
+  const handleCloseRegistrationConfirmation = () => {
+    setConfirmRegistrationDialog(false);
+  };
+
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
+
+  const [confirmDialog, setConfirmDialog] = useState({
+    open: false,
+    userId: null,
+    currentStatus: null,
+  });
+
+  const handleCancelStatusToggle = () => {
+    // Close the confirmation dialog
+    setConfirmDialog({
+      open: false,
+      userId: null,
+      currentStatus: null,
+    });
+  };
+
+
 
   useEffect(() => {
     const fetchTableRows = async () => {
@@ -151,17 +182,68 @@ const ManageUsers = () => {
     setSignature(e.target.files[0]);
     console.log(signature);
   };
+  const handleToggleStatus = (userId, currentStatus) => {
+    setConfirmDialog({
+      open: true,
+      userId,
+      currentStatus,
+    });
+  };
+
+  const handleConfirmStatusToggle = async () => {
+    try {
+      const { userId, currentStatus } = confirmDialog;
+
+      // Determine the new status based on the current status
+      const newStatusValue = currentStatus ? "InActive" : "Active";
+
+      // Send a request to the backend to toggle the status using fetch
+      const response = await fetch(`http://localhost:7000/user/${userId}/toggle-status`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          newStatus: newStatusValue,
+        }),
+      });
+
+      console.log('API Response:', response);
+
+      if (response.ok) {
+        // Update the status locally in the state
+        setTableRows((prevRows) =>
+          prevRows.map((user) =>
+            user._id === userId ? { ...user, status: newStatusValue } : user
+          )
+        );
+      } else {
+        // Handle the case where the response indicates an error
+        console.error('Error toggling user status:', response.status);
+      }
+    } catch (error) {
+      console.error('Error toggling user status:', error);
+    } finally {
+      // Close the confirmation dialog
+      setConfirmDialog({
+        open: false,
+        userId: null,
+        currentStatus: null,
+      });
+    }
+  };
 
   const AddUser = async () => {
     const formData = new FormData();
-    formData.append("firstname", firstname);
-    formData.append("lastname", lastname);
-    formData.append("office", office);
-    formData.append("designation", designation);
-    formData.append("email", email);
-    formData.append("password", password);
-    formData.append("userType", userType);
-    formData.append("signature", signature);
+    formData.append('firstname', firstname);
+    formData.append('lastname', lastname);
+    formData.append('office', office);
+    formData.append('designation', designation);
+    formData.append('email', email);
+    formData.append('password', password);
+    formData.append('userType', userType);
+    formData.append('signature', signature);
+
     try {
       const response = await axios.post(
         "http://localhost:7000/user/register",
@@ -174,17 +256,98 @@ const ManageUsers = () => {
       );
 
       if (response.status === 200) {
-        console.log(response);
-        console.log("User registered successfully");
+        console.log('User registered successfully');
+        setOpen(false); // Close the registration dialog
+        handleOpenRegistrationConfirmation(); // Open the confirmation dialog
+
       }
     } catch (error) {
-      console.log("Error:", error.response?.data || "Something went wrong");
+      console.log('Error:', error.response?.data || 'Something went wrong');
       console.log(error);
     }
   };
 
+
+
   return (
     <Card className="h-full w-full rounded-lg bg-white">
+
+      <Dialog
+        size="sm"
+        open={confirmRegistrationDialog}
+        handler={handleCloseRegistrationConfirmation}
+        className="bg-transparent shadow-none"
+      >
+        <Card className="mx-auto w-full max-w-[24rem]">
+          <CardHeader
+            className="mb-4 grid h-16 place-items-center bg-indigo-800"
+          >
+            <Typography variant="h4" color="white">
+              Registration Successful
+            </Typography>
+          </CardHeader>
+          <CardBody
+            color="white"
+            className="flex flex-col h-36 gap-5 overflow-auto "
+          >
+            <Typography variant="body" color="blue-gray">
+              User has been registered successfully!
+            </Typography>
+          </CardBody>
+          <CardFooter className="flex mx-auto">
+            <Button
+              className="flex text-white bg-indigo-800 hover:scale-105"
+              variant="standard"
+              onClick={handleCloseRegistrationConfirmation}
+            >
+              OK
+            </Button>
+          </CardFooter>
+        </Card>
+      </Dialog>
+
+      <Dialog
+        size="sm"
+        open={confirmDialog.open}
+        handler={handleCancelStatusToggle}
+        className="bg-transparent shadow-none"
+      >
+        <Card className="mx-auto w-full max-w-[24rem]">
+          <CardHeader
+            className="mb-4 grid h-16 place-items-center bg-indigo-800"
+          >
+            <Typography variant="h4" color="white">
+              Confirm Status Change
+            </Typography>
+          </CardHeader>
+          <CardBody
+            color="white"
+            className="flex flex-col h-36 gap-5 overflow-auto"
+          >
+            <Typography variant="body" color="blue-gray">
+              Are you sure you want to change the status?
+            </Typography>
+          </CardBody>
+          <CardFooter className="flex mx-auto gap-3">
+            <Button
+              className="flex text-white bg-red-500 hover:scale-105"
+              variant="standard"
+              onClick={handleCancelStatusToggle}
+            >
+              Cancel
+            </Button>
+            <Button
+              className="flex text-white bg-indigo-800 hover:scale-105"
+              variant="standard"
+              onClick={handleConfirmStatusToggle}
+            >
+              Confirm
+            </Button>
+
+          </CardFooter>
+        </Card>
+      </Dialog>
+
       <CardHeader
         floated={false}
         shadow={false}
@@ -238,17 +401,13 @@ const ManageUsers = () => {
                       animate={{
                         mount: { y: 0 },
                         unmount: { y: -25 },
-                      }}
-                    >
-                      <Option value="Uploader">Department Chairperson</Option>
-                      <Option value="Approver - Dean">Approver - Dean</Option>
-                      <Option value="Endorser - OVCAA">
-                        Office of the Vice Chancellor for Academic Affairs
-                      </Option>
-                      <Option value="Approver - OP">
-                        Office of the President
-                      </Option>
-                      <Option value="Administrator">Administrator</Option>
+                      }}>
+                      <Option value='Uploader'>Department Chairperson</Option>
+                      <Option value='Approver - Dean'>Approver - Dean</Option>
+                      <Option value='Endorser - OVCAA'>Office of the Vice Chancellor for Academic Affairs</Option>
+                      <Option value='Approver - OP'>Office of the President</Option>
+                      {/* <Option value='Administrator'>Administrator</Option> */}
+
                     </Select>
 
                     <Select
@@ -406,30 +565,6 @@ const ManageUsers = () => {
                 return (
                   <tr key={_id}>
                     <td className={classes}>
-                      <div className="flex flex-col items-start gap-1">
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-light"
-                        >
-                          ID: {_id}
-                        </Typography>
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-normal opacity-70"
-                        >
-                          {userType}
-                        </Typography>
-                        {/* <Chip
-                          variant="ghost"
-                          size="md"
-                          value={userType}
-                          color={'green'}
-                        /> */}
-                      </div>
-                    </td>
-                    <td className={classes}>
                       <div className="flex flex-col">
                         <Typography
                           variant="small"
@@ -447,6 +582,26 @@ const ManageUsers = () => {
                         </Typography>
                       </div>
                     </td>
+                    <td className={classes}>
+                      <div className="flex flex-col items-start gap-1">
+                        <Typography
+                          variant="small"
+                          color="blue-gray"
+                          className="font-light"
+                        >
+                          {userType}
+
+                        </Typography>
+                        <Typography
+                          variant="small"
+                          color="blue-gray"
+                          className="font-normal opacity-70"
+                        >
+                          ID: {_id}
+                        </Typography>
+                      </div>
+                    </td>
+
                     <td className={classes}>
                       <div className="flex">
                         <Typography
@@ -466,26 +621,26 @@ const ManageUsers = () => {
                       >
                         {designation}
                       </Typography>
-                      {/* <div className="flex gap-2 justify-center">
-                        <Chip
-                          variant="ghost"
-                          size="md"
-                          value={designation}
-                          color={'blue'}
-                        />
-                        <Chip
-                          variant="ghost"
-                          size="md"
-                          value={office}
-                          color={'green'}
-                        />
-                      </div> */}
+
                     </td>
+                    <td className={classes}>
+                      <div className="flex gap-2 justify-start cursor pointer">
+                        <Button
+                          variant="outlined"
+                          size="md"
+                          onClick={() => handleToggleStatus(_id, status)}
+                          value={status === 'Active' ? 'Active' : 'Inactive'}
+                          color={status === 'Active' ? 'green' : 'red'}
+                        >{status === 'Active' ? 'Active' : 'Inactive'}</Button>
+                      </div>
+
+                    </td>
+
                     <td className={classes}>
                       <div className="flex gap-1.5">
                         <LuEdit />
                         {/* <LuCheckSquare /> */}
-                        <LuTrash />
+                        {/* <LuTrash /> */}
                       </div>
                     </td>
                   </tr>
