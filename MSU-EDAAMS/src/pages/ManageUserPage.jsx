@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { MagnifyingGlassIcon, PencilSquareIcon } from "@heroicons/react/24/outline";
+import {
+  MagnifyingGlassIcon,
+  PencilSquareIcon,
+} from "@heroicons/react/24/outline";
 import { PencilIcon, UserPlusIcon } from "@heroicons/react/24/solid";
 import {
   Card,
@@ -24,8 +27,14 @@ import {
   Select,
 } from "@material-tailwind/react";
 
-import { format } from 'date-fns'
-import { LuCheckSquare, LuDelete, LuEdit, LuPenTool, LuTrash } from "react-icons/lu";
+import { format } from "date-fns";
+import {
+  LuCheckSquare,
+  LuDelete,
+  LuEdit,
+  LuPenTool,
+  LuTrash,
+} from "react-icons/lu";
 
 const TABS = [
   {
@@ -59,15 +68,13 @@ const TABLE_HEAD = [
   "Name",
   "College/Office",
   "Designation",
-  "Action"
+  "Action",
 ];
 
-
 const ManageUsers = () => {
-
   const [tableRows, setTableRows] = useState([]);
 
-  const [userType, setUsertype] = useState('')
+  const [userType, setUsertype] = useState("");
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [office, setOffice] = useState("");
@@ -79,10 +86,8 @@ const ManageUsers = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredTableRows, setFilteredTableRows] = useState([]);
 
-
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
-
 
   useEffect(() => {
     const fetchTableRows = async () => {
@@ -105,23 +110,23 @@ const ManageUsers = () => {
     fetchTableRows();
   }, []);
 
-
   const handleSearch = (e) => {
     const query = e.target.value;
     setSearchQuery(query);
 
     // Filter the tableRows based on the user's name
     const filteredRows = tableRows.filter((row) =>
-      `${row.firstName} ${row.lastName}`.toLowerCase().includes(query.toLowerCase())
+      `${row.firstName} ${row.lastName}`
+        .toLowerCase()
+        .includes(query.toLowerCase())
     );
 
     setFilteredTableRows(filteredRows);
   };
 
-
   const handleUserType = (e) => {
-    setUsertype(e)
-  }
+    setUsertype(e);
+  };
 
   const handleFirstNameChange = (e) => {
     setFirstname(e.target.value);
@@ -143,37 +148,40 @@ const ManageUsers = () => {
   };
 
   const handleSignature = (e) => {
-    setSignature(e.target.files[0])
-    console.log(signature)
+    setSignature(e.target.files[0]);
+    console.log(signature);
   };
 
   const AddUser = async () => {
     const formData = new FormData();
-    formData.append('firstname', firstname);
-    formData.append('lastname', lastname);
-    formData.append('office', office);
-    formData.append('designation', designation);
-    formData.append('email', email);
-    formData.append('password', password);
-    formData.append('userType', userType);
-    formData.append('signature', signature);
+    formData.append("firstname", firstname);
+    formData.append("lastname", lastname);
+    formData.append("office", office);
+    formData.append("designation", designation);
+    formData.append("email", email);
+    formData.append("password", password);
+    formData.append("userType", userType);
+    formData.append("signature", signature);
     try {
-      const response = await axios.post('http://localhost:7000/user/register', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+      const response = await axios.post(
+        "http://localhost:7000/user/register",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
 
       if (response.status === 200) {
-        console.log(response)
-        console.log('User registered successfully');
+        console.log(response);
+        console.log("User registered successfully");
       }
     } catch (error) {
-      console.log('Error:', error.response?.data || 'Something went wrong');
-      console.log(error)
+      console.log("Error:", error.response?.data || "Something went wrong");
+      console.log(error);
     }
   };
-
 
   return (
     <Card className="h-full w-full rounded-lg bg-white">
@@ -201,7 +209,9 @@ const ManageUsers = () => {
                 className="flex items-center gap-3 hover:scale-105"
                 color="indigo"
                 size="md"
-              > Register User
+              >
+                {" "}
+                Register User
               </Button>
               <Dialog
                 size="sm"
@@ -210,9 +220,7 @@ const ManageUsers = () => {
                 className="bg-transparent shadow-none"
               >
                 <Card className="mx-auto w-full max-w-[24rem]">
-                  <CardHeader
-                    className="mb-4 grid h-16 place-items-center bg-indigo-800"
-                  >
+                  <CardHeader className="mb-4 grid h-16 place-items-center bg-indigo-800">
                     <Typography variant="h4" color="white">
                       Register New User
                     </Typography>
@@ -230,13 +238,17 @@ const ManageUsers = () => {
                       animate={{
                         mount: { y: 0 },
                         unmount: { y: -25 },
-                      }}>
-                      <Option value='Uploader'>Department Chairperson</Option>
-                      <Option value='Approver - Dean'>Approver - Dean</Option>
-                      <Option value='Endorser - OVCAA'>Office of the Vice Chancellor for Academic Affairs</Option>
-                      <Option value='Approver - OP'>Office of the President</Option>
-                      <Option value='Administrator'>Administrator</Option>
-
+                      }}
+                    >
+                      <Option value="Uploader">Department Chairperson</Option>
+                      <Option value="Approver - Dean">Approver - Dean</Option>
+                      <Option value="Endorser - OVCAA">
+                        Office of the Vice Chancellor for Academic Affairs
+                      </Option>
+                      <Option value="Approver - OP">
+                        Office of the President
+                      </Option>
+                      <Option value="Administrator">Administrator</Option>
                     </Select>
 
                     <Select
@@ -248,22 +260,35 @@ const ManageUsers = () => {
                       animate={{
                         mount: { y: 0 },
                         unmount: { y: -25 },
-                      }}>
+                      }}
+                    >
                       <Option value="OP">Office of the President</Option>
-                      <Option value="OVCAA">Office of Vice Chancellor for Academic Affairs</Option>
+                      <Option value="OVCAA">
+                        Office of Vice Chancellor for Academic Affairs
+                      </Option>
                       <Option value="COA">College of Agriculture</Option>
-                      <Option value="CBAA">College of Business Administration and Accountancy</Option>
+                      <Option value="CBAA">
+                        College of Business Administration and Accountancy
+                      </Option>
                       <Option value="CED">College of Education</Option>
                       <Option value="COE">College of Engineering</Option>
-                      <Option value="CFAS">College of Fisheries and Aquatic Sciences</Option>
-                      <Option value="CFES">College of Forestry and Environmental Sciences</Option>
-                      <Option value="CHARM">College of Hotel and Restaurant Management</Option>
-                      <Option value="CICS">College of Information and Computing Sciences</Option>
+                      <Option value="CFAS">
+                        College of Fisheries and Aquatic Sciences
+                      </Option>
+                      <Option value="CFES">
+                        College of Forestry and Environmental Sciences
+                      </Option>
+                      <Option value="CHARM">
+                        College of Hotel and Restaurant Management
+                      </Option>
+                      <Option value="CICS">
+                        College of Information and Computing Sciences
+                      </Option>
                       <Option value="CSPEAR">CSPEAR</Option>
-                      <Option value="CNSM">College of Natural Science and Mathematics</Option>
+                      <Option value="CNSM">
+                        College of Natural Science and Mathematics
+                      </Option>
                       <Option value="CPA">College of Public Affairs</Option>
-
-
                     </Select>
 
                     <Input
@@ -273,8 +298,8 @@ const ManageUsers = () => {
                       onChange={handleFirstNameChange}
                     />
                     <Input
-                      label='Last Name'
-                      size='lg'
+                      label="Last Name"
+                      size="lg"
                       value={lastname}
                       onChange={handleLastNameChange}
                     />
@@ -303,14 +328,15 @@ const ManageUsers = () => {
                       size="lg"
                       onChange={handleSignature}
                     />
-
                   </CardBody>
                   <CardFooter className="flex mx-auto">
-
-                    <Button className="flex text-white bg-indigo-800 hover:scale-105"
+                    <Button
+                      className="flex text-white bg-indigo-800 hover:scale-105"
                       variant="standard"
                       onClick={AddUser}
-                    >Save User Detail</Button>
+                    >
+                      Save User Detail
+                    </Button>
                   </CardFooter>
                 </Card>
               </Dialog>
@@ -360,7 +386,16 @@ const ManageUsers = () => {
           <tbody>
             {filteredTableRows.map(
               (
-                { _id, userType, firstName, lastName, email, office, designation, status },
+                {
+                  _id,
+                  userType,
+                  firstName,
+                  lastName,
+                  email,
+                  office,
+                  designation,
+                  status,
+                },
                 index
               ) => {
                 const isLast = index === tableRows.length - 1;
@@ -401,7 +436,7 @@ const ManageUsers = () => {
                           color="blue-gray"
                           className="font-normal"
                         >
-                          {firstName + ' ' + lastName}
+                          {firstName + " " + lastName}
                         </Typography>
                         <Typography
                           variant="small"
@@ -460,7 +495,7 @@ const ManageUsers = () => {
           </tbody>
         </table>
       </CardBody>
-    </Card >
+    </Card>
   );
 };
 

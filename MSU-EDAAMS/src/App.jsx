@@ -18,7 +18,7 @@ import OPApprovalPage from "./pages/OPApprovalPage";
 import TestingPage from "./pages/TestingPage";
 import ReleasingDocumentPage from "./pages/ReleasingDocumentPage";
 import { CustomNavbar } from "./components/Navbar";
-import { io } from "socket.io-client";
+import { io } from "socket.io-client/dist/socket.io.js";
 import RestrictedPage from "./pages/RestrictedPage";
 
 const App = () => {
@@ -125,7 +125,6 @@ const MainRoutes = ({ socket }) => {
           <Route path="/releasedocument" element={user && user.userType === 'releaser' ? <ReleasingDocumentPage /> : <Navigate to="/restricted" />} />
           <Route path="/testing" element={user && user.userType === 'tester' ? <TestingPage /> : <Navigate to="/restricted" />} />
           <Route path="/restricted" element={<div>Access Restricted</div>} /> */}
-
         </Routes>
       </div>
     </div>
