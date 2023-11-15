@@ -49,9 +49,9 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                 className={`whitespace-pre text-sm duration-500 ${!isOpen && 'opacity-0 translate-x-28 overflow-hidden'}`}>
                 {menu?.name}
               </Typography>
-              {/* <Typography className={`${open && 'hidden'} absolute  text-sm left-24 bg-indigo-900 whitespace-pre text-white rounded-md drop-shadow-lg px-0 py-0 w-0 overflow-hidden group-hover:px-2 group-hover:py-1 group-hover:left-14 group-hover:duration-300 group-hover:w-fit`}>
+              <Typography className={`${isOpen && 'hidden'} absolute text-sm left-24 bg-indigo-900 whitespace-pre text-white rounded-xl drop-shadow-lg px-0 py-0 w-0 overflow-hidden group-hover:px-2 group-hover:py-1 group-hover:left-14 group-hover:duration-300 group-hover:w-fit`}>
                 {menu?.name}
-              </Typography> */}
+              </Typography>
             </Link>
 
           ))}

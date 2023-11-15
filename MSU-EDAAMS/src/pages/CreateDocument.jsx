@@ -3,6 +3,9 @@ import React, { useEffect, useState } from "react";
 import { useToast } from "../components/ToastService";
 import { LuAlertCircle } from "react-icons/lu";
 
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+
 import {
   Alert,
   Select,
@@ -29,6 +32,19 @@ const CreateDocument = () => {
   const [uploaderSignature, setUploaderSignature] = useState()
   const [open, setOpen] = React.useState(false);
 
+  const quillModules = {
+    toolbar: [
+      [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
+      [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+      ['bold', 'italic', 'underline'],
+      ['link'],
+    ],
+  };
+
+  const quillFormats = [
+    'header', 'font', 'size', 'bold', 'italic', 'underline', 'list', 'bullet', 'link',
+  ];
+
   const toast = useToast();
 
   const handleOpen = () => setOpen(!open);
@@ -49,9 +65,9 @@ const CreateDocument = () => {
   const handleSubject = (e) => {
     setSubject(e.target.value);
   };
-  const handleContent = (e) => {
-    setContent(e.target.value);
-  };
+  // const handleContent = (e) => {
+  //   setContent(e.target.value);
+  // };
 
 
   const handleSubmitAndOpen = () => {
@@ -234,10 +250,17 @@ const CreateDocument = () => {
           onChange={handleSubject}
         />
       </div>
-      <div className='flex mt-4 h-screen'>
-        <Textarea
+      <div>
+        {/* <Textarea
           color='cyan'
-          label="Content" value={content} onChange={handleContent} />
+          label="Content" value={content} onChange={handleContent} /> */}
+        <ReactQuill
+          value={content}
+          theme="snow"
+          onChange={setContent}
+          modules={quillModules}
+          formats={quillFormats}
+        />
       </div>
       <div className='flex mx-auto mt-2 hover:scale-105'>
         <Button variant='outlined' onClick={handleOpen} size='sm'

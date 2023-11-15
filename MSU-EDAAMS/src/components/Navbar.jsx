@@ -180,13 +180,10 @@ export const CustomNavbar = ({ setOpen }) => {
 
   return (
     <Navbar className="flex max-w-screen items-center mx-auto justify-between  p-1 my-1">
-      <div className="flex">
-        <TiThMenuOutline onClick={() => setOpen((prevOpen) => !prevOpen)} className="flex bg-deep-purple-900 rounded-lg w-8 h-8 p-1 mt-1 ml-2 cursor-pointer" />
-
-        <Typography className="ml-6 text-xl py-1.5 font-bold text-deep-purple-900">
-          MSU EDAAMS
-        </Typography>
-      </div>
+      <Typography className="flex flex-row gap-4 items-center ml-2 text-lg p-0.5 pr-3 text-center font-semibold text-white bg-indigo-800 rounded-lg">
+        <TiThMenuOutline onClick={() => setOpen((prevOpen) => !prevOpen)} className="flex bg-indigo-800 rounded-lg w-8 h-8 p-1 translate-x-2 cursor-pointer hover:scale-110" />
+        MSU EDAAMS
+      </Typography>
 
       <div className="flex flex-row items-center gap-8">
         {/* <div className="flex relative">
@@ -199,12 +196,9 @@ export const CustomNavbar = ({ setOpen }) => {
               4
             </div>
           </div> */}
-        <div className="flex flex-col justify-center items-center">
-          <Typography className="flex text-md text-gray-700">
-            {currentUser}
-          </Typography>
-          <Typography className="flex text-xs text-gray-600">
-            {userDesignation + ' | ' + userCollege}
+        <div className="flex flex-col justify-center items-center bg-indigo-800 rounded-xl p-1 px-2 cursor-default">
+          <Typography className="flex font-md">
+            {currentUser + " | " + userDesignation + ' | ' + userCollege}
           </Typography>
         </div>
         <ProfileMenu />
