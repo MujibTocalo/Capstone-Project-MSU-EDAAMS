@@ -1,4 +1,8 @@
 import Document from '../models/document.js'
+import Dean from '../models/dean.js'
+import Endorser from '../models/endorser.js'
+import FinalApprover from '../models/op.js'
+import Releaser from '../models/rmo.js'
 
 
 // Controller For Getting all the Document
@@ -45,7 +49,12 @@ export const deleteDocument = async (req, res) => {
 export const endorseDocument = async (req, res) => {
 	try {
 		const { id } = req.params
-		const { endorserName, endorserDesignation, endorsementLetter, endorserRemark, decision, endorserSignature } = req.body
+		const { endorserName,
+			endorserDesignation,
+			endorsementLetter,
+			endorserRemark,
+			decision,
+			endorserSignature } = req.body
 
 		const document = await Document.findById(id)
 		if (!document) {
@@ -77,10 +86,10 @@ export const endorseDocument = async (req, res) => {
 	}
 }
 
-export const deanApproval = async (req, res) => {
+export const deanEndorsement = async (req, res) => {
 	try {
 		const { id } = req.params
-		const { deanName, deanRemark, decision, deanDesignation, deanSignature } = req.body
+		const { name, header, subject, content, remark, decision, designation, signature } = req.body
 
 		const document = await Document.findById(id)
 
@@ -88,13 +97,14 @@ export const deanApproval = async (req, res) => {
 			return res.status(404).json({ error: 'Document not found' });
 		}
 
-		document.deanApproverName = deanName;
-		document.dateDeanApproved = Date.now();
-		document.deanRemarks = deanRemark;
-		document.deanDecision = decision;
-		document.deanApproverSignature = deanSignature;
-		document.deanApproverDesignation = deanDesignation;
-		console.log(decision)
+		document.dean.Name = name;
+		document.dean.EndorsementHeader = header;
+		document.dean.EndorsementSubject = subject;
+		document.dean.EndorsementContent = content;
+		document.dean.Designation = designation;
+		document.dean.Signature = signature;
+		document.dean.EndorsementDate = Date.now();
+		document.dean.Remark = remark;
 
 		if (decision === 'true') {
 			document.documentStatus = 'Dean Approved';

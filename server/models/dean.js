@@ -6,7 +6,10 @@ const dean = new mongoose.Schema({
 	Name: String,
 	Designation: String,
 	Signature: String,
-	ApprovalDate: Date,
+	EndorsementHeader: String,
+	EndorsementSubject: String,
+	EndorsementContent: String,
+	EndorsementDate: Date,
 	Remarks: String
 }, { timestamps: true })
 

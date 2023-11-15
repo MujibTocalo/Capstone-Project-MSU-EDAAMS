@@ -1,4 +1,8 @@
 import mongoose from 'mongoose'
+import Dean from './dean'
+import Endorser from './endorser'
+import FinalApprover from './op'
+import Releaser from './rmo'
 
 
 const documentSchema = new mongoose.Schema({
@@ -14,32 +18,37 @@ const documentSchema = new mongoose.Schema({
 	uploaderDesignation: String,
 	uploaderSignature: String,
 
+	dean: Dean,
+	endorser: Endorser,
+	finalApprover: FinalApprover,
+	releaser: Releaser,
+
 	// Dean Data
-	deanApproverName: String,
-	deanApproverDesignation: String,
-	deanApproverSignature: String,
-	dateDeanApproved: Date,
-	deanRemarks: String,
+	// deanApproverName: String,
+	// deanApproverDesignation: String,
+	// deanApproverSignature: String,
+	// dateDeanApproved: Date,
+	// deanRemarks: String,
 
 	// OVCAA date
-	endorserName: String,
-	endorserDesignation: String,
-	endorsementDate: Date,
-	endorsementLetter: String,
-	endorserSignature: String,
-	EndorserRemarks: String,
+	// endorserName: String,
+	// endorserDesignation: String,
+	// endorsementDate: Date,
+	// endorsementLetter: String,
+	// endorserSignature: String,
+	// EndorserRemarks: String,
 
 	// Office of the President Data
-	opApproverName: String,
-	opApproverDesignation: String,
-	opApprovalDate: Date,
-	opApprovalRemark: String,
-	opSignature: String,
+	// opApproverName: String,
+	// opApproverDesignation: String,
+	// opApprovalDate: Date,
+	// opApprovalRemark: String,
+	// opSignature: String,
 
 	// RMO Data
-	releaserName: String,
-	releaseDate: Date,
-	rmoRemark: String,
+	// releaserName: String,
+	// releaseDate: Date,
+	// rmoRemark: String,
 
 	// Workflow Status
 	documentStatus: {
