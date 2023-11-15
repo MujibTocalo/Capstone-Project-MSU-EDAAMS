@@ -12,13 +12,7 @@ import { Avatar, Typography } from '@material-tailwind/react'
 import { LuClipboardCheck } from 'react-icons/lu'
 
 
-const Sidebar = () => {
-
-  // useEffect(() => {
-  //   const userDetail = JSON.parse(localStorage.getItem('userDetails'))
-  //   handleCurrentUser(userDetail)
-  // })
-
+const Sidebar = ({ isOpen, toggleSidebar }) => {
 
   const menus = [
     { name: 'Dashboard', link: '/dashboard', icon: RiDashboardLine },
@@ -33,16 +27,15 @@ const Sidebar = () => {
 
   ]
 
-  const [open, setOpen] = useState(true)
 
   return (
-    <div className='flex flex-col overflow-x-clip overflow-y-scroll bg-indigo-900 duration-500 '>
-      <div className={`h-screen ${open ? 'w-52' : 'w-12'} duration-500 text-white p-1`}>
-        <div className='py-4 flex duration-500 justify-between'>
-          {/* <Avatar className='flex h-6 w-6 border rounded-none ml-2' /> */}
-          <h1 className={`${!open && '0.5s ease-in-out hidden'} flex 3s ease-in-out mx-auto whitespace-pre font-semibold text-lg `}>MSU EDAAMS</h1>
-          < TiThMenuOutline size={23} className={`${!open && 'flex ml-2'} flex mr-2.5 cursor-pointer transition`} onClick={() => setOpen(!open)} />
-        </div>
+    <div className={`flex flex-col ${isOpen ? 'w-52' : 'w-12'} bg-indigo-900 duration-500`} style={{ zIndex: 1, position: 'relative' }}>
+      <div className={`h-screen ${isOpen ? 'w-52' : 'w-12'} bg-indigo-900 duration-500 text-white p-1`}>
+        {/* <div className='py-4 flex duration-500 justify-between'> */}
+        {/* <Avatar className='flex h-6 w-6 border rounded-none ml-2' /> */}
+        {/* <h1 className={`${!open && '0.5s ease-in-out hidden'} flex 3s ease-in-out mx-auto whitespace-pre font-semibold text-lg `}>MSU EDAAMS</h1>
+        < TiThMenuOutline size={23} className={`${!open && 'flex ml-2'} flex mr-2.5 cursor-pointer transition`} onClick={() => setOpen(!open)} />
+      </div> */}
         <div className='mt-4 flex flex-col gap-4 relative'>
           {menus?.map((menu, i) => (
             <Link to={menu?.link} key={i} className='group flex items-center text-sm gap-3.5 font-medium p-2 hover:border rounded-lg'>
@@ -53,9 +46,10 @@ const Sidebar = () => {
                 style={{
                   transitionDelay: `${i + 3}00ms`,
                 }}
-                className={`whitespace-pre text-sm duration-500 ${!open && 'opacity-0 translate-x-28 overflow-hidden'}`}>
-                {menu?.name}</Typography>
-              {/* <Typography className={`${open && 'hidden'} absolute  text-sm left-24 bg-[#512B81] whitespace-pre text-white rounded-md drop-shadow-lg px-0 py-0 w-0 overflow-hidden group-hover:px-2 group-hover:py-1 group-hover:left-14 group-hover:duration-300 group-hover:w-fit`}>
+                className={`whitespace-pre text-sm duration-500 ${!isOpen && 'opacity-0 translate-x-28 overflow-hidden'}`}>
+                {menu?.name}
+              </Typography>
+              {/* <Typography className={`${open && 'hidden'} absolute  text-sm left-24 bg-indigo-900 whitespace-pre text-white rounded-md drop-shadow-lg px-0 py-0 w-0 overflow-hidden group-hover:px-2 group-hover:py-1 group-hover:left-14 group-hover:duration-300 group-hover:w-fit`}>
                 {menu?.name}
               </Typography> */}
             </Link>

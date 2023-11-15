@@ -12,6 +12,7 @@ import {
   MenuList,
   MenuItem,
   Avatar,
+  menu,
 } from "@material-tailwind/react";
 import {
   UserCircleIcon,
@@ -19,10 +20,12 @@ import {
   Cog6ToothIcon,
   PowerIcon,
 } from "@heroicons/react/24/outline";
-import { RiNotification3Fill } from "react-icons/ri";
+import { RiMenuLine, RiMenuUnfoldFill, RiNotification3Fill } from "react-icons/ri";
 import logo from "../assets/msulogo.png";
 import Notification from "../assets/notification.svg";
 import avatar from "../assets/profile icon.png";
+import Sidebar from "./Sidebar";
+import { TiThMenuOutline } from "react-icons/ti";
 
 // Profile menu component
 const profileMenuItems = [
@@ -162,10 +165,11 @@ const ProfileMenu = () => {
   );
 };
 
-export const CustomNavbar = () => {
+export const CustomNavbar = ({ setOpen }) => {
   const [currentUser, setCurrentUser] = useState();
   const [userDesignation, setUserDesignation] = useState();
   const [userCollege, setUserCollege] = useState();
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   useEffect(() => {
     const userDetail = JSON.parse(localStorage.getItem("userDetails"));
@@ -176,9 +180,14 @@ export const CustomNavbar = () => {
 
   return (
     <Navbar className="flex max-w-screen items-center mx-auto justify-between  p-1 my-1">
-      <Typography className="ml-6 text-xl py-1.5 font-bold">
-        MSU EDAAMS
-      </Typography>
+      <div className="flex">
+        <TiThMenuOutline onClick={() => setOpen((prevOpen) => !prevOpen)} className="flex bg-deep-purple-900 rounded-lg w-8 h-8 p-1 mt-1 ml-2 cursor-pointer" />
+
+        <Typography className="ml-6 text-xl py-1.5 font-bold text-deep-purple-900">
+          MSU EDAAMS
+        </Typography>
+      </div>
+
       <div className="flex flex-row items-center gap-8">
         {/* <div className="flex relative">
             <RiNotification3Fill

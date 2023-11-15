@@ -20,14 +20,15 @@ import ReleasingDocumentPage from "./pages/ReleasingDocumentPage";
 import { CustomNavbar } from "./components/Navbar";
 import { io } from "socket.io-client/dist/socket.io.js";
 import RestrictedPage from "./pages/RestrictedPage";
+import NewCreateDocument from "./pages/NewCreateDocument";
+
+// const socket = io('http://localhost:7000')
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [socket, setSocket] = useState(null);
 
-  useEffect(() => {
-    setSocket(io("http://localhost:7000"));
-  }, []);
+
+
 
   const handleLogin = () => {
     setIsLoggedIn(true);
@@ -40,48 +41,45 @@ const App = () => {
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<Login onLogin={handleLogin} />} />
         <Route path="/registration" element={<Registration />} />
-        <Route path="/*" element={<MainRoutes socket={socket} />} />
+        <Route path="/*" element={<MainRoutes />} />
       </Routes>
     </div>
   );
 };
 
-const MainRoutes = ({ socket }) => {
+const MainRoutes = () => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [userType, setUserType] = useState('')
 
-
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
 
   useEffect(() => {
     const userDetail = JSON.parse(localStorage.getItem('userDetails'))
     setUserType(userDetail.userType);
-
   }, []);
-  console.log(userType)
-
-  useEffect(() => {
-    socket?.emit("newUser");
-  }, [socket]);
-
-
-
 
 
   return (
     <div className="flex flex-row h-screen overflow-hidden">
-      <Sidebar />
+      <div style={{ zIndex: 1, position: 'relative' }}>
+        <Sidebar isOpen={isSidebarOpen} toggleSidebar={!toggleSidebar} />
+      </div>
       <div className="flex flex-col p-2 mx-auto flex-grow bg-transparent">
-        <CustomNavbar socket={socket} />
+        <CustomNavbar setOpen={setIsSidebarOpen} />
         <Routes>
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/profilePage" element={<ProfilePage />} />
           <Route path="/documents" element={<DocumentsLists />} />
           <Route path="/createDocument" element={<CreateDocument />} />
+          <Route path="/newcreateDocument" element={<NewCreateDocument />} />
           <Route path="/approvedocument" element={<ApproveDocument />} />
           <Route path="/endorsedocument" element={<EndorseDocument />} />
           <Route path="/opapproval" element={<OPApprovalPage />} />
           <Route path="/archive" element={<ArchivePage />} />
-          {/* <Route path="/manageusers" element={<ManageUsers />} /> */}
-          <Route
+          <Route path="/manageusers" element={<ManageUsers />} />
+          {/* <Route
             path="/manageusers"
             element={
               userType === 'Administrator' ? (
@@ -90,7 +88,7 @@ const MainRoutes = ({ socket }) => {
                 <Navigate to="/restricted" />
               )
             }
-          />
+          /> */}
           {/* <Route path="/releasedocument" element={<ReleasingDocumentPage />} /> */}
           <Route
             path="/releasedocument"
