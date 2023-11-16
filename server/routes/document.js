@@ -7,11 +7,8 @@ import {
 	updateDocument,
 	createDocument,
 	totalDocuments,
-	approveDocument,
-	deanApproval,
+	deanEndorsement,
 	endorseDocument,
-	releaseDocument
-
 } from '../controllers/document.js'
 
 
@@ -26,10 +23,13 @@ documentRouter.put('/:id', updateDocument)
 
 documentRouter.get('/total', totalDocuments)
 
-documentRouter.put('/deanApproval/:id', deanApproval)
-documentRouter.put('/opApproval/:id', approveDocument)
-documentRouter.put('/endorseDocument/:id', endorseDocument)
-documentRouter.put('/releaseDocument/:id', releaseDocument)
+documentRouter.put('/deanEndorsement/:id', deanEndorsement)
+documentRouter.put('/endorsement/:id', endorseDocument)
+
+// documentRouter.put('/deanApproval/:id', deanApproval)
+// documentRouter.put('/opApproval/:id', approveDocument)
+// documentRouter.put('/endorseDocument/:id', endorseDocument)
+// documentRouter.put('/releaseDocument/:id', releaseDocument)
 
 
 export default documentRouter

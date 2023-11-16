@@ -1,10 +1,6 @@
 import mongoose from 'mongoose'
-import Dean from './dean'
-import Endorser from './endorser'
-import FinalApprover from './op'
-import Releaser from './rmo'
 
-
+// Document Schema
 const documentSchema = new mongoose.Schema({
 
 	// Uploader Data
@@ -18,39 +14,44 @@ const documentSchema = new mongoose.Schema({
 	uploaderDesignation: String,
 	uploaderSignature: String,
 
-	dean: Dean,
-	endorser: Endorser,
-	finalApprover: FinalApprover,
-	releaser: Releaser,
-
 	// Dean Data
-	// deanApproverName: String,
-	// deanApproverDesignation: String,
-	// deanApproverSignature: String,
-	// dateDeanApproved: Date,
-	// deanRemarks: String,
+	deanName: String,
+	deanDesignation: String,
+	deanEndorsementHeader: String,
+	deanEndorsementSubject: String,
+	deanEndorsementContent: String,
+	deanSignature: String,
+	deanEndorsementDate: Date,
+	deanRemarks: String,
 
 	// OVCAA date
-	// endorserName: String,
-	// endorserDesignation: String,
-	// endorsementDate: Date,
-	// endorsementLetter: String,
-	// endorserSignature: String,
-	// EndorserRemarks: String,
+	endorserName: String,
+	endorserDesignation: String,
+	endorsementDate: Date,
+	endorsementHeader: String,
+	endorsementSubject: String,
+	endorsementContent: String,
+	endorserSignature: String,
+	endorserRemarks: String,
 
 	// Office of the President Data
-	// opApproverName: String,
-	// opApproverDesignation: String,
-	// opApprovalDate: Date,
-	// opApprovalRemark: String,
-	// opSignature: String,
+	approverName: String,
+	approverDesignation: String,
+	approvalDate: Date,
+	approverHeader: String,
+	approverSubject: String,
+	approverContent: String,
+	approverSignature: String,
+	approverRemarks: String,
+
 
 	// RMO Data
-	// releaserName: String,
-	// releaseDate: Date,
-	// rmoRemark: String,
+	releaserName: String,
+	releaseDate: Date,
+	rmoRemark: String,
 
 	// Workflow Status
+
 	documentStatus: {
 		type: String,
 		enum: ['Pending', 'Dean Approved', 'Endorsed', 'OP Approved', 'Released', 'Rejected | OVCAA', 'Rejected | Dean', 'Rejected | OP', 'Not Released', 'Rejected'],
