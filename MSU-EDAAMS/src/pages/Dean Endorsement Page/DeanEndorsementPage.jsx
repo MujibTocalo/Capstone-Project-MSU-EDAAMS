@@ -79,6 +79,7 @@ const DeanEndorsementPage = () => {
 				designation: documentDetail.designation,
 				signature: documentDetail.signature,
 				remarks: documentDetail.remarks,
+				decision: 'true'
 			})
 				.then(res => {
 					console.log(res)
