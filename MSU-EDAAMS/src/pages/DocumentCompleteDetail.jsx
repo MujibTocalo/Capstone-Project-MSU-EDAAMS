@@ -3,6 +3,7 @@ import documentsStore from "../config/documentsStore";
 import logo from '../assets/msulogo.png'
 import { Avatar, Typography } from "@material-tailwind/react";
 import { format } from "date-fns";
+import ReactQuill from "react-quill";
 
 const DocumentCompleteDetail = ({ document }) => {
 
@@ -16,24 +17,40 @@ const DocumentCompleteDetail = ({ document }) => {
 	useEffect(() => {
 		store.fetchDocuments();
 		setSignature(document.uploaderSignature);
-		setDeanSignature(document.deanApproverSignature);
+		setDeanSignature(document.deanSignature);
 		setEndorserSignature(document.endorserSignature);
-		setOPSignature(document.opSignature);
+		setOPSignature(document.approverSignature);
 	}, [store]);
 
 	return (
 		<div className="text-black">
-			<div key={document._id}>
-				<div className="flex flex-col p-2">
+			<div key={document._id} className="p-2">
+				<div className="flex flex-row border border-gray-400 p-2 mx-2 justify-between shadow-md">
 					<Typography variant='paragraph'>{'Control No. ' + document.controlNumber + ' - ' + document.collegeName}</Typography>
 					<Typography variant='paragraph'>Date: {format(new Date(document.createdAt), 'yyyy-MM-dd')}</Typography>
 				</div>
 				<div className="p-2">
 					<div className="gap-3.5">
-						<Typography variant='paragraph'>To: {document.header}</Typography>
-						<Typography variant='paragraph'>Subject: {document.subject}</Typography>
+						<div className="flex flex-col border border-gray-400 p-2 my-2 shadow-md">
+							<Typography variant='paragraph'>To: </Typography>
+							<Typography variant='paragraph' style={{ textIndent: '1em' }}>{document.header}</Typography>
+						</div>
+						<div className="flex flex-col border border-gray-400 p-2 my-2 shadow-md">
+							<Typography variant='paragraph'>Subject: </Typography>
+							<Typography variant='paragraph' style={{ textIndent: '1em' }}>{document.subject}</Typography>
+						</div>
 					</div>
-					<Typography variant='paragraph' className='m-3 whitespace-break-spaces text-justify'>{document.content}</Typography>
+
+					<ReactQuill
+						value={document.content}
+						readOnly={true}
+						modules={{
+							toolbar: false,
+						}}
+						className="flex border-none shadow-md"
+						style={{ textIndent: '1em' }}
+					/>
+
 				</div>
 				<div className="flex flex-row justify-evenly">
 					<div className="flex flex-col">
@@ -50,8 +67,8 @@ const DocumentCompleteDetail = ({ document }) => {
 							<img className="flex mx-auto translate-y-8 w-24 h-24" src={`http://localhost:7000${deanSignature}`} alt="signature" />
 						)}
 						<div className="text-center">
-							<Typography variant='paragraph'><u>{document.deanApproverName}</u></Typography>
-							<Typography variant='paragraph'>{document.deanApproverDesignation}</Typography>
+							<Typography variant='paragraph'><u>{document.deanName}</u></Typography>
+							<Typography variant='paragraph'>{document.deanDesignation}</Typography>
 						</div>
 					</div>
 					<div className="flex flex-col">

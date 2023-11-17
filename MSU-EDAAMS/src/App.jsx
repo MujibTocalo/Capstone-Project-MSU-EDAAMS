@@ -21,6 +21,7 @@ import { CustomNavbar } from "./components/Navbar";
 import { io } from "socket.io-client/dist/socket.io.js";
 import RestrictedPage from "./pages/RestrictedPage";
 import NewCreateDocument from "./pages/NewCreateDocument";
+import DeanEndorsementPage from "./pages/Dean Endorsement Page/DeanEndorsementPage";
 
 // const socket = io('http://localhost:7000')
 
@@ -75,6 +76,7 @@ const MainRoutes = () => {
           <Route path="/createDocument" element={<CreateDocument />} />
           <Route path="/newcreateDocument" element={<NewCreateDocument />} />
           <Route path="/approvedocument" element={<ApproveDocument />} />
+          <Route path="/deanEndorsementPage" element={<DeanEndorsementPage />} />
           <Route path="/endorsedocument" element={<EndorseDocument />} />
           <Route path="/opapproval" element={<OPApprovalPage />} />
           <Route path="/archive" element={<ArchivePage />} />
