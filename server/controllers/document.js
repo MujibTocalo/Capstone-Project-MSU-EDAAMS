@@ -1,8 +1,4 @@
 import Document from '../models/document.js'
-import Dean from '../models/dean.js'
-import Endorser from '../models/endorser.js'
-import FinalApprover from '../models/op.js'
-import Releaser from '../models/rmo.js'
 
 
 // Controller For Getting all the Document
@@ -46,72 +42,72 @@ export const deleteDocument = async (req, res) => {
 };
 
 
-export const endorseDocument = async (req, res) => {
-	try {
-		const { id } = req.params
-		const { endorserName,
-			endorserDesignation,
-			endorsementLetter,
-			endorserRemark,
-			decision,
-			endorserSignature } = req.body
+// export const endorseDocument = async (req, res) => {
+// 	try {
+// 		const { id } = req.params
+// 		const { endorserName,
+// 			endorserDesignation,
+// 			endorsementLetter,
+// 			endorserRemark,
+// 			decision,
+// 			endorserSignature } = req.body
 
-		const document = await Document.findById(id)
-		if (!document) {
-			return res.status(404).json({ error: 'Document Not Found.' })
-		}
+// 		const document = await Document.findById(id)
+// 		if (!document) {
+// 			return res.status(404).json({ error: 'Document Not Found.' })
+// 		}
 
-		document.endorserName = endorserName
-		document.endorserDesignation = endorserDesignation
-		document.endorserSignature = endorserSignature
-		document.endorsementDate = Date.now();
-		document.endorsementLetter = endorsementLetter;
-		document.EndorserRemarks = endorserRemark
+// 		document.endorserName = endorserName
+// 		document.endorserDesignation = endorserDesignation
+// 		document.endorserSignature = endorserSignature
+// 		document.endorsementDate = Date.now();
+// 		document.endorsementLetter = endorsementLetter;
+// 		document.EndorserRemarks = endorserRemark
 
-		if (decision === 'true') {
-			document.documentStatus = 'Endorsed'
-			console.log("documentStatus: " + document.documentStatus)
-		} else if (decision === 'false') {
-			document.documentStatus = 'Rejected'
-			console.log("documentStatus: " + document.documentStatus)
-		}
+// 		if (decision === 'true') {
+// 			document.documentStatus = 'Endorsed'
+// 			console.log("documentStatus: " + document.documentStatus)
+// 		} else if (decision === 'false') {
+// 			document.documentStatus = 'Rejected'
+// 			console.log("documentStatus: " + document.documentStatus)
+// 		}
 
-		console.log(document);
+// 		console.log(document);
 
-		await document.save()
-		res.json({ message: 'Document endorsed successfully' });
-	} catch (error) {
-		console.error(error);
-		res.status(500).json({ error: 'Internal server error' });
-	}
-}
+// 		await document.save()
+// 		res.json({ message: 'Document endorsed successfully' });
+// 	} catch (error) {
+// 		console.error(error);
+// 		res.status(500).json({ error: 'Internal server error' });
+// 	}
+// }
 
 export const deanEndorsement = async (req, res) => {
 	try {
-		const { id } = req.params
-		const { name, header, subject, content, remark, decision, designation, signature } = req.body
+		const { id } = req.params;
+		const { name, header, subject, content, remarks, decision, designation, signature } = req.body;
 
-		const document = await Document.findById(id)
+		const document = await Document.findById(id);
 
 		if (!document) {
 			return res.status(404).json({ error: 'Document not found' });
 		}
 
-		document.dean.Name = name;
-		document.dean.EndorsementHeader = header;
-		document.dean.EndorsementSubject = subject;
-		document.dean.EndorsementContent = content;
-		document.dean.Designation = designation;
-		document.dean.Signature = signature;
-		document.dean.EndorsementDate = Date.now();
-		document.dean.Remark = remark;
+		document.deanName = name;
+		document.deanEndorsementHeader = header;
+		document.deanEndorsementSubject = subject;
+		document.deanEndorsementContent = content;
+		document.deanDesignation = designation;
+		document.deanSignature = signature;
+		document.deanEndorsementDate = Date.now();
+		document.deanRemarks = remarks;
 
 		if (decision === 'true') {
-			document.documentStatus = 'Dean Approved';
-			console.log("documentStatus: " + document.documentStatus)
+			document.documentStatus = 'Dean Endorsed';
+			console.log("documentStatus: " + document.documentStatus);
 		} else if (decision === 'false') {
-			document.documentStatus = 'Rejected';
-			console.log("documentStatus: " + document.documentStatus)
+			document.documentStatus = 'Rejected | Dean';
+			console.log("documentStatus: " + document.documentStatus);
 		}
 
 		await document.save();
@@ -120,61 +116,103 @@ export const deanEndorsement = async (req, res) => {
 			message: 'Success'
 		});
 	} catch (error) {
+		console.error(error);
 		res.status(500).json({ error: 'Internal server error' });
 	}
-}
+};
 
-export const approveDocument = async (req, res) => {
+
+export const endorseDocument = async (req, res) => {
 	try {
-		const { id } = req.params
-		const { ApproverName, ApproverDesignation, Remark, signature, decision } = req.body
+		const { id } = req.params;
+		const { name, header, subject, content, remark, decision, designation, signature } = req.body;
 
-		const document = await Document.findById(id)
+		const document = await Document.findById(id);
+
 		if (!document) {
 			return res.status(404).json({ error: 'Document not found' });
 		}
 
-		document.opApproverName = ApproverName;
-		document.opApproverDesignation = ApproverDesignation;
-		document.opApprovalDate = Date.now();
-		document.Remark = Remark;
-		document.opSignature = signature;
-		document.documentStatus = decision == true ? 'OP Approved' : 'Rejected | OP'
+		document.endorserName = name;
+		document.endorsementHeader = header;
+		document.endorsementSubject = subject;
+		document.endorsementContent = content;
+		document.endorserDesignation = designation;
+		document.endorserSignature = signature;
+		document.endorsementDate = Date.now();
+		document.endorserRemarks = remark;
 
-		console.log(document.documentStatus)
+		if (decision === 'true') {
+			document.documentStatus = 'Endorsed';
+			console.log("documentStatus: " + document.documentStatus);
+		} else if (decision === 'false') {
+			document.documentStatus = 'Rejected | OVCAA';
+			console.log("documentStatus: " + document.documentStatus);
+		}
 
-		await document.save()
-		res.json({ message: 'Document approved successfully' });
+		await document.save();
+
+		res.json({
+			message: 'Success'
+		});
 	} catch (error) {
 		console.error(error);
 		res.status(500).json({ error: 'Internal server error' });
 	}
 }
 
-export const releaseDocument = async (req, res) => {
 
-	try {
-		const { id } = req.params
-		const { ReleaserName, Remark, decision } = req.body
+// export const approveDocument = async (req, res) => {
+// 	try {
+// 		const { id } = req.params
+// 		const { ApproverName, ApproverDesignation, Remark, signature, decision } = req.body
 
-		const document = await Document.findById(id)
-		if (!document) {
-			return res.status(404).json({ error: 'Document not found' });
-		}
+// 		const document = await Document.findById(id)
+// 		if (!document) {
+// 			return res.status(404).json({ error: 'Document not found' });
+// 		}
+
+// 		document.opApproverName = ApproverName;
+// 		document.opApproverDesignation = ApproverDesignation;
+// 		document.opApprovalDate = Date.now();
+// 		document.Remark = Remark;
+// 		document.opSignature = signature;
+// 		document.documentStatus = decision == true ? 'OP Approved' : 'Rejected | OP'
+
+// 		console.log(document.documentStatus)
+
+// 		await document.save()
+// 		res.json({ message: 'Document approved successfully' });
+// 	} catch (error) {
+// 		console.error(error);
+// 		res.status(500).json({ error: 'Internal server error' });
+// 	}
+// }
+
+// export const releaseDocument = async (req, res) => {
+
+// 	try {
+// 		const { id } = req.params
+// 		const { ReleaserName, Remark, decision } = req.body
+
+// 		const document = await Document.findById(id)
+// 		if (!document) {
+// 			return res.status(404).json({ error: 'Document not found' });
+// 		}
 
 
-		document.rmoRemark = Remark;
-		document.releaserName = ReleaserName;
-		document.releaseDate = Date.now();
-		document.documentStatus = decision == true ? 'Released' : 'Not Released'
+// 		document.rmoRemark = Remark;
+// 		document.releaserName = ReleaserName;
+// 		document.releaseDate = Date.now();
+// 		document.documentStatus = decision == true ? 'Released' : 'Not Released'
 
-		await document.save()
-		res.json({ message: 'Document Released on ' });
-	} catch (error) {
-		console.error(error);
-		res.status(500).json({ error: 'Internal server error' });
-	}
-}
+// 		await document.save()
+// 		res.json({ message: 'Document Released on ' });
+// 	} catch (error) {
+// 		console.error(error);
+// 		res.status(500).json({ error: 'Internal server error' });
+// 	}
+// }
 
 
 export const updateDocument = async (req, res) => {

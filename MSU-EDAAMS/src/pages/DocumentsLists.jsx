@@ -118,7 +118,7 @@ export const DocumentsLists = () => {
 
 
   const handleCreateNewDocument = () => {
-    navigate("/createDocument");
+    navigate("/newCreateDocument");
   };
   // const handleArchive = () => {
   // 	navigate('/archive')

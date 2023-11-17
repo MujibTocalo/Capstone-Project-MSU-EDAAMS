@@ -1,8 +1,8 @@
 import { useEffect } from "react";
-import documentsStore from "../config/documentsStore";
+import documentsStore from "../../config/documentsStore";
 import { Avatar, Typography } from "@material-tailwind/react";
 
-import logo from '../assets/msulogo.png'
+import logo from '../../assets/msulogo.png'
 import { format } from "date-fns";
 
 const DocumentApproverDetail = ({ document }) => {

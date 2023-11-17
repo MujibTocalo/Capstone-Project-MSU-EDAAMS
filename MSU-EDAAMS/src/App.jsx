@@ -10,7 +10,7 @@ import CreateDocument from "./pages/CreateDocument";
 import Sidebar from "./components/Sidebar";
 import ArchivePage from "./pages/ArchivePage";
 import ManageUsers from "./pages/ManageUserPage";
-import ApproveDocument from "./pages/ApproveDocument";
+// import ApproveDocument from "./pages/ApproveDocument";
 import EndorseDocument from "./pages/EndorsementPage";
 import Dashboard from "./pages/Dashboard";
 import { DocumentsLists } from "./pages/DocumentsLists";
@@ -22,6 +22,7 @@ import { io } from "socket.io-client/dist/socket.io.js";
 import RestrictedPage from "./pages/RestrictedPage";
 import NewCreateDocument from "./pages/NewCreateDocument";
 import DeanEndorsementPage from "./pages/Dean Endorsement Page/DeanEndorsementPage";
+import OVCAAEndorsementPage from "./pages/OVCAA Endorsement Page/OVCAAEndorsementPage";
 
 // const socket = io('http://localhost:7000')
 
@@ -74,10 +75,11 @@ const MainRoutes = () => {
           <Route path="/profilePage" element={<ProfilePage />} />
           <Route path="/documents" element={<DocumentsLists />} />
           <Route path="/createDocument" element={<CreateDocument />} />
-          <Route path="/newcreateDocument" element={<NewCreateDocument />} />
-          <Route path="/approvedocument" element={<ApproveDocument />} />
-          <Route path="/deanEndorsementPage" element={<DeanEndorsementPage />} />
+          <Route path="/newCreateDocument" element={<NewCreateDocument />} />
+          {/* <Route path="/approvedocument" element={<ApproveDocument />} /> */}
+          <Route path="/deanEndorsement" element={<DeanEndorsementPage />} />
           <Route path="/endorsedocument" element={<EndorseDocument />} />
+          <Route path="/ovcaaEndorsement" element={<OVCAAEndorsementPage />} />
           <Route path="/opapproval" element={<OPApprovalPage />} />
           <Route path="/archive" element={<ArchivePage />} />
           <Route path="/manageusers" element={<ManageUsers />} />

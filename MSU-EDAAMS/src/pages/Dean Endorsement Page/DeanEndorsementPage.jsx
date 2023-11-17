@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import documentsStore from '../../config/documentsStore'
 import { useToast } from '../../components/ToastService'
-import DocumentApproverDetail from '../DocumentApproverDetail'
+import DocumentApproverDetail from './DocumentApproverDetail'
 
 import ReactQuill from 'react-quill'
 import EditorToolbar, { modules, formats } from '../../components/EditorToolbar'
@@ -28,8 +28,6 @@ const DeanEndorsementPage = () => {
 	const userDetail = JSON.parse(localStorage.getItem('userDetails'))
 	const store = documentsStore()
 	const toast = useToast()
-
-	const [endorserRemark, setEndorserRemark] = useState()
 
 	const [endorse, setEndorse] = useState(false)
 	const [endorseSelectedDocument, setEndorseSelectedDocument] = useState(null);
@@ -118,7 +116,7 @@ const DeanEndorsementPage = () => {
 			axios.put(`http://localhost:7000/document/deanEndorsement/${documentId}`, {
 				name: userDetail.firstName + ' ' + userDetail.lastName,
 				designation: documentDetail.designation,
-				signature: documentDetail.signature,
+				signature: null,
 				remarks: documentDetail.remarks,
 				decision: 'false'
 			})
@@ -275,7 +273,7 @@ const DeanEndorsementPage = () => {
 									</DialogBody>
 									<DialogFooter className="space-x-2">
 										<Button variant="standard" color="green" onClick={(e) => EndorseDocument(e, document._id) && setEndorse(false) && setOpen(false)}>
-											Endorse Document
+											Endorse Document To OVCAA
 										</Button>
 										<Button variant="outlined" color="red" onClick={() => setEndorse(false) && setOpen(false)}>
 											close
