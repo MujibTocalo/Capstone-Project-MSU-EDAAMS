@@ -186,9 +186,9 @@ const NewCreateDocument = () => {
 	}
 
 	return (
-		<div className='flex flex-col mx-auto mt-4 p-2 rounded-xl overflow-y-scroll'>
-			<h3 className='flex bg-deep-purple-900 text-xl shadow-lg p-3 text-white font-bold rounded-xl justify-center'>Create Document</h3>
-			<div className='flex gap-14 m-4'>
+		<div className='flex flex-col mt-4 px-20 rounded-xl overflow-y-scroll'>
+			<h3 className='flex bg-deep-purple-900 text-xl shadow-lg p-3 text-white font-bold rounded-xl justify-center'>Document Creation Page</h3>
+			<div className='flex gap-14 my-4'>
 				<Select
 					className='text-[#4477CE]'
 					variant='outlined'

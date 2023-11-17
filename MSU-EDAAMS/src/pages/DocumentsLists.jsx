@@ -94,6 +94,7 @@ export const DocumentsLists = () => {
           .filter(
             (document) =>
               document.documentStatus === "DeanApproved" ||
+              document.documentStatus === "Dean Endorsed" ||
               document.documentStatus === "Endorsed" ||
               document.documentStatus === "Dean Approved" ||
               document.documentStatus === "Pending" ||
@@ -163,8 +164,8 @@ export const DocumentsLists = () => {
                         <HomeIcon className="h-4 w-4" />
                       </TimelineIcon>
                       <Typography variant="h6" color="blue-gray">
-                        {selectedDocument.collegeName} :{" "}
-                        {selectedDocument.documentType}
+                        {selectedDocument.uploaderDesignation} {selectedDocument.documentType}
+
                       </Typography>
                     </TimelineHeader>
                     <TimelineBody className="pb-8">
@@ -199,8 +200,7 @@ export const DocumentsLists = () => {
                         <BellIcon className="h-4 w-4" />
                       </TimelineIcon>
                       <Typography variant="h6" color="blue-gray">
-                        {selectedDocument.collegeName} :{" "}
-                        {selectedDocument.documentType} - Approval
+                        {selectedDocument.collegeName} Dean
                       </Typography>
                     </TimelineHeader>
                     <TimelineBody className="pb-8">
@@ -209,21 +209,21 @@ export const DocumentsLists = () => {
                         className="font-normal text-sm text-gray-600"
                       >
                         Date Approved:{" "}
-                        {selectedDocument.dateDeanApproved
+                        {selectedDocument.deanEndorsementDate
                           ? format(
-                            new Date(selectedDocument.dateDeanApproved),
+                            new Date(selectedDocument.deanEndorsementDate),
                             "yyyy-MM-dd"
                           )
                           : "Waiting"}{" "}
                         <br />
                         Approved By:{" "}
-                        {selectedDocument.deanApproverName
-                          ? selectedDocument.deanApproverName
+                        {selectedDocument.deanName
+                          ? selectedDocument.deanName
                           : "Pending"}{" "}
                         <br />
                         Remarks:{" "}
                         {selectedDocument.deanRemarks
-                          ? selectedDocument.remarks
+                          ? selectedDocument.deanRemarks
                           : ""}
                       </Typography>
                     </TimelineBody>
@@ -235,8 +235,7 @@ export const DocumentsLists = () => {
                         <BellIcon className="h-4 w-4" />
                       </TimelineIcon>
                       <Typography variant="h6" color="blue-gray">
-                        {selectedDocument.collegeName} :{" "}
-                        {selectedDocument.documentType} - Endorsement
+                        Office of Vice Chancellor for Academic Affairs
                       </Typography>
                     </TimelineHeader>
                     <TimelineBody className="pb-8">
@@ -271,8 +270,7 @@ export const DocumentsLists = () => {
                         <BellIcon className="h-4 w-4" />
                       </TimelineIcon>
                       <Typography variant="h6" color="blue-gray">
-                        {selectedDocument.collegeName} :{" "}
-                        {selectedDocument.documentType} - Final Approval
+                        Office of the President
                       </Typography>
                     </TimelineHeader>
                     <TimelineBody className="pb-8">
@@ -306,8 +304,7 @@ export const DocumentsLists = () => {
                         <BellIcon className="h-4 w-4" />
                       </TimelineIcon>
                       <Typography variant="h6" color="blue-gray">
-                        {selectedDocument.collegeName} :{" "}
-                        {selectedDocument.documentType} - Releasing
+                        Record Management Office
                       </Typography>
                     </TimelineHeader>
                     <TimelineBody className="pb-8">
@@ -493,17 +490,19 @@ export const DocumentsLists = () => {
                           variant="ghost"
                           size="md"
                           value={
-                            documentStatus === "DeanApproved"
+                            documentStatus === "Dean Approved"
                               ? "Dean Approved"
-                              : documentStatus === "Endorsed"
-                                ? "Endorsed"
-                                : documentStatus === "OP Approved"
-                                  ? "OP Approved"
-                                  : documentStatus === "Created"
-                                    ? "Created"
-                                    : documentStatus === "Pending"
-                                      ? "Pending"
-                                      : "Rejected"
+                              : documentStatus === "Dean Endorsed"
+                                ? "Dean Approved"
+                                : documentStatus === "Endorsed"
+                                  ? "OVCAA Approved"
+                                  : documentStatus === "OP Approved"
+                                    ? "OP Approved"
+                                    : documentStatus === "Created"
+                                      ? "Created"
+                                      : documentStatus === "Pending"
+                                        ? "Pending"
+                                        : "Rejected"
                           }
                           color={
                             documentStatus === "Rejected"
