@@ -17,7 +17,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
   const menus = [
     { name: 'Dashboard', link: '/dashboard', icon: RiDashboardLine },
     { name: 'Documents', link: '/documents', icon: HiOutlineDocumentText },
-    { name: 'Dean Endorsement', link: '/deanEndorsementPage', icon: LuClipboardCheck },
+    { name: 'Dean Endorsement', link: '/deanEndorsement', icon: LuClipboardCheck },
     { name: 'OVCAA Endorsement', link: '/ovcaaEndorsement', icon: RiAttachment2 },
     { name: 'OP Approval', link: '/opapproval', icon: HiOutlineDocumentText },
     { name: 'Releasing Document', link: '/releasedocument', icon: HiUpload },

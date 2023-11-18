@@ -10,7 +10,7 @@ import CreateDocument from "./pages/CreateDocument";
 import Sidebar from "./components/Sidebar";
 import ArchivePage from "./pages/ArchivePage";
 import ManageUsers from "./pages/ManageUserPage";
-// import ApproveDocument from "./pages/ApproveDocument";
+import ApproveDocument from "./pages/ApproveDocument";
 import EndorseDocument from "./pages/EndorsementPage";
 import Dashboard from "./pages/Dashboard";
 import { DocumentsLists } from "./pages/DocumentsLists";
@@ -24,12 +24,23 @@ import NewCreateDocument from "./pages/NewCreateDocument";
 import DeanEndorsementPage from "./pages/Dean Endorsement Page/DeanEndorsementPage";
 import OVCAAEndorsementPage from "./pages/OVCAA Endorsement Page/OVCAAEndorsementPage";
 
-// const socket = io('http://localhost:7000')
+const socket = io('http://localhost:7000')
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  useEffect(() => {
+    socket.on("newDocument", (newDocument) => {
+      // Handle the new document, e.g., update state
+      console.log("New Document Received:", newDocument);
+      // You might want to update the state or trigger a fetchDocuments function
+    });
 
+    // Cleanup the socket listener when the component unmounts
+    return () => {
+      socket.off("newDocument");
+    };
+  }, []);
 
 
   const handleLogin = () => {
@@ -76,7 +87,7 @@ const MainRoutes = () => {
           <Route path="/documents" element={<DocumentsLists />} />
           <Route path="/createDocument" element={<CreateDocument />} />
           <Route path="/newCreateDocument" element={<NewCreateDocument />} />
-          {/* <Route path="/approvedocument" element={<ApproveDocument />} /> */}
+          <Route path="/approvedocument" element={<ApproveDocument />} />
           <Route path="/deanEndorsement" element={<DeanEndorsementPage />} />
           <Route path="/endorsedocument" element={<EndorseDocument />} />
           <Route path="/ovcaaEndorsement" element={<OVCAAEndorsementPage />} />
