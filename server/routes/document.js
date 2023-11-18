@@ -9,6 +9,7 @@ import {
 	totalDocuments,
 	deanEndorsement,
 	ovcaaEndorsement,
+	approveDocument,
 } from '../controllers/document.js'
 
 
@@ -25,6 +26,7 @@ documentRouter.get('/total', totalDocuments)
 
 documentRouter.put('/deanEndorsement/:id', deanEndorsement)
 documentRouter.put('/ovcaaEndorsement/:id', ovcaaEndorsement)
+documentRouter.put('/approveDocument/:id', approveDocument)
 
 // documentRouter.put('/deanApproval/:id', deanApproval)
 // documentRouter.put('/opApproval/:id', approveDocument)

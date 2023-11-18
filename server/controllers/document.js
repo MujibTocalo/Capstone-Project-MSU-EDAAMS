@@ -114,6 +114,8 @@ export const deanEndorsement = async (req, res) => {
 
 		await document.save();
 
+		io.emit("deanEndorsedDocument", document);
+
 		res.json({
 			message: 'Success'
 		});
@@ -154,6 +156,8 @@ export const ovcaaEndorsement = async (req, res) => {
 
 		await document.save();
 
+		io.emit("endorsedDocument", document);
+
 		res.json({
 			message: 'Success'
 		});
@@ -163,33 +167,38 @@ export const ovcaaEndorsement = async (req, res) => {
 	}
 }
 
+export const approveDocument = async (req, res) => {
+	try {
+		const { id } = req.params
+		const { name, header, subject, content, designation, remarks, signature, decision } = req.body
 
-// export const approveDocument = async (req, res) => {
-// 	try {
-// 		const { id } = req.params
-// 		const { ApproverName, ApproverDesignation, Remark, signature, decision } = req.body
+		const document = await Document.findById(id)
+		if (!document) {
+			return res.status(404).json({ error: 'Document not found' });
+		}
+		s
+		document.approverName = name;
+		document.approverDesignation = designation;
+		document.approvalDate = Date.now();
+		document.approverHeader = header;
+		document.approverSubject = subject;
+		document.approverContent = content;
+		document.approverRemarks = remarks;
+		document.approverSignature = signature;
+		document.documentStatus = decision === 'true' ? 'OP Approved' : 'Rejected | OP'
 
-// 		const document = await Document.findById(id)
-// 		if (!document) {
-// 			return res.status(404).json({ error: 'Document not found' });
-// 		}
+		await document.save();
 
-// 		document.opApproverName = ApproverName;
-// 		document.opApproverDesignation = ApproverDesignation;
-// 		document.opApprovalDate = Date.now();
-// 		document.Remark = Remark;
-// 		document.opSignature = signature;
-// 		document.documentStatus = decision == true ? 'OP Approved' : 'Rejected | OP'
+		io.emit("approvedDocument", document);
 
-// 		console.log(document.documentStatus)
-
-// 		await document.save()
-// 		res.json({ message: 'Document approved successfully' });
-// 	} catch (error) {
-// 		console.error(error);
-// 		res.status(500).json({ error: 'Internal server error' });
-// 	}
-// }
+		res.json({
+			message: 'Success'
+		});
+	} catch (error) {
+		console.error(error);
+		res.status(500).json({ error: 'Internal server error' });
+	}
+}
 
 // export const releaseDocument = async (req, res) => {
 

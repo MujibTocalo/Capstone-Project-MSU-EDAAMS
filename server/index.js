@@ -45,6 +45,21 @@ io.on("connection", (socket) => {
     // Broadcast the new document to all connected clients
     io.emit("newDocument", newDocument);
   });
+  // NOTIFICATION FOR DEAN ENDORSEMENT
+  socket.on("deanEndorsement", (deanEndorsedDocument) => {
+    // Broadcast the new document to all connected clients
+    io.emit("deanEndorsedDocument", deanEndorsedDocument);
+  });
+  // NOTIFICATION FOR OVCAA ENDORSEMENT
+  socket.on("endorsementDocument", (endorsedDocument) => {
+    // Broadcast the new document to all connected clients
+    io.emit("endorsedDocument", endorsedDocument);
+  });
+
+  socket.on("opApprovedDocument", (approvedDocument) => {
+    // Broadcast the new document to all connected clients
+    io.emit("approvedDocument", approvedDocument);
+  });
 
   // Handle disconnect event (if needed)
   socket.on("disconnect", () => {
