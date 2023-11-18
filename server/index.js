@@ -38,34 +38,33 @@ const io = new Server(server, {
 io.on("connection", (socket) => {
   console.log("a user connected");
 
-  // Handle events (if needed)
+  const handleEvent = (eventName, broadcastName) => {
+    socket.on(eventName, (data) => {
+      // Broadcast the data to all connected clients
+      io.emit(broadcastName, data);
+    });
+  };
 
   // Example: Handle document creation event
-  socket.on("createDocument", (newDocument) => {
-    // Broadcast the new document to all connected clients
-    io.emit("newDocument", newDocument);
-  });
-  // NOTIFICATION FOR DEAN ENDORSEMENT
-  socket.on("deanEndorsement", (deanEndorsedDocument) => {
-    // Broadcast the new document to all connected clients
-    io.emit("deanEndorsedDocument", deanEndorsedDocument);
-  });
-  // NOTIFICATION FOR OVCAA ENDORSEMENT
-  socket.on("endorsementDocument", (endorsedDocument) => {
-    // Broadcast the new document to all connected clients
-    io.emit("endorsedDocument", endorsedDocument);
-  });
+  handleEvent("createDocument", "newDocument");
 
-  socket.on("opApprovedDocument", (approvedDocument) => {
-    // Broadcast the new document to all connected clients
-    io.emit("approvedDocument", approvedDocument);
-  });
+  // Handle specific events with a generic function
+  const eventsToHandle = [
+    { eventName: "deanEndorsement", broadcastName: "deanEndorsedDocument" },
+    { eventName: "endorsementDocument", broadcastName: "endorsedDocument" },
+    { eventName: "opApprovedDocument", broadcastName: "approvedDocument" },
+    // Add more events as needed
+  ];
+
+  eventsToHandle.forEach((event) => handleEvent(event.eventName, event.broadcastName));
 
   // Handle disconnect event (if needed)
   socket.on("disconnect", () => {
     console.log("user disconnected");
   });
 });
+
+export { io }
 
 
 app.use(express.json());

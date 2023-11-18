@@ -1,4 +1,5 @@
 import Document from '../models/document.js'
+import { io } from '../index.js'
 
 
 // Controller For Getting all the Document
@@ -41,47 +42,6 @@ export const deleteDocument = async (req, res) => {
 	}
 };
 
-
-// export const endorseDocument = async (req, res) => {
-// 	try {
-// 		const { id } = req.params
-// 		const { endorserName,
-// 			endorserDesignation,
-// 			endorsementLetter,
-// 			endorserRemark,
-// 			decision,
-// 			endorserSignature } = req.body
-
-// 		const document = await Document.findById(id)
-// 		if (!document) {
-// 			return res.status(404).json({ error: 'Document Not Found.' })
-// 		}
-
-// 		document.endorserName = endorserName
-// 		document.endorserDesignation = endorserDesignation
-// 		document.endorserSignature = endorserSignature
-// 		document.endorsementDate = Date.now();
-// 		document.endorsementLetter = endorsementLetter;
-// 		document.EndorserRemarks = endorserRemark
-
-// 		if (decision === 'true') {
-// 			document.documentStatus = 'Endorsed'
-// 			console.log("documentStatus: " + document.documentStatus)
-// 		} else if (decision === 'false') {
-// 			document.documentStatus = 'Rejected'
-// 			console.log("documentStatus: " + document.documentStatus)
-// 		}
-
-// 		console.log(document);
-
-// 		await document.save()
-// 		res.json({ message: 'Document endorsed successfully' });
-// 	} catch (error) {
-// 		console.error(error);
-// 		res.status(500).json({ error: 'Internal server error' });
-// 	}
-// }
-
 export const deanEndorsement = async (req, res) => {
 	try {
 		const { id } = req.params;
@@ -104,16 +64,9 @@ export const deanEndorsement = async (req, res) => {
 		decision === 'true' ? document.documentStatus = 'Dean Endorsed' : document.documentStatus = 'Rejected | Dean';
 		console.log("documentStatus: " + document.documentStatus);
 
-		// if (decision === 'true') {
-		// 	document.documentStatus = 'Dean Endorsed';
-		// 	console.log("documentStatus: " + document.documentStatus);
-		// } else if (decision === 'false') {
-		// 	document.documentStatus = 'Rejected | Dean';
-		// 	console.log("documentStatus: " + document.documentStatus);
-		// }
-
 		await document.save();
 
+		// Emit a socket event for Dean Endorsement
 		io.emit("deanEndorsedDocument", document);
 
 		res.json({
@@ -156,7 +109,8 @@ export const ovcaaEndorsement = async (req, res) => {
 
 		await document.save();
 
-		io.emit("endorsedDocument", document);
+		// Emit a socket event for Endorsement
+		io.emit("endorsementDocument", document);
 
 		res.json({
 			message: 'Success'
@@ -188,8 +142,6 @@ export const approveDocument = async (req, res) => {
 		document.documentStatus = decision === 'true' ? 'OP Approved' : 'Rejected | OP'
 
 		await document.save();
-
-		io.emit("approvedDocument", document);
 
 		res.json({
 			message: 'Success'

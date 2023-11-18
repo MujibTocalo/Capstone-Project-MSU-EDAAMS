@@ -25,13 +25,12 @@ import {
 import axios from 'axios'
 import DocumentCompleteDetail from '../DocumentCompleteDetail'
 
-const socket = io('http://localhost:7000');
-
 const DeanEndorsementPage = () => {
 
 	const userDetail = JSON.parse(localStorage.getItem('userDetails'))
 	const store = documentsStore()
 	const toast = useToast()
+	const [documents, setDocuments] = useState([]);
 
 	const [endorse, setEndorse] = useState(false)
 	const [endorseSelectedDocument, setEndorseSelectedDocument] = useState(null);
@@ -41,7 +40,7 @@ const DeanEndorsementPage = () => {
 	const [rejectSelected, setRejectSelected] = useState(null);
 	const [selectedDocument, setSelectedDocument] = useState(null);
 
-	const [documents, setDocuments] = useState([]);
+
 
 	const handleOpenEndorsement = (document) => {
 		setEndorseSelectedDocument(document)
@@ -73,10 +72,11 @@ const DeanEndorsementPage = () => {
 	})
 
 	useEffect(() => {
+		const socket = io('http://localhost:7000');
 
-		// Listen for the 'newDocument' event and update the documents state
-		socket.on('newDocument', (newDocument) => {
-			setDocuments((prevDocuments) => [newDocument, ...prevDocuments]);
+		socket.on('deanEndorsedDocument', (deanEndorsedDocument) => {
+			// Update documents state when a document is endorsed
+			setDocuments((prevDocuments) => [deanEndorsedDocument, ...prevDocuments]);
 		});
 
 		// Fetch initial documents
@@ -88,9 +88,7 @@ const DeanEndorsementPage = () => {
 				console.error('Error fetching documents:', error);
 			}
 		};
-
 		fetchDocuments();
-
 		// Clean up the Socket.io connection when the component unmounts
 		return () => {
 			socket.disconnect();
@@ -123,6 +121,7 @@ const DeanEndorsementPage = () => {
 					setEndorse(false)
 					setOpen(false)
 					if (res.status === 200) {
+						store.fetchDocuments()
 						toast.open(
 							<div className="flex gap-2 bg-green-500 text-white p-4 rounded-lg shadow-lg">
 								<LuAlertCircle size={40} />
@@ -256,7 +255,7 @@ const DeanEndorsementPage = () => {
 
 
 	return (
-		<div className='grid grid-cols-4 p-2 rounded-lg shadow-md'>
+		<div className='grid grid-cols-4 p-2'>
 			{pendingDocuments.map((document) => (
 				<div key={document._id} className='flex flex-col bg-indigo-50/50 p-1.5 m-2 rounded-lg shadow-md hover:scale-105'>
 					<DocumentApproverDetail document={document} />

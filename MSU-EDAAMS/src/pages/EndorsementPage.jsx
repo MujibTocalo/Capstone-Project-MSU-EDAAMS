@@ -6,7 +6,7 @@ import { Button, Alert, Dialog, DialogHeader, DialogBody, DialogFooter, Typograp
 
 import { useToast } from '../components/ToastService';
 import { LuAlertCircle } from 'react-icons/lu';
-import DocumentEndorsementDetail from './DocumentEndorsementDetail';
+import DocumentEndorsementDetail from './OVCAA Endorsement Page/DocumentEndorsementDetail';
 
 const EndorseDocument = () => {
 

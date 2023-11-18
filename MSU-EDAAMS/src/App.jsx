@@ -23,6 +23,7 @@ import RestrictedPage from "./pages/RestrictedPage";
 import NewCreateDocument from "./pages/NewCreateDocument";
 import DeanEndorsementPage from "./pages/Dean Endorsement Page/DeanEndorsementPage";
 import OVCAAEndorsementPage from "./pages/OVCAA Endorsement Page/OVCAAEndorsementPage";
+import OpApprovalPage from './pages/Approval Page/OpApprovalPage'
 
 const socket = io('http://localhost:7000')
 
@@ -91,7 +92,7 @@ const MainRoutes = () => {
           <Route path="/deanEndorsement" element={<DeanEndorsementPage />} />
           <Route path="/endorsedocument" element={<EndorseDocument />} />
           <Route path="/ovcaaEndorsement" element={<OVCAAEndorsementPage />} />
-          <Route path="/opapproval" element={<OPApprovalPage />} />
+          <Route path="/opapproval" element={<OpApprovalPage />} />
           <Route path="/archive" element={<ArchivePage />} />
           <Route path="/manageusers" element={<ManageUsers />} />
           {/* <Route

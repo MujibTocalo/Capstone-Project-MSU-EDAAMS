@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import documentsStore from '../config/documentsStore'
-import DocumentOPDetail from './DocumentOPDetail';
+import DocumentOPDetail from './Approval Page/DocumentOPDetail';
 import DocumentCompleteDetail from './DocumentCompleteDetail';
 
 import { Button, Alert, Dialog, DialogHeader, DialogBody, DialogFooter, Typography, Input, Textarea } from '@material-tailwind/react';
 
 import { useToast } from '../components/ToastService';
 import { LuAlertCircle } from 'react-icons/lu';
-import DocumentDetail from './DocumentApproverDetail';
+import DocumentDetail from './Dean Endorsement Page/DocumentApproverDetail';
 import DocumentDetailForOP from './DocumentDetailForOP';
 
 const OPApprovalPage = () => {

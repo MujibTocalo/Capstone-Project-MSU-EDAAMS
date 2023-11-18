@@ -7,7 +7,8 @@ import EditorToolbar, { modules, formats } from '../../components/EditorToolbar'
 import "react-quill/dist/quill.snow.css";
 import '../../components/TextEditor.css';
 import { LuAlertCircle } from "react-icons/lu";
-import { io } from "socket.io-client";
+
+
 import {
 	Button,
 	Alert,
@@ -21,9 +22,10 @@ import {
 } from "@material-tailwind/react";
 import axios from 'axios'
 import DocumentCompleteDetail from '../DocumentCompleteDetail'
-import DocumentEndorsementDetail from './DocumentEndorsementDetail'
+import DocumentOPDetail from './DocumentOPDetail'
+import { io } from "socket.io-client";
 
-const OVCAAEndorsementPage = () => {
+const OpApprovalPage = () => {
 
 	const userDetail = JSON.parse(localStorage.getItem('userDetails'))
 	const store = documentsStore()
@@ -37,6 +39,7 @@ const OVCAAEndorsementPage = () => {
 
 	const [selectedDocument, setSelectedDocument] = useState(null);
 	const [open, setOpen] = useState(false);
+
 	const [documents, setDocuments] = useState([]);
 
 	const handleOpenEndorsement = (document) => {
@@ -68,7 +71,7 @@ const OVCAAEndorsementPage = () => {
 		decision: 'true'
 	})
 
-	const EndorseDocument = async (e, documentId) => {
+	const approveDocument = async (e, documentId) => {
 		e.preventDefault()
 		try {
 			axios.put(`http://localhost:7000/document/ovcaaEndorsement/${documentId}`, {
@@ -86,7 +89,6 @@ const OVCAAEndorsementPage = () => {
 					setOpen(false)
 					console.log(res)
 					if (res.status === 200) {
-						store.fetchDocuments()
 						toast.open(
 							<div className="flex gap-2 bg-green-500 text-white p-4 rounded-lg shadow-lg">
 								<LuAlertCircle size={40} />
@@ -101,6 +103,7 @@ const OVCAAEndorsementPage = () => {
 					} else {
 						setEndorse(false)
 						setOpen(false)
+						store.fetchDocuments()
 						toast.open(
 							<div className='flex gap-2 bg-red-500 text-white p-4 rounded-lg shadow-lg'>
 								<LuAlertCircle size={40} />
@@ -218,9 +221,6 @@ const OVCAAEndorsementPage = () => {
 		})
 	}
 
-
-
-
 	useEffect(() => {
 		const socket = io('http://localhost:7000');
 
@@ -247,19 +247,17 @@ const OVCAAEndorsementPage = () => {
 		};
 	}, [store]);
 
-
-	const deanEndorsedDocuments = documents
+	const endorsedDocuments = documents
 		? documents
-			.filter((document) => document.documentStatus === 'Dean Endorsed' || document.documentStatus === 'Dean Approved')
+			.filter((document) => document.documentStatus === 'OVCAA Endorsed')
 			.sort((a, b) => b.createdAt.localeCompare(a.createdAt))
 		: [];
 
-
 	return (
 		<div className='grid grid-cols-4 p-2'>
-			{deanEndorsedDocuments.map((document) => (
+			{endorsedDocuments.map((document) => (
 				<div key={document._id} className='flex flex-col bg-indigo-50/50 p-1.5 m-2 rounded-lg shadow-md hover:scale-105'>
-					<DocumentEndorsementDetail document={document} />
+					<DocumentOPDetail document={document} />
 
 					<Dialog
 						className='flex flex-col overflow-y-scroll bg-white rounded-t-xl max-h-[100vh]'
@@ -325,8 +323,8 @@ const OVCAAEndorsementPage = () => {
 										</div>
 									</DialogBody>
 									<DialogFooter className="space-x-2">
-										<Button variant="standard" color="green" onClick={(e) => EndorseDocument(e, document._id) && setEndorse(false) && setOpen(false)}>
-											Endorse Document To OP
+										<Button variant="standard" color="green" onClick={(e) => approveDocument(e, document._id) && setEndorse(false) && setOpen(false)}>
+											Approve Document
 										</Button>
 										<Button variant="outlined" color="red" onClick={() => setEndorse(false) && setOpen(false)}>
 											close
@@ -397,4 +395,4 @@ const OVCAAEndorsementPage = () => {
 	)
 }
 
-export default OVCAAEndorsementPage
+export default OpApprovalPage
