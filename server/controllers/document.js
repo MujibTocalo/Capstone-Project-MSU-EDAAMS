@@ -101,14 +101,16 @@ export const deanEndorsement = async (req, res) => {
 		document.deanSignature = signature;
 		document.deanEndorsementDate = Date.now();
 		document.deanRemarks = remarks;
+		decision === 'true' ? document.documentStatus = 'Dean Endorsed' : document.documentStatus = 'Rejected | Dean';
+		console.log("documentStatus: " + document.documentStatus);
 
-		if (decision === 'true') {
-			document.documentStatus = 'Dean Endorsed';
-			console.log("documentStatus: " + document.documentStatus);
-		} else if (decision === 'false') {
-			document.documentStatus = 'Rejected | Dean';
-			console.log("documentStatus: " + document.documentStatus);
-		}
+		// if (decision === 'true') {
+		// 	document.documentStatus = 'Dean Endorsed';
+		// 	console.log("documentStatus: " + document.documentStatus);
+		// } else if (decision === 'false') {
+		// 	document.documentStatus = 'Rejected | Dean';
+		// 	console.log("documentStatus: " + document.documentStatus);
+		// }
 
 		await document.save();
 
@@ -122,7 +124,7 @@ export const deanEndorsement = async (req, res) => {
 };
 
 
-export const endorseDocument = async (req, res) => {
+export const ovcaaEndorsement = async (req, res) => {
 	try {
 		const { id } = req.params;
 		const { name, header, subject, content, remark, decision, designation, signature } = req.body;
@@ -143,7 +145,7 @@ export const endorseDocument = async (req, res) => {
 		document.endorserRemarks = remark;
 
 		if (decision === 'true') {
-			document.documentStatus = 'Endorsed';
+			document.documentStatus = 'OVCAA Endorsed';
 			console.log("documentStatus: " + document.documentStatus);
 		} else if (decision === 'false') {
 			document.documentStatus = 'Rejected | OVCAA';
@@ -240,9 +242,31 @@ export const updateDocument = async (req, res) => {
 
 export const createDocument = async (req, res) => {
 	try {
-		const { controlNumber, collegeName, documentType, header, subject, content, uploaderDesignation, uploaderName, uploaderSignature } = req.body
+		const {
+			controlNumber,
+			collegeName,
+			documentType,
+			header,
+			subject,
+			content,
+			uploaderDesignation,
+			uploaderName,
+			uploaderSignature,
+		} = req.body;
 
-
+		if (
+			!controlNumber ||
+			!collegeName ||
+			!documentType ||
+			!header ||
+			!subject ||
+			!content ||
+			!uploaderDesignation ||
+			!uploaderName ||
+			!uploaderSignature
+		) {
+			return res.status(400).json({ error: "Missing required parameters" });
+		}
 
 		const document = await Document.create({
 			controlNumber,
@@ -253,16 +277,21 @@ export const createDocument = async (req, res) => {
 			content,
 			uploaderDesignation,
 			uploaderName,
-			uploaderSignature
-		})
+			uploaderSignature,
+		});
 
-		res.json({ document })
-		console.log(document)
+		// Emit a Socket.io event when a new document is created
+		io.emit("newDocument", document);
 
+		res.status(201).json({ document });
+		console.log(document);
 	} catch (error) {
-		throw (error)
+		console.error(error);
+		res.status(500).json({ error: "Internal Server Error" });
 	}
-}
+};
+
+
 
 export const totalDocuments = async (req, res) => {
 	try {

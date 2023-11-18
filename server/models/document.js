@@ -54,7 +54,7 @@ const documentSchema = new mongoose.Schema({
 
 	documentStatus: {
 		type: String,
-		enum: ['Pending', 'Dean Approved', 'Endorsed', 'OP Approved', 'Released', 'Rejected | OVCAA', 'Rejected | Dean', 'Rejected | OP', 'Not Released', 'Rejected'],
+		enum: ['Pending', 'Dean Endorsed', 'OVCAA Endorsed', 'OP Approved', 'Released', 'Rejected | OVCAA', 'Rejected | Dean', 'Rejected | OP', 'Not Released', 'Rejected'],
 		default: 'Pending'
 	}
 

@@ -9,6 +9,8 @@ import "react-quill/dist/quill.snow.css";
 import '../../components/TextEditor.css';
 import { LuAlertCircle } from "react-icons/lu";
 
+import { io } from "socket.io-client";
+
 import {
 	Button,
 	Alert,
@@ -23,6 +25,8 @@ import {
 import axios from 'axios'
 import DocumentCompleteDetail from '../DocumentCompleteDetail'
 
+const socket = io('http://localhost:7000');
+
 const DeanEndorsementPage = () => {
 
 	const userDetail = JSON.parse(localStorage.getItem('userDetails'))
@@ -32,11 +36,12 @@ const DeanEndorsementPage = () => {
 	const [endorse, setEndorse] = useState(false)
 	const [endorseSelectedDocument, setEndorseSelectedDocument] = useState(null);
 
+	const [open, setOpen] = useState(false);
 	const [reject, setReject] = useState(false);
 	const [rejectSelected, setRejectSelected] = useState(null);
-
 	const [selectedDocument, setSelectedDocument] = useState(null);
-	const [open, setOpen] = useState(false);
+
+	const [documents, setDocuments] = useState([]);
 
 	const handleOpenEndorsement = (document) => {
 		setEndorseSelectedDocument(document)
@@ -67,7 +72,41 @@ const DeanEndorsementPage = () => {
 		decision: 'true'
 	})
 
+	useEffect(() => {
+
+		// Listen for the 'newDocument' event and update the documents state
+		socket.on('newDocument', (newDocument) => {
+			setDocuments((prevDocuments) => [newDocument, ...prevDocuments]);
+		});
+
+		// Fetch initial documents
+		const fetchDocuments = async () => {
+			try {
+				await store.fetchDocuments();
+				setDocuments(store.documents);
+			} catch (error) {
+				console.error('Error fetching documents:', error);
+			}
+		};
+
+		fetchDocuments();
+
+		// Clean up the Socket.io connection when the component unmounts
+		return () => {
+			socket.disconnect();
+		};
+	}, [store]);
+
+
+
+	const pendingDocuments = documents
+		? documents
+			.filter((document) => document.documentStatus === 'Pending')
+			.sort((a, b) => b.createdAt.localeCompare(a.createdAt))
+		: [];
+
 	const EndorseDocument = async (e, documentId) => {
+		e.preventDefault()
 		try {
 			axios.put(`http://localhost:7000/document/deanEndorsement/${documentId}`, {
 				name: userDetail.firstName + ' ' + userDetail.lastName,
@@ -81,6 +120,8 @@ const DeanEndorsementPage = () => {
 			})
 				.then(res => {
 					console.log(res)
+					setEndorse(false)
+					setOpen(false)
 					if (res.status === 200) {
 						toast.open(
 							<div className="flex gap-2 bg-green-500 text-white p-4 rounded-lg shadow-lg">
@@ -93,9 +134,24 @@ const DeanEndorsementPage = () => {
 								</div>
 							</div>
 						);
+					} else {
+						setEndorse(false)
+						setOpen(false)
+						toast.open(
+							<div className='flex gap-2 bg-red-500 text-white p-4 rounded-lg shadow-lg'>
+								<LuAlertCircle size={40} />
+								<div>
+									<Typography variant='h5'>Failed!</Typography>
+									<Typography variant='paragraph'>Document Rejection Failed</Typography>
+								</div>
+
+							</div>
+						)
 					}
 				})
 		} catch (error) {
+			setEndorse(false)
+			setOpen(false)
 			toast.open(
 				<div className='flex gap-2 bg-red-800 text-white p-4 rounded-lg shadow-lg'>
 					<LuAlertCircle size={40} />
@@ -122,6 +178,8 @@ const DeanEndorsementPage = () => {
 			})
 				.then(res => {
 					console.log(res)
+					setReject(false)
+					setOpen(false)
 					if (res.status === 200) {
 						toast.open(
 							<div className="flex gap-2 bg-green-500 text-white p-4 rounded-lg shadow-lg">
@@ -135,6 +193,8 @@ const DeanEndorsementPage = () => {
 							</div>
 						);
 					} else {
+						setOpen(false)
+						setReject(false)
 						toast.open(
 							<div className='flex gap-2 bg-red-500 text-white p-4 rounded-lg shadow-lg'>
 								<LuAlertCircle size={40} />
@@ -148,6 +208,8 @@ const DeanEndorsementPage = () => {
 					}
 				})
 		} catch (error) {
+			setOpen(false)
+			setReject(false)
 			toast.open(
 				<div className='flex gap-2 bg-red-800 text-white p-4 rounded-lg shadow-lg'>
 					<LuAlertCircle size={40} />
@@ -191,16 +253,7 @@ const DeanEndorsementPage = () => {
 		})
 	}
 
-	useEffect(() => {
-		store.fetchDocuments()
-	}, [store])
 
-
-	const pendingDocuments = store.documents
-		? store.documents
-			.filter((document) => document.documentStatus === 'Pending')
-			.sort((a, b) => b.createdAt.localeCompare(a.createdAt))
-		: [];
 
 	return (
 		<div className='grid grid-cols-4 p-2 rounded-lg shadow-md'>

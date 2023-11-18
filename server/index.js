@@ -10,11 +10,12 @@ import { fileURLToPath } from "url";
 import { register } from "./controllers/user.js";
 import userRouter from "./routes/user.js";
 import documentRouter from "./routes/document.js";
-import { createServer } from "node:http";
 import { Server } from "socket.io";
+import http from "http";
 
 // CONFIGURATION
 const app = express();
+const server = http.createServer(app);
 dotenv.config();
 
 
@@ -26,20 +27,30 @@ app.use(
   })
 );
 
-// io.on('connection', (socket) => {
+// Set up Socket.io
+const io = new Server(server, {
+  cors: {
+    origin: "http://127.0.0.1:5173",
+  },
+});
 
-//   console.log('a user connected')
+// Handle Socket.io connections
+io.on("connection", (socket) => {
+  console.log("a user connected");
 
-//   socket.on('chat message', (msg) => {
-//     console.log('message: ' + msg);
-//   })
+  // Handle events (if needed)
 
-//   // socket.on('disconnect', () => {
-//   //   // Remove the user from the onlineUsers list
-//   //   removeUser(socket.id);
-//   //   console.log('User disconnected:', socket.id);
-//   // });
-// })
+  // Example: Handle document creation event
+  socket.on("createDocument", (newDocument) => {
+    // Broadcast the new document to all connected clients
+    io.emit("newDocument", newDocument);
+  });
+
+  // Handle disconnect event (if needed)
+  socket.on("disconnect", () => {
+    console.log("user disconnected");
+  });
+});
 
 
 app.use(express.json());

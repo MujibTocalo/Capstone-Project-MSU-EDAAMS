@@ -20,9 +20,12 @@ import {
 	Typography,
 } from "@material-tailwind/react";
 import { useToast } from '../components/ToastService';
+import { io } from "socket.io-client";
 
 const NewCreateDocument = () => {
 	const uploaderDetail = JSON.parse(localStorage.getItem('userDetails'))
+
+
 
 	const [confirmationOpen, setConfirmationOpen] = React.useState(false);
 
@@ -45,6 +48,24 @@ const NewCreateDocument = () => {
 		uploaderDesignation: uploaderDetail.designation,
 		uploaderSignature: uploaderDetail.signature,
 	})
+
+	// Establish Socket.io connection
+	const socket = io('http://localhost:7000');
+
+	socket.emit('newDocument', {
+		controlNumber: documentDetail.controlNumber,
+		collegeName: documentDetail.collegeName,
+		documentType: documentDetail.documentType,
+		header: documentDetail.header,
+		subject: documentDetail.subject,
+		content: documentDetail.content,
+		uploaderName: documentDetail.uploaderName,
+		uploaderDesignation: documentDetail.uploaderDesignation,
+		uploaderSignature: documentDetail.uploaderSignature,
+	});
+
+	// Clean up the Socket.io connection
+	socket.disconnect();
 
 	const [open, setOpen] = React.useState(false);
 
@@ -95,8 +116,6 @@ const NewCreateDocument = () => {
 
 	const addDocument = async () => {
 		try {
-
-
 			if (
 				!documentDetail.controlNumber ||
 				!documentDetail.collegeName ||
@@ -132,7 +151,7 @@ const NewCreateDocument = () => {
 				})
 					.then(res => {
 						console.log(res)
-						if (res.status === 200) {
+						if (res.status === 201) {
 							toast.open(
 								<div className="flex gap-2 bg-green-500 text-white p-4 rounded-lg shadow-lg">
 									<LuAlertCircle size={40} />
@@ -145,15 +164,12 @@ const NewCreateDocument = () => {
 								</div>
 							);
 							setDocumentDetail({
-								controlNumber: "",
-								collegeName: "",
-								documentType: null,
-								header: "",
-								subject: "",
-								content: '',
-								uploaderName: uploaderDetail.firstName + ' ' + uploaderDetail.lastName,
-								uploaderDesignation: uploaderDetail.designation,
-								uploaderSignature: uploaderDetail.signature,
+								controlNumber: documentDetail.controlNumber,
+								collegeName: documentDetail.collegeName,
+								documentType: documentDetail.documentType,
+								header: documentDetail.header,
+								subject: documentDetail.subject,
+								content: documentDetail.content,
 							})
 						} else {
 							toast.open(
@@ -272,8 +288,8 @@ const NewCreateDocument = () => {
 						unmount: { scale: 0.9, y: -100 },
 					}}
 				>
-					<DialogHeader>Submit Document?</DialogHeader>
-					<DialogBody divider>
+					<DialogHeader>Confirm Submittion.</DialogHeader>
+					<DialogBody>
 						Make sure all the details entered are correct.
 					</DialogBody>
 					<DialogFooter className='flex gap-3'>
