@@ -17,6 +17,8 @@ import {
 } from "@react-pdf/renderer";
 import imageHeader from "../assets/ImageHeader.jpg";
 import styles from "../components/styles";
+import { convert } from 'html-to-text';
+
 
 import {
   Card,
@@ -28,7 +30,8 @@ import {
   CardFooter,
 } from "@material-tailwind/react";
 
-import { format } from "date-fns";
+import { format } from 'date-fns'
+import html2pdf from 'html2pdf.js';
 
 import { useNavigate } from "react-router-dom";
 import documentsStore from "../config/documentsStore";
@@ -42,6 +45,8 @@ import {
 } from "react-icons/lu";
 
 import axios from "axios";
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 const TABS = [
   {
