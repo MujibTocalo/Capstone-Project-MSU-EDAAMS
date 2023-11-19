@@ -224,8 +224,8 @@ export const CustomNavbar = ({ setOpen }) => {
 
   return (
     <div className="flex max-w-screen items-center rounded-lg shadow-lg justify-between p-1 mb-2">
-      <Typography className="flex flex-row gap-4 items-center ml-2 text-lg p-0.5 pr-3 text-center font-semibold text-white bg-indigo-800 rounded-lg">
-        <TiThMenuOutline onClick={() => setOpen((prevOpen) => !prevOpen)} className="flex bg-indigo-800 rounded-lg w-8 h-8 p-1 translate-x-2 cursor-pointer hover:scale-110" />
+      <Typography className="flex flex-row gap-4 items-center ml-2 text-lg p-0.5 pr-3 text-center font-semibold text-black rounded-lg">
+        <TiThMenuOutline onClick={() => setOpen((prevOpen) => !prevOpen)} className="flex rounded-lg w-8 h-8 p-1 translate-x-2 cursor-pointer hover:scale-110" />
         MSU EDAAMS
       </Typography>
 
@@ -240,8 +240,8 @@ export const CustomNavbar = ({ setOpen }) => {
               4
             </div>
           </div> */}
-        <div className="flex flex-col justify-center items-center bg-indigo-800 rounded-xl p-1 px-2 cursor-default">
-          <Typography className="flex font-md text-white">
+        <div className="flex flex-row justify-center items-center rounded-xl p-1 px-2 cursor-default text-xs">
+          <Typography className="flex font-md text-black">
             {currentUser + " | " + userDesignation + ' | ' + userCollege}
           </Typography>
         </div>
@@ -250,3 +250,4 @@ export const CustomNavbar = ({ setOpen }) => {
     </div>
   );
 };
+
