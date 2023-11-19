@@ -74,7 +74,7 @@ const OpApprovalPage = () => {
 	const approveDocument = async (e, documentId) => {
 		e.preventDefault()
 		try {
-			axios.put(`http://localhost:7000/document/ovcaaEndorsement/${documentId}`, {
+			axios.put(`http://localhost:7000/document/approveDocument/${documentId}`, {
 				name: userDetail.firstName + ' ' + userDetail.lastName,
 				header: documentDetail.header,
 				subject: documentDetail.subject,
@@ -254,7 +254,7 @@ const OpApprovalPage = () => {
 		: [];
 
 	return (
-		<div className='grid grid-cols-4 p-2'>
+		<div className='grid grid-cols-4 p-2 overflow-y-scroll'>
 			{endorsedDocuments.map((document) => (
 				<div key={document._id} className='flex flex-col bg-indigo-50/50 p-1.5 m-2 rounded-lg shadow-md hover:scale-105'>
 					<DocumentOPDetail document={document} />

@@ -111,7 +111,7 @@ const DocumentCompleteDetail = ({ document }) => {
 					</div>
 				)}
 				{/* DEAN ENDORSEMENT FOR OVCAA */}
-				{documentStatus === 'Dean Approved' && (
+				{documentStatus === 'Dean Approved' || documentStatus === 'Dean Endorsed' && (
 					<div className="p-2">
 						<div className="gap-3.5">
 							<Typography className='text-center font-semibold bg-indigo-800 text-white p-1 mt-4 rounded-md shadow-lg'>Endorsement Document By {document.deanDesignation + ', ' + document.deanName}</Typography>
@@ -142,13 +142,12 @@ const DocumentCompleteDetail = ({ document }) => {
 								<Typography variant='paragraph'>{document.deanDesignation}</Typography>
 							</div>
 						</div>
-						<Typography className='text-center font-semibold bg-indigo-800 text-white p-1 mt-4 rounded-md shadow-lg'>Original Document By {document.uploaderDesignation + ', ' + document.uploaderName}</Typography>
 					</div>
 				)}
 
 				<div className="p-2">
 					<div className="gap-3.5">
-
+						<Typography className='text-center font-semibold bg-indigo-800 text-white p-1 mt-4 rounded-md shadow-lg'>Original Document By {document.uploaderDesignation + ', ' + document.uploaderName}</Typography>
 						<div className="flex flex-col border border-gray-400 p-2 my-2 shadow-md">
 							<Typography variant='paragraph'>To: </Typography>
 							<Typography variant='paragraph' className='font-semibold' style={{ textIndent: '1em' }}>{document.header}</Typography>
