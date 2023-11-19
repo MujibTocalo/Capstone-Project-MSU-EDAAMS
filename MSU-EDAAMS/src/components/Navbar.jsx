@@ -13,18 +13,10 @@ import {
   MenuItem,
   Avatar,
 } from "@material-tailwind/react";
-import {
-  UserCircleIcon,
-  ChevronDownIcon,
-  Cog6ToothIcon,
-  PowerIcon,
-} from "@heroicons/react/24/outline";
+import { ChevronDownIcon, Cog6ToothIcon, PowerIcon, UserCircleIcon } from "@heroicons/react/24/outline";
 import { RiNotification3Fill } from "react-icons/ri";
-import logo from "../assets/msulogo.png";
-import Notification from "../assets/notification.svg";
 import avatar from "../assets/profile icon.png";
 
-// Profile menu component
 const profileMenuItems = [
   {
     label: "My Profile",
@@ -44,7 +36,13 @@ const ProfileMenu = () => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [isProfileDialogOpen, setIsProfileDialogOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
-  const [profileImage, setProfileImage] = useState(avatar); // Initial profile image source
+  const [profileImage, setProfileImage] = useState(avatar);
+  const [userDetails, setUserDetails] = useState({
+    firstName: "",
+    lastName: "",
+    designation: "",
+    collegeOrOffice: "",
+  });
 
   const closeMenu = () => setIsMenuOpen(false);
   const openProfileDialog = () => setIsProfileDialogOpen(true);
@@ -58,34 +56,56 @@ const ProfileMenu = () => {
     setSelectedImage(file);
   };
 
+  const handleImageClick = () => {
+    // Trigger the file input click when the profile image is clicked
+    document.getElementById("profileImageInput").click();
+  };
+
   useEffect(() => {
     if (selectedImage) {
       setProfileImage(URL.createObjectURL(selectedImage));
     }
   }, [selectedImage]);
 
+  useEffect(() => {
+    const storedUserDetails = JSON.parse(localStorage.getItem("userDetails"));
+    setUserDetails(storedUserDetails);
+  }, []);
+
   return (
     <div>
-      <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
+      <Menu
+        open={isMenuOpen}
+        handler={setIsMenuOpen}
+        placement="bottom-end"
+        onMouseEnter={() => setIsMenuOpen(true)}
+        onMouseLeave={() => setIsMenuOpen(false)}
+      >
         <MenuHandler>
-          <Button
-            variant="text"
-            color="blue-gray"
-            className="flex items-center gap-1 rounded-full py-0.5 pr-2 pl-0.5 lg:ml-auto"
-          >
-            <Avatar
-              variant="circular"
-              size="sm"
-              alt="tania andrew"
-              className="border border-blue-200 p-0.5"
-              src={profileImage} // Use the profileImage state for the source
-            />
-            <ChevronDownIcon
-              strokeWidth={2.5}
-              className={`h-3 w-3 transition-transform ${isMenuOpen ? "rotate-180" : ""
-                }`}
-            />
-          </Button>
+          <div className="relative">
+            <label htmlFor="profileImage" className="cursor-pointer">
+              <Button
+                variant="text"
+                color="blue-gray"
+                className="flex items-center gap-1 rounded-full py-0.5 pr-2 pl-0.5 lg:ml-auto"
+              >
+                <Avatar
+                  variant="circular"
+                  size="sm"
+                  alt="tania andrew"
+                  className={`border border-blue-200 p-0.5`}
+                  src={profileImage}
+                  onClick={handleImageClick}
+                />
+                <ChevronDownIcon
+                  strokeWidth={2.5}
+                  className={`h-3 w-3 transition-transform ${
+                    isMenuOpen ? "rotate-180" : ""
+                  }`}
+                />
+              </Button>
+            </label>
+          </div>
         </MenuHandler>
 
         <MenuList className="p-1">
@@ -101,10 +121,11 @@ const ProfileMenu = () => {
                     openProfileDialog();
                   }
                 }}
-                className={`flex items-center gap-2 rounded ${isLastItem
-                  ? "hover:bg-red-500/10 focus:bg-red-500/10 active/bg-red-500/10"
-                  : ""
-                  }`}
+                className={`flex items-center gap-2 rounded ${
+                  isLastItem
+                    ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
+                    : ""
+                }`}
               >
                 {React.createElement(icon, {
                   className: `h-4 w-4 ${isLastItem ? "text-red-500" : ""}`,
@@ -128,33 +149,49 @@ const ProfileMenu = () => {
         onClose={closeProfileDialog}
         className="bg-transparent shadow-none"
       >
-        <Card>
-          <CardBody className="p-60">
-            <label htmlFor="profileImage" className="block text-gray-700 font-bold">
-              <img src={profileImage} alt="avatar" className="w-25 h-25 rounded-full border border-gray-300" />
-              <input
-                type="file"
-                id="profileImage"
-                accept="image/*"
-                onChange={handleImageUpload}
-              />
-            </label>
-            {/* {selectedImage && (
+        <Card className="flex flex-col w-96 h-96 mx-auto items-center justify-center mb-4">
+          <CardBody className="p-60 items-center relative">
+            <label htmlFor="profileImage" className="text-gray-700 font-bold cursor-pointer">
+              <div className="flex flex-col items-center group">
                 <img
-                  src={URL.createObjectURL(selectedImage)}
-                  alt="Selected Profile Image"
-                  className="mt-3 max-w-full mx-auto"
+                  src={profileImage}
+                  alt="avatar"
+                  id="profileImage"
+                  className="w-32 h-32 rounded-full border border-gray-500 cursor-pointer group-hover:opacity-75 transition-opacity"
+                  onClick={handleImageClick}
                 />
-              )} */}
-          </CardBody>
-          <CardFooter>
-            <Button
-              color="red"
-              className="px-4 py-2"
-              onClick={closeProfileDialog}
-            >
+                <input
+                  type="file"
+                  id="profileImageInput"
+                  onChange={handleImageUpload}
+                  className="hidden"
+                />
+                <div className="absolute bottom-0 right-0 opacity-0 group-hover:opacity-100 transition-opacity">
+                  {/* ... (camera icon) */}
+                </div>
+              </div>
+            </label>
+            <div className="mt-4 text-center">
+              <Typography
+                as="p"
+                variant="lg"
+                className="font-bold text-2xl text-black"
+              >
+                {userDetails.firstName} {userDetails.lastName}
+              </Typography>
+              <Typography as="p" variant="sm" className="text-black-900">
+                {userDetails.collegeOrOffice}
+              </Typography>
+              <Typography as="p" variant="sm" className="text-gray-600">
+                {userDetails.designation}
+              </Typography>
+            </div>
+            <Button color="red" className="" onClick={closeProfileDialog}>
               Close
             </Button>
+          </CardBody>
+          <CardFooter className="flex">
+            {/* ... (other card footer content) */}
           </CardFooter>
         </Card>
       </Dialog>
@@ -162,39 +199,30 @@ const ProfileMenu = () => {
   );
 };
 
-  export const CustomNavbar = () => {
-    const [currentUser, setCurrentUser] = useState();
-    const [userDesignation, setUserDesignation] = useState();
+export const CustomNavbar = () => {
+  const [currentUser, setCurrentUser] = useState();
+  const [userDesignation, setUserDesignation] = useState();
+  const [userCollege, setUserCollege] = useState();
 
   useEffect(() => {
     const userDetail = JSON.parse(localStorage.getItem("userDetails"));
     setUserDesignation(userDetail.designation);
     setCurrentUser(userDetail.firstName + " " + userDetail.lastName);
-    setUserCollege(userDetail.office)
+    setUserCollege(userDetail.office);
   });
 
   return (
-    <Navbar className="flex max-w-screen items-center mx-auto justify-between  p-1 my-1">
+    <Navbar className="flex max-w-screen items-center mx-auto justify-between p-1 my-1">
       <Typography className="ml-6 text-xl py-1.5 font-bold">
         MSU EDAAMS
       </Typography>
-      <div className="flex flex-row items-center gap-8">
-        {/* <div className="flex relative">
-            <RiNotification3Fill
-              className="cursor-pointer"
-              color="gray"
-              size={28}
-            />
-            <div className="flex bg-red-600 text-xs font-light border rounded-lg p-1.5 h-4 w-4 items-center justify-center translate-x-4 -translate-y-1 absolute">
-              4
-            </div>
-          </div> */}
+      <div className="flex flex-row items-center gap-5">
         <div className="flex flex-col justify-center items-center">
           <Typography className="flex text-md text-gray-700">
             {currentUser}
           </Typography>
           <Typography className="flex text-xs text-gray-600">
-            {userDesignation + ' | ' + userCollege}
+            {userDesignation + " | " + userCollege}
           </Typography>
         </div>
         <ProfileMenu />
