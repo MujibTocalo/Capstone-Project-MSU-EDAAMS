@@ -75,7 +75,7 @@ const TABLE_HEAD = [
 
 const ManageUsers = () => {
   const [tableRows, setTableRows] = useState([]);
-
+  const [profilePicture, setProfilePicture] = useState("");
   const [userType, setUsertype] = useState("");
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
@@ -116,7 +116,6 @@ const ManageUsers = () => {
       currentStatus: null,
     });
   };
-
 
   useEffect(() => {
     const fetchTableRows = async () => {
@@ -180,6 +179,10 @@ const ManageUsers = () => {
     setSignature(e.target.files[0]);
     console.log(signature);
   };
+  const handleProfilePicture = (e) => {
+    setProfilePicture(e.target.files[0]);
+    console.log(profilePicture);
+  };
   const handleToggleStatus = (userId, currentStatus) => {
     setConfirmDialog({
       open: true,
@@ -236,6 +239,7 @@ const ManageUsers = () => {
 
   const AddUser = async () => {
     const formData = new FormData();
+    formData.append("profilePicture", profilePicture);
     formData.append("firstname", firstname);
     formData.append("lastname", lastname);
     formData.append("office", office);
@@ -385,6 +389,13 @@ const ManageUsers = () => {
                     color="white"
                     className="flex flex-col h-96 gap-5 overflow-auto"
                   >
+                    <Input
+                      label="Profile Picture"
+                      type="file"
+                      size="lg"
+                      onChange={handleProfilePicture}
+                    />
+
                     <Select
                       className="h-10"
                       variant="outlined"
@@ -406,7 +417,7 @@ const ManageUsers = () => {
                       </Option>
                       {/* <Option value='Administrator'>Administrator</Option> */}
                     </Select>
-                      
+
                     <Select
                       className="h-10"
                       variant="outlined"

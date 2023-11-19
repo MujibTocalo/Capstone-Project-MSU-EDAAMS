@@ -18,7 +18,6 @@ const app = express();
 const server = http.createServer(app);
 dotenv.config();
 
-
 // Middleware
 app.use(
   cors({
@@ -56,7 +55,9 @@ io.on("connection", (socket) => {
     // Add more events as needed
   ];
 
-  eventsToHandle.forEach((event) => handleEvent(event.eventName, event.broadcastName));
+  eventsToHandle.forEach((event) =>
+    handleEvent(event.eventName, event.broadcastName)
+  );
 
   // Handle disconnect event (if needed)
   socket.on("disconnect", () => {
@@ -64,8 +65,7 @@ io.on("connection", (socket) => {
   });
 });
 
-export { io }
-
+export { io };
 
 app.use(express.json());
 app.use(cookieParser());
@@ -102,7 +102,13 @@ app.use((req, res, next) => {
 // ROUTES
 app.use("/document", documentRouter);
 app.use("/user", userRouter);
-app.post("/user/register", upload.single("signature"), register);
+
+const userFile = upload.fields([
+  { name: "signature", maxCount: 1 },
+  { name: "profilePicture", maxCount: 1 },
+]);
+
+app.post("/user/register", userFile, register);
 
 // DATABASE CONFIGURATION
 const PORT = process.env.PORT || 2300;

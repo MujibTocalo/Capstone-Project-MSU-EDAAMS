@@ -241,7 +241,7 @@ export const CustomNavbar = ({ setOpen }) => {
             </div>
           </div> */}
         <div className="flex flex-row justify-center items-center rounded-xl p-1 px-2 cursor-default text-xs">
-          <Typography className="flex font-md text-black">
+          <Typography className="flex font-md text-gray-700">
             {currentUser + " | " + userDesignation + ' | ' + userCollege}
           </Typography>
         </div>
