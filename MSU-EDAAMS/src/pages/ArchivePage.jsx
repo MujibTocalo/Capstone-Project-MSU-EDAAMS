@@ -6,7 +6,7 @@ import {
 	DocumentMagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
 import { PDFDownloadLink, Document, Page, Text, Image, View, PDFViewer, Line } from '@react-pdf/renderer';
-import ImageHeader from '../assets/image_header.jpg';
+import ImageHeader from '../assets/ImageHeader.jpg';
 import styles from "../components/styles";
 
 import {
@@ -149,6 +149,7 @@ const ArchivePage = () => {
 									header,
 									subject,
 									uploaderSignature,
+									ImageHeader,
 									content,
 									uploaderDesignation
 								},
@@ -231,15 +232,15 @@ const ArchivePage = () => {
 												<PDFDownloadLink document={
 													<Document>
 														<Page size="A4" style={styles.page}>
-														<img
-																src={ImageHeader}
-																alt="header image"
-															/>
 															<Text style={styles.documentDetailText}>Control No. {controlNumber + ' - ' + collegeName}</Text>
 															<Text style={styles.documentDetailText}>Date: {format(new Date(createdAt), 'yyyy-MM-dd')}</Text>
 															<Text style={styles.headerText}>To: {header}</Text>
 															<Text style={styles.subjectText}>Subject: {subject}</Text>
 															<Text style={styles.content}> {content} </Text>
+															<Image
+																src={`http://localhost:7000${ImageHeader}`}
+																style={styles.ImageHeader}
+															/>
 															<Image
 																src={`http://localhost:7000${uploaderSignature}`}
 																style={styles.signature}

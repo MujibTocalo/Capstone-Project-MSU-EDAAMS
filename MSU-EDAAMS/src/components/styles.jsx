@@ -73,6 +73,11 @@ const styles = StyleSheet.create({
 		color: 'maroon',
 		fontSize:10
 	  },
+	ImageHeader: {
+		width: '200%',
+   	 	height: 50,
+    	marginTop: 10,
+	}
 
 });
 
