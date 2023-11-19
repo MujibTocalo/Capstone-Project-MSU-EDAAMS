@@ -50,6 +50,7 @@ const styles = StyleSheet.create({
 		marginLeft: 250,
 
 	},
+	
 	name: {
 		fontSize: 11.5,
 		textAlign: 'center',
@@ -63,6 +64,20 @@ const styles = StyleSheet.create({
 		marginLeft: 250,
 
 	},
+	footer: {
+		position: 'absolute',
+		bottom: 50,
+		left: 40,
+		right: 40,
+		textAlign: 'center',
+		color: 'maroon',
+		fontSize:10
+	  },
+	ImageHeader: {
+		width: '200%',
+   	 	height: 50,
+    	marginTop: 10,
+	}
 
 });
 

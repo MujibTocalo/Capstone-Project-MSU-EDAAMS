@@ -70,13 +70,11 @@ const TABLE_HEAD = [
   "College/Office",
   "Designation",
   "Status",
-  "Action"
+  "Action",
 ];
 
 const ManageUsers = () => {
   const [tableRows, setTableRows] = useState([]);
-
-
 
   const [userType, setUsertype] = useState("");
   const [firstname, setFirstname] = useState("");
@@ -90,7 +88,8 @@ const ManageUsers = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredTableRows, setFilteredTableRows] = useState([]);
 
-  const [confirmRegistrationDialog, setConfirmRegistrationDialog] = useState(false);
+  const [confirmRegistrationDialog, setConfirmRegistrationDialog] =
+    useState(false);
 
   const handleOpenRegistrationConfirmation = () => {
     setConfirmRegistrationDialog(true);
@@ -117,7 +116,6 @@ const ManageUsers = () => {
       currentStatus: null,
     });
   };
-
 
 
   useEffect(() => {
@@ -198,17 +196,20 @@ const ManageUsers = () => {
       const newStatusValue = currentStatus ? "InActive" : "Active";
 
       // Send a request to the backend to toggle the status using fetch
-      const response = await fetch(`http://localhost:7000/user/${userId}/toggle-status`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          newStatus: newStatusValue,
-        }),
-      });
+      const response = await fetch(
+        `http://localhost:7000/user/${userId}/toggle-status`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            newStatus: newStatusValue,
+          }),
+        }
+      );
 
-      console.log('API Response:', response);
+      console.log("API Response:", response);
 
       if (response.ok) {
         // Update the status locally in the state
@@ -219,10 +220,10 @@ const ManageUsers = () => {
         );
       } else {
         // Handle the case where the response indicates an error
-        console.error('Error toggling user status:', response.status);
+        console.error("Error toggling user status:", response.status);
       }
     } catch (error) {
-      console.error('Error toggling user status:', error);
+      console.error("Error toggling user status:", error);
     } finally {
       // Close the confirmation dialog
       setConfirmDialog({
@@ -235,14 +236,14 @@ const ManageUsers = () => {
 
   const AddUser = async () => {
     const formData = new FormData();
-    formData.append('firstname', firstname);
-    formData.append('lastname', lastname);
-    formData.append('office', office);
-    formData.append('designation', designation);
-    formData.append('email', email);
-    formData.append('password', password);
-    formData.append('userType', userType);
-    formData.append('signature', signature);
+    formData.append("firstname", firstname);
+    formData.append("lastname", lastname);
+    formData.append("office", office);
+    formData.append("designation", designation);
+    formData.append("email", email);
+    formData.append("password", password);
+    formData.append("userType", userType);
+    formData.append("signature", signature);
 
     try {
       const response = await axios.post(
@@ -256,22 +257,18 @@ const ManageUsers = () => {
       );
 
       if (response.status === 200) {
-        console.log('User registered successfully');
+        console.log("User registered successfully");
         setOpen(false); // Close the registration dialog
         handleOpenRegistrationConfirmation(); // Open the confirmation dialog
-
       }
     } catch (error) {
-      console.log('Error:', error.response?.data || 'Something went wrong');
+      console.log("Error:", error.response?.data || "Something went wrong");
       console.log(error);
     }
   };
 
-
-
   return (
     <Card className="h-full w-full rounded-lg bg-white">
-
       <Dialog
         size="sm"
         open={confirmRegistrationDialog}
@@ -279,9 +276,7 @@ const ManageUsers = () => {
         className="bg-transparent shadow-none"
       >
         <Card className="mx-auto w-full max-w-[24rem]">
-          <CardHeader
-            className="mb-4 grid h-16 place-items-center bg-indigo-800"
-          >
+          <CardHeader className="mb-4 grid h-16 place-items-center bg-indigo-800">
             <Typography variant="h4" color="white">
               Registration Successful
             </Typography>
@@ -313,9 +308,7 @@ const ManageUsers = () => {
         className="bg-transparent shadow-none"
       >
         <Card className="mx-auto w-full max-w-[24rem]">
-          <CardHeader
-            className="mb-4 grid h-16 place-items-center bg-indigo-800"
-          >
+          <CardHeader className="mb-4 grid h-16 place-items-center bg-indigo-800">
             <Typography variant="h4" color="white">
               Confirm Status Change
             </Typography>
@@ -343,7 +336,6 @@ const ManageUsers = () => {
             >
               Confirm
             </Button>
-
           </CardFooter>
         </Card>
       </Dialog>
@@ -376,6 +368,7 @@ const ManageUsers = () => {
                 {" "}
                 Register User
               </Button>
+
               <Dialog
                 size="sm"
                 open={open}
@@ -401,15 +394,19 @@ const ManageUsers = () => {
                       animate={{
                         mount: { y: 0 },
                         unmount: { y: -25 },
-                      }}>
-                      <Option value='Uploader'>Department Chairperson</Option>
-                      <Option value='Approver - Dean'>Approver - Dean</Option>
-                      <Option value='Endorser - OVCAA'>Office of the Vice Chancellor for Academic Affairs</Option>
-                      <Option value='Approver - OP'>Office of the President</Option>
+                      }}
+                    >
+                      <Option value="Uploader">Department Chairperson</Option>
+                      <Option value="Approver - Dean">College Dean</Option>
+                      <Option value="Endorser - OVCAA">
+                        Office of the Vice Chancellor for Academic Affairs
+                      </Option>
+                      <Option value="Approver - OP">
+                        Office of the President
+                      </Option>
                       {/* <Option value='Administrator'>Administrator</Option> */}
-
                     </Select>
-
+                      
                     <Select
                       className="h-10"
                       variant="outlined"
@@ -490,11 +487,11 @@ const ManageUsers = () => {
                   </CardBody>
                   <CardFooter className="flex mx-auto">
                     <Button
-                      className="flex text-white bg-indigo-800 hover:scale-105"
+                      className="flex text-white bg-indigo-500 hover:scale-105"
                       variant="standard"
                       onClick={AddUser}
                     >
-                      Save User Detail
+                      Save Details
                     </Button>
                   </CardFooter>
                 </Card>
@@ -590,7 +587,6 @@ const ManageUsers = () => {
                           className="font-light"
                         >
                           {userType}
-
                         </Typography>
                         <Typography
                           variant="small"
@@ -621,7 +617,6 @@ const ManageUsers = () => {
                       >
                         {designation}
                       </Typography>
-
                     </td>
                     <td className={classes}>
                       <div className="flex gap-2 justify-start cursor pointer">
@@ -629,13 +624,13 @@ const ManageUsers = () => {
                           variant="outlined"
                           size="md"
                           onClick={() => handleToggleStatus(_id, status)}
-                          value={status === 'Active' ? 'Active' : 'Inactive'}
-                          color={status === 'Active' ? 'green' : 'red'}
-                        >{status === 'Active' ? 'Active' : 'Inactive'}</Button>
+                          value={status === "Active" ? "Active" : "Inactive"}
+                          color={status === "Active" ? "green" : "red"}
+                        >
+                          {status === "Active" ? "Active" : "Inactive"}
+                        </Button>
                       </div>
-
                     </td>
-
                     <td className={classes}>
                       <div className="flex gap-1.5">
                         <LuEdit />

@@ -6,7 +6,7 @@ import {
 	DocumentMagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
 import { PDFDownloadLink, Document, Page, Text, Image, View, PDFViewer, Line } from '@react-pdf/renderer';
-
+import ImageHeader from '../assets/ImageHeader.jpg';
 import styles from "../components/styles";
 
 import {
@@ -45,7 +45,6 @@ const TABS = [
 ];
 
 const TABLE_HEAD = ["Document Type", 'User Detail', "College/Office", "Document Status", 'Date Uploaded', 'Action'];
-
 const ArchivePage = () => {
 
 	const store = documentsStore()
@@ -150,6 +149,7 @@ const ArchivePage = () => {
 									header,
 									subject,
 									uploaderSignature,
+									ImageHeader,
 									content,
 									uploaderDesignation
 								},
@@ -236,15 +236,21 @@ const ArchivePage = () => {
 															<Text style={styles.documentDetailText}>Date: {format(new Date(createdAt), 'yyyy-MM-dd')}</Text>
 															<Text style={styles.headerText}>To: {header}</Text>
 															<Text style={styles.subjectText}>Subject: {subject}</Text>
-															<Text style={styles.content}>
-																{content}
-															</Text>
+															<Text style={styles.content}> {content} </Text>
+															<Image
+																src={`http://localhost:7000${ImageHeader}`}
+																style={styles.ImageHeader}
+															/>
 															<Image
 																src={`http://localhost:7000${uploaderSignature}`}
 																style={styles.signature}
 															/>
 															<Text style={styles.name}>{uploaderName}</Text>
 															<Text style={styles.designation}>{uploaderDesignation}</Text>
+															<View style={styles.footer}>
+                                  								<Text>MSU-Iligan Institute of Technology  MSU-Tawi-Tawi College of Technology & Oceanology  MSU-Maguindanao  MSU-General Santos  MSU-Sulu  MSU-Naawan  MSU-Lanao del Norte National Agriculture College  MSU-Maigo School of Art & Trades  MSU-Lanao National College of Arts & Trades  MSU-Buug
+																</Text>
+                                							</View>
 														</Page>
 													</Document>
 												} fileName="Generated PDF.pdf">
