@@ -272,7 +272,7 @@ const ManageUsers = () => {
   };
 
   return (
-    <Card className="h-full w-full rounded-lg bg-white">
+    <Card className="h-full w-screen rounded-lg bg-white">
       <Dialog
         size="sm"
         open={confirmRegistrationDialog}
@@ -365,7 +365,7 @@ const ManageUsers = () => {
             <div>
               <Button
                 onClick={handleOpen}
-                className="flex items-center gap-3 hover:scale-105"
+                className="flex items-center gap-3 -translate-x-12 hover:scale-105"
                 color="indigo"
                 size="md"
               >
@@ -508,7 +508,7 @@ const ManageUsers = () => {
                 </Card>
               </Dialog>
             </div>
-            <div className="w-full md:w-72">
+            <div className="w-full -translate-x-12 md:w-72">
               <Input
                 label="Search by Name"
                 icon={<MagnifyingGlassIcon className="h-5 w-5" />}

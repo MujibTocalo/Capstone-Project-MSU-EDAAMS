@@ -16,6 +16,9 @@ import {
   Dialog,
   DialogHeader,
   Timeline,
+  Tabs,
+  Tab,
+  TabsHeader,
   TimelineItem,
   TimelineConnector,
   TimelineHeader,
@@ -140,7 +143,7 @@ export const DocumentsLists = () => {
   const navigate = useNavigate();
 
   return (
-    <Card className="h-full w-full bg-white">
+    <Card className="h-full w-screen rounded-none bg-white">
       <div>
         <Dialog
           size="md"
@@ -356,7 +359,7 @@ export const DocumentsLists = () => {
             </Typography>
           </div>
           <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-            <div className="flex gap-2">
+            <div className="flex gap-2 -translate-x-12">
               <Button
                 className="flex gap-2 hover:scale-105"
                 color="indigo"
@@ -365,7 +368,7 @@ export const DocumentsLists = () => {
                 <HiOutlineDocumentAdd size={16} /> Add Document
               </Button>
             </div>
-            <div className="w-full md:w-72">
+            <div className="w-screen -translate-x-12 md:w-72">
               <Input
                 label="Search by Uploader Detail"
                 icon={<MagnifyingGlassIcon className="h-5 w-5" />}
@@ -375,16 +378,16 @@ export const DocumentsLists = () => {
             </div>
           </div>
         </div>
-        <div className="flex mb-16 whitespace-pre flex-col items-center justify-between gap-4 md:flex-row">
-          {/* <Tabs value="all" className="w-full md:w-max">
-						<TabsHeader>
-							{TABS.map(({ label, value }) => (
-								<Tab key={value} value={value}>
-									&nbsp;&nbsp;{label}&nbsp;&nbsp;
-								</Tab>
-							))}
-						</TabsHeader>
-					</Tabs> */}
+        <div className="flex mb-2 mt-4 whitespace-pre flex-col items-center justify-between gap-4 md:flex-row">
+          <Tabs value="all" className="w-full md:w-max whitespace-pre">
+            <TabsHeader>
+              {TABS.map(({ label, value }) => (
+                <Tab key={value} value={value}>
+                  &nbsp;&nbsp;{label}&nbsp;&nbsp;
+                </Tab>
+              ))}
+            </TabsHeader>
+          </Tabs>
         </div>
       </CardHeader>
 

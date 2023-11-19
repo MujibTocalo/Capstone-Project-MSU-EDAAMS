@@ -29,8 +29,8 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
 
 
   return (
-    <div className={`flex flex-col ${isOpen ? 'w-52' : 'w-12'} bg-indigo-900 duration-500`} style={{ zIndex: 1, position: 'relative' }}>
-      <div className={`h-screen ${isOpen ? 'w-52' : 'w-12'} bg-indigo-900 duration-500 text-white p-1`}>
+    <div className={`flex flex-col ${isOpen ? 'w-52' : 'w-12'} bg-white duration-500`} style={{ zIndex: 1, position: 'relative' }}>
+      <div className={`h-screen ${isOpen ? 'w-52' : 'w-12'} bg-gray-300 duration-500  p-1`}>
         {/* <div className='py-4 flex duration-500 justify-between'> */}
         {/* <Avatar className='flex h-6 w-6 border rounded-none ml-2' /> */}
         {/* <h1 className={`${!open && '0.5s ease-in-out hidden'} flex 3s ease-in-out mx-auto whitespace-pre font-semibold text-lg `}>MSU EDAAMS</h1>
