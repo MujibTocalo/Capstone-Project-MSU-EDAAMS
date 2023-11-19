@@ -101,7 +101,7 @@ export const register = async (req, res) => {
       }
 
       if (profilePictureFile) {
-        profilePicture = `/assets/profilePictures/${profilePictureFile.filename}`;
+        profilePicture = `/assets/${profilePictureFile.filename}`;
       }
     }
 

@@ -45,8 +45,9 @@ const profileMenuItems = [
 const ProfileMenu = () => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [isProfileDialogOpen, setIsProfileDialogOpen] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [profileImage, setProfileImage] = useState(avatar);
+  // const [selectedImage, setSelectedImage] = useState(null);
+
+  const [profileImage, setProfileImage] = useState(null);
   const [userDetails, setUserDetails] = useState({
     firstName: "",
     lastName: "",
@@ -61,25 +62,28 @@ const ProfileMenu = () => {
     setSelectedImage(null);
   };
 
-  const handleImageUpload = (event) => {
-    const file = event.target.files[0];
-    setSelectedImage(file);
-  };
+  // const handleImageUpload = (event) => {
+  //   const file = event.target.files[0];
+  //   setSelectedImage(file);
+  // };
 
-  const handleImageClick = () => {
-    // Trigger the file input click when the profile image is clicked
-    document.getElementById("profileImageInput").click();
-  };
+  // const handleImageClick = () => {
+  //   // Trigger the file input click when the profile image is clicked
+  //   document.getElementById("profileImageInput").click();
+  // };
 
   useEffect(() => {
-    if (selectedImage) {
-      setProfileImage(URL.createObjectURL(selectedImage));
-    }
-  }, [selectedImage]);
+
+    // if (selectedImage) {
+    //   setProfileImage(URL.createObjectURL(selectedImage));
+    // }
+  }, []);
 
   useEffect(() => {
     const storedUserDetails = JSON.parse(localStorage.getItem("userDetails"));
+    console.log(storedUserDetails)
     setUserDetails(storedUserDetails);
+    setProfileImage(storedUserDetails.profilePicture);
   }, []);
 
   return (
@@ -93,25 +97,24 @@ const ProfileMenu = () => {
       >
         <MenuHandler>
           <div className="relative">
-            <label htmlFor="profileImage" className="cursor-pointer">
+            <label className="cursor-pointer">
               <Button
                 variant="text"
                 color="blue-gray"
                 className="flex items-center gap-1 rounded-full py-0.5 pr-2 pl-0.5 lg:ml-auto"
               >
-                <Avatar
-                  variant="circular"
-                  size="sm"
-                  alt="tania andrew"
-                  className={`border border-blue-200 p-0.5`}
-                  src={profileImage}
-                  onClick={handleImageClick}
-                />
+                {profileImage && (
+                  <Avatar
+                    size="lg"
+                    src={`http://localhost:7000${profileImage}`}
+                    alt="tania andrew"
+                    className={`flex border border-blue-200 p-0.5`}
+                  />
+                )}
                 <ChevronDownIcon
                   strokeWidth={2.5}
-                  className={`h-3 w-3 transition-transform ${
-                    isMenuOpen ? "rotate-180" : ""
-                  }`}
+                  className={`h-3 w-3 transition-transform ${isMenuOpen ? "rotate-180" : ""
+                    }`}
                 />
               </Button>
             </label>
@@ -131,11 +134,10 @@ const ProfileMenu = () => {
                     openProfileDialog();
                   }
                 }}
-                className={`flex items-center gap-2 rounded ${
-                  isLastItem
-                    ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
-                    : ""
-                }`}
+                className={`flex items-center gap-2 rounded ${isLastItem
+                  ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
+                  : ""
+                  }`}
               >
                 {React.createElement(icon, {
                   className: `h-4 w-4 ${isLastItem ? "text-red-500" : ""}`,
@@ -163,17 +165,18 @@ const ProfileMenu = () => {
           <CardBody className="p-60 items-center relative">
             <label htmlFor="profileImage" className="text-gray-700 font-bold cursor-pointer">
               <div className="flex flex-col items-center group">
-                <img
-                  src={profileImage}
-                  alt="avatar"
-                  id="profileImage"
-                  className="w-32 h-32 rounded-full border border-gray-500 cursor-pointer group-hover:opacity-75 transition-opacity"
-                  onClick={handleImageClick}
-                />
+                {profileImage && (
+                  <Avatar
+                    size="xxl"
+                    src={`http://localhost:7000${profileImage}`}
+                    alt="tania andrew"
+                    className={`flex border border-blue-200 p-0.5`}
+                  />
+                )}
                 <input
                   type="file"
                   id="profileImageInput"
-                  onChange={handleImageUpload}
+                  // onChange={handleImageUpload}
                   className="hidden"
                 />
                 <div className="absolute bottom-0 right-0 opacity-0 group-hover:opacity-100 transition-opacity">
