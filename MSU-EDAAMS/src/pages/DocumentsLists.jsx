@@ -117,7 +117,7 @@ export const DocumentsLists = () => {
   const handleTimelineClick = (index) => {
     const selectedDocument = tableRows[index]; // Access the document data using the index
     setSelectedDocument(selectedDocument); // Set the selected document
-    setIsTimelineDialogOpen(true); // Open the dialog
+    setIsTimelineDialogOpen(!isTimelineDialogOpen); // Open the dialog
   };
 
 
@@ -143,7 +143,7 @@ export const DocumentsLists = () => {
   const navigate = useNavigate();
 
   return (
-    <Card className="h-full w-screen rounded-none bg-white">
+    <Card className="h-screen w-screen rounded-none bg-white">
       <div>
         <Dialog
           size="md"
@@ -217,7 +217,7 @@ export const DocumentsLists = () => {
                             new Date(selectedDocument.deanEndorsementDate),
                             "yyyy-MM-dd"
                           )
-                          : "Waiting"}{" "}
+                          : "Processing"}{" "}
                         <br />
                         Approved By:{" "}
                         {selectedDocument.deanName
@@ -252,7 +252,7 @@ export const DocumentsLists = () => {
                             new Date(selectedDocument.endorsementDate),
                             "yyyy-MM-dd"
                           )
-                          : "Waiting"}{" "}
+                          : `Waiting for ${selectedDocument.collegeName} Dean Endorsement`}{" "}
                         <br />
                         Endorsed By:{" "}
                         {selectedDocument.endorserName
@@ -287,7 +287,7 @@ export const DocumentsLists = () => {
                             new Date(selectedDocument.opApprovalDate),
                             "yyyy-MM-dd"
                           )
-                          : "Waiting"}{" "}
+                          : "Waiting for OVCAA Endorsement"}{" "}
                         <br />
                         Approved By:{" "}
                         {selectedDocument.opApproverName
@@ -321,7 +321,7 @@ export const DocumentsLists = () => {
                             new Date(selectedDocument.releaseDate),
                             "yyyy-MM-dd"
                           )
-                          : "Waiting"}{" "}
+                          : "Waiting for Office of the President Approval"}{" "}
                         <br />
                         {/* Released By: {selectedDocument.opApproverName ? selectedDocument.opApproverName : 'Pending'} <br />
 												Remarks: {selectedDocument.EndorserRemarks ? selectedDocument.remarks : ''} */}
@@ -378,8 +378,8 @@ export const DocumentsLists = () => {
             </div>
           </div>
         </div>
-        <div className="flex mb-2 mt-4 whitespace-pre flex-col items-center justify-between gap-4 md:flex-row">
-          <Tabs value="all" className="w-full md:w-max whitespace-pre">
+        <div className="flex mb-6 mt-4 whitespace-pre flex-col items-center justify-between gap-4 md:flex-row">
+          {/* <Tabs value="all" className="w-full md:w-max whitespace-pre">
             <TabsHeader>
               {TABS.map(({ label, value }) => (
                 <Tab key={value} value={value}>
@@ -387,10 +387,9 @@ export const DocumentsLists = () => {
                 </Tab>
               ))}
             </TabsHeader>
-          </Tabs>
+          </Tabs> */}
         </div>
       </CardHeader>
-
       <CardBody className="overflow-scroll px-0">
         <table className="w-full min-w-max table-auto">
           <thead>

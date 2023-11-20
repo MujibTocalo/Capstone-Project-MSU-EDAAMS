@@ -71,7 +71,6 @@ const DocumentCompleteDetail = ({ document }) => {
 								<Typography variant='paragraph'>{document.endorserDesignation}</Typography>
 							</div>
 						</div>
-
 					</div>
 				)}
 
@@ -133,21 +132,24 @@ const DocumentCompleteDetail = ({ document }) => {
 							className="flex border-none shadow-md"
 							style={{ textIndent: '1em' }}
 						/>
-						<div className="flex flex-col">
-							{deanSignature && (
-								<img className="flex mx-auto translate-y-8 w-24 h-24" src={`http://localhost:7000${deanSignature}`} alt="signature" />
-							)}
-							<div className="text-center">
-								<Typography variant='paragraph'><u>{document.deanName}</u></Typography>
-								<Typography variant='paragraph'>{document.deanDesignation}</Typography>
+						<div className="flex flex-row mr-12 justify-end">
+							<div className="flex flex-col">
+								{deanSignature && (
+									<img className="flex mx-auto translate-y-8 w-24 h-24" src={`http://localhost:7000${deanSignature}`} alt="signature" />
+								)}
+								<div className="text-center ">
+									<Typography variant='paragraph'><u>{document.deanName}</u></Typography>
+									<Typography variant='paragraph'>{document.deanDesignation}</Typography>
+								</div>
 							</div>
 						</div>
+						<Typography className='text-center font-semibold bg-indigo-800 text-white p-1 mt-4 rounded-md shadow-lg'>Original Document By {document.uploaderDesignation + ', ' + document.uploaderName}</Typography>
 					</div>
 				)}
 
 				<div className="p-2">
 					<div className="gap-3.5">
-						<Typography className='text-center font-semibold bg-indigo-800 text-white p-1 mt-4 rounded-md shadow-lg'>Original Document By {document.uploaderDesignation + ', ' + document.uploaderName}</Typography>
+
 						<div className="flex flex-col border border-gray-400 p-2 my-2 shadow-md">
 							<Typography variant='paragraph'>To: </Typography>
 							<Typography variant='paragraph' className='font-semibold' style={{ textIndent: '1em' }}>{document.header}</Typography>
@@ -168,7 +170,7 @@ const DocumentCompleteDetail = ({ document }) => {
 					/>
 				</div>
 
-				<div className="flex flex-row justify-evenly">
+				<div className="flex flex-row justify-end mr-12">
 					<div className="flex flex-col">
 						{signature && (
 							<img className="flex mx-auto translate-y-8 w-24 h-24" src={`http://localhost:7000${signature}`} alt="signature" />
@@ -178,13 +180,13 @@ const DocumentCompleteDetail = ({ document }) => {
 							<Typography variant='paragraph'>{document.uploaderDesignation}</Typography>
 						</div>
 					</div>
-					<div className="flex flex-col gap-1.5">
+					{/* <div className="flex flex-col gap-1.5">
 						{opSignature && (
 							<img className="flex mx-auto translate-y-8 w-24 h-24" src={`http://localhost:7000${opSignature}`} alt="signature" />
 						)}
 						<Typography variant='paragraph'><u>{document.opApproverName}</u></Typography>
 						<Typography variant='paragraph'>{document.opApproverDesignation}</Typography>
-					</div>
+					</div> */}
 				</div>
 			</div>
 		</div >

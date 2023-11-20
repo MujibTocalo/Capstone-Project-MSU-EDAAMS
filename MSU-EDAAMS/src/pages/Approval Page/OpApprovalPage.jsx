@@ -254,7 +254,7 @@ const OpApprovalPage = () => {
 		: [];
 
 	return (
-		<div className='grid grid-cols-4 p-2 overflow-y-scroll'>
+		<div className='grid grid-cols-4 p-2 w-screen'>
 			{endorsedDocuments.map((document) => (
 				<div key={document._id} className='flex flex-col bg-indigo-50/50 p-1.5 m-2 rounded-lg shadow-md hover:scale-105'>
 					<DocumentOPDetail document={document} />

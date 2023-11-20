@@ -120,7 +120,7 @@ const ArchivePage = () => {
   const navigate = useNavigate();
 
   return (
-    <Card className="h-full w-full bg-white">
+    <Card className="h-screen w-screen rounded-none bg-white">
       <CardHeader
         floated={false}
         shadow={false}
@@ -240,23 +240,23 @@ const ArchivePage = () => {
                             documentStatus === "DeanApproved"
                               ? "Dean Approved"
                               : documentStatus === "Endorsed"
-                              ? "Endorsed"
-                              : documentStatus === "OP Approved"
-                              ? "OP Approved"
-                              : documentStatus === "Created"
-                              ? "Created"
-                              : documentStatus === "Pending"
-                              ? "Pending"
-                              : documentStatus === "Released"
-                              ? "Released"
-                              : "Rejected"
+                                ? "Endorsed"
+                                : documentStatus === "OP Approved"
+                                  ? "OP Approved"
+                                  : documentStatus === "Created"
+                                    ? "Created"
+                                    : documentStatus === "Pending"
+                                      ? "Pending"
+                                      : documentStatus === "Released"
+                                        ? "Released"
+                                        : "Rejected"
                           }
                           color={
                             documentStatus === "Rejected"
                               ? "red"
                               : documentStatus === "Pending"
-                              ? "orange"
-                              : "green"
+                                ? "orange"
+                                : "green"
                           }
                         />
                       </div>

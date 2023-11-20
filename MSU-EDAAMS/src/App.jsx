@@ -14,7 +14,6 @@ import ApproveDocument from "./pages/ApproveDocument";
 import EndorseDocument from "./pages/EndorsementPage";
 import Dashboard from "./pages/Dashboard";
 import { DocumentsLists } from "./pages/DocumentsLists";
-import OPApprovalPage from "./pages/OPApprovalPage";
 import TestingPage from "./pages/TestingPage";
 import ReleasingDocumentPage from "./pages/ReleasingDocumentPage";
 import { CustomNavbar } from "./components/Navbar";
@@ -49,7 +48,7 @@ const App = () => {
   };
 
   return (
-    <div>
+    <div className="overflow-hidden">
       {isLoggedIn && <Sidebar />}
       <Routes>
         <Route path="/" element={<LandingPage />} />
@@ -76,13 +75,11 @@ const MainRoutes = () => {
 
 
   return (
-    <div className="flex flex-col h-screen overflow-hidden">
+    <div className="flex flex-col max-h-screen overflow-hidden">
       <CustomNavbar setOpen={setIsSidebarOpen} />
-      <div className="flex flex-row bg-transparent">
-        <div style={{ zIndex: 1, position: 'relative' }}>
-          <Sidebar isOpen={isSidebarOpen} toggleSidebar={!toggleSidebar} />
-        </div>
-        <div className="flex flex-col flex-grow">
+      <div className="flex max-w-fit overflow-hidden">
+        <Sidebar isOpen={isSidebarOpen} toggleSidebar={!toggleSidebar} style={{ zIndex: 1, position: 'relative' }} />
+        <div className="flex flex-col max-w-fit overflow-hidden flex-grow">
           <Routes>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/profilePage" element={<ProfilePage />} />
@@ -96,17 +93,6 @@ const MainRoutes = () => {
             <Route path="/opapproval" element={<OpApprovalPage />} />
             <Route path="/archive" element={<ArchivePage />} />
             <Route path="/manageusers" element={<ManageUsers />} />
-            {/* <Route
-            path="/manageusers"
-            element={
-              userType === 'Administrator' ? (
-                <ManageUsers />
-              ) : (
-                <Navigate to="/restricted" />
-              )
-            }
-          /> */}
-            {/* <Route path="/releasedocument" element={<ReleasingDocumentPage />} /> */}
             <Route
               path="/releasedocument"
               element={
@@ -128,18 +114,6 @@ const MainRoutes = () => {
               }
             />
             <Route path="/restricted" element={<RestrictedPage />} />
-            {/* <Route path="/dashboard" element={user && user.userType === 'admin' ? <Dashboard /> : <Navigate to="/restricted" />} />
-          <Route path="/profilePage" element={<ProfilePage />} />
-          <Route path="/documents" element={<DocumentsLists />} />
-          <Route path="/createDocument" element={user && user.userType === 'editor' ? <CreateDocument /> : <Navigate to="/restricted" />} />
-          <Route path="/approvedocument" element={user && user.userType === 'approver' ? <ApproveDocument socket={socket} /> : <Navigate to="/restricted" />} />
-          <Route path="/endorsedocument" element={user && user.userType === 'endorser' ? <EndorseDocument /> : <Navigate to="/restricted" />} />
-          <Route path="/opapproval" element={user && user.userType === 'op-approver' ? <OPApprovalPage /> : <Navigate to="/restricted" />} />
-          <Route path="/archive" element={<ArchivePage />} />
-          <Route path="/manageusers" element={user && user.userType === 'admin' ? <ManageUsers /> : <Navigate to="/restricted" />} />
-          <Route path="/releasedocument" element={user && user.userType === 'releaser' ? <ReleasingDocumentPage /> : <Navigate to="/restricted" />} />
-          <Route path="/testing" element={user && user.userType === 'tester' ? <TestingPage /> : <Navigate to="/restricted" />} />
-          <Route path="/restricted" element={<div>Access Restricted</div>} /> */}
           </Routes>
         </div>
       </div>

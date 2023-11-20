@@ -255,9 +255,9 @@ const DeanEndorsementPage = () => {
 
 
 	return (
-		<div className='grid grid-cols-4 p-1 overflow-y-scroll'>
+		<div className='grid grid-cols-4 w-screen overflow-y-scroll'>
 			{pendingDocuments.map((document) => (
-				<div key={document._id} className='flex flex-row bg-indigo-200/50 m-2 p-1 rounded-lg shadow-md hover:scale-105'>
+				<div key={document._id} className='flex flex-col flex-wrap bg-indigo-100/50 m-1 p-1 rounded-lg shadow-md hover:scale-105'>
 					<DocumentApproverDetail document={document} />
 
 					<Dialog
@@ -370,8 +370,11 @@ const DeanEndorsementPage = () => {
 					</Dialog>
 
 
-					<div className='flex items-end'>
-						<Button className='flex flex-col whitespace-pre items-center text-black font-medium m-2 hover:font-semibold hover:scale-105' size='sm' color='white' variant='text'
+					<div className='flex flex-row items-center justify-center'>
+						<Button className='flex flex-col whitespace-pre items-center text-black font-medium m-2 hover:font-semibold hover:scale-105'
+							size='sm'
+							color='white'
+							variant='text'
 							onClick={() => handleOpen(document)}>
 							Read More{" "}
 							<svg
