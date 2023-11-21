@@ -38,10 +38,10 @@ const DocumentReleasingDetail = ({ document }) => {
 					<b>Date: </b> {format(new Date(document.createdAt), 'yyyy-MM-dd')}
 				</Typography>
 				<Typography className='text-sm pl-2 py-1'>
-					Approved By: {document.opApproverName}
+					Approved By: {document.approverName}
 				</Typography>
 				<Typography className='text-sm pl-2 py-1'>
-					<b>Date Approved: </b> {format(new Date(document.opApprovalDate), 'yyyy-MM-dd')}
+					<b>Date Approved: </b> {format(new Date(document.approvalDate), 'yyyy-MM-dd')}
 				</Typography>
 			</div>
 		</div>

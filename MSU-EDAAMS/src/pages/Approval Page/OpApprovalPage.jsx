@@ -95,7 +95,7 @@ const OpApprovalPage = () => {
 								<div>
 									<Typography variant="h5">Success!</Typography>
 									<Typography variant="paragraph">
-										Document Endorsement Successful
+										Document Approval Successful
 									</Typography>
 								</div>
 							</div>
