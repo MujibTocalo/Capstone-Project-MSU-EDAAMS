@@ -88,31 +88,37 @@ const MainRoutes = () => {
             <Route path="/newCreateDocument" element={<NewCreateDocument />} />
             <Route path="/approvedocument" element={<ApproveDocument />} />
             <Route path="/deanEndorsement" element={<DeanEndorsementPage />} />
-            <Route path="/endorsedocument" element={<EndorseDocument />} />
-            <Route path="/ovcaaEndorsement" element={<OVCAAEndorsementPage />} />
-            <Route path="/opapproval" element={<OpApprovalPage />} />
-            <Route path="/archive" element={<ArchivePage />} />
-            <Route path="/manageusers" element={<ManageUsers />} />
+            {/* <Route path="/endorsedocument" element={<EndorseDocument />} /> */}
+
+            <Route
+              path="/ovcaaEndorsement"
+              element={
+                (userType === 'Endorser - OVCAA' || userType === 'Administrator') ?
+                  (<OVCAAEndorsementPage />) : (<Navigate to='/restricted' />)} />
+
+            <Route
+              path="/opapproval"
+              element={
+                (userType === 'Approver - OP' || userType === 'Administrator') ?
+                  (<OpApprovalPage />) : (<Navigate to="/restricted" />)} />
+
+            <Route
+              path="/archive"
+              element={
+                userType === 'Administrator' ?
+                  (<ArchivePage />) : (<Navigate to='/restricted' />)} />
+
+            <Route
+              path="/manageusers"
+              element={
+                userType === 'Administrator' ?
+                  (<ManageUsers />) : (<Navigate to="/restricted" />)} />
             <Route
               path="/releasedocument"
-              element={
-                userType === 'Administrator' ? (
-                  <ReleasingDocumentPage />
-                ) : (
-                  <Navigate to="/restricted" />
-                )
-              }
-            />
-            <Route
-              path="/testing"
-              element={
-                userType === 'Administrator' ? (
-                  <TestingPage />
-                ) : (
-                  <Navigate to="/restricted" />
-                )
-              }
-            />
+              element=
+              {userType === 'Administrator' ?
+                (<ReleasingDocumentPage />) : (<Navigate to="/restricted" />)} />
+
             <Route path="/restricted" element={<RestrictedPage />} />
           </Routes>
         </div>

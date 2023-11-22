@@ -8,34 +8,17 @@ import { PencilIcon, UserPlusIcon } from "@heroicons/react/24/solid";
 import {
   Card,
   Dialog,
-  cardFooter,
-  checkbox,
+
   CardHeader,
   Input,
   Typography,
   Button,
   CardBody,
-  Chip,
-  CardFooter,
-  Tabs,
-  TabsHeader,
-  Tab,
-  Option,
-  Avatar,
-  IconButton,
-  Tooltip,
-  Select,
-  Switch,
-} from "@material-tailwind/react";
 
-import { format } from "date-fns";
-import {
-  LuCheckSquare,
-  LuDelete,
-  LuEdit,
-  LuPenTool,
-  LuTrash,
-} from "react-icons/lu";
+  CardFooter,
+  Option,
+  Select,
+} from "@material-tailwind/react";
 
 const TABS = [
   {
@@ -70,7 +53,6 @@ const TABLE_HEAD = [
   "College/Office",
   "Designation",
   "Status",
-  "Action",
 ];
 
 const ManageUsers = () => {
@@ -637,16 +619,10 @@ const ManageUsers = () => {
                           onClick={() => handleToggleStatus(_id, status)}
                           value={status === "Active" ? "Active" : "Inactive"}
                           color={status === "Active" ? "green" : "red"}
+                          className="hover:scale-105"
                         >
                           {status === "Active" ? "Active" : "Inactive"}
                         </Button>
-                      </div>
-                    </td>
-                    <td className={classes}>
-                      <div className="flex gap-1.5">
-                        <LuEdit />
-                        {/* <LuCheckSquare /> */}
-                        {/* <LuTrash /> */}
                       </div>
                     </td>
                   </tr>
