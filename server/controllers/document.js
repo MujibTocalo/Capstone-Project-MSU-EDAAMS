@@ -29,18 +29,24 @@ export const fetchDocument = async (req, res) => {
 export const deleteDocument = async (req, res) => {
 	try {
 		const id = req.params.id;
+		console.log("Deleting document with ID:", id);
 
 		const result = await Document.findOneAndDelete({ _id: id });
 
 		if (result) {
+			console.log("Document deleted:", result);
 			res.json({ success: "Document Deleted" });
 		} else {
+			console.log("Document not found");
 			res.status(404).json({ error: "Document not found" });
 		}
 	} catch (error) {
+		console.error("Error deleting document:", error);
 		res.status(500).json({ error: "Internal Server Error" });
 	}
 };
+
+
 
 export const deanEndorsement = async (req, res) => {
 	try {
