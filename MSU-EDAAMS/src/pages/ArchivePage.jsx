@@ -117,6 +117,14 @@ const ArchivePage = () => {
     setFilteredTableRows(filteredRows);
   };
 
+
+  const convertHtmlToText = (htmlContent) => {
+    // Specify options if needed, see the html-to-text documentation for details
+    const options = {};
+    return convert(htmlContent, options);
+  };
+
+
   const navigate = useNavigate();
 
   return (
@@ -294,7 +302,7 @@ const ArchivePage = () => {
                                 <Text style={styles.subjectText}>
                                   Subject: {subject}
                                 </Text>
-                                <Text style={styles.content}> {content} </Text>
+                                <Text style={styles.content}> {convertHtmlToText(content)} </Text>
                                 <Image
                                   src={`http://localhost:7000${uploaderSignature}`}
                                   style={styles.signature}

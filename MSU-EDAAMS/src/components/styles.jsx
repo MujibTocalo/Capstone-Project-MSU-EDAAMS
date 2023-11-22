@@ -15,6 +15,8 @@ const styles = StyleSheet.create({
   },
   headerText: {
     fontSize: 11.5,
+    textIndent: 1,
+    lineHeight: 2,
     marginLeft: 20,
     marginTop: 10,
     marginRight: 10,
@@ -25,6 +27,8 @@ const styles = StyleSheet.create({
   },
   subjectText: {
     fontSize: 11.5,
+    textIndent: 1,
+    lineHeight: 2,
     fontWeight: "medium",
     marginLeft: 20,
     marginRight: 10,
