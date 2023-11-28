@@ -15,7 +15,7 @@ const DocumentOPDetail = ({ document }) => {
 
 	return (
 		<div key={document._id}
-			className='flex flex-col bg-white p-3 rounded-md'>
+			className='flex flex-col bg-white p-3 rounded-md overflow-hidden'>
 			<div className="flex flex-row items-center justify-start whitespace-pre">
 				<Typography
 					className='bg-indigo-600 font-semibold text-sm rounded-lg m-1 p-1 text-white'>

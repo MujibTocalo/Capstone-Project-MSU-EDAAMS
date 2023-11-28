@@ -13,29 +13,35 @@ const DocumentEndorsementDetail = ({ document }) => {
 
 	return (
 		<div key={document._id}
-			className='flex flex-col bg-white p-3 rounded-md'>
-			<div className="flex flex-row items-center justify-start whitespace-pre">
+			className='flex flex-col bg-white p-1 px-4 rounded-md'>
+			<div className="flex flex-col items-center justify-start whitespace-pre">
 				<Typography
-					className='bg-indigo-600 font-semibold text-sm rounded-lg m-1 p-1 text-white'>
+					className='bg-indigo-500/80 font-semibold text-sm rounded-lg m-1 p-1 text-white'>
 					{document.documentType}
 				</Typography>
 				<Typography
-					className='text-md rounded-lg p-1 font-bold text-indigo-900'>
+					className='text-md rounded-lg p-1 font-bold '>
 					{document.collegeName}
 				</Typography>
 			</div>
-			<div className="flex flex-col py-2 rounded-lg">
-				<Typography className='text-sm pl-2 py-1'>
-					Control No. {document.controlNumber}
+			<div className="flex flex-col rounded-lg text-center">
+				<Typography className='text-sm font-semibold py-1'>
+					Control Number
 				</Typography>
-				<Typography className='text-sm pl-2 py-1'>
-					<b>Date: </b> {format(new Date(document.createdAt), 'yyyy-MM-dd')}
+				<Typography className='text-sm '>
+					{document.controlNumber}
 				</Typography>
-				<Typography className='text-sm pl-2 py-1'>
-					Approved By: {document.deanName}
+				<Typography className='text-sm py-1 font-semibold'>
+					Date Endorsed
 				</Typography>
-				<Typography className='text-sm pl-2 py-1'>
-					<b>Date Endorsed: </b> {format(new Date(document.deanEndorsementDate), 'yyyy-MM-dd')}
+				<Typography className='text-sm'>
+					{format(new Date(document.deanEndorsementDate), 'yyyy-MM-dd')}
+				</Typography>
+				<Typography className='text-sm py-1 font-semibold'>
+					Endorsed By
+				</Typography>
+				<Typography className='text-sm pb-1'>
+					{document.deanName}
 				</Typography>
 			</div>
 		</div>

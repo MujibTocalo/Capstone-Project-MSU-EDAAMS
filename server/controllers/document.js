@@ -130,7 +130,6 @@ export const approveDocument = async (req, res) => {
 		if (!document) {
 			return res.status(404).json({ error: 'Document not found' });
 		}
-		s
 		document.approverName = name;
 		document.approverDesignation = designation;
 		document.approvalDate = Date.now();

@@ -6,24 +6,27 @@ import { format } from "date-fns";
 import ReactQuill from "react-quill";
 
 const DocumentCompleteDetail = ({ document }) => {
-
+	const currentUser = JSON.parse(localStorage.getItem('userDetails'))
 	const store = documentsStore();
 
 	const [signature, setSignature] = useState()
 	const [deanSignature, setDeanSignature] = useState()
 	const [endorserSignature, setEndorserSignature] = useState()
 	const [opSignature, setOPSignature] = useState()
+	const [userAccess, setUserAccess] = useState(currentUser.userType)
 
-	const [documentStatus, setDocumentStatus] = useState()
+
 
 	useEffect(() => {
+		setUserAccess(currentUser.userType)
+		console.log(userAccess)
 		store.fetchDocuments();
 		setSignature(document.uploaderSignature);
 		setDeanSignature(document.deanSignature);
 		setEndorserSignature(document.endorserSignature);
 		setOPSignature(document.approverSignature);
-		setDocumentStatus(document.documentStatus)
 	}, [store]);
+
 
 	return (
 		<div className="text-black">
@@ -40,10 +43,11 @@ const DocumentCompleteDetail = ({ document }) => {
 					</div>
 				</div>
 
-				{/* FINAL DOCUMENT CONTENT FOR RMO TO RELEASE */}
-				{documentStatus === 'OP Approved' && (
+				{/* OFFICE OF THE PRESIDENT DOCUMENT ACCESS	 */}
+				{(userAccess === 'Approver - OP' || userAccess === 'Administrator') && (
 					<div className="p-2">
 						<div className="gap-3.5">
+							<Typography className='text-center font-semibold bg-indigo-800 text-white p-1 mt-4 rounded-md shadow-lg'>{document.documentType} Endorsement By {document.endorserDesignation + ', ' + document.endorserName}</Typography>
 							<div className="flex flex-col border border-gray-400 p-2 my-2 shadow-md">
 								<Typography variant='paragraph'>To: </Typography>
 								<Typography variant='paragraph' className='font-semibold' style={{ textIndent: '1em' }}>{document.endorsementHeader}</Typography>
@@ -62,70 +66,37 @@ const DocumentCompleteDetail = ({ document }) => {
 							className="flex border-none shadow-md"
 							style={{ textIndent: '1em' }}
 						/>
-						<div className="flex flex-col">
-							{endorserSignature && (
-								<img className="flex mx-auto translate-y-8 w-24 h-24" src={`http://localhost:7000${endorserSignature}`} alt="signature" />
-							)}
-							<div className="text-center">
-								<Typography variant='paragraph'><u>{document.endorserName}</u></Typography>
-								<Typography variant='paragraph'>{document.endorserDesignation}</Typography>
+						<div className="flex flex-row mr-12 justify-end">
+							<div className="flex flex-col">
+								{deanSignature && (
+									<img className="flex mx-auto translate-y-8 w-24 h-24" src={`http://localhost:7000${deanSignature}`} alt="signature" />
+								)}
+								<div className="text-center ">
+									<Typography variant='paragraph'><u>{document.endorserName}</u></Typography>
+									<Typography variant='paragraph'>{document.endorserDesignation}</Typography>
+								</div>
 							</div>
 						</div>
-
+						<Typography className='text-center font-semibold bg-indigo-800 text-white p-1 mt-4 rounded-md shadow-lg'>Dean Endorsement Document By {document.endorserDesignation + ', ' + document.endorserName}</Typography>
 					</div>
 				)}
 
-				{/* OVCAA ENDORSEMENT FOR OP */}
-				{documentStatus === 'OVCAA Endorsed' && (
-					<div className="p-2">
-						<div className="gap-3.5">
-							<Typography className='text-center font-semibold bg-indigo-800 text-white p-1 mt-4 rounded-md shadow-lg'>Endorsement Document By {document.endorserDesignation + ', ' + document.endorserName}</Typography>
-							<div className="flex flex-col border border-gray-400 p-2 my-2 shadow-md">
-								<Typography variant='paragraph'>To: </Typography>
-								<Typography variant='paragraph' className='font-semibold' style={{ textIndent: '1em' }}>{document.endorsementHeader}</Typography>
-							</div>
-							<div className="flex flex-col border border-gray-400 p-2 my-2 shadow-md">
-								<Typography variant='paragraph'>Subject: </Typography>
-								<Typography variant='paragraph' className='font-semibold' style={{ textIndent: '1em' }}>{document.endorsmentSubject}</Typography>
-							</div>
-						</div>
-						<ReactQuill
-							value={document.endorsementContent}
-							readOnly={true}
-							modules={{
-								toolbar: false,
-							}}
-							className="flex border-none shadow-md"
-							style={{ textIndent: '1em' }}
-						/>
-						<div className="flex flex-col">
-							{endorserSignature && (
-								<img className="flex mx-auto translate-y-8 w-24 h-24" src={`http://localhost:7000${endorserSignature}`} alt="signature" />
-							)}
-							<div className="text-center">
-								<Typography variant='paragraph'><u>{document.endorserName}</u></Typography>
-								<Typography variant='paragraph'>{document.endorserDesignation}</Typography>
-							</div>
-						</div>
 
-					</div>
-				)}
 				{/* DEAN ENDORSEMENT FOR OVCAA */}
-				{documentStatus === 'Dean Approved' || documentStatus === 'Dean Endorsed' && (
+				{(userAccess === "Endorser - OVCAA" || userAccess === 'Approver OP' || userAccess === 'Administrator') && (
 					<div className="p-2">
 						<div className="gap-3.5">
-							<Typography className='text-center font-semibold bg-indigo-800 text-white p-1 mt-4 rounded-md shadow-lg'>Endorsement Document By {document.deanDesignation + ', ' + document.deanName}</Typography>
 							<div className="flex flex-col border border-gray-400 p-2 my-2 shadow-md">
 								<Typography variant='paragraph'>To: </Typography>
-								<Typography variant='paragraph' className='font-semibold' style={{ textIndent: '1em' }}>{documentStatus === 'Dean Approved' || documentStatus === 'Dean Endorsed' ? document.deanEndorsementHeader : document.header}</Typography>
+								<Typography variant='paragraph' className='font-semibold' style={{ textIndent: '1em' }}>{document.deanEndorsementHeader}</Typography>
 							</div>
 							<div className="flex flex-col border border-gray-400 p-2 my-2 shadow-md">
 								<Typography variant='paragraph'>Subject: </Typography>
-								<Typography variant='paragraph' className='font-semibold' style={{ textIndent: '1em' }}>{documentStatus === 'Dean Approved' || documentStatus === 'Dean Endorsed' ? document.deanEndorsmentSubject : document.subject}</Typography>
+								<Typography variant='paragraph' className='font-semibold' style={{ textIndent: '1em' }}>{document.deanEndorsmentSubject}</Typography>
 							</div>
 						</div>
 						<ReactQuill
-							value={documentStatus === 'Dean Approved' || documentStatus === 'Dean Endorsed' ? document.deanEndorsementContent : document.content}
+							value={document.deanEndorsementContent}
 							readOnly={true}
 							modules={{
 								toolbar: false,
@@ -133,21 +104,24 @@ const DocumentCompleteDetail = ({ document }) => {
 							className="flex border-none shadow-md"
 							style={{ textIndent: '1em' }}
 						/>
-						<div className="flex flex-col">
-							{deanSignature && (
-								<img className="flex mx-auto translate-y-8 w-24 h-24" src={`http://localhost:7000${deanSignature}`} alt="signature" />
-							)}
-							<div className="text-center">
-								<Typography variant='paragraph'><u>{document.deanName}</u></Typography>
-								<Typography variant='paragraph'>{document.deanDesignation}</Typography>
+						<div className="flex flex-row mr-12 justify-end">
+							<div className="flex flex-col">
+								{deanSignature && (
+									<img className="flex mx-auto translate-y-8 w-24 h-24" src={`http://localhost:7000${deanSignature}`} alt="signature" />
+								)}
+								<div className="text-center ">
+									<Typography variant='paragraph'><u>{document.deanName}</u></Typography>
+									<Typography variant='paragraph'>{document.deanDesignation}</Typography>
+								</div>
 							</div>
 						</div>
+						<Typography className='text-center font-semibold bg-indigo-800 text-white p-1 mt-4 rounded-md shadow-lg'>Original Document By {document.uploaderDesignation + ', ' + document.uploaderName}</Typography>
 					</div>
 				)}
 
+				{/* PENDING STATUS DEAN ACCESS */}
 				<div className="p-2">
 					<div className="gap-3.5">
-						<Typography className='text-center font-semibold bg-indigo-800 text-white p-1 mt-4 rounded-md shadow-lg'>Original Document By {document.uploaderDesignation + ', ' + document.uploaderName}</Typography>
 						<div className="flex flex-col border border-gray-400 p-2 my-2 shadow-md">
 							<Typography variant='paragraph'>To: </Typography>
 							<Typography variant='paragraph' className='font-semibold' style={{ textIndent: '1em' }}>{document.header}</Typography>
@@ -168,7 +142,7 @@ const DocumentCompleteDetail = ({ document }) => {
 					/>
 				</div>
 
-				<div className="flex flex-row justify-evenly">
+				<div className="flex flex-row justify-end mr-12">
 					<div className="flex flex-col">
 						{signature && (
 							<img className="flex mx-auto translate-y-8 w-24 h-24" src={`http://localhost:7000${signature}`} alt="signature" />
@@ -177,13 +151,6 @@ const DocumentCompleteDetail = ({ document }) => {
 							<Typography variant='paragraph'><u>{document.uploaderName}</u></Typography>
 							<Typography variant='paragraph'>{document.uploaderDesignation}</Typography>
 						</div>
-					</div>
-					<div className="flex flex-col gap-1.5">
-						{opSignature && (
-							<img className="flex mx-auto translate-y-8 w-24 h-24" src={`http://localhost:7000${opSignature}`} alt="signature" />
-						)}
-						<Typography variant='paragraph'><u>{document.opApproverName}</u></Typography>
-						<Typography variant='paragraph'>{document.opApproverDesignation}</Typography>
 					</div>
 				</div>
 			</div>
