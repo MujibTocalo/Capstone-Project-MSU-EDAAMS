@@ -63,7 +63,7 @@ import {
 import axios from "axios";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import { BsCardChecklist } from "react-icons/bs";
+import { BsCardChecklist, BsDownload } from "react-icons/bs";
 
 const TABS = [
   {
@@ -414,7 +414,6 @@ const ArchivePage = () => {
                   header,
                   subject,
                   uploaderSignature,
-                  ImageHeader,
                   content,
                   uploaderDesignation,
                 },
@@ -453,6 +452,13 @@ const ArchivePage = () => {
                           className="font-normal"
                         >
                           {uploaderName}
+                        </Typography>
+                        <Typography
+                          variant="small"
+                          color="blue-gray"
+                          className="font-normal opacity-80"
+                        >
+                          {uploaderDesignation}
                         </Typography>
                       </div>
                     </td>
@@ -507,7 +513,12 @@ const ArchivePage = () => {
                       </Typography>
                     </td>
                     <td className={classes}>
-                      <div className="flex gap-1.5">
+                      <div className="flex items-center justify-start gap-1.5">
+                        <BsCardChecklist
+                          size={20}
+                          onClick={() => handleTimelineClick(index)}
+                          className='cursor-pointer'
+                        />
                         <PDFDownloadLink
                           document={
                             <Document>
@@ -562,17 +573,11 @@ const ArchivePage = () => {
                             ) : error ? (
                               "Error generating PDF"
                             ) : (
-                              <Button
-                                size="md"
-                                color="indigo"
-                              >Download</Button>
+                              <LuDownload />
                             )
                           }
                         </PDFDownloadLink>
-                        <BsCardChecklist
-                          size={20}
-                          onClick={() => handleTimelineClick(index)}
-                        />
+
 
                       </div>
                     </td>
