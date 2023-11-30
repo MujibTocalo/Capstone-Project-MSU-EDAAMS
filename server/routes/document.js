@@ -10,6 +10,7 @@ import {
 	deanEndorsement,
 	ovcaaEndorsement,
 	approveDocument,
+	releaseDocument
 } from '../controllers/document.js'
 
 
@@ -28,10 +29,11 @@ documentRouter.put('/deanEndorsement/:id', deanEndorsement)
 documentRouter.put('/ovcaaEndorsement/:id', ovcaaEndorsement)
 documentRouter.put('/approveDocument/:id', approveDocument)
 
+
 // documentRouter.put('/deanApproval/:id', deanApproval)
 // documentRouter.put('/opApproval/:id', approveDocument)
 // documentRouter.put('/endorseDocument/:id', endorseDocument)
-// documentRouter.put('/releaseDocument/:id', releaseDocument)
+documentRouter.put('/releaseDocument/:id', releaseDocument)
 
 
 export default documentRouter

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import documentsStore from '../config/documentsStore'
 import DocumentReleasingDetail from './DocumentReleasingDetail';
 import DocumentCompleteDetail from './DocumentCompleteDetail';
+import axios from 'axios';
 
 import { Button, Alert, Dialog, DialogHeader, DialogBody, DialogFooter, Typography, Input, Textarea } from '@material-tailwind/react';
 
@@ -59,48 +60,89 @@ const ReleasingDocumentPage = () => {
 
 	const handleReleaseDocument = async (e, documentId) => {
 		e.preventDefault();
-
 		try {
-			const data = {
-				ApproverName: ReleaserName,
-				Remark,
-				decision: true,
-			};
+			axios.put(`http://localhost:7000/document/releaseDocument/${documentId}`, {
+				ReleaserName,
+				decision: true
+			})
+				.then(res => {
+					setOpen(!open)
+					console.log(res)
+					if (res.status === 200) {
+						toast.open(
+							<div className="flex gap-2 bg-green-500 text-white p-4 rounded-lg shadow-lg">
+								<LuAlertCircle size={40} />
+								<div>
+									<Typography variant="h5">Success!</Typography>
+									<Typography variant="paragraph">
+										Document Archived Successfully
+									</Typography>
+								</div>
+							</div>
+						);
+					} else {
+						setOpen(false)
+						toast.open(
+							<div className='flex gap-2 bg-red-500 text-white p-4 rounded-lg shadow-lg'>
+								<LuAlertCircle size={40} />
+								<div>
+									<Typography variant='h5'>Failed!</Typography>
+									<Typography variant='paragraph'>Document Archiving Failed</Typography>
+								</div>
 
-			const res = await fetch(`http://localhost:7000/document/releaseDocument	/${documentId}`, {
-				method: 'PUT',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify(data),
-			});
-
-			if (res.ok) {
-				toast.open(
-					<div className='flex gap-2 bg-green-500 text-white p-4 rounded-lg shadow-lg'>
-						<LuAlertCircle size={55} />
-						<div>
-							<Typography variant='h4'>Success!</Typography>
-							<Typography variant='paragraph'>Archived as Not Released</Typography>
-						</div>
-
-					</div>
-				)
-			}
+							</div>
+						)
+					}
+				})
 		} catch (error) {
-			toast.open(
-				<div className='flex gap-2 bg-red-800 text-white p-4 rounded-lg shadow-lg'>
-					<LuAlertCircle size={55} />
-					<div>
-						<Typography variant='h4'>Error!</Typography>
-						<Typography variant='paragraph'>Archive Error</Typography>
-					</div>
 
-				</div>
-			)
-			console.log(error);
 		}
-	};
+	}
+
+	// const handleReleaseDocument = async (e, documentId) => {
+	// 	e.preventDefault();
+
+	// 	try {
+	// 		const data = {
+	// 			ApproverName: ReleaserName,
+	// 			Remark,
+	// 			decision: true,
+	// 		};
+
+	// 		const res = await fetch(`http://localhost:7000/document/releaseDocument	/${documentId}`, {
+	// 			method: 'PUT',
+	// 			headers: {
+	// 				'Content-Type': 'application/json',
+	// 			},
+	// 			body: JSON.stringify(data),
+	// 		});
+
+	// 		if (res.ok) {
+	// 			toast.open(
+	// 				<div className='flex gap-2 bg-green-500 text-white p-4 rounded-lg shadow-lg'>
+	// 					<LuAlertCircle size={55} />
+	// 					<div>
+	// 						<Typography variant='h4'>Success!</Typography>
+	// 						<Typography variant='paragraph'>Archived as Not Released</Typography>
+	// 					</div>
+
+	// 				</div>
+	// 			)
+	// 		}
+	// 	} catch (error) {
+	// 		toast.open(
+	// 			<div className='flex gap-2 bg-red-800 text-white p-4 rounded-lg shadow-lg'>
+	// 				<LuAlertCircle size={55} />
+	// 				<div>
+	// 					<Typography variant='h4'>Error!</Typography>
+	// 					<Typography variant='paragraph'>Archive Error</Typography>
+	// 				</div>
+
+	// 			</div>
+	// 		)
+	// 		console.log(error);
+	// 	}
+	// };
 
 	const handleRejectDocument = async (e, documentId) => {
 		e.preventDefault();
