@@ -5,6 +5,9 @@ import {
   DocumentChartBarIcon,
   DocumentMagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
+
+import { HomeIcon, BellIcon } from "@heroicons/react/24/solid";
+
 import {
   PDFDownloadLink,
   Document,
@@ -25,10 +28,22 @@ import {
   CardHeader,
   Input,
   Typography,
+  Button,
   CardBody,
   Chip,
   CardFooter,
-  Button,
+  Tooltip,
+  Dialog,
+  DialogHeader,
+  Timeline,
+  Tabs,
+  Tab,
+  TabsHeader,
+  TimelineItem,
+  TimelineConnector,
+  TimelineHeader,
+  TimelineIcon,
+  TimelineBody,
 } from "@material-tailwind/react";
 
 import { format } from 'date-fns'
@@ -48,6 +63,7 @@ import {
 import axios from "axios";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import { BsCardChecklist } from "react-icons/bs";
 
 const TABS = [
   {
@@ -78,6 +94,8 @@ const ArchivePage = () => {
   const [tableRows, setTableRows] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredTableRows, setFilteredTableRows] = useState([]);
+  const [isTimelineDialogOpen, setIsTimelineDialogOpen] = useState(false);
+  const [selectedDocument, setSelectedDocument] = useState(false);
 
   useEffect(() => {
     const fetchTableRows = async () => {
@@ -106,6 +124,12 @@ const ArchivePage = () => {
     fetchTableRows();
   }, [store]);
 
+  const handleTimelineClick = (index) => {
+    const selectedDocument = tableRows[index];
+    setSelectedDocument(selectedDocument);
+    setIsTimelineDialogOpen(!isTimelineDialogOpen);
+  };
+
   const handleSearch = (e) => {
     const query = e.target.value;
     setSearchQuery(query);
@@ -132,6 +156,207 @@ const ArchivePage = () => {
 
   return (
     <Card className="h-screen w-screen rounded-none bg-white">
+
+      <Dialog
+        size="md"
+        open={isTimelineDialogOpen}
+        handler={setIsTimelineDialogOpen}
+        className="bg-white shadow-none"
+      >
+        <Card className="mx-auto w-full">
+          <CardHeader className="mb-4 grid h-16 place-items-center bg-indigo-800">
+            <Typography variant="h4" className="text-white">
+              Document Tracking
+            </Typography>
+          </CardHeader>
+          <CardBody className="flex flex-col h-96 overflow-y-scroll">
+            {selectedDocument && (
+              <Timeline>
+                <TimelineItem>
+                  <TimelineConnector />
+                  <TimelineHeader>
+                    <TimelineIcon className="p-2">
+                      <HomeIcon className="h-4 w-4" />
+                    </TimelineIcon>
+                    <Typography variant="h6" color="blue-gray">
+                      {selectedDocument.uploaderDesignation}{" "}
+                      {selectedDocument.documentType}
+                    </Typography>
+                  </TimelineHeader>
+                  <TimelineBody className="pb-8">
+                    <Typography
+                      color="gray"
+                      className="font-normal text-sm text-gray-600"
+                    >
+                      Date Uploaded:{" "}
+                      {selectedDocument.createdAt
+                        ? format(
+                          new Date(selectedDocument.createdAt),
+                          "yyyy-MM-dd"
+                        )
+                        : "Waiting"}{" "}
+                      <br />
+                      Uploaded By:{" "}
+                      {selectedDocument.uploaderName
+                        ? selectedDocument.uploaderName
+                        : "Pending"}{" "}
+                      <br />
+                      Remarks:{" "}
+                      {selectedDocument.remarks
+                        ? selectedDocument.remarks
+                        : ""}
+                    </Typography>
+                  </TimelineBody>
+                </TimelineItem>
+                <TimelineItem>
+                  <TimelineConnector />
+                  <TimelineHeader>
+                    <TimelineIcon className="p-2">
+                      <BellIcon className="h-4 w-4" />
+                    </TimelineIcon>
+                    <Typography variant="h6" color="blue-gray">
+                      {selectedDocument.collegeName} Dean
+                    </Typography>
+                  </TimelineHeader>
+                  <TimelineBody className="pb-8">
+                    <Typography
+                      color="gray"
+                      className="font-normal text-sm text-gray-600"
+                    >
+                      Date Approved:{" "}
+                      {selectedDocument.deanEndorsementDate
+                        ? format(
+                          new Date(selectedDocument.deanEndorsementDate),
+                          "yyyy-MM-dd"
+                        )
+                        : "Waiting"}{" "}
+                      <br />
+                      Approved By:{" "}
+                      {selectedDocument.deanName
+                        ? selectedDocument.deanName
+                        : "Pending"}{" "}
+                      <br />
+                      Remarks:{" "}
+                      {selectedDocument.deanRemarks
+                        ? selectedDocument.deanRemarks
+                        : ""}
+                    </Typography>
+                  </TimelineBody>
+                </TimelineItem>
+                <TimelineItem>
+                  <TimelineConnector />
+                  <TimelineHeader>
+                    <TimelineIcon className="p-2">
+                      <BellIcon className="h-4 w-4" />
+                    </TimelineIcon>
+                    <Typography variant="h6" color="blue-gray">
+                      Office of Vice Chancellor for Academic Affairs
+                    </Typography>
+                  </TimelineHeader>
+                  <TimelineBody className="pb-8">
+                    <Typography
+                      color="gray"
+                      className="font-normal text-sm text-gray-600"
+                    >
+                      Date Endorsed:{" "}
+                      {selectedDocument.endorsementDate
+                        ? format(
+                          new Date(selectedDocument.endorsementDate),
+                          "yyyy-MM-dd"
+                        )
+                        : `Waiting for ${selectedDocument.collegeName} Dean Endorsement`}{" "}
+                      <br />
+                      Endorsed By:{" "}
+                      {selectedDocument.endorserName
+                        ? selectedDocument.endorserName
+                        : "Pending"}{" "}
+                      <br />
+                      Remarks:{" "}
+                      {selectedDocument.EndorserRemarks
+                        ? selectedDocument.EndorserRemarks
+                        : ""}
+                    </Typography>
+                  </TimelineBody>
+                </TimelineItem>
+                <TimelineItem>
+                  <TimelineConnector />
+                  <TimelineHeader>
+                    <TimelineIcon className="p-2">
+                      <BellIcon className="h-4 w-4" />
+                    </TimelineIcon>
+                    <Typography variant="h6" color="blue-gray">
+                      Office of the President
+                    </Typography>
+                  </TimelineHeader>
+                  <TimelineBody className="pb-8">
+                    <Typography
+                      color="gray"
+                      className="font-normal text-sm text-gray-600"
+                    >
+                      Final Approval Date:{" "}
+                      {selectedDocument.approvalDate
+                        ? format(
+                          new Date(selectedDocument.approvalDate),
+                          "yyyy-MM-dd"
+                        )
+                        : "Waiting for OVCAA Endorsement"}{" "}
+                      <br />
+                      Approved By:{" "}
+                      {selectedDocument.approverName
+                        ? selectedDocument.approverName
+                        : "Pending"}{" "}
+                      <br />
+                      Remarks:{" "}
+                      {selectedDocument.EndorserRemarks
+                        ? selectedDocument.remarks
+                        : ""}
+                    </Typography>
+                  </TimelineBody>
+                </TimelineItem>
+                <TimelineItem>
+                  <TimelineHeader>
+                    <TimelineIcon className="p-2">
+                      <BellIcon className="h-4 w-4" />
+                    </TimelineIcon>
+                    <Typography variant="h6" color="blue-gray">
+                      Record Management Office
+                    </Typography>
+                  </TimelineHeader>
+                  <TimelineBody className="pb-8">
+                    <Typography
+                      color="gray"
+                      className="font-normal text-sm text-gray-600"
+                    >
+                      Release Date:{" "}
+                      {selectedDocument.releaseDate
+                        ? format(
+                          new Date(selectedDocument.releaseDate),
+                          "yyyy-MM-dd"
+                        )
+                        : "Waiting for Office of the President Approval"}{" "}
+                      <br />
+                      {/* Released By: {selectedDocument.opApproverName ? selectedDocument.opApproverName : 'Pending'} <br />
+												Remarks: {selectedDocument.EndorserRemarks ? selectedDocument.remarks : ''} */}
+                    </Typography>
+                  </TimelineBody>
+                </TimelineItem>
+              </Timeline>
+            )}
+          </CardBody>
+          <CardFooter className="flex border bg-indigo-50/50 rounded-lg p-1 w-full mx-auto">
+            <Button
+              className="flex mx-auto hover:scale-105"
+              variant="text"
+              size="md"
+              onClick={handleTimelineClick}
+            >
+              Close
+            </Button>
+          </CardFooter>
+        </Card>
+      </Dialog>
+
+
       <CardHeader
         floated={false}
         shadow={false}
@@ -344,6 +569,10 @@ const ArchivePage = () => {
                             )
                           }
                         </PDFDownloadLink>
+                        <BsCardChecklist
+                          size={20}
+                          onClick={() => handleTimelineClick(index)}
+                        />
 
                       </div>
                     </td>
@@ -355,7 +584,7 @@ const ArchivePage = () => {
         </table>
       </CardBody>
       <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4"></CardFooter>
-    </Card>
+    </Card >
   );
 };
 
