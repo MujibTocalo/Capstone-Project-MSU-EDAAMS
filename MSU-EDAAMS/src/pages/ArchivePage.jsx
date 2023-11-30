@@ -416,6 +416,12 @@ const ArchivePage = () => {
                   uploaderSignature,
                   content,
                   uploaderDesignation,
+                  approverHeader,
+                  approverSubject,
+                  approverContent,
+                  approverName,
+                  approverDesignation,
+                  approverSignature
                 },
                 index
               ) => {
@@ -531,25 +537,25 @@ const ArchivePage = () => {
                                   Control No.{" "}
                                   {controlNumber + " - " + collegeName}
                                 </Text>
-                                <Text style={styles.documentDetailText}>
+                                <Text style={styles.documentDate}>
                                   Date:{" "}
                                   {format(new Date(createdAt), "yyyy-MM-dd")}
                                 </Text>
                                 <Text style={styles.headerText}>
-                                  To: {header}
+                                  To: {approverHeader}
                                 </Text>
                                 <Text style={styles.subjectText}>
-                                  Subject: {subject}
+                                  Subject: {approverSubject}
                                 </Text>
                                 {/* <Text style={styles.content}> {convertHtmlToText(content)} </Text> */}
-                                <Text style={styles.content}> {content} </Text>
+                                <Text style={styles.content}> {approverContent} </Text>
                                 <Image
-                                  src={`http://localhost:7000${uploaderSignature}`}
+                                  src={`http://localhost:7000${approverSignature}`}
                                   style={styles.signature}
                                 />
-                                <Text style={styles.name}>{uploaderName}</Text>
+                                <Text style={styles.name}>{approverName}</Text>
                                 <Text style={styles.designation}>
-                                  {uploaderDesignation}
+                                  {approverDesignation}
                                 </Text>
                                 <View style={styles.footer}>
                                   <Text>

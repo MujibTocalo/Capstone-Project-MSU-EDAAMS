@@ -4,33 +4,40 @@ const styles = StyleSheet.create({
   page: {
     flexDirection: "column",
     justifyContent: "flex-start",
-    marginBottom: 50,
 
   },
   documentDetailText: {
     fontSize: 11.5,
-    marginTop: 10,
+    marginTop: 25,
     marginLeft: 20,
     marginBottom: 5,
     fontWeight: "medium",
+    flexDirection: 'column'
+  },
+  documentDate: {
+    fontSize: 11.5,
+    marginLeft: 20,
+    marginBottom: 5,
+    fontWeight: "medium",
+    flexDirection: 'column'
   },
   headerText: {
     fontSize: 11.5,
-    textIndent: 1,
+    // textIndent: 10,
     lineHeight: 2,
     marginLeft: 20,
     marginTop: 10,
     marginRight: 10,
     marginBottom: 5,
-    fontWeight: "semibold",
+    fontWeight: "bold",
     paddingRight: 20,
     textAlign: "justify",
   },
   subjectText: {
     fontSize: 11.5,
-    textIndent: 1,
+    // textIndent: 10,
     lineHeight: 2,
-    fontWeight: "semibold",
+    fontWeight: "bold",
     marginLeft: 20,
     marginRight: 10,
     marginBottom: 5,
