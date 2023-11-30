@@ -87,7 +87,10 @@ const MainRoutes = () => {
             <Route path="/createDocument" element={<CreateDocument />} />
             <Route path="/newCreateDocument" element={<NewCreateDocument />} />
             <Route path="/approvedocument" element={<ApproveDocument />} />
-            <Route path="/deanEndorsement" element={<DeanEndorsementPage />} />
+            <Route
+              path="/deanEndorsement"
+              element={
+                (userType === 'Approver - Dean' || userType === 'Administrator') ? (<DeanEndorsementPage />) : (<Navigate to='/restricted' />)} />
             {/* <Route path="/endorsedocument" element={<EndorseDocument />} /> */}
 
             <Route
