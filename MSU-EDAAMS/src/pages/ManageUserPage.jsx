@@ -584,7 +584,7 @@ const ManageUsers = () => {
                         <Typography
                           variant="small"
                           color="blue-gray"
-                          className="font-normal opacity-70"
+                          className="font-normal opacity-50"
                         >
                           ID: {_id}
                         </Typography>

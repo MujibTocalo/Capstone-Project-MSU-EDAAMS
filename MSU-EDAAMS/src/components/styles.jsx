@@ -4,7 +4,8 @@ const styles = StyleSheet.create({
   page: {
     flexDirection: "column",
     justifyContent: "flex-start",
-    margin: 5,
+    marginBottom: 50,
+
   },
   documentDetailText: {
     fontSize: 11.5,
@@ -21,7 +22,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginRight: 10,
     marginBottom: 5,
-    fontWeight: "medium",
+    fontWeight: "semibold",
     paddingRight: 20,
     textAlign: "justify",
   },
@@ -29,7 +30,7 @@ const styles = StyleSheet.create({
     fontSize: 11.5,
     textIndent: 1,
     lineHeight: 2,
-    fontWeight: "medium",
+    fontWeight: "semibold",
     marginLeft: 20,
     marginRight: 10,
     marginBottom: 5,
@@ -40,10 +41,13 @@ const styles = StyleSheet.create({
   content: {
     fontSize: 11,
     marginRight: 10,
+    textIndent: 20,
+    textAlign: 'justify',
     marginTop: 10,
+    lineHeight: 2,
     paddingRight: 20,
     marginLeft: 30,
-    textAlign: "justify",
+    pageBreak: 'auto'
   },
   signature: {
     width: 100,
@@ -74,7 +78,7 @@ const styles = StyleSheet.create({
     fontSize: 10,
   },
   ImageHeader: {
-    width: "98%",
+    width: "100%",
     height: 100,
   },
 });

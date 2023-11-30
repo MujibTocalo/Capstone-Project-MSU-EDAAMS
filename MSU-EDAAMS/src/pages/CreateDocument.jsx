@@ -65,9 +65,9 @@ const CreateDocument = () => {
   const handleSubject = (e) => {
     setSubject(e.target.value);
   };
-  // const handleContent = (e) => {
-  //   setContent(e.target.value);
-  // };
+  const handleContent = (e) => {
+    setContent(e.target.value);
+  };
 
 
   const handleSubmitAndOpen = () => {
@@ -186,7 +186,7 @@ const CreateDocument = () => {
 
 
   return (
-    <div className="flex flex-col p-10 gap-1.5 border shadow-xl rounded-lg bg-white overflow-y-scroll">
+    <div className="flex flex-col p-10 gap-1.5 border shadow-xl rounded-lg bg-white w-screen overflow-y-scroll">
       <Typography variant='h3' className=' flex font-medium mb-4 justify-center'>Create Document</Typography>
       <div className='flex gap-14'>
         <Select
@@ -251,16 +251,18 @@ const CreateDocument = () => {
         />
       </div>
       <div>
-        {/* <Textarea
+        <Textarea
           color='cyan'
-          label="Content" value={content} onChange={handleContent} /> */}
-        <ReactQuill
+          label="Content" value={content}
+          onChange={handleContent}
+          className="h-[75vh]" />
+        {/* <ReactQuill
           value={content}
           theme="snow"
           onChange={setContent}
           modules={quillModules}
           formats={quillFormats}
-        />
+        /> */}
       </div>
       <div className='flex mx-auto mt-2 hover:scale-105'>
         <Button variant='outlined' onClick={handleOpen} size='sm'

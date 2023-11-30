@@ -5,8 +5,8 @@ import DocumentApproverDetail from './DocumentApproverDetail'
 
 import ReactQuill from 'react-quill'
 import EditorToolbar, { modules, formats } from '../../components/EditorToolbar'
-import "react-quill/dist/quill.snow.css";
-import '../../components/TextEditor.css';
+import 'react-quill/dist/quill.snow.css'
+import '../../components/TextEditor.css'
 import { LuAlertCircle } from "react-icons/lu";
 
 import { io } from "socket.io-client";
@@ -311,16 +311,17 @@ const DeanEndorsementPage = () => {
 													onChange={onSubject}
 												/>
 											</div>
-											<EditorToolbar toolbarId={'t1'} />
-											<ReactQuill
-												theme="snow"
-												value={documentDetail.content}
-												onChange={onContent}
-												placeholder={"Write the Document Content Here..."}
-												modules={modules('t1')}
-												formats={formats}
-
-											/>
+											<div>
+												<EditorToolbar toolbarId={'t2'} />
+												<ReactQuill
+													theme='snow'
+													value={documentDetail.content}
+													onChange={onContent}
+													placeholder={"Write the Document Content Here..."}
+													modules={modules('t2')}
+													formats={formats}
+												/>
+											</div>
 										</div>
 									</DialogBody>
 									<DialogFooter className="space-x-2">

@@ -28,6 +28,7 @@ import {
   CardBody,
   Chip,
   CardFooter,
+  Button,
 } from "@material-tailwind/react";
 
 import { format } from 'date-fns'
@@ -120,7 +121,9 @@ const ArchivePage = () => {
 
   const convertHtmlToText = (htmlContent) => {
     // Specify options if needed, see the html-to-text documentation for details
-    const options = {};
+    const options = {
+      wordwrap: 130
+    };
     return convert(htmlContent, options);
   };
 
@@ -302,7 +305,8 @@ const ArchivePage = () => {
                                 <Text style={styles.subjectText}>
                                   Subject: {subject}
                                 </Text>
-                                <Text style={styles.content}> {convertHtmlToText(content)} </Text>
+                                {/* <Text style={styles.content}> {convertHtmlToText(content)} </Text> */}
+                                <Text style={styles.content}> {content} </Text>
                                 <Image
                                   src={`http://localhost:7000${uploaderSignature}`}
                                   style={styles.signature}
@@ -333,13 +337,14 @@ const ArchivePage = () => {
                             ) : error ? (
                               "Error generating PDF"
                             ) : (
-                              <LuDownload />
+                              <Button
+                                size="md"
+                                color="indigo"
+                              >Download</Button>
                             )
                           }
                         </PDFDownloadLink>
-                        <LuEdit />
-                        <LuHistory />
-                        <LuTrash />
+
                       </div>
                     </td>
                   </tr>
