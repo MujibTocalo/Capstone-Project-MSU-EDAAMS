@@ -56,8 +56,11 @@ const DocumentCompleteDetail = ({ document }) => {
 								<Typography variant='paragraph'>Subject: </Typography>
 								<Typography variant='paragraph' className='font-semibold' style={{ textIndent: '1em' }}>{document.endorsementSubject}</Typography>
 							</div>
+							<div className="flex flex-col border border-gray-400 p-2 my-2 shadow-md">
+								<Typography variant='paragraph' className='font-medium text-justify' style={{ textIndent: '3em' }}>{document.endrosementContent}</Typography>
+							</div>
 						</div>
-						<ReactQuill
+						{/* <ReactQuill
 							value={document.endorsementContent}
 							readOnly={true}
 							modules={{
@@ -65,7 +68,7 @@ const DocumentCompleteDetail = ({ document }) => {
 							}}
 							className="flex border-none shadow-md"
 							style={{ textIndent: '1em' }}
-						/>
+						/> */}
 						<div className="flex flex-row mr-12 justify-end">
 							<div className="flex flex-col">
 								{endorserSignature && (
@@ -94,8 +97,11 @@ const DocumentCompleteDetail = ({ document }) => {
 								<Typography variant='paragraph'>Subject: </Typography>
 								<Typography variant='paragraph' className='font-semibold' style={{ textIndent: '1em' }}>{document.deanEndorsementSubject}</Typography>
 							</div>
+							<div className="flex flex-col border border-gray-400 p-2 my-2 shadow-md">
+								<Typography variant='paragraph' className='font-medium text-justify' style={{ textIndent: '3em' }}>{document.deanEndorsementContent}</Typography>
+							</div>
 						</div>
-						<ReactQuill
+						{/* <ReactQuill
 							theme="snow"
 							value={document.deanEndorsementContent}
 							readOnly={true}
@@ -104,7 +110,7 @@ const DocumentCompleteDetail = ({ document }) => {
 							}}
 							className="flex border-none shadow-md"
 							style={{ textIndent: '1em' }}
-						/>
+						/> */}
 						<div className="flex flex-row mr-12 justify-end">
 							<div className="flex flex-col">
 								{deanSignature && (
@@ -131,11 +137,11 @@ const DocumentCompleteDetail = ({ document }) => {
 							<Typography variant='paragraph'>Subject: </Typography>
 							<Typography variant='paragraph' className='font-semibold' style={{ textIndent: '1em' }}>{document.subject}</Typography>
 						</div>
-						{/* <div className="flex flex-col border border-gray-400 p-2 my-2 shadow-md">
+						<div className="flex flex-col border border-gray-400 p-2 my-2 shadow-md">
 							<Typography variant='paragraph' className='font-medium text-justify' style={{ textIndent: '3em' }}>{document.content}</Typography>
-						</div> */}
+						</div>
 					</div>
-					<ReactQuill
+					{/* <ReactQuill
 						value={document.content}
 						readOnly={true}
 						modules={{
@@ -143,7 +149,7 @@ const DocumentCompleteDetail = ({ document }) => {
 						}}
 						className="flex border-none shadow-md"
 						style={{ textIndent: '1em' }}
-					/>
+					/> */}
 				</div>
 
 				<div className="flex flex-row justify-end mr-12">
