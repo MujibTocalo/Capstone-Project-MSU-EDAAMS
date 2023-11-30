@@ -32,7 +32,7 @@ import { format } from "date-fns";
 
 import { useNavigate } from "react-router-dom";
 import documentsStore from "../config/documentsStore";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import axios from "axios";
 import { BiDetail, BiEdit, BiTrash } from "react-icons/bi";
@@ -246,9 +246,9 @@ export const DocumentsLists = () => {
                         Date Uploaded:{" "}
                         {selectedDocument.createdAt
                           ? format(
-                              new Date(selectedDocument.createdAt),
-                              "yyyy-MM-dd"
-                            )
+                            new Date(selectedDocument.createdAt),
+                            "yyyy-MM-dd"
+                          )
                           : "Waiting"}{" "}
                         <br />
                         Uploaded By:{" "}
@@ -281,14 +281,10 @@ export const DocumentsLists = () => {
                         Date Approved:{" "}
                         {selectedDocument.deanEndorsementDate
                           ? format(
-                              new Date(selectedDocument.deanEndorsementDate),
-                              "yyyy-MM-dd"
-                            )
-                          : "Waiting"}{" "}
                             new Date(selectedDocument.deanEndorsementDate),
                             "yyyy-MM-dd"
                           )
-                          : "Processing"}{" "}
+                          : "Waiting"}{" "}
                         <br />
                         Approved By:{" "}
                         {selectedDocument.deanName
@@ -320,9 +316,9 @@ export const DocumentsLists = () => {
                         Date Endorsed:{" "}
                         {selectedDocument.endorsementDate
                           ? format(
-                              new Date(selectedDocument.endorsementDate),
-                              "yyyy-MM-dd"
-                            )
+                            new Date(selectedDocument.endorsementDate),
+                            "yyyy-MM-dd"
+                          )
                           : `Waiting for ${selectedDocument.collegeName} Dean Endorsement`}{" "}
                         <br />
                         Endorsed By:{" "}
@@ -355,9 +351,9 @@ export const DocumentsLists = () => {
                         Final Approval Date:{" "}
                         {selectedDocument.opApprovalDate
                           ? format(
-                              new Date(selectedDocument.opApprovalDate),
-                              "yyyy-MM-dd"
-                            )
+                            new Date(selectedDocument.opApprovalDate),
+                            "yyyy-MM-dd"
+                          )
                           : "Waiting for OVCAA Endorsement"}{" "}
                         <br />
                         Approved By:{" "}
@@ -389,9 +385,9 @@ export const DocumentsLists = () => {
                         Release Date:{" "}
                         {selectedDocument.releaseDate
                           ? format(
-                              new Date(selectedDocument.releaseDate),
-                              "yyyy-MM-dd"
-                            )
+                            new Date(selectedDocument.releaseDate),
+                            "yyyy-MM-dd"
+                          )
                           : "Waiting for Office of the President Approval"}{" "}
                         <br />
                         {/* Released By: {selectedDocument.opApproverName ? selectedDocument.opApproverName : 'Pending'} <br />
@@ -569,23 +565,23 @@ export const DocumentsLists = () => {
                             documentStatus === "Dean Approved"
                               ? "Dean Approved"
                               : documentStatus === "Dean Endorsed"
-                              ? "Dean Approved"
-                              : documentStatus === "Endorsed"
-                              ? "OVCAA Approved"
-                              : documentStatus === "OP Approved"
-                              ? "OP Approved"
-                              : documentStatus === "Created"
-                              ? "Created"
-                              : documentStatus === "Pending"
-                              ? "Pending"
-                              : "Rejected"
+                                ? "Dean Approved"
+                                : documentStatus === "Endorsed"
+                                  ? "OVCAA Approved"
+                                  : documentStatus === "OP Approved"
+                                    ? "OP Approved"
+                                    : documentStatus === "Created"
+                                      ? "Created"
+                                      : documentStatus === "Pending"
+                                        ? "Pending"
+                                        : "Rejected"
                           }
                           color={
                             documentStatus === "Rejected"
                               ? "red"
                               : documentStatus === "Pending"
-                              ? "orange"
-                              : "green"
+                                ? "orange"
+                                : "green"
                           }
                         />
                       </div>
