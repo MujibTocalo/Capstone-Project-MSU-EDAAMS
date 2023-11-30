@@ -93,8 +93,10 @@ export const DocumentsLists = () => {
         const response = await axios.get("http://localhost:7000/document");
         const responseData = response.data;
         const documentArray = responseData.document;
-        const currentUserCollege = userDetail.office
-        const filteredDocuments = documentArray.filter(document => document.collegeName === currentUserCollege);
+        const currentUserCollege = userDetail.office;
+        const filteredDocuments = documentArray.filter(
+          (document) => document.collegeName === currentUserCollege
+        );
 
         const sortedDocuments = documentArray
           .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
@@ -232,8 +234,8 @@ export const DocumentsLists = () => {
                         <HomeIcon className="h-4 w-4" />
                       </TimelineIcon>
                       <Typography variant="h6" color="blue-gray">
-                        {selectedDocument.uploaderDesignation} {selectedDocument.documentType}
-
+                        {selectedDocument.uploaderDesignation}{" "}
+                        {selectedDocument.documentType}
                       </Typography>
                     </TimelineHeader>
                     <TimelineBody className="pb-8">
@@ -244,9 +246,9 @@ export const DocumentsLists = () => {
                         Date Uploaded:{" "}
                         {selectedDocument.createdAt
                           ? format(
-                            new Date(selectedDocument.createdAt),
-                            "yyyy-MM-dd"
-                          )
+                              new Date(selectedDocument.createdAt),
+                              "yyyy-MM-dd"
+                            )
                           : "Waiting"}{" "}
                         <br />
                         Uploaded By:{" "}
@@ -279,6 +281,10 @@ export const DocumentsLists = () => {
                         Date Approved:{" "}
                         {selectedDocument.deanEndorsementDate
                           ? format(
+                              new Date(selectedDocument.deanEndorsementDate),
+                              "yyyy-MM-dd"
+                            )
+                          : "Waiting"}{" "}
                             new Date(selectedDocument.deanEndorsementDate),
                             "yyyy-MM-dd"
                           )
@@ -314,9 +320,9 @@ export const DocumentsLists = () => {
                         Date Endorsed:{" "}
                         {selectedDocument.endorsementDate
                           ? format(
-                            new Date(selectedDocument.endorsementDate),
-                            "yyyy-MM-dd"
-                          )
+                              new Date(selectedDocument.endorsementDate),
+                              "yyyy-MM-dd"
+                            )
                           : `Waiting for ${selectedDocument.collegeName} Dean Endorsement`}{" "}
                         <br />
                         Endorsed By:{" "}
@@ -349,9 +355,9 @@ export const DocumentsLists = () => {
                         Final Approval Date:{" "}
                         {selectedDocument.opApprovalDate
                           ? format(
-                            new Date(selectedDocument.opApprovalDate),
-                            "yyyy-MM-dd"
-                          )
+                              new Date(selectedDocument.opApprovalDate),
+                              "yyyy-MM-dd"
+                            )
                           : "Waiting for OVCAA Endorsement"}{" "}
                         <br />
                         Approved By:{" "}
@@ -383,9 +389,9 @@ export const DocumentsLists = () => {
                         Release Date:{" "}
                         {selectedDocument.releaseDate
                           ? format(
-                            new Date(selectedDocument.releaseDate),
-                            "yyyy-MM-dd"
-                          )
+                              new Date(selectedDocument.releaseDate),
+                              "yyyy-MM-dd"
+                            )
                           : "Waiting for Office of the President Approval"}{" "}
                         <br />
                         {/* Released By: {selectedDocument.opApproverName ? selectedDocument.opApproverName : 'Pending'} <br />
@@ -427,12 +433,14 @@ export const DocumentsLists = () => {
             <div className="flex gap-2 -translate-x-12">
               <Button
                 className="flex gap-2 hover:scale-105"
-                color="indigo"
+                color="green"
                 onClick={handleCreateNewDocument}
               >
-                <HiOutlineDocumentAdd size={16} /> Add Document
+                <HiOutlineDocumentAdd size={16} /> Create Document
               </Button>
             </div>
+
+            {/* search bar */}
             <div className="w-screen -translate-x-12 md:w-72">
               <Input
                 label="Search by Uploader Detail"
@@ -455,8 +463,8 @@ export const DocumentsLists = () => {
           </Tabs> */}
         </div>
       </CardHeader>
-      <CardBody className="overflow-scroll px-0">
-        <table className="w-full min-w-max table-auto">
+      <CardBody className="overflow-scroll px-1 py-10">
+        <table className="min-w-max table-auto" style={{ width: "100%" }}>
           <thead>
             <tr>
               {TABLE_HEAD.map((head, index) => (
@@ -553,7 +561,7 @@ export const DocumentsLists = () => {
                       </div>
                     </td>
                     <td className={classes}>
-                      <div className="flex w-max">
+                      <div className="flex flex-row">
                         <Chip
                           variant="ghost"
                           size="md"
@@ -561,23 +569,23 @@ export const DocumentsLists = () => {
                             documentStatus === "Dean Approved"
                               ? "Dean Approved"
                               : documentStatus === "Dean Endorsed"
-                                ? "Dean Approved"
-                                : documentStatus === "Endorsed"
-                                  ? "OVCAA Approved"
-                                  : documentStatus === "OP Approved"
-                                    ? "OP Approved"
-                                    : documentStatus === "Created"
-                                      ? "Created"
-                                      : documentStatus === "Pending"
-                                        ? "Pending"
-                                        : "Rejected"
+                              ? "Dean Approved"
+                              : documentStatus === "Endorsed"
+                              ? "OVCAA Approved"
+                              : documentStatus === "OP Approved"
+                              ? "OP Approved"
+                              : documentStatus === "Created"
+                              ? "Created"
+                              : documentStatus === "Pending"
+                              ? "Pending"
+                              : "Rejected"
                           }
                           color={
                             documentStatus === "Rejected"
                               ? "red"
                               : documentStatus === "Pending"
-                                ? "orange"
-                                : "green"
+                              ? "orange"
+                              : "green"
                           }
                         />
                       </div>

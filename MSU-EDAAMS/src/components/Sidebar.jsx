@@ -15,7 +15,7 @@ import { LuClipboardCheck } from 'react-icons/lu'
 const Sidebar = ({ isOpen, toggleSidebar }) => {
 
   const menus = [
-    { name: 'Dashboard', link: '/dashboard', icon: RiDashboardLine },
+    // { name: 'Dashboard', link: '/dashboard', icon: RiDashboardLine },
     { name: 'Documents', link: '/documents', icon: HiOutlineDocumentText },
     { name: 'Dean Endorsement', link: '/deanEndorsement', icon: LuClipboardCheck },
     { name: 'OVCAA Endorsement', link: '/ovcaaEndorsement', icon: RiAttachment2 },

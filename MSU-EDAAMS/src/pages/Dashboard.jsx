@@ -1,28 +1,43 @@
 // Import necessary components and icons
 import React from "react";
-import PropTypes from 'prop-types';
-import ArrowDownIcon from '@heroicons/react/24/solid/ArrowDownIcon';
-import ArrowUpIcon from '@heroicons/react/24/solid/ArrowUpIcon';
-import CurrencyDollarIcon from '@heroicons/react/24/solid/CurrencyDollarIcon';
-import { Avatar, Card, CardContent, Stack, SvgIcon, Typography } from '@mui/material';
+import PropTypes from "prop-types";
+import ArrowDownIcon from "@heroicons/react/24/solid/ArrowDownIcon";
+import ArrowUpIcon from "@heroicons/react/24/solid/ArrowUpIcon";
+import CurrencyDollarIcon from "@heroicons/react/24/solid/CurrencyDollarIcon";
+import {
+  Avatar,
+  Card,
+  CardContent,
+  Stack,
+  SvgIcon,
+  Typography,
+} from "@mui/material";
 
 // Document component
 const Document = (props) => {
-  const { difference, positive = false, sx, value, category, initialCount } = props;
+  const {
+    difference,
+    positive = false,
+    sx,
+    value,
+    category,
+    initialCount,
+  } = props;
 
   return (
-    <Card sx={{ width: '250px', ...sx }}>
+    <Card sx={{ width: "300px", ...sx, mx: "auto" }}>
       <CardContent>
         <Stack
-          alignItems="flex-start"
+          alignItems="flex-center"
           direction="row"
           justifyContent="space-between"
-          spacing={3}
+          spacing={2}
         >
           <Stack spacing={1}>
             <Typography
               color="text.secondary"
               variant="overline"
+              sx={{ fontWeight: "600", fontSize: "12px" }}
             >
               MSU EDAAMS
             </Typography>
@@ -32,9 +47,9 @@ const Document = (props) => {
           </Stack>
           <Avatar
             sx={{
-              backgroundColor: 'error.main',
+              backgroundColor: "error.main",
               height: 56,
-              width: 56
+              width: 56,
             }}
           >
             {/* <SvgIcon>
@@ -43,21 +58,9 @@ const Document = (props) => {
           </Avatar>
         </Stack>
         {difference && (
-          <Stack
-            alignItems="center"
-            direction="row"
-            spacing={2}
-            sx={{ mt: 2 }}
-          >
-            <Stack
-              alignItems="center"
-              direction="row"
-              spacing={0.5}
-            >
-              <SvgIcon
-                color={positive ? 'success' : 'error'}
-                fontSize="small"
-              >
+          <Stack alignItems="center" direction="row" spacing={3} sx={{ mt: 1 }}>
+            <Stack alignItems="center" direction="row" spacing={0.5}>
+              <SvgIcon color={positive ? "success" : "error"} fontSize="small">
                 {/* {positive ? <ArrowUpIcon /> : <ArrowDownIcon />} */}
               </SvgIcon>
               {/* <Typography

@@ -26,6 +26,7 @@ import Notification from "../assets/notification.svg";
 import avatar from "../assets/profile icon.png";
 import Sidebar from "./Sidebar";
 import { TiThMenuOutline } from "react-icons/ti";
+import msulogo from "../assets/msulogo.png";
 
 const profileMenuItems = [
   {
@@ -107,7 +108,7 @@ const ProfileMenu = () => {
                   <Avatar
                     src={`http://localhost:7000${profileImage}`}
                     alt="tania andrew"
-                    className={`flex border border-blue-200 p-0.5`}
+                    className={`flex border border-white-300 p-0.5`}
                   />
                 )}
                 <ChevronDownIcon
@@ -145,7 +146,7 @@ const ProfileMenu = () => {
                 <Typography
                   as="span"
                   variant="small"
-                  className="font-normal"
+                  className="font-normal "
                   color={isLastItem ? "red" : "inherit"}
                 >
                   {label}
@@ -179,7 +180,6 @@ const ProfileMenu = () => {
                   className="hidden"
                 />
                 <div className="absolute bottom-0 right-0 opacity-0 group-hover:opacity-100 transition-opacity">
-                  {/* ... (camera icon) */}
                 </div>
               </div>
             </label>
@@ -198,13 +198,12 @@ const ProfileMenu = () => {
                 {userDetails.designation}
               </Typography>
             </div>
-            <Button color="red" className="" onClick={closeProfileDialog}>
-              Close
-            </Button>
+            <CardFooter className="flex flex-row justify-center mt-10">
+              <Button color="red" className="" onClick={closeProfileDialog}>
+                Close
+              </Button>
+            </CardFooter>
           </CardBody>
-          <CardFooter className="flex">
-            {/* ... (other card footer content) */}
-          </CardFooter>
         </Card>
       </Dialog>
     </div>
@@ -225,9 +224,13 @@ export const CustomNavbar = ({ setOpen }) => {
   });
 
   return (
-    <div className="flex w-screen items-center bg-[#5A5A5A] justify-between p-1">
+    <div className="flex max-w-screen items-center bg-indigo-500 justify-between p-1">
       <Typography className="flex flex-row gap-4 items-center ml-2 text-lg p-0.5 pr-3 text-center font-semibold text-white rounded-lg">
-        <TiThMenuOutline onClick={() => setOpen((prevOpen) => !prevOpen)} className="flex rounded-lg w-8 h-8 p-1 -translate-x-1.5 cursor-pointer hover:scale-110" />
+        <TiThMenuOutline onClick={() => setOpen((prevOpen) => !prevOpen)} className="flex rounded-lg w-8 h-8 p-1 -translate-x-2 cursor-pointer hover:scale-110" />
+        <img
+          src={msulogo}
+          alt="logo"
+          className="flex flex-row h-10" />
         MSU EDAAMS
       </Typography>
 

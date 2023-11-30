@@ -81,7 +81,7 @@ const MainRoutes = () => {
         <Sidebar isOpen={isSidebarOpen} toggleSidebar={!toggleSidebar} style={{ zIndex: 1, position: 'relative' }} />
         <div className="flex flex-col max-w-fit overflow-hidden flex-grow">
           <Routes>
-            <Route path="/dashboard" element={<Dashboard />} />
+            {/* <Route path="/dashboard" element={<Dashboard />} /> */}
             <Route path="/profilePage" element={<ProfilePage />} />
             <Route path="/documents" element={<DocumentsLists />} />
             <Route path="/createDocument" element={<CreateDocument />} />
