@@ -255,7 +255,7 @@ const CreateDocument = () => {
           color='cyan'
           label="Content" value={content}
           onChange={handleContent}
-          className="h-[75vh]" />
+          className="h-screen" />
         {/* <ReactQuill
           value={content}
           theme="snow"

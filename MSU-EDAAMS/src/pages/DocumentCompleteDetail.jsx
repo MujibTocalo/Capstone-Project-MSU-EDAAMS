@@ -43,11 +43,42 @@ const DocumentCompleteDetail = ({ document }) => {
 					</div>
 				</div>
 
+				{/* RMO DOCUMENT ACCESS */}
+				{(userAccess === 'Administrator' || userAccess === 'Releaser') && (
+					<div className="p-2">
+						<div className="gap-3.5">
+							<Typography className='text-center font-semibold bg-indigo-800 text-white p-1 mt-4 rounded-md shadow-lg'>{document.documentType} Endorsement By {document.approverDesignation + ', ' + document.approverName}</Typography>
+							<div className="flex flex-col border border-gray-400 p-2 my-2 shadow-md">
+								<Typography variant='paragraph'>To: </Typography>
+								<Typography variant='paragraph' className='font-semibold' style={{ textIndent: '1em' }}>{document.approverHeader}</Typography>
+							</div>
+							<div className="flex flex-col border border-gray-400 p-2 my-2 shadow-md">
+								<Typography variant='paragraph'>Subject: </Typography>
+								<Typography variant='paragraph' className='font-semibold' style={{ textIndent: '1em' }}>{document.approverSubject}</Typography>
+							</div>
+							<div className="flex flex-col border border-gray-400 p-2 my-2 shadow-md">
+								<Typography variant='paragraph' className='font-medium text-justify whitespace-break-spaces' style={{ textIndent: '3em', lineHeight: 2 }}>{document.approverContent}</Typography>
+							</div>
+						</div>
+						<div className="flex flex-row mr-12 justify-end">
+							<div className="flex flex-col">
+								{endorserSignature && (
+									<img className="flex mx-auto translate-y-8 w-24 h-24" src={`http://localhost:7000${endorserSignature}`} alt="signature" />
+								)}
+								<div className="text-center ">
+									<Typography variant='paragraph'><u>{document.approverName}</u></Typography>
+									<Typography variant='paragraph'>{document.approverDesignation}</Typography>
+								</div>
+							</div>
+						</div>
+					</div>
+				)}
+
 				{/* OFFICE OF THE PRESIDENT DOCUMENT ACCESS	 */}
 				{(userAccess === 'Approver - OP' || userAccess === 'Administrator') && (
 					<div className="p-2">
 						<div className="gap-3.5">
-							<Typography className='text-center font-semibold bg-indigo-800 text-white p-1 mt-4 rounded-md shadow-lg'>{document.documentType} Endorsement By {document.endorserDesignation + ', ' + document.endorserName}</Typography>
+							<Typography className='text-center font-semibold bg-indigo-800 text-white p-1 mt-4 rounded-md shadow-lg'>{document.documentType} Endorsement By {document.endorserDesignation + ', ' + document.endorserName} From OVCAA</Typography>
 							<div className="flex flex-col border border-gray-400 p-2 my-2 shadow-md">
 								<Typography variant='paragraph'>To: </Typography>
 								<Typography variant='paragraph' className='font-semibold' style={{ textIndent: '1em' }}>{document.endorsementHeader}</Typography>
@@ -57,18 +88,9 @@ const DocumentCompleteDetail = ({ document }) => {
 								<Typography variant='paragraph' className='font-semibold' style={{ textIndent: '1em' }}>{document.endorsementSubject}</Typography>
 							</div>
 							<div className="flex flex-col border border-gray-400 p-2 my-2 shadow-md">
-								<Typography variant='paragraph' className='font-medium text-justify' style={{ textIndent: '3em' }}>{document.endrosementContent}</Typography>
+								<Typography variant='paragraph' className='font-medium text-justify whitespace-break-spaces' style={{ textIndent: '3em', lineHeight: 2 }}>{document.endorsementContent}</Typography>
 							</div>
 						</div>
-						{/* <ReactQuill
-							value={document.endorsementContent}
-							readOnly={true}
-							modules={{
-								toolbar: false,
-							}}
-							className="flex border-none shadow-md"
-							style={{ textIndent: '1em' }}
-						/> */}
 						<div className="flex flex-row mr-12 justify-end">
 							<div className="flex flex-col">
 								{endorserSignature && (
@@ -80,7 +102,7 @@ const DocumentCompleteDetail = ({ document }) => {
 								</div>
 							</div>
 						</div>
-						<Typography className='text-center font-semibold bg-indigo-800 text-white p-1 mt-4 rounded-md shadow-lg'>Dean Endorsement Document By {document.endorserDesignation + ', ' + document.endorserName}</Typography>
+						<Typography className='text-center font-semibold bg-indigo-800 text-white p-1 mt-4 rounded-md shadow-lg'>Dean Endorsement Document By {document.deanDesignation + ', ' + document.deanName}</Typography>
 					</div>
 				)}
 
@@ -98,19 +120,9 @@ const DocumentCompleteDetail = ({ document }) => {
 								<Typography variant='paragraph' className='font-semibold' style={{ textIndent: '1em' }}>{document.deanEndorsementSubject}</Typography>
 							</div>
 							<div className="flex flex-col border border-gray-400 p-2 my-2 shadow-md">
-								<Typography variant='paragraph' className='font-medium text-justify' style={{ textIndent: '3em' }}>{document.deanEndorsementContent}</Typography>
+								<Typography variant='paragraph' className='font-medium text-justify whitespace-break-spaces' style={{ textIndent: '3em', lineHeight: 2 }}>{document.deanEndorsementContent}</Typography>
 							</div>
 						</div>
-						{/* <ReactQuill
-							theme="snow"
-							value={document.deanEndorsementContent}
-							readOnly={true}
-							modules={{
-								toolbar: false,
-							}}
-							className="flex border-none shadow-md"
-							style={{ textIndent: '1em' }}
-						/> */}
 						<div className="flex flex-row mr-12 justify-end">
 							<div className="flex flex-col">
 								{deanSignature && (
@@ -138,18 +150,9 @@ const DocumentCompleteDetail = ({ document }) => {
 							<Typography variant='paragraph' className='font-semibold' style={{ textIndent: '1em' }}>{document.subject}</Typography>
 						</div>
 						<div className="flex flex-col border border-gray-400 p-2 my-2 shadow-md">
-							<Typography variant='paragraph' className='font-medium text-justify' style={{ textIndent: '3em' }}>{document.content}</Typography>
+							<Typography variant='paragraph' className='font-medium text-justify whitespace-break-spaces' style={{ textIndent: '3em', lineHeight: 2 }}>{document.content}</Typography>
 						</div>
 					</div>
-					{/* <ReactQuill
-						value={document.content}
-						readOnly={true}
-						modules={{
-							toolbar: false,
-						}}
-						className="flex border-none shadow-md"
-						style={{ textIndent: '1em' }}
-					/> */}
 				</div>
 
 				<div className="flex flex-row justify-end mr-12">

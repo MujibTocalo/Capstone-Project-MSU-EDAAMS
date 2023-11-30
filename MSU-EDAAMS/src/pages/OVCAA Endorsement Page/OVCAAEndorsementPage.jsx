@@ -204,10 +204,10 @@ const OVCAAEndorsementPage = () => {
 		})
 	}
 
-	const onContent = (value) => {
+	const onContent = (e) => {
 		setDocumentDetail({
 			...documentDetail,
-			content: value
+			content: e.target.value
 		})
 	}
 
@@ -311,17 +311,14 @@ const OVCAAEndorsementPage = () => {
 													value={documentDetail.subject}
 													onChange={onSubject}
 												/>
+												<Textarea
+													color='cyan'
+													label="Content"
+													value={documentDetail.content}
+													onChange={onContent}
+													className="flex h-screen"
+												/>
 											</div>
-											<EditorToolbar toolbarId={'t1'} />
-											<ReactQuill
-												theme="snow"
-												value={documentDetail.content}
-												onChange={onContent}
-												placeholder={"Write the Document Content Here..."}
-												modules={modules('t1')}
-												formats={formats}
-
-											/>
 										</div>
 									</DialogBody>
 									<DialogFooter className="space-x-2">

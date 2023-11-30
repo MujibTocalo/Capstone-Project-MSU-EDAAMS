@@ -140,7 +140,7 @@ export const DocumentsLists = () => {
   };
 
   const handleCreateNewDocument = () => {
-    navigate("/newCreateDocument");
+    navigate("/createDocument");
   };
 
   const handleSearch = (e) => {
@@ -349,16 +349,16 @@ export const DocumentsLists = () => {
                         className="font-normal text-sm text-gray-600"
                       >
                         Final Approval Date:{" "}
-                        {selectedDocument.opApprovalDate
+                        {selectedDocument.approvalDate
                           ? format(
-                            new Date(selectedDocument.opApprovalDate),
+                            new Date(selectedDocument.approvalDate),
                             "yyyy-MM-dd"
                           )
                           : "Waiting for OVCAA Endorsement"}{" "}
                         <br />
                         Approved By:{" "}
-                        {selectedDocument.opApproverName
-                          ? selectedDocument.opApproverName
+                        {selectedDocument.approverName
+                          ? selectedDocument.approverName
                           : "Pending"}{" "}
                         <br />
                         Remarks:{" "}
@@ -596,14 +596,13 @@ export const DocumentsLists = () => {
                       </Typography>
                     </td>
                     <td className={classes}>
-                      <div className="flex justify-center gap-1 cursor-pointer">
+                      <div className="flex flex-row mx-auto gap-1 cursor-pointer">
+
                         <BsCardChecklist
                           size={20}
                           onClick={() => handleTimelineClick(index)}
                         />
 
-                        <BiDetail size={20} />
-                        <BiEdit size={20} />
                         {userAccess === 'Uploader' && documentStatus === 'Pending' && (
                           <BiTrash onClick={() => showConfirmationModal(_id)} size={20} />
                         )}

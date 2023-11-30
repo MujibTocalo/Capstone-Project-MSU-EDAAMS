@@ -136,7 +136,7 @@ const OpApprovalPage = () => {
 	const RejectDocument = async (e, documentId) => {
 		e.preventDefault()
 		try {
-			axios.put(`http://localhost:7000/document/ovcaaendorsement/${documentId}`, {
+			axios.put(`http://localhost:7000/document/approveDocument/${documentId}`, {
 				name: userDetail.firstName + ' ' + userDetail.lastName,
 				designation: documentDetail.designation,
 				signature: null,
@@ -207,10 +207,10 @@ const OpApprovalPage = () => {
 		})
 	}
 
-	const onContent = (value) => {
+	const onContent = (e) => {
 		setDocumentDetail({
 			...documentDetail,
-			content: value
+			content: e.target.value
 		})
 	}
 
@@ -309,17 +309,15 @@ const OpApprovalPage = () => {
 													value={documentDetail.subject}
 													onChange={onSubject}
 												/>
+												<Textarea
+													color='cyan'
+													label="Content"
+													value={documentDetail.content}
+													onChange={onContent}
+													className="flex h-screen"
+												/>
 											</div>
-											<EditorToolbar toolbarId={'t1'} />
-											<ReactQuill
-												theme="snow"
-												value={documentDetail.content}
-												onChange={onContent}
-												placeholder={"Write the Document Content Here..."}
-												modules={modules('t1')}
-												formats={formats}
 
-											/>
 										</div>
 									</DialogBody>
 									<DialogFooter className="space-x-2">

@@ -238,10 +238,10 @@ const DeanEndorsementPage = () => {
 		})
 	}
 
-	const onContent = (value) => {
+	const onContent = (e) => {
 		setDocumentDetail({
 			...documentDetail,
-			content: value
+			content: e.target.value
 		})
 	}
 
@@ -251,8 +251,6 @@ const DeanEndorsementPage = () => {
 			content: value
 		})
 	}
-
-
 
 	return (
 		<div className='grid grid-cols-4 w-screen overflow-y-scroll'>
@@ -310,16 +308,12 @@ const DeanEndorsementPage = () => {
 													value={documentDetail.subject}
 													onChange={onSubject}
 												/>
-											</div>
-											<div>
-												<EditorToolbar toolbarId={'t2'} />
-												<ReactQuill
-													theme='snow'
+												<Textarea
+													color='cyan'
+													label="Content"
 													value={documentDetail.content}
 													onChange={onContent}
-													placeholder={"Write the Document Content Here..."}
-													modules={modules('t2')}
-													formats={formats}
+													className="flex h-screen"
 												/>
 											</div>
 										</div>
