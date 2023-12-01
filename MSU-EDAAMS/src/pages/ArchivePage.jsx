@@ -6,8 +6,6 @@ import {
   DocumentMagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
 
-import { HomeIcon, BellIcon } from "@heroicons/react/24/solid";
-
 import {
   PDFDownloadLink,
   Document,
@@ -59,6 +57,9 @@ import {
   LuLoader,
   LuTrash,
 } from "react-icons/lu";
+
+import { HomeIcon, BellIcon, UserCircleIcon, UserIcon, UsersIcon, UserGroupIcon } from "@heroicons/react/24/solid";
+import { HiOutlineDocumentAdd } from "react-icons/hi";
 
 import axios from "axios";
 import ReactQuill from 'react-quill';
@@ -176,7 +177,7 @@ const ArchivePage = () => {
                   <TimelineConnector />
                   <TimelineHeader>
                     <TimelineIcon className="p-2">
-                      <HomeIcon className="h-4 w-4" />
+                      <UsersIcon className="h-4 w-4" />
                     </TimelineIcon>
                     <Typography variant="h6" color="blue-gray">
                       {selectedDocument.uploaderDesignation}{" "}
@@ -212,7 +213,7 @@ const ArchivePage = () => {
                   <TimelineConnector />
                   <TimelineHeader>
                     <TimelineIcon className="p-2">
-                      <BellIcon className="h-4 w-4" />
+                      <UserIcon className="h-4 w-4" />
                     </TimelineIcon>
                     <Typography variant="h6" color="blue-gray">
                       {selectedDocument.collegeName} Dean
@@ -247,7 +248,7 @@ const ArchivePage = () => {
                   <TimelineConnector />
                   <TimelineHeader>
                     <TimelineIcon className="p-2">
-                      <BellIcon className="h-4 w-4" />
+                      <UsersIcon className="h-4 w-4" />
                     </TimelineIcon>
                     <Typography variant="h6" color="blue-gray">
                       Office of Vice Chancellor for Academic Affairs
@@ -282,7 +283,7 @@ const ArchivePage = () => {
                   <TimelineConnector />
                   <TimelineHeader>
                     <TimelineIcon className="p-2">
-                      <BellIcon className="h-4 w-4" />
+                      <UserIcon className="h-4 w-4" />
                     </TimelineIcon>
                     <Typography variant="h6" color="blue-gray">
                       Office of the President
@@ -316,7 +317,7 @@ const ArchivePage = () => {
                 <TimelineItem>
                   <TimelineHeader>
                     <TimelineIcon className="p-2">
-                      <BellIcon className="h-4 w-4" />
+                      <UserGroupIcon className="h-4 w-4" />
                     </TimelineIcon>
                     <Typography variant="h6" color="blue-gray">
                       Record Management Office

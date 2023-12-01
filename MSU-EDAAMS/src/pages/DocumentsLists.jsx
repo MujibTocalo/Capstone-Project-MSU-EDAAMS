@@ -26,7 +26,7 @@ import {
   TimelineBody,
 } from "@material-tailwind/react";
 
-import { HomeIcon, BellIcon } from "@heroicons/react/24/solid";
+import { HomeIcon, BellIcon, UserCircleIcon, UserIcon, UsersIcon, UserGroupIcon } from "@heroicons/react/24/solid";
 
 import { format } from "date-fns";
 
@@ -36,7 +36,7 @@ import React, { useEffect, useState } from "react";
 
 import axios from "axios";
 import { BiDetail, BiEdit, BiTrash } from "react-icons/bi";
-import { BsCardChecklist } from "react-icons/bs";
+import { BsAppIndicator, BsCardChecklist, BsRecord2Fill } from "react-icons/bs";
 import { HiOutlineDocumentAdd } from "react-icons/hi";
 import TrackDocumentContent from "../components/TrackingContent";
 
@@ -231,7 +231,7 @@ export const DocumentsLists = () => {
                     <TimelineConnector />
                     <TimelineHeader>
                       <TimelineIcon className="p-2">
-                        <HomeIcon className="h-4 w-4" />
+                        <UsersIcon className="h-4 w-4" />
                       </TimelineIcon>
                       <Typography variant="h6" color="blue-gray">
                         {selectedDocument.uploaderDesignation}{" "}
@@ -267,7 +267,7 @@ export const DocumentsLists = () => {
                     <TimelineConnector />
                     <TimelineHeader>
                       <TimelineIcon className="p-2">
-                        <BellIcon className="h-4 w-4" />
+                        <UserIcon className="h-4 w-4" />
                       </TimelineIcon>
                       <Typography variant="h6" color="blue-gray">
                         {selectedDocument.collegeName} Dean
@@ -302,7 +302,7 @@ export const DocumentsLists = () => {
                     <TimelineConnector />
                     <TimelineHeader>
                       <TimelineIcon className="p-2">
-                        <BellIcon className="h-4 w-4" />
+                        <UsersIcon className="h-4 w-4" />
                       </TimelineIcon>
                       <Typography variant="h6" color="blue-gray">
                         Office of Vice Chancellor for Academic Affairs
@@ -337,7 +337,7 @@ export const DocumentsLists = () => {
                     <TimelineConnector />
                     <TimelineHeader>
                       <TimelineIcon className="p-2">
-                        <BellIcon className="h-4 w-4" />
+                        <UserIcon className="h-4 w-4" />
                       </TimelineIcon>
                       <Typography variant="h6" color="blue-gray">
                         Office of the President
@@ -371,7 +371,7 @@ export const DocumentsLists = () => {
                   <TimelineItem>
                     <TimelineHeader>
                       <TimelineIcon className="p-2">
-                        <BellIcon className="h-4 w-4" />
+                        <UserGroupIcon className="h-4 w-4" />
                       </TimelineIcon>
                       <Typography variant="h6" color="blue-gray">
                         Record Management Office
@@ -566,7 +566,7 @@ export const DocumentsLists = () => {
                               ? "Dean Approved"
                               : documentStatus === "Dean Endorsed"
                                 ? "Dean Approved"
-                                : documentStatus === "Endorsed"
+                                : documentStatus === "OVCAA Endorsed"
                                   ? "OVCAA Approved"
                                   : documentStatus === "OP Approved"
                                     ? "OP Approved"
@@ -596,15 +596,18 @@ export const DocumentsLists = () => {
                       </Typography>
                     </td>
                     <td className={classes}>
-                      <div className="flex flex-row mx-auto gap-1 cursor-pointer">
+                      <div className="flex flex-row mx-auto gap-1 items-center cursor-pointer">
 
-                        <BsCardChecklist
+                        {/* <BsCardChecklist
                           size={20}
                           onClick={() => handleTimelineClick(index)}
-                        />
+                        /> */}
+                        <button className="flex bg-green-600 text-white text-sm p-1.5 rounded-lg shadow-md hover:scale-105"
+                          onClick={() => handleTimelineClick(index)}>
+                          Track Document</button>
 
                         {userAccess === 'Uploader' && documentStatus === 'Pending' && (
-                          <BiTrash onClick={() => showConfirmationModal(_id)} size={20} />
+                          <BiTrash onClick={() => showConfirmationModal(_id)} size={30} className='flex bg-red-600 text-white p-1 rounded-lg hover:scale-105' />
                         )}
                       </div>
                     </td>

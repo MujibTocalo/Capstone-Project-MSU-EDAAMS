@@ -108,7 +108,7 @@ const MainRoutes = () => {
             <Route
               path="/archive"
               element={
-                userType === 'Administrator' ?
+                (userType === 'Administrator') ?
                   (<ArchivePage />) : (<Navigate to='/restricted' />)} />
 
             <Route

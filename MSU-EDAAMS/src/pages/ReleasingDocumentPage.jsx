@@ -8,6 +8,7 @@ import { Button, Alert, Dialog, DialogHeader, DialogBody, DialogFooter, Typograp
 
 import { useToast } from '../components/ToastService';
 import { LuAlertCircle } from 'react-icons/lu';
+import { io } from 'socket.io-client';
 
 const ReleasingDocumentPage = () => {
 
@@ -20,6 +21,8 @@ const ReleasingDocumentPage = () => {
 
 	const [ReleaserName, setName] = useState()
 	const [Remark, setRemark] = useState()
+
+	const [documents, setDocuments] = useState([]);
 
 
 
@@ -43,19 +46,42 @@ const ReleasingDocumentPage = () => {
 	};
 
 	useEffect(() => {
-		store.fetchDocuments()
+		const socket = io('http://localhost:7000');
+
+		socket.on('endorsementDocument', (endorsedDocument) => {
+			// Update documents state when a document is endorsed
+			setDocuments((prevDocuments) => [endorsedDocument, ...prevDocuments]);
+		});
+
 		const userDetail = JSON.parse(localStorage.getItem('userDetails'));
 		handleReleaserName(userDetail)
-	}, [store])
+
+		// Fetch initial documents
+		const fetchDocuments = async () => {
+			try {
+				await store.fetchDocuments();
+				setDocuments(store.documents);
+			} catch (error) {
+				console.error('Error fetching documents:', error);
+			}
+		};
+
+		fetchDocuments();
+
+		// Clean up the Socket.io connection when the component unmounts
+		return () => {
+			socket.disconnect();
+		};
+	}, [store]);
 
 
 	if (!store.documents) {
 		return null
 	}
 
-	const endorseDocument = store.documents
+	const endorseDocument = documents ? documents
 		.filter((document) => document.documentStatus === 'OP Approved')
-		.sort((a, b) => b.createdAt.localeCompare(a.createdAt))
+		.sort((a, b) => b.createdAt.localeCompare(a.createdAt)) : []
 
 
 	const handleReleaseDocument = async (e, documentId) => {
@@ -69,6 +95,7 @@ const ReleasingDocumentPage = () => {
 					setOpen(!open)
 					console.log(res)
 					if (res.status === 200) {
+
 						toast.open(
 							<div className="flex gap-2 bg-green-500 text-white p-4 rounded-lg shadow-lg">
 								<LuAlertCircle size={40} />
@@ -98,51 +125,6 @@ const ReleasingDocumentPage = () => {
 
 		}
 	}
-
-	// const handleReleaseDocument = async (e, documentId) => {
-	// 	e.preventDefault();
-
-	// 	try {
-	// 		const data = {
-	// 			ApproverName: ReleaserName,
-	// 			Remark,
-	// 			decision: true,
-	// 		};
-
-	// 		const res = await fetch(`http://localhost:7000/document/releaseDocument	/${documentId}`, {
-	// 			method: 'PUT',
-	// 			headers: {
-	// 				'Content-Type': 'application/json',
-	// 			},
-	// 			body: JSON.stringify(data),
-	// 		});
-
-	// 		if (res.ok) {
-	// 			toast.open(
-	// 				<div className='flex gap-2 bg-green-500 text-white p-4 rounded-lg shadow-lg'>
-	// 					<LuAlertCircle size={55} />
-	// 					<div>
-	// 						<Typography variant='h4'>Success!</Typography>
-	// 						<Typography variant='paragraph'>Archived as Not Released</Typography>
-	// 					</div>
-
-	// 				</div>
-	// 			)
-	// 		}
-	// 	} catch (error) {
-	// 		toast.open(
-	// 			<div className='flex gap-2 bg-red-800 text-white p-4 rounded-lg shadow-lg'>
-	// 				<LuAlertCircle size={55} />
-	// 				<div>
-	// 					<Typography variant='h4'>Error!</Typography>
-	// 					<Typography variant='paragraph'>Archive Error</Typography>
-	// 				</div>
-
-	// 			</div>
-	// 		)
-	// 		console.log(error);
-	// 	}
-	// };
 
 	const handleRejectDocument = async (e, documentId) => {
 		e.preventDefault();

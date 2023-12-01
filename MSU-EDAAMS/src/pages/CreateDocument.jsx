@@ -3,8 +3,8 @@ import React, { useEffect, useState } from "react";
 import { useToast } from "../components/ToastService";
 import { LuAlertCircle } from "react-icons/lu";
 
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
+// import ReactQuill from 'react-quill';
+// import 'react-quill/dist/quill.snow.css';
 
 import {
   Alert,
@@ -20,6 +20,9 @@ import {
   Typography,
 } from "@material-tailwind/react";
 
+import { io } from "socket.io-client";
+import axios from "axios";
+
 const CreateDocument = () => {
   const [controlNumber, setControlNumber] = useState("");
   const [collegeName, setCollegeName] = useState("");
@@ -32,24 +35,10 @@ const CreateDocument = () => {
   const [uploaderSignature, setUploaderSignature] = useState()
   const [open, setOpen] = React.useState(false);
 
-  const quillModules = {
-    toolbar: [
-      [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
-      [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-      ['bold', 'italic', 'underline'],
-      ['link'],
-    ],
-  };
-
-  const quillFormats = [
-    'header', 'font', 'size', 'bold', 'italic', 'underline', 'list', 'bullet', 'link',
-  ];
-
   const toast = useToast();
 
   const handleOpen = () => setOpen(!open);
 
-  // HANDLERS
   const handleControlName = (e) => {
     setControlNumber(e.target.value);
   };
@@ -75,7 +64,112 @@ const CreateDocument = () => {
     handleSubmit();
   };
 
+  const socket = io('http://localhost:7000');
+
+
   const handleSubmit = async () => {
+    try {
+      if (
+        !controlNumber ||
+        !collegeName ||
+        !documentType ||
+        !header ||
+        !subject ||
+        !content
+      ) {
+        handleOpen();
+        toast.open(
+          <div className="flex gap-2 bg-red-500 text-white p-4 rounded-lg shadow-lg">
+            <LuAlertCircle size={40} />
+            <div>
+              <Typography variant="h4">Incomplete Detail!</Typography>
+              <Typography variant="paragraph">
+                Please fill in all necessary details.
+              </Typography>
+            </div>
+          </div>
+        );
+        return;
+      } else {
+        axios.post('http://localhost:7000/document/createDocument', {
+          controlNumber,
+          collegeName,
+          documentType,
+          header,
+          subject,
+          content,
+          uploaderName,
+          uploaderDesignation,
+          uploaderSignature
+        })
+          .then(res => {
+            if (res.status === 201) {
+              socket.emit('createDocument', {
+                controlNumber,
+                collegeName,
+                documentType,
+                header,
+                subject,
+                content,
+                uploaderName,
+                uploaderSignature,
+                uploaderDesignation
+              })
+              socket.disconnect();
+              toast.open(
+                <div className="flex gap-2 bg-green-500 text-white p-4 rounded-lg shadow-lg">
+                  <LuAlertCircle size={40} />
+                  <div>
+                    <Typography variant="h5">Success!</Typography>
+                    <Typography variant="paragraph">
+                      Document Submittion Successful
+                    </Typography>
+                  </div>
+                </div>
+              );
+              setDocumentDetail({
+                controlNumber: documentDetail.controlNumber,
+                collegeName: documentDetail.collegeName,
+                documentType: documentDetail.documentType,
+                header: documentDetail.header,
+                subject: documentDetail.subject,
+                content: documentDetail.content,
+              })
+            } else {
+              toast.open(
+                <div className='flex gap-2 bg-red-500 text-white p-4 rounded-lg shadow-lg'>
+                  <LuAlertCircle size={40} />
+                  <div>
+                    <Typography variant='h5'>Failed!</Typography>
+                    <Typography variant='paragraph'>Document Submittion Failed</Typography>
+                  </div>
+
+                </div>
+              )
+            }
+          })
+      }
+
+    } catch (error) {
+      toast.open(
+        <div className='flex gap-2 bg-red-800 text-white p-4 rounded-lg shadow-lg'>
+          <LuAlertCircle size={40} />
+          <div>
+            <Typography variant='h5'>Error!</Typography>
+            <Typography variant='paragraph'>Document Submittion Error</Typography>
+          </div>
+
+        </div>
+      )
+      throw error;
+    }
+  }
+
+
+
+
+
+  const handleSubmit1 = async () => {
     // Check if any of the required fields are empty
     if (
       !controlNumber ||

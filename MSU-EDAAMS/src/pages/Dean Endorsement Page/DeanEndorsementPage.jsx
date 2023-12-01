@@ -71,12 +71,12 @@ const DeanEndorsementPage = () => {
 		decision: 'true'
 	})
 
-	useEffect(() => {
-		const socket = io('http://localhost:7000');
+	const socket = io('http://localhost:7000');
 
-		socket.on('deanEndorsedDocument', (deanEndorsedDocument) => {
-			// Update documents state when a document is endorsed
-			setDocuments((prevDocuments) => [deanEndorsedDocument, ...prevDocuments]);
+	useEffect(() => {
+
+		socket.on('createDocument', (newDocument) => {
+			setDocuments((prevDocuments) => [newDocument, ...prevDocuments])
 		});
 
 		// Fetch initial documents
@@ -89,7 +89,6 @@ const DeanEndorsementPage = () => {
 			}
 		};
 		fetchDocuments();
-		// Clean up the Socket.io connection when the component unmounts
 		return () => {
 			socket.disconnect();
 		};
@@ -121,7 +120,17 @@ const DeanEndorsementPage = () => {
 					setEndorse(false)
 					setOpen(false)
 					if (res.status === 200) {
-						store.fetchDocuments()
+						socket.emit('deanEndorsement', {
+							name: userDetail.firstName + ' ' + userDetail.lastName,
+							header: documentDetail.header,
+							subject: documentDetail.subject,
+							content: documentDetail.content,
+							designation: documentDetail.designation,
+							signature: documentDetail.signature,
+							remarks: documentDetail.remarks,
+							decision: 'true'
+						})
+						socket.disconnect();
 						toast.open(
 							<div className="flex gap-2 bg-green-500 text-white p-4 rounded-lg shadow-lg">
 								<LuAlertCircle size={40} />

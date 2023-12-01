@@ -42,22 +42,24 @@ io.on("connection", (socket) => {
     socket.on(eventName, (data) => {
       // Broadcast the data to all connected clients
       io.emit(broadcastName, data);
+      console.log("NOTIFICATION: ", eventName, data)
     });
   };
 
-  // Example: Handle document creation event
+
   handleEvent("createDocument", "newDocument");
 
-  // Handle specific events with a generic function
   const eventsToHandle = [
     { eventName: "deanEndorsement", broadcastName: "deanEndorsedDocument" },
     { eventName: "endorsementDocument", broadcastName: "endorsedDocument" },
     { eventName: "opApprovedDocument", broadcastName: "approvedDocument" },
-    // Add more events as needed
+    { eventName: "rmoReleasedDocument", broadcastName: 'releasedDocument' },
+
   ];
 
   eventsToHandle.forEach((event) =>
-    handleEvent(event.eventName, event.broadcastName)
+    handleEvent(event.eventName, event.broadcastName),
+
   );
 
   // Handle disconnect event (if needed)
