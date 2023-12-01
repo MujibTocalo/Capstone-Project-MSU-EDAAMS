@@ -199,10 +199,10 @@ const ProfileMenu = () => {
               </Typography>
             </div>
             <CardFooter className="flex flex-row justify-center mt-10">
-          <Button color="red" className="" onClick={closeProfileDialog}>
-              Close
-            </Button>
-          </CardFooter>
+              <Button color="red" className="" onClick={closeProfileDialog}>
+                Close
+              </Button>
+            </CardFooter>
           </CardBody>
         </Card>
       </Dialog>
@@ -229,9 +229,9 @@ export const CustomNavbar = ({ setOpen }) => {
       <Typography className="flex flex-row gap-4 items-center ml-2 text-lg p-0.5 pr-3 text-center font-semibold text-white rounded-lg">
         <TiThMenuOutline onClick={() => setOpen((prevOpen) => !prevOpen)} className="flex rounded-lg w-8 h-8 p-1 -translate-x-2 cursor-pointer hover:scale-110" />
         <img
-        src={msulogo}
-        alt="logo"
-        className="flex flex-row h-10"/>
+          src={msulogo}
+          alt="logo"
+          className="flex flex-row h-10" />
         MSU EDAAMS
       </Typography>
 

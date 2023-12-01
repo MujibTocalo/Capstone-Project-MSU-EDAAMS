@@ -81,11 +81,15 @@ export const DocumentsLists = () => {
   const [isTimelineDialogOpen, setIsTimelineDialogOpen] = useState(false);
   const [selectedDocument, setSelectedDocument] = useState(false);
 
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+  const [selectedDocumentId, setSelectedDocumentId] = useState(null);
+  const [userAccess, setUserAccess] = useState()
+
   useEffect(() => {
     const fetchTableRows = async () => {
       try {
-        const userDetail = JSON.parse(localStorage.getItem("userDetails"));
-
+        const userDetail = JSON.parse(localStorage.getItem('userDetails'))
+        setUserAccess(userDetail.userType)
         const response = await axios.get("http://localhost:7000/document");
         const responseData = response.data;
         const documentArray = responseData.document;
@@ -117,17 +121,27 @@ export const DocumentsLists = () => {
   }, []);
 
   const handleTimelineClick = (index) => {
-    const selectedDocument = tableRows[index]; // Access the document data using the index
-    setSelectedDocument(selectedDocument); // Set the selected document
-    setIsTimelineDialogOpen(!isTimelineDialogOpen); // Open the dialog
+    const selectedDocument = tableRows[index];
+    setSelectedDocument(selectedDocument);
+    setIsTimelineDialogOpen(!isTimelineDialogOpen);
+  };
+
+  const deleteDocument = (documentId) => {
+    axios.delete(`http://localhost:7000/document/delete/${documentId}`)
+      .then((res) => {
+        console.log(res);
+        if (res.data.success === 'Document Deleted') {
+          store.fetchDocuments();
+        }
+      })
+      .catch((error) => {
+        console.error("Error deleting document:", error);
+      });
   };
 
   const handleCreateNewDocument = () => {
     navigate("/newCreateDocument");
   };
-  // const handleArchive = () => {
-  // 	navigate('/archive')
-  // }
 
   const handleSearch = (e) => {
     const query = e.target.value;
@@ -141,11 +155,63 @@ export const DocumentsLists = () => {
     setFilteredTableRows(filteredRows);
   };
 
+  // Function to show the confirmation modal
+  const showConfirmationModal = (documentId) => {
+    setSelectedDocumentId(documentId);
+    setShowDeleteConfirmation(true);
+  };
+
+  // Function to hide the confirmation modal
+  const hideConfirmationModal = () => {
+    setShowDeleteConfirmation(false);
+    setSelectedDocumentId(null);
+  };
+
+  // Function to handle document deletion when confirmed
+  const handleDeleteConfirmed = () => {
+    if (selectedDocumentId) {
+      console.log(selectedDocumentId)
+      deleteDocument(selectedDocumentId);
+      hideConfirmationModal();
+    }
+  };
+
+
   const navigate = useNavigate();
 
   return (
     <Card className="h-screen w-screen rounded-none bg-white">
       <div>
+
+        <Dialog
+          size="sm"
+          open={showDeleteConfirmation}
+          handler={hideConfirmationModal}
+          className="bg-white shadow-none"
+        >
+          <Card className="mx-auto w-full">
+            <CardHeader className="mb-4 grid h-16 place-items-center bg-indigo-800">
+              <Typography variant="h4" className="text-white">
+                Confirm Deletion
+              </Typography>
+            </CardHeader>
+            <CardBody className="flex flex-col items-center justify-center h-32">
+              <Typography variant="body" color="blue-gray" className="text-center">
+                Are you sure you want to delete this document?
+              </Typography>
+              <div className="flex mt-4 gap-4">
+                <Button onClick={hideConfirmationModal} color="indigo" variant="outlined" size="sm">
+                  Cancel
+                </Button>
+                <Button onClick={handleDeleteConfirmed} color="red" size="sm">
+                  Confirm Delete
+                </Button>
+              </div>
+            </CardBody>
+          </Card>
+        </Dialog>
+
+
         <Dialog
           size="md"
           open={isTimelineDialogOpen}
@@ -421,6 +487,7 @@ export const DocumentsLists = () => {
             {filteredTableRows.map(
               (
                 {
+                  _id,
                   documentType,
                   uploaderName,
                   uploaderDesignation,
@@ -533,7 +600,7 @@ export const DocumentsLists = () => {
                       </Typography>
                     </td>
                     <td className={classes}>
-                      <div className="flex gap-1 cursor-pointer">
+                      <div className="flex justify-center gap-1 cursor-pointer">
                         <BsCardChecklist
                           size={20}
                           onClick={() => handleTimelineClick(index)}
@@ -541,7 +608,9 @@ export const DocumentsLists = () => {
 
                         <BiDetail size={20} />
                         <BiEdit size={20} />
-                        <BiTrash size={20} />
+                        {userAccess === 'Uploader' && documentStatus === 'Pending' && (
+                          <BiTrash onClick={() => showConfirmationModal(_id)} size={20} />
+                        )}
                       </div>
                     </td>
                   </tr>
