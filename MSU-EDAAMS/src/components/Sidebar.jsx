@@ -30,7 +30,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
 
   return (
     <div className={`flex flex-col ${isOpen ? 'w-52 opacity-100' : 'w-0 opacity-0'} bg-white duration-500`} style={{ zIndex: 1, position: 'relative' }}>
-      <div className={`h-screen ${isOpen ? 'w-52' : 'w-12'} bg-gray-300 duration-500  p-1`}>
+      <div className={`h-screen ${isOpen ? 'w-52' : 'w-12'} bg-gray-100 duration-500 p-1`}>
         {/* <div className='py-4 flex duration-500 justify-between'> */}
         {/* <Avatar className='flex h-6 w-6 border rounded-none ml-2' /> */}
         {/* <h1 className={`${!open && '0.5s ease-in-out hidden'} flex 3s ease-in-out mx-auto whitespace-pre font-semibold text-lg `}>MSU EDAAMS</h1>
@@ -38,7 +38,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
       </div> */}
         <div className='mt-4 flex flex-col gap-3 relative'>
           {menus?.map((menu, i) => (
-            <Link to={menu?.link} key={i} className='group flex items-center text-sm gap-3.5 font-medium p-2 hover:border hover:border-gray-600 rounded-lg'>
+            <Link to={menu?.link} key={i} className='group flex items-center text-sm gap-3.5 font-medium p-2 hover:border hover:border-gray-400/50 hover:bg-gray-100 rounded-lg hover:scale-110'>
               <div>
                 {React.createElement(menu?.icon, { size: '24' })}
               </div>

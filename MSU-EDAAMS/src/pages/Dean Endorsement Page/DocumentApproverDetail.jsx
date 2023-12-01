@@ -15,10 +15,10 @@ const DocumentApproverDetail = ({ document }) => {
 
 	return (
 		<div key={document._id}
-			className='flex flex-col bg-white p-1 px-4 rounded-md'>
+			className='flex flex-col bg-white p-4 px-5 rounded-xl'>
 			<div className="flex flex-col flex-wrap items-center justify-start whitespace-pre">
 				<Typography
-					className='bg-indigo-500/80 font-semibold text-sm rounded-lg m-1 p-1 text-white'>
+					className='bg-yellow-500/80 font-semibold text-sm rounded-lg m-1 p-2 text-black'>
 					{document.documentType}
 				</Typography>
 				<Typography
@@ -26,21 +26,21 @@ const DocumentApproverDetail = ({ document }) => {
 					{document.collegeName}
 				</Typography>
 			</div>
-			<div className="flex flex-col rounded-lg text-center">
+			<div className="flex flex-col rounded-lg text-start">
 				<Typography className='text-sm font-semibold py-1'>
-					Control Number
+					Control Number :
 				</Typography>
 				<Typography className='text-sm '>
 					{document.controlNumber}
 				</Typography>
 				<Typography className='text-sm py-1 font-semibold'>
-					Date
+					Date :
 				</Typography>
 				<Typography className='text-sm'>
 					{format(new Date(document.createdAt), 'yyyy-MM-dd')}
 				</Typography>
 				<Typography className='text-sm py-1 font-semibold'>
-					Submitted By
+					Submitted By :
 				</Typography>
 				<Typography className='text-sm pb-1'>
 					{document.uploaderName}
