@@ -161,10 +161,13 @@ const ProfileMenu = () => {
         onClose={closeProfileDialog}
         className="bg-transparent shadow-none"
       >
-        <Card className="flex flex-col w-96 h-96 mx-auto items-center justify-center mb-4">
-          <CardBody className="p-60 items-center relative">
+        <Card className="mx-auto w-full max-w-[22rem] h-full max-h-[26rem]">
+          <CardBody className="flex flex-col gap-4">
             <label htmlFor="profileImage" className="text-gray-700 font-bold cursor-pointer">
               <div className="flex flex-col items-center group">
+              <Typography variant="h4" color="blue-gray">
+              User Profile
+            </Typography>
                 {profileImage && (
                   <Avatar
                     size="xxl"
@@ -183,14 +186,23 @@ const ProfileMenu = () => {
                 </div>
               </div>
             </label>
-            <div className="mt-4 text-center">
+            <div className="mt-4 text-start">
               <Typography
                 as="p"
                 variant="lg"
-                className="font-bold text-2xl text-black"
+                className="bg-transparent border-gray-300 p-3 rounded-md shadow-md text-blue-gray pb-2"
               >
-                {userDetails.firstName} {userDetails.lastName}
+                {userDetails.firstName} 
               </Typography>
+
+              <Typography
+                as="p"
+                variant="lg"
+                className="bg-tranparent border-gray-300 p-2 rounded-md shadow-md text-blue-gray pt-3 pb-3"
+              >
+                {userDetails.lastName}
+              </Typography>
+              
               <Typography as="p" variant="sm" className="text-black-900">
                 {userDetails.collegeOrOffice}
               </Typography>
@@ -249,13 +261,14 @@ export const CustomNavbar = ({ setOpen }) => {
           <Typography className="flex font-md text-md text-white">
             {currentUser}
           </Typography>
-          <Typography className="flex text-xs text-white opacity-80">
-            {userDesignation + ' | ' + userCollege}
-          </Typography>
+            {/* <Typography className="flex text-xs text-white opacity-80">
+              {userDesignation + ' | ' + userCollege}
+            </Typography> */}
         </div>
         <ProfileMenu />
       </div>
     </div>
+
   );
 };
 

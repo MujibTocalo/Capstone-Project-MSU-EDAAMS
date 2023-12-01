@@ -127,16 +127,17 @@ const LandingPage = () => {
   return (
     <div className="relative h-screen bg-indigo-50/50 overflow-x-hidden overflow-y-scroll flex flex-col">
       <div className="flex flex-col items-start">
-        <div className="flex mx-auto bg-indigo-700 h-14 items-center w-screen justify-center">
-          <ul className="flex flex-row mr-10 m-4 gap-6 text-white font-medium">
-            <li className="hover:cursor-pointer hover:scale-105">Documents</li>
+        <div className="flex mx-auto bg-indigo-700 h-14 items-center w-screen justify-end">
+          <ul className="flex flex-row gap-6 text-white font-medium mr-16">
+            {/* <li className="hover:cursor-pointer hover:scale-105">Documents</li>
             <li className="hover:cursor-pointer hover:scale-105">Memorandum</li>
             <li className="hover:cursor-pointer hover:scale-105">
               Special Order
-            </li>
-            <li className="hover:cursor-pointer hover:scale-105">Archive</li>
+            </li> */}
+            {/* <li className="hover:cursor-pointer hover:scale-105">Archive</li> */}
+            <li className="hover:cursor-pointer hover:scale-105">About Us</li>
             <li className="hover:cursor-pointer hover:scale-105">Contacts</li>
-            <li className="hover:cursor-pointer hover:scale-105">About</li>
+            <li className="hover:cursor-pointer hover:scale-105">Services</li>
           </ul>
         </div>
         <div className="flex flex-row">
@@ -158,8 +159,8 @@ const LandingPage = () => {
             <Typography className="flex flex-col text-8xl mb-5 text-indigo-600 font-extrabold">
               EDAAMS
             </Typography>
-            <Typography className="font-semibold text-lg whitespace-pre text-gray-700">
-              Electronic Document Approval & Archive Management System
+            <Typography className="font-semibold text-lg whitespace-pre text-gray-800">
+              " Electronic Document Approval & Archive Management System "
             </Typography>
             <Typography className="mb-0 text-md text-gray-700">
               A software solution designed to streamline document approval{" "}
@@ -167,7 +168,7 @@ const LandingPage = () => {
               <br /> electronically.
             </Typography>
             <Button
-              className="flex mx-auto rounded-3xl mt-10 bg-indigo-600 hover:bg-indigo-900 hover:scale-110 text-sm"
+              className="flex mx-auto rounded-3xl mt-6 bg-indigo-500 hover:bg-indigo-900 hover:scale-110 text-sm"
               onClick={handleOpen}
             >
               Get Started
@@ -183,8 +184,8 @@ const LandingPage = () => {
           handler={handleOpen}
           className="flex bg-transparent shadow-none"
         >
-          <Card className="mx-auto w-full max-w-[24rem]">
-            <CardHeader
+          <Card className="mx-auto w-full max-w-[20rem]">
+            {/* <CardHeader
               variant="standard"
               color="indigo"
               className="mb-4 grid h-28 place-items-center"
@@ -192,14 +193,30 @@ const LandingPage = () => {
               <Typography variant="h3" color="white">
                 Account Login
               </Typography>
-            </CardHeader>
+            </CardHeader> */}
             <CardBody className="flex flex-col gap-4">
+            <Typography className="flex flex-col align items-center" variant="h4" color="blue-gray">
+              Sign In
+            </Typography>
+            <Typography
+              className="mb-3 font-normal text-sm align items-center"
+              variant="paragraph"
+              color="gray"
+            >
+              Enter your email and password to Sign In.
+            </Typography>
+            <Typography className="-mb-2" variant="h6">
+              Your Email
+            </Typography>
               <Input
                 value={email}
                 onChange={handleEmailChange}
                 label="Email"
                 size="lg"
               />
+              <Typography className="-mb-2" variant="h6">
+              Your Password
+            </Typography>
               <Input
                 value={password}
                 onChange={handlePasswordChange}
@@ -213,6 +230,19 @@ const LandingPage = () => {
                 Sign In
               </Button>
             </CardFooter>
+            <Typography variant="small" className="mb-6 flex justify-center">
+              Don&apos;t have an account?
+              <Typography
+                as="a"
+                href="#signup"
+                variant="small"
+                color="blue-gray"
+                className="ml-1 font-bold"
+                onClick={handleOpen}
+              >
+                Sign up
+              </Typography>
+              </Typography>
           </Card>
         </Dialog>
       </div>
