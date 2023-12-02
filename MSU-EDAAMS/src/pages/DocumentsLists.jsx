@@ -451,35 +451,18 @@ export const DocumentsLists = () => {
                       </Button>
                     </TimelineBody>
                   </TimelineItem>
-
-                  {/* <TimelineItem>
-                    <TimelineConnector />
-                    <TimelineHeader>
-                      <TimelineIcon className="p-2">
-                        <ArchiveBoxIcon className="h-4 w-4" />
-                      </TimelineIcon>
-                      <Typography variant="h6" color="blue-gray">
-                        Archive the document
-                      </Typography>
-                    </TimelineHeader>
-                    <TimelineBody className="pb-8">
-                      <Button color="green" variant="outlined" onClick={handleCreateNewDocument}>
-                        Archive Document
-                      </Button>
-                    </TimelineBody>
-                  </TimelineItem> */}
                 </Timeline>
               )}
             </CardBody>
             <CardFooter className="flex border bg-indigo-50/50 rounded-lg p-1 w-full mx-auto">
-              <Button
+              {/* <Button
                 className="flex mx-auto hover:scale-105"
                 variant="text"
                 size="md"
                 onClick={handleTimelineClick}
               >
                 Close
-              </Button>
+              </Button> */}
             </CardFooter>
           </Card>
         </Dialog>

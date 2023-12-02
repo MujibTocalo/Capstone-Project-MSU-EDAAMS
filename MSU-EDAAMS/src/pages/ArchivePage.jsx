@@ -143,14 +143,13 @@ const ArchivePage = () => {
     setFilteredTableRows(filteredRows);
   };
 
-
-  const convertHtmlToText = (htmlContent) => {
-    // Specify options if needed, see the html-to-text documentation for details
-    const options = {
-      wordwrap: 130
-    };
-    return convert(htmlContent, options);
-  };
+  // const convertHtmlToText = (htmlContent) => {
+  //   // Specify options if needed, see the html-to-text documentation for details
+  //   const options = {
+  //     wordwrap: 130
+  //   };
+  //   return convert(htmlContent, options);
+  // };
 
 
   const navigate = useNavigate();
@@ -171,7 +170,7 @@ const ArchivePage = () => {
             </Typography>
           </CardHeader>
           <CardBody className="flex flex-col h-96 overflow-y-scroll">
-            {selectedDocument && (
+            {selectedDocument.documentStatus === 'Released' && (
               <Timeline>
                 <TimelineItem>
                   <TimelineConnector />
@@ -343,16 +342,54 @@ const ArchivePage = () => {
                 </TimelineItem>
               </Timeline>
             )}
+            {selectedDocument.documentStatus === 'Rejected' && (
+              <Timeline>
+                <TimelineItem>
+                  <TimelineConnector />
+                  <TimelineHeader>
+                    <TimelineIcon className="p-2">
+                      <UsersIcon className="h-4 w-4" />
+                    </TimelineIcon>
+                    <Typography variant="h6" color="blue-gray">
+                      {selectedDocument.rejectedPoint}
+                    </Typography>
+                  </TimelineHeader>
+                  <TimelineBody className="pb-8">
+                    <Typography
+                      color="gray"
+                      className="font-normal text-md text-gray-800"
+                    >
+                      Date Rejected:{" "}
+                      {selectedDocument.rejectedDate
+                        ? format(
+                          new Date(selectedDocument.rejectedDate),
+                          "yyyy-MM-dd"
+                        )
+                        : "Waiting"}{" "}
+                      <br />
+                      Rejected By:{" "}
+                      {selectedDocument.rejectedName
+                        ? selectedDocument.rejectedDesignation + " " + selectedDocument.rejectedName : "Pending"}{" "}
+                      <br />
+                      Remarks:{" "}
+                      {selectedDocument.rejectedRemarks
+                        ? selectedDocument.rejectedRemarks
+                        : ""}
+                    </Typography>
+                  </TimelineBody>
+                </TimelineItem>
+              </Timeline>
+            )}
           </CardBody>
           <CardFooter className="flex border bg-indigo-50/50 rounded-lg p-1 w-full mx-auto">
-            <Button
+            {/* <Button
               className="flex mx-auto hover:scale-105"
               variant="text"
               size="md"
               onClick={handleTimelineClick}
             >
               Close
-            </Button>
+            </Button> */}
           </CardFooter>
         </Card>
       </Dialog>
