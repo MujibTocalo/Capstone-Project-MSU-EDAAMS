@@ -51,7 +51,7 @@ export const deleteDocument = async (req, res) => {
 export const deanEndorsement = async (req, res) => {
 	try {
 		const { id } = req.params;
-		const { name, header, subject, content, remarks, decision, designation, signature } = req.body;
+		const { name, header, subject, content, remarks, rejected, designation, signature } = req.body;
 
 		const document = await Document.findById(id);
 
@@ -59,15 +59,30 @@ export const deanEndorsement = async (req, res) => {
 			return res.status(404).json({ error: 'Document not found' });
 		}
 
-		document.deanName = name;
-		document.deanEndorsementHeader = header;
-		document.deanEndorsementSubject = subject;
-		document.deanEndorsementContent = content;
-		document.deanDesignation = designation;
-		document.deanSignature = signature;
-		document.deanEndorsementDate = Date.now();
-		document.deanRemarks = remarks;
-		decision === 'true' ? document.documentStatus = 'Dean Endorsed' : document.documentStatus = 'Rejected | Dean';
+
+		if (rejected === false) {
+			document.deanName = name;
+			document.deanEndorsementHeader = header;
+			document.deanEndorsementSubject = subject;
+			document.deanEndorsementContent = content;
+			document.deanDesignation = designation;
+			document.deanSignature = signature;
+			document.deanEndorsementDate = Date.now();
+			document.documentStatus = 'Dean Endorsed'
+
+		} else if (rejected === true) {
+			document.rejectedName = name;
+			document.rejectedDesignation = designation;
+			document.rejectedRemarks = remarks;
+			document.deanDecision = false;
+			document.rejectedDate = Date.now();
+			document.documentStatus = 'Rejected'
+			document.rejectedPoint = 'Rejected By College Dean'
+		}
+
+
+
+
 		console.log("documentStatus: " + document.documentStatus);
 
 		await document.save();
@@ -109,7 +124,7 @@ export const ovcaaEndorsement = async (req, res) => {
 			document.documentStatus = 'OVCAA Endorsed';
 			console.log("documentStatus: " + document.documentStatus);
 		} else if (decision === 'false') {
-			document.documentStatus = 'Rejected | OVCAA';
+			document.documentStatus = 'Rejected';
 			console.log("documentStatus: " + document.documentStatus);
 		}
 
@@ -144,7 +159,7 @@ export const approveDocument = async (req, res) => {
 		document.approverContent = content;
 		document.approverRemarks = remarks;
 		document.approverSignature = signature;
-		document.documentStatus = decision === 'true' ? 'OP Approved' : 'Rejected | OP'
+		document.documentStatus = decision === 'true' ? 'OP Approved' : 'Rejected'
 
 		await document.save();
 

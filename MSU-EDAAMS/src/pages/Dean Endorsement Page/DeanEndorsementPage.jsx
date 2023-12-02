@@ -58,119 +58,119 @@ const DeanEndorsementPage = () => {
   };
 
 
-	const [documentDetail, setDocumentDetail] = useState({
-		name: userDetail.firstName + ' ' + userDetail.lastName,
-		header: '',
-		subject: '',
-		content: '',
-		designation: userDetail.designation,
-		signature: userDetail.signature,
-		remarks: '',
-		decision: 'true'
-	})
+  const [documentDetail, setDocumentDetail] = useState({
+    name: userDetail.firstName + ' ' + userDetail.lastName,
+    header: '',
+    subject: '',
+    content: '',
+    designation: userDetail.designation,
+    signature: userDetail.signature,
+    remarks: '',
+    decision: 'true'
+  })
 
-	const socket = io('http://localhost:7000');
+  const socket = io('http://localhost:7000');
 
-	useEffect(() => {
+  useEffect(() => {
 
-		socket.on('createDocument', (newDocument) => {
-			setDocuments((prevDocuments) => [newDocument, ...prevDocuments])
-		});
+    socket.on('createDocument', (newDocument) => {
+      setDocuments((prevDocuments) => [newDocument, ...prevDocuments])
+    });
 
-		// Fetch initial documents
-		const fetchDocuments = async () => {
-			try {
-				await store.fetchDocuments();
-				setDocuments(store.documents);
-			} catch (error) {
-				console.error('Error fetching documents:', error);
-			}
-		};
-		fetchDocuments();
-		return () => {
-			socket.disconnect();
-		};
-	}, [store]);
+    // Fetch initial documents
+    const fetchDocuments = async () => {
+      try {
+        await store.fetchDocuments();
+        setDocuments(store.documents);
+      } catch (error) {
+        console.error('Error fetching documents:', error);
+      }
+    };
+    fetchDocuments();
+    return () => {
+      socket.disconnect();
+    };
+  }, [store]);
 
 
 
   const pendingDocuments = documents
     ? documents
-        .filter((document) => document.documentStatus === "Pending")
-        .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
+      .filter((document) => document.documentStatus === "Pending")
+      .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
     : [];
 
-	const EndorseDocument = async (e, documentId) => {
-		e.preventDefault()
-		try {
-			axios.put(`http://localhost:7000/document/deanEndorsement/${documentId}`, {
-				name: userDetail.firstName + ' ' + userDetail.lastName,
-				header: documentDetail.header,
-				subject: documentDetail.subject,
-				content: documentDetail.content,
-				designation: documentDetail.designation,
-				signature: documentDetail.signature,
-				remarks: documentDetail.remarks,
-				decision: 'true'
-			})
-				.then(res => {
-					console.log(res)
-					setEndorse(false)
-					setOpen(false)
-					if (res.status === 200) {
-						socket.emit('deanEndorsement', {
-							name: userDetail.firstName + ' ' + userDetail.lastName,
-							header: documentDetail.header,
-							subject: documentDetail.subject,
-							content: documentDetail.content,
-							designation: documentDetail.designation,
-							signature: documentDetail.signature,
-							remarks: documentDetail.remarks,
-							decision: 'true'
-						})
-						socket.disconnect();
-						toast.open(
-							<div className="flex gap-2 bg-green-500 text-white p-4 rounded-lg shadow-lg">
-								<LuAlertCircle size={40} />
-								<div>
-									<Typography variant="h5">Success!</Typography>
-									<Typography variant="paragraph">
-										Document Endorsement Successful
-									</Typography>
-								</div>
-							</div>
-						);
-					} else {
-						setEndorse(false)
-						setOpen(false)
-						toast.open(
-							<div className='flex gap-2 bg-red-500 text-white p-4 rounded-lg shadow-lg'>
-								<LuAlertCircle size={40} />
-								<div>
-									<Typography variant='h5'>Failed!</Typography>
-									<Typography variant='paragraph'>Document Rejection Failed</Typography>
-								</div>
+  const EndorseDocument = async (e, documentId) => {
+    e.preventDefault()
+    try {
+      axios.put(`http://localhost:7000/document/deanEndorsement/${documentId}`, {
+        name: userDetail.firstName + ' ' + userDetail.lastName,
+        header: documentDetail.header,
+        subject: documentDetail.subject,
+        content: documentDetail.content,
+        designation: documentDetail.designation,
+        signature: documentDetail.signature,
+        remarks: documentDetail.remarks,
+        rejected: false
+      })
+        .then(res => {
+          console.log(res)
+          setEndorse(false)
+          setOpen(false)
+          if (res.status === 200) {
+            socket.emit('deanEndorsement', {
+              name: userDetail.firstName + ' ' + userDetail.lastName,
+              header: documentDetail.header,
+              subject: documentDetail.subject,
+              content: documentDetail.content,
+              designation: documentDetail.designation,
+              signature: documentDetail.signature,
+              remarks: documentDetail.remarks,
+              decision: 'true'
+            })
+            socket.disconnect();
+            toast.open(
+              <div className="flex gap-2 bg-green-500 text-white p-4 rounded-lg shadow-lg">
+                <LuAlertCircle size={40} />
+                <div>
+                  <Typography variant="h5">Success!</Typography>
+                  <Typography variant="paragraph">
+                    Document Endorsement Successful
+                  </Typography>
+                </div>
+              </div>
+            );
+          } else {
+            setEndorse(false)
+            setOpen(false)
+            toast.open(
+              <div className='flex gap-2 bg-red-500 text-white p-4 rounded-lg shadow-lg'>
+                <LuAlertCircle size={40} />
+                <div>
+                  <Typography variant='h5'>Failed!</Typography>
+                  <Typography variant='paragraph'>Document Rejection Failed</Typography>
+                </div>
 
-							</div>
-						)
-					}
-				})
-		} catch (error) {
-			setEndorse(false)
-			setOpen(false)
-			toast.open(
-				<div className='flex gap-2 bg-red-800 text-white p-4 rounded-lg shadow-lg'>
-					<LuAlertCircle size={40} />
-					<div>
-						<Typography variant='h5'>Error!</Typography>
-						<Typography variant='paragraph'>Document Submittion Error</Typography>
-					</div>
+              </div>
+            )
+          }
+        })
+    } catch (error) {
+      setEndorse(false)
+      setOpen(false)
+      toast.open(
+        <div className='flex gap-2 bg-red-800 text-white p-4 rounded-lg shadow-lg'>
+          <LuAlertCircle size={40} />
+          <div>
+            <Typography variant='h5'>Error!</Typography>
+            <Typography variant='paragraph'>Document Submittion Error</Typography>
+          </div>
 
-				</div>
-			)
-			throw error;
-		}
-	}
+        </div>
+      )
+      throw error;
+    }
+  }
 
   const RejectDocument = async (e, documentId) => {
     e.preventDefault();
@@ -179,9 +179,8 @@ const DeanEndorsementPage = () => {
         .put(`http://localhost:7000/document/deanEndorsement/${documentId}`, {
           name: userDetail.firstName + " " + userDetail.lastName,
           designation: documentDetail.designation,
-          signature: null,
           remarks: documentDetail.remarks,
-          decision: "false",
+          rejected: true
         })
         .then((res) => {
           console.log(res);
@@ -247,19 +246,19 @@ const DeanEndorsementPage = () => {
     });
   };
 
-	const onContent = (e) => {
-		setDocumentDetail({
-			...documentDetail,
-			content: e.target.value
-		})
-	}
+  const onContent = (e) => {
+    setDocumentDetail({
+      ...documentDetail,
+      content: e.target.value
+    })
+  }
 
-	const onRemarks = (value) => {
-		setDocumentDetail({
-			...documentDetail,
-			content: value
-		})
-	}
+  const onRemarks = (e) => {
+    setDocumentDetail({
+      ...documentDetail,
+      remarks: e.target.value
+    })
+  }
 
   return (
     <div className="grid grid-cols-4 w-screen overflow-y-scroll">
@@ -296,55 +295,55 @@ const DeanEndorsementPage = () => {
                   Make Endorsement
                 </Button>
 
-								<Dialog
-									size='xl'
-									open={endorse && endorseSelectedDocument && endorseSelectedDocument._id === document._id}
-									handler={() => setEndorse(false)}>
-									<div className="flex items-center justify-between"
-									>
-										<DialogHeader className='flex w-[100%] bg-indigo-900 '>
-											<Typography
-												className='flex mx-auto font-semibold text-2xl text-white'
-											> Dean Endorsement
-											</Typography>
-										</DialogHeader>
-									</div>
-									<DialogBody className='overflow-y-scroll'>
-										<div className="flex flex-col gap-1.5 h-[70vh]">
-											<div className="flex flex-col gap-2 ">
-												<Textarea
-													color='cyan'
-													variant="standard"
-													label="Header"
-													value={documentDetail.header}
-													onChange={onHeader}
-												/>
-												<Textarea
-													color='cyan'
-													variant="standard"
-													label="Subject"
-													value={documentDetail.subject}
-													onChange={onSubject}
-												/>
-												<Textarea
-													color='cyan'
-													label="Content"
-													value={documentDetail.content}
-													onChange={onContent}
-													className="flex h-screen"
-												/>
-											</div>
-										</div>
-									</DialogBody>
-									<DialogFooter className="space-x-2">
-										<Button variant="standard" color="green" onClick={(e) => EndorseDocument(e, document._id) && setEndorse(false) && setOpen(false)}>
-											Endorse Document To OVCAA
-										</Button>
-										<Button variant="outlined" color="red" onClick={() => setEndorse(false) && setOpen(false)}>
-											close
-										</Button>
-									</DialogFooter>
-								</Dialog>
+                <Dialog
+                  size='xl'
+                  open={endorse && endorseSelectedDocument && endorseSelectedDocument._id === document._id}
+                  handler={() => setEndorse(false)}>
+                  <div className="flex items-center justify-between"
+                  >
+                    <DialogHeader className='flex w-[100%] bg-indigo-900 '>
+                      <Typography
+                        className='flex mx-auto font-semibold text-2xl text-white'
+                      > Dean Endorsement
+                      </Typography>
+                    </DialogHeader>
+                  </div>
+                  <DialogBody className='overflow-y-scroll'>
+                    <div className="flex flex-col gap-1.5 h-[70vh]">
+                      <div className="flex flex-col gap-2 ">
+                        <Textarea
+                          color='cyan'
+                          variant="standard"
+                          label="Header"
+                          value={documentDetail.header}
+                          onChange={onHeader}
+                        />
+                        <Textarea
+                          color='cyan'
+                          variant="standard"
+                          label="Subject"
+                          value={documentDetail.subject}
+                          onChange={onSubject}
+                        />
+                        <Textarea
+                          color='cyan'
+                          label="Content"
+                          value={documentDetail.content}
+                          onChange={onContent}
+                          className="flex h-screen"
+                        />
+                      </div>
+                    </div>
+                  </DialogBody>
+                  <DialogFooter className="space-x-2">
+                    <Button variant="standard" color="green" onClick={(e) => EndorseDocument(e, document._id) && setEndorse(false) && setOpen(false)}>
+                      Endorse Document To OVCAA
+                    </Button>
+                    <Button variant="outlined" color="red" onClick={() => setEndorse(false) && setOpen(false)}>
+                      close
+                    </Button>
+                  </DialogFooter>
+                </Dialog>
 
                 <Button
                   size="sm"

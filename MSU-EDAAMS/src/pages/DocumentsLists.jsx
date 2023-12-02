@@ -26,7 +26,7 @@ import {
   TimelineBody,
 } from "@material-tailwind/react";
 
-import { HomeIcon, BellIcon, UserCircleIcon, UserIcon, UsersIcon, UserGroupIcon } from "@heroicons/react/24/solid";
+import { HomeIcon, BellIcon, UserCircleIcon, UserIcon, UsersIcon, UserGroupIcon, PlusIcon, ArchiveBoxIcon, DocumentPlusIcon } from "@heroicons/react/24/solid";
 
 import { format } from "date-fns";
 
@@ -36,7 +36,7 @@ import React, { useEffect, useState } from "react";
 
 import axios from "axios";
 import { BiDetail, BiEdit, BiTrash } from "react-icons/bi";
-import { BsAppIndicator, BsCardChecklist, BsRecord2Fill } from "react-icons/bs";
+import { BsAppIndicator, BsCardChecklist, BsPlus, BsRecord2Fill } from "react-icons/bs";
 import { HiOutlineDocumentAdd } from "react-icons/hi";
 import TrackDocumentContent from "../components/TrackingContent";
 
@@ -107,7 +107,8 @@ export const DocumentsLists = () => {
               document.documentStatus === "Endorsed" ||
               document.documentStatus === "Dean Approved" ||
               document.documentStatus === "Pending" ||
-              document.documentStatus === "OP Approved"
+              document.documentStatus === "OP Approved" ||
+              document.documentStatus === "Rejected"
           );
 
         setTableRows(sortedDocuments);
@@ -225,7 +226,7 @@ export const DocumentsLists = () => {
               </Typography>
             </CardHeader>
             <CardBody className="flex flex-col h-96 overflow-y-scroll">
-              {selectedDocument && (
+              {selectedDocument.documentStatus !== 'Rejected' && (
                 <Timeline>
                   <TimelineItem>
                     <TimelineConnector />
@@ -395,6 +396,79 @@ export const DocumentsLists = () => {
                       </Typography>
                     </TimelineBody>
                   </TimelineItem>
+                </Timeline>
+              )}
+              {selectedDocument.documentStatus === 'Rejected' && (
+                <Timeline>
+                  <TimelineItem>
+                    <TimelineConnector />
+                    <TimelineHeader>
+                      <TimelineIcon className="p-2">
+                        <UsersIcon className="h-4 w-4" />
+                      </TimelineIcon>
+                      <Typography variant="h6" color="blue-gray">
+                        {selectedDocument.rejectedPoint}
+                      </Typography>
+                    </TimelineHeader>
+                    <TimelineBody className="pb-8">
+                      <Typography
+                        color="gray"
+                        className="font-normal text-md text-gray-800"
+                      >
+                        Date Rejected:{" "}
+                        {selectedDocument.rejectedDate
+                          ? format(
+                            new Date(selectedDocument.rejectedDate),
+                            "yyyy-MM-dd"
+                          )
+                          : "Waiting"}{" "}
+                        <br />
+                        Rejected By:{" "}
+                        {selectedDocument.rejectedName
+                          ? selectedDocument.rejectedName
+                          : "Pending"}{" "}
+                        <br />
+                        Remarks:{" "}
+                        {selectedDocument.rejectedRemarks
+                          ? selectedDocument.rejectedRemarks
+                          : ""}
+                      </Typography>
+                    </TimelineBody>
+                  </TimelineItem>
+
+                  <TimelineItem>
+                    <TimelineConnector />
+                    <TimelineHeader>
+                      <TimelineIcon className="p-2">
+                        <DocumentPlusIcon className="h-4 w-4" />
+                      </TimelineIcon>
+                      <Typography variant="h6" color="blue-gray">
+                        Re-Create Document
+                      </Typography>
+                    </TimelineHeader>
+                    <TimelineBody className="pb-4">
+                      <Button color="green" variant="outlined" onClick={handleCreateNewDocument}>
+                        Create New Document
+                      </Button>
+                    </TimelineBody>
+                  </TimelineItem>
+
+                  {/* <TimelineItem>
+                    <TimelineConnector />
+                    <TimelineHeader>
+                      <TimelineIcon className="p-2">
+                        <ArchiveBoxIcon className="h-4 w-4" />
+                      </TimelineIcon>
+                      <Typography variant="h6" color="blue-gray">
+                        Archive the document
+                      </Typography>
+                    </TimelineHeader>
+                    <TimelineBody className="pb-8">
+                      <Button color="green" variant="outlined" onClick={handleCreateNewDocument}>
+                        Archive Document
+                      </Button>
+                    </TimelineBody>
+                  </TimelineItem> */}
                 </Timeline>
               )}
             </CardBody>

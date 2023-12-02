@@ -80,7 +80,7 @@ const ReleasingDocumentPage = () => {
 	}
 
 	const endorseDocument = documents ? documents
-		.filter((document) => document.documentStatus === 'OP Approved')
+		.filter((document) => (document.documentStatus === 'OP Approved' || document.documentStatus === 'Rejected'))
 		.sort((a, b) => b.createdAt.localeCompare(a.createdAt)) : []
 
 

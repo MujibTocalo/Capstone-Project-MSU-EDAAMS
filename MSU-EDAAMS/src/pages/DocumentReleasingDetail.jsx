@@ -30,20 +30,41 @@ const DocumentReleasingDetail = ({ document }) => {
 					{document.collegeName}
 				</Typography>
 			</div>
-			<div className="flex flex-col py-2 rounded-lg">
-				<Typography className='text-sm pl-2 py-1'>
-					Control No. {document.controlNumber}
-				</Typography>
-				<Typography className='text-sm pl-2 py-1'>
-					<b>Date: </b> {format(new Date(document.createdAt), 'yyyy-MM-dd')}
-				</Typography>
-				<Typography className='text-sm pl-2 py-1'>
-					Approved By: {document.approverName}
-				</Typography>
-				<Typography className='text-sm pl-2 py-1'>
-					<b>Date Approved: </b> {format(new Date(document.approvalDate), 'yyyy-MM-dd')}
-				</Typography>
-			</div>
+
+			{document.documentStatus === 'OP Approved' && (
+				<div className="flex flex-col py-2 rounded-lg">
+					<Typography className='text-sm pl-2 py-1'>
+						Control No. {document.controlNumber}
+					</Typography>
+					<Typography className='text-sm pl-2 py-1'>
+						<b>Date: </b> {format(new Date(document.createdAt), 'yyyy-MM-dd')}
+					</Typography>
+					<Typography className='text-sm pl-2 py-1'>
+						Approved By: {document.approverName}
+					</Typography>
+					<Typography className='text-sm pl-2 py-1'>
+						<b>Date Approved: </b> {format(new Date(document.approvalDate), 'yyyy-MM-dd')}
+					</Typography>
+				</div>
+			)}
+
+			{document.documentStatus === 'Rejected' && (
+				<div className="flex flex-col py-2 rounded-lg">
+					<Typography className='text-sm pl-2 py-1'>
+						Control No. {document.controlNumber}
+					</Typography>
+					<Typography className='text-sm pl-2 py-1'>
+						<b>Date Submitted: </b> {format(new Date(document.createdAt), 'yyyy-MM-dd')}
+					</Typography>
+					<Typography className='text-sm pl-2 py-1'>
+						Rejected By: {document.rejectedName}
+					</Typography>
+					<Typography className='text-sm pl-2 py-1'>
+						<b>Date Rejected: </b> {format(new Date(document.rejectedDate), 'yyyy-MM-dd')}
+					</Typography>
+				</div>
+			)}
+
 		</div>
 	)
 

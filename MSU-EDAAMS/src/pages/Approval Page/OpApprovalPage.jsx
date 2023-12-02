@@ -287,7 +287,7 @@ const OpApprovalPage = () => {
 						<DialogFooter>
 							<div className='flex gap-4'>
 								<Button variant='standard' color='green' onClick={() => handleOpenEndorsement(document)}>
-									Make Endorsement
+									Make Approved Document
 								</Button>
 
 								<Dialog
