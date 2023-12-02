@@ -103,7 +103,7 @@ export const deanEndorsement = async (req, res) => {
 export const ovcaaEndorsement = async (req, res) => {
 	try {
 		const { id } = req.params;
-		const { name, header, subject, content, remark, decision, designation, signature } = req.body;
+		const { name, header, subject, content, remarks, rejected, designation, signature } = req.body;
 
 		const document = await Document.findById(id);
 
@@ -111,21 +111,24 @@ export const ovcaaEndorsement = async (req, res) => {
 			return res.status(404).json({ error: 'Document not found' });
 		}
 
-		document.endorserName = name;
-		document.endorsementHeader = header;
-		document.endorsementSubject = subject;
-		document.endorsementContent = content;
-		document.endorserDesignation = designation;
-		document.endorserSignature = signature;
-		document.endorsementDate = Date.now();
-		document.endorserRemarks = remark;
-
-		if (decision === 'true') {
+		if (rejected === false) {
+			document.endorserName = name;
+			document.endorsementHeader = header;
+			document.endorsementSubject = subject;
+			document.endorsementContent = content;
+			document.endorserDesignation = designation;
+			document.endorserSignature = signature;
+			document.endorsementDate = Date.now();
 			document.documentStatus = 'OVCAA Endorsed';
-			console.log("documentStatus: " + document.documentStatus);
-		} else if (decision === 'false') {
-			document.documentStatus = 'Rejected';
-			console.log("documentStatus: " + document.documentStatus);
+
+		} else if (rejected === true) {
+			document.rejectedName = name;
+			document.rejectedDesignation = designation;
+			document.rejectedRemarks = remarks;
+			document.deanDecision = false;
+			document.rejectedDate = Date.now();
+			document.documentStatus = 'Rejected'
+			document.rejectedPoint = 'Rejected By OVCAA'
 		}
 
 		await document.save();

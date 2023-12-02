@@ -79,7 +79,7 @@ const OVCAAEndorsementPage = () => {
 				designation: documentDetail.designation,
 				signature: documentDetail.signature,
 				remarks: documentDetail.remarks,
-				decision: 'true'
+				rejected: false
 			})
 				.then(res => {
 					setEndorse(false)
@@ -147,9 +147,8 @@ const OVCAAEndorsementPage = () => {
 			axios.put(`http://localhost:7000/document/ovcaaendorsement/${documentId}`, {
 				name: userDetail.firstName + ' ' + userDetail.lastName,
 				designation: documentDetail.designation,
-				signature: null,
 				remarks: documentDetail.remarks,
-				decision: 'false'
+				rejected: true
 			})
 				.then(res => {
 					console.log(res)
@@ -222,10 +221,10 @@ const OVCAAEndorsementPage = () => {
 		})
 	}
 
-	const onRemarks = (value) => {
+	const onRemarks = (e) => {
 		setDocumentDetail({
 			...documentDetail,
-			content: value
+			remarks: e.target.value
 		})
 	}
 
