@@ -425,8 +425,7 @@ export const DocumentsLists = () => {
                         <br />
                         Rejected By:{" "}
                         {selectedDocument.rejectedName
-                          ? selectedDocument.rejectedName
-                          : "Pending"}{" "}
+                          ? selectedDocument.rejectedDesignation + " " + selectedDocument.rejectedName : "Pending"}{" "}
                         <br />
                         Remarks:{" "}
                         {selectedDocument.rejectedRemarks

@@ -86,17 +86,6 @@ const OVCAAEndorsementPage = () => {
 					setOpen(false)
 					console.log(res)
 					if (res.status === 200) {
-						socket.emit('deanEndorsement', {
-							name: userDetail.firstName + ' ' + userDetail.lastName,
-							header: documentDetail.header,
-							subject: documentDetail.subject,
-							content: documentDetail.content,
-							designation: documentDetail.designation,
-							signature: documentDetail.signature,
-							remarks: documentDetail.remarks,
-							decision: 'true'
-						})
-						socket.disconnect();
 						store.fetchDocuments()
 						toast.open(
 							<div className="flex gap-2 bg-green-500 text-white p-4 rounded-lg shadow-lg">
@@ -232,13 +221,6 @@ const OVCAAEndorsementPage = () => {
 
 
 	useEffect(() => {
-		const socket = io('http://localhost:7000');
-
-		socket.on('deanEndorsement', (deanEndorsedDocument) => {
-			// Update documents state when a document is endorsed
-			setDocuments((prevDocuments) => [deanEndorsedDocument, ...prevDocuments]);
-		});
-
 		// Fetch initial documents
 		const fetchDocuments = async () => {
 			try {
@@ -250,11 +232,6 @@ const OVCAAEndorsementPage = () => {
 		};
 
 		fetchDocuments();
-
-		// Clean up the Socket.io connection when the component unmounts
-		return () => {
-			socket.disconnect();
-		};
 	}, [store]);
 
 
