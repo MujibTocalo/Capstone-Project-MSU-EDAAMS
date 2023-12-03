@@ -16,13 +16,13 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
 
   const menus = [
     // { name: 'Dashboard', link: '/dashboard', icon: RiDashboardLine },
-    { name: 'Documents', link: '/documents', icon: HiOutlineDocumentText },
-    { name: 'Dean Endorsement', link: '/deanEndorsement', icon: LuClipboardCheck },
-    { name: 'OVCAA Endorsement', link: '/ovcaaEndorsement', icon: RiAttachment2 },
-    { name: 'OP Approval', link: '/opapproval', icon: HiOutlineDocumentText },
-    { name: 'Releasing Document', link: '/releasedocument', icon: HiUpload },
+    { name: 'Dashboard', link: '/documents', icon: HiOutlineDocumentText },
+    { name: 'Dean', link: '/deanEndorsement', icon: LuClipboardCheck },
+    { name: 'Endorsement', link: '/ovcaaEndorsement', icon: RiAttachment2 },
+    { name: 'Approval', link: '/opapproval', icon: HiOutlineDocumentText },
+    { name: 'Release', link: '/releasedocument', icon: HiUpload },
     { name: 'Archive', link: '/archive', icon: HiOutlineArchive },
-    { name: 'Manage Users', link: '/manageusers', icon: HiOutlineUsers },
+    { name: 'Users', link: '/manageusers', icon: HiOutlineUsers },
     { name: 'Logout', link: '/', icon: BiLogOut },
 
   ]
