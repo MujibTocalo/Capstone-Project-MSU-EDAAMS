@@ -397,7 +397,7 @@ const ManageUsers = () => {
                       <Option value="Approver - OP">
                         Office of the President
                       </Option>
-                      {/* <Option value='Administrator'>Administrator</Option> */}
+                      <Option value='Administrator'>Administrator</Option>
                     </Select>
 
                     <Select
