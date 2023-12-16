@@ -26,7 +26,7 @@ import {
   TimelineBody,
 } from "@material-tailwind/react";
 
-import { HomeIcon, BellIcon, UserCircleIcon, UserIcon, UsersIcon, UserGroupIcon, PlusIcon, ArchiveBoxIcon, DocumentPlusIcon } from "@heroicons/react/24/solid";
+import { UserIcon, UsersIcon, UserGroupIcon, DocumentPlusIcon } from "@heroicons/react/24/solid";
 
 import { format } from "date-fns";
 
@@ -36,9 +36,7 @@ import React, { useEffect, useState } from "react";
 
 import axios from "axios";
 import { BiDetail, BiEdit, BiTrash } from "react-icons/bi";
-import { BsAppIndicator, BsCardChecklist, BsPlus, BsRecord2Fill } from "react-icons/bs";
 import { HiOutlineDocumentAdd } from "react-icons/hi";
-import TrackDocumentContent from "../components/TrackingContent";
 
 const TABS = [
   {
@@ -85,8 +83,6 @@ export const DocumentsLists = () => {
   const [selectedDocumentId, setSelectedDocumentId] = useState(null);
   const [userAccess, setUserAccess] = useState()
 
-  var sortedDocuments;
-
   useEffect(() => {
     const fetchTableRows = async () => {
       try {
@@ -102,33 +98,46 @@ export const DocumentsLists = () => {
           }
         );
 
-        if (currentUserCollege === 'RMO' || currentUserCollege === 'OVCAA' || currentUserCollege === 'OP') {
-          sortedDocuments = documentArray
-            .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-            .filter(
-              (document) =>
-                document.documentStatus === "DeanApproved" ||
-                document.documentStatus === "Dean Endorsed" ||
-                document.documentStatus === "Endorsed" ||
-                document.documentStatus === "Dean Approved" ||
-                document.documentStatus === "Pending" ||
-                document.documentStatus === "OP Approved" ||
-                document.documentStatus === "Rejected"
-            );
-        } else {
-          sortedDocuments = filteredDocuments
-            .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-            .filter(
-              (document) =>
-                document.documentStatus === "DeanApproved" ||
-                document.documentStatus === "Dean Endorsed" ||
-                document.documentStatus === "Endorsed" ||
-                document.documentStatus === "Dean Approved" ||
-                document.documentStatus === "Pending" ||
-                document.documentStatus === "OP Approved" ||
-                document.documentStatus === "Rejected"
-            );
-        }
+        // if (currentUserCollege === 'RMO' || currentUserCollege === 'OVCAA' || currentUserCollege === 'OP') {
+        //   sortedDocuments = documentArray
+        //     .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+        //     .filter(
+        //       (document) =>
+        //         document.documentStatus === "DeanApproved" ||
+        //         document.documentStatus === "Dean Endorsed" ||
+        //         document.documentStatus === "Endorsed" ||
+        //         document.documentStatus === "Dean Approved" ||
+        //         document.documentStatus === "Pending" ||
+        //         document.documentStatus === "OP Approved" ||
+        //         document.documentStatus === "Rejected"
+        //     );
+        // } else {
+        //   sortedDocuments = filteredDocuments
+        //     .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+        //     .filter(
+        //       (document) =>
+        //         document.documentStatus === "DeanApproved" ||
+        //         document.documentStatus === "Dean Endorsed" ||
+        //         document.documentStatus === "Endorsed" ||
+        //         document.documentStatus === "Dean Approved" ||
+        //         document.documentStatus === "Pending" ||
+        //         document.documentStatus === "OP Approved" ||
+        //         document.documentStatus === "Rejected"
+        //     );
+        // }
+
+        const sortedDocuments = documentArray
+          .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+          .filter(
+            (document) =>
+              document.documentStatus === "DeanApproved" ||
+              document.documentStatus === "Dean Endorsed" ||
+              document.documentStatus === "Endorsed" ||
+              document.documentStatus === "Dean Approved" ||
+              document.documentStatus === "Pending" ||
+              document.documentStatus === "OP Approved" ||
+              document.documentStatus === "Rejected"
+          );
 
 
 
@@ -192,7 +201,6 @@ export const DocumentsLists = () => {
   // Function to handle document deletion when confirmed
   const handleDeleteConfirmed = () => {
     if (selectedDocumentId) {
-      console.log(selectedDocumentId)
       deleteDocument(selectedDocumentId);
       hideConfirmationModal();
     }
@@ -222,10 +230,10 @@ export const DocumentsLists = () => {
                 Are you sure you want to delete this document?
               </Typography>
               <div className="flex mt-4 gap-4">
-                <Button onClick={hideConfirmationModal} color="indigo" variant="outlined" size="sm">
+                <Button onClick={hideConfirmationModal} color="red" size="sm">
                   Cancel
                 </Button>
-                <Button onClick={handleDeleteConfirmed} color="red" size="sm">
+                <Button onClick={handleDeleteConfirmed} color="green" size="sm">
                   Confirm Delete
                 </Button>
               </div>

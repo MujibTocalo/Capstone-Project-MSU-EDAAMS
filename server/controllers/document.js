@@ -247,21 +247,8 @@ export const createDocument = async (req, res) => {
 			uploaderDesignation,
 			uploaderName,
 			uploaderSignature,
+			receiver
 		} = req.body;
-
-		if (
-			!controlNumber ||
-			!collegeName ||
-			!documentType ||
-			!header ||
-			!subject ||
-			!content ||
-			!uploaderDesignation ||
-			!uploaderName ||
-			!uploaderSignature
-		) {
-			return res.status(400).json({ error: "Missing required parameters" });
-		}
 
 		const document = await Document.create({
 			controlNumber,
@@ -276,10 +263,13 @@ export const createDocument = async (req, res) => {
 		});
 
 		// Emit a Socket.io event when a new document is created
-		io.emit("newDocument", document);
+		io.emit("newDocument", {
+			senderName: uploaderName,
+			receiverType: receiver,
+			type: 1
+		});
 
 		res.status(201).json({ document });
-		console.log(document);
 	} catch (error) {
 		console.error(error);
 		res.status(500).json({ error: "Internal Server Error" });

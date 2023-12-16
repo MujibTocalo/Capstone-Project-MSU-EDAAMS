@@ -12,6 +12,7 @@ import userRouter from "./routes/user.js";
 import documentRouter from "./routes/document.js";
 import { Server } from "socket.io";
 import http from "http";
+import User from "./models/user.js";
 
 // CONFIGURATION
 const app = express();
@@ -19,12 +20,7 @@ const server = http.createServer(app);
 dotenv.config();
 
 // Middleware
-app.use(
-  cors({
-    origin: "http://127.0.0.1:5173",
-    credentials: true,
-  })
-);
+app.use(cors());
 
 // Set up Socket.io
 const io = new Server(server, {
@@ -34,37 +30,66 @@ const io = new Server(server, {
   },
 });
 
-// Handle Socket.io connections
 io.on("connection", (socket) => {
-  console.log("a user connected");
+  console.log(`User Connected: ${socket.id}`);
 
-  const handleEvent = (eventName, broadcastName) => {
-    socket.on(eventName, (data) => {
-      // Broadcast the data to all connected clients
-      io.emit(broadcastName, data);
-      console.log("NOTIFICATION: ", eventName, data)
+  const userId = socket.handshake.query.userId;
+
+  let userTypes
+
+  // Use async/await to handle the asynchronous findById operation
+  (async () => {
+    try {
+      const user = await User.findById(userId);
+
+      if (user) {
+        userTypes = user.userType || [];
+
+        userTypes.forEach((type) => {
+          socket.join(type); // Join a room for each user type the user has
+        });
+      }
+    } catch (error) {
+      console.error('Error retrieving user:', error);
+    }
+  })();
+
+  socket.on('newDocument', (documentDetails) => {
+    const { receiverType, ...restDetails } = documentDetails;
+
+    if (receiverType && userTypes.includes(receiverType)) {
+      // Emit the event to the specified userType room
+      io.to(receiverType).emit('newDocument', restDetails);
+    } else {
+      console.warn('Invalid receiverUserType or user not in the specified type.');
+    }
+  });
+
+
+
+  app.use("/assets", express.static(path.join(__dirname, "/assets")));
+
+  app.use((req, res, next) => {
+    console.log(req.path, req.method, res.json);
+    next();
+  });
+
+  // ROUTES
+  app.use("/document", documentRouter);
+  app.use("/user", userRouter);
+
+  const userFile = upload.fields([
+    { name: "signature", maxCount: 1 },
+    { name: "profilePicture", maxCount: 1 },
+  ]);
+
+  app.post("/user/register", userFile, register);
+
+  socket.on('disconnect', () => {
+    // Leave all rooms when the user disconnects
+    userTypes?.forEach((type) => {
+      socket.leave(type);
     });
-  };
-
-
-  handleEvent("createDocument", "newDocument");
-
-  const eventsToHandle = [
-    { eventName: "deanEndorsement", broadcastName: "deanEndorsedDocument" },
-    { eventName: "endorsementDocument", broadcastName: "endorsedDocument" },
-    { eventName: "opApprovedDocument", broadcastName: "approvedDocument" },
-    { eventName: "rmoReleasedDocument", broadcastName: 'releasedDocument' },
-
-  ];
-
-  eventsToHandle.forEach((event) =>
-    handleEvent(event.eventName, event.broadcastName),
-
-  );
-
-  // Handle disconnect event (if needed)
-  socket.on("disconnect", () => {
-    console.log("user disconnected");
   });
 });
 
@@ -95,26 +120,11 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-app.use("/assets", express.static(path.join(__dirname, "/assets")));
 
-app.use((req, res, next) => {
-  console.log(req.path, req.method, res.json);
-  next();
-});
-
-// ROUTES
-app.use("/document", documentRouter);
-app.use("/user", userRouter);
-
-const userFile = upload.fields([
-  { name: "signature", maxCount: 1 },
-  { name: "profilePicture", maxCount: 1 },
-]);
-
-app.post("/user/register", userFile, register);
 
 // DATABASE CONFIGURATION
 const PORT = process.env.PORT || 2300;
+
 
 mongoose
   .connect(process.env.MONGODB_URI, {
@@ -122,6 +132,6 @@ mongoose
     useUnifiedTopology: true,
   })
   .then(() => {
-    app.listen(PORT, () => console.log(`Server Port: ${PORT}`));
+    server.listen(PORT, () => console.log(`Server Port: ${PORT}`));
   })
   .catch((error) => console.log(`${error} did not connect`));

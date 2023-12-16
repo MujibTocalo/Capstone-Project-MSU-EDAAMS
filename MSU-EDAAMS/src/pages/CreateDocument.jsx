@@ -113,14 +113,14 @@ const CreateDocument = () => {
                   </div>
                 </div>
               );
-              setDocumentDetail({
-                controlNumber: documentDetail.controlNumber,
-                collegeName: documentDetail.collegeName,
-                documentType: documentDetail.documentType,
-                header: documentDetail.header,
-                subject: documentDetail.subject,
-                content: documentDetail.content,
-              })
+              // setDocumentDetail({
+              //   controlNumber: documentDetail.controlNumber,
+              //   collegeName: documentDetail.collegeName,
+              //   documentType: documentDetail.documentType,
+              //   header: documentDetail.header,
+              //   subject: documentDetail.subject,
+              //   content: documentDetail.content,
+              // })
             } else {
               toast.open(
                 <div className='flex gap-2 bg-red-500 text-white p-4 rounded-lg shadow-lg'>

@@ -37,14 +37,14 @@ const profileMenuItems = [
     label: "My Profile",
     icon: UserCircleIcon,
   },
-  {
-    label: "Edit Profile",
-    icon: Cog6ToothIcon,
-  },
-  {
-    label: "Sign Out",
-    icon: PowerIcon,
-  },
+  // {
+  //   label: "Edit Profile",
+  //   icon: Cog6ToothIcon,
+  // },
+  // {
+  //   label: "Sign Out",
+  //   icon: PowerIcon,
+  // },
 ];
 
 const ProfileMenu = () => {
@@ -116,9 +116,8 @@ const ProfileMenu = () => {
                 )}
                 <ChevronDownIcon
                   strokeWidth={2.5}
-                  className={`h-3 w-3 transition-transform ${
-                    isMenuOpen ? "rotate-180" : ""
-                  }`}
+                  className={`h-3 w-3 transition-transform ${isMenuOpen ? "rotate-180" : ""
+                    }`}
                 />
               </Button>
             </label>
@@ -138,11 +137,10 @@ const ProfileMenu = () => {
                     openProfileDialog();
                   }
                 }}
-                className={`flex items-center gap-2 rounded ${
-                  isLastItem
-                    ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
-                    : ""
-                }`}
+                className={`flex items-center gap-2 rounded ${isLastItem
+                  ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
+                  : ""
+                  }`}
               >
                 {React.createElement(icon, {
                   className: `h-4 w-4 ${isLastItem ? "text-red-500" : ""}`,
@@ -263,21 +261,85 @@ const ProfileMenu = () => {
   );
 };
 
-export const CustomNavbar = ({ setOpen }) => {
+export const CustomNavbar = ({ setOpen, socket }) => {
   const [currentUser, setCurrentUser] = useState();
   const [userDesignation, setUserDesignation] = useState();
   const [userCollege, setUserCollege] = useState();
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [notifications, setNotifications] = useState([]);
+  const [isNotificationVisible, setIsNotificationVisible] = useState(false);
+  const [unreadCount, setUnreadCount] = useState(0);
 
   useEffect(() => {
     const userDetail = JSON.parse(localStorage.getItem("userDetails"));
-    setUserDesignation(userDetail.designation);
     setCurrentUser(userDetail.firstName + " " + userDetail.lastName);
-    setUserCollege(userDetail.office);
-  });
+
+    // Check if socket is valid before setting up the event listener
+    if (socket) {
+      socket.on('newDocument', (documentDetails) => {
+        const hasApproverDeanUserType = userDetail.userType === 'Approver - Dean';
+
+        if (hasApproverDeanUserType) {
+          setNotifications((prevNotifications) => [
+            ...prevNotifications,
+            {
+              id: Date.now(),
+              message: `${documentDetails.senderName} submitted a document.`,
+              isRead: false,
+            },
+          ]);
+          // Increment the unread notifications count
+          setUnreadCount((prevCount) => prevCount + 1);
+        }
+      });
+    }
+
+    // Clean up the socket connection when the component unmounts
+    return () => {
+      // Check if socket is valid before disconnecting
+      if (socket) {
+        socket.disconnect();
+      }
+    };
+  }, [socket]);
+
+  const dismissNotification = (notificationId) => {
+    setNotifications((prevNotifications) =>
+      prevNotifications.map((notification) =>
+        notification.id === notificationId
+          ? { ...notification, isRead: true }
+          : notification
+      )
+    );
+    // Decrement the unread notifications count when a notification is dismissed
+    setUnreadCount((prevCount) => Math.max(0, prevCount - 1));
+  };
+
+  const toggleNotificationVisibility = () => {
+    setIsNotificationVisible((prevVisibility) => !prevVisibility);
+  };
+
+  const markAllAsRead = () => {
+    setNotifications((prevNotifications) =>
+      prevNotifications.map((notification) => ({
+        ...notification,
+        isRead: true,
+      }))
+    );
+    // Set the unread notifications count to zero when marking all as read
+    setUnreadCount(0);
+  };
+
+  const deleteReadNotifications = () => {
+    setNotifications((prevNotifications) =>
+      prevNotifications.filter((notification) => !notification.isRead)
+    );
+    // Set the unread notifications count to zero when deleting read notifications
+    setUnreadCount(0);
+  };
 
   return (
-    <div className="flex max-w-screen items-center bg-indigo-500 justify-between p-1">
+    <div className="flex max-w-screen items-center bg-indigo-500 justify-between p-1 relative">
       <Typography className="flex flex-row gap-4 items-center ml-2 text-lg p-0.5 pr-3 text-center font-semibold text-white rounded-lg">
         <TiThMenuOutline
           onClick={() => setOpen((prevOpen) => !prevOpen)}
@@ -288,26 +350,64 @@ export const CustomNavbar = ({ setOpen }) => {
       </Typography>
 
       <div className="flex flex-row items-center gap-1">
-        {/* <div className="flex relative">
-            <RiNotification3Fill
-              className="cursor-pointer"
-              color="gray"
-              size={28}
-            />
-            <div className="flex bg-red-600 text-xs font-light border rounded-lg p-1.5 h-4 w-4 items-center justify-center translate-x-4 -translate-y-1 absolute">
-              4
+        <div className="relative">
+          <div className={`flex flex-col ${!isNotificationVisible && 'hidden'} rounded-md w-[35vh] bg-white p-2 absolute -translate-x-64 shadow-md gap-2`} style={{ zIndex: 1 }}>
+            {notifications.length > 0 && (
+              <div className="top-0 right-0 flex flex-col items-center mt-2 mr-2 space-y-2">
+                {notifications.map((notification) => (
+                  <div
+                    key={notification.id}
+                    className={`flex bg-white text-xs font-light border rounded-md p-2 w-56 ${notification.isRead ? 'opacity-50' : ''}`}
+                  >
+                    <div className="flex flex-col flex-1">
+                      <div className="font-semibold">{notification.message}</div>
+                      <div className="text-gray-500">{currentUser}</div>
+                    </div>
+                    {!notification.isRead && (
+                      <button
+                        onClick={() => dismissNotification(notification.id)}
+                        className="text-blue-500 hover:underline"
+                      >
+                        Dismiss
+                      </button>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
+
+            <div className="flex mx-auto p-1 gap-1.5">
+              <Button color="blue" onClick={markAllAsRead} size="sm">
+                Mark All as Read
+              </Button>
+              <Button color="red" onClick={deleteReadNotifications} size="sm">
+                Delete Read Notifications
+              </Button>
             </div>
-          </div> */}
+          </div>
+
+          <RiNotification3Fill
+            className="cursor-pointer mr-4"
+            color="white"
+            size={28}
+            onClick={toggleNotificationVisibility}
+          />
+
+          {/* Display the notification counter */}
+          {unreadCount > 0 && (
+            <div className="absolute top-0 right-0 bg-red-500 text-white rounded-full h-4 w-4 flex items-center justify-center text-xs">
+              {unreadCount}
+            </div>
+          )}
+        </div>
+
         <div className="flex flex-col justify-center items-center rounded-xl p-1 cursor-default">
           <Typography className="flex font-md text-md text-white">
             {currentUser}
           </Typography>
-          {/* <Typography className="flex text-xs text-white opacity-80">
-              {userDesignation + ' | ' + userCollege}
-            </Typography> */}
         </div>
         <ProfileMenu />
       </div>
-    </div>
+    </div >
   );
 };
