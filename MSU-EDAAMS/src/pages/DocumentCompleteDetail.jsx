@@ -102,7 +102,7 @@ const DocumentCompleteDetail = ({ document }) => {
 								</div>
 							</div>
 						</div>
-						<Typography className='text-center font-semibold bg-indigo-800 text-white p-1 mt-4 rounded-md shadow-lg'>Dean Endorsement Document By {document.deanDesignation + ', ' + document.deanName}</Typography>
+						<Typography className='text-center font-semibold bg-indigo-800 text-white p-1 mt-4 rounded-md shadow-lg'>{document.documentType} Endorsement Document By {document.deanDesignation + ', ' + document.deanName}</Typography>
 					</div>
 				)}
 
@@ -134,7 +134,7 @@ const DocumentCompleteDetail = ({ document }) => {
 								</div>
 							</div>
 						</div>
-						<Typography className='text-center font-semibold bg-indigo-800 text-white p-1 mt-4 rounded-md shadow-lg'>Original Document By {document.uploaderDesignation + ', ' + document.uploaderName}</Typography>
+						<Typography className='text-center font-semibold bg-indigo-800 text-white p-1 mt-4 rounded-md shadow-lg'>Original {document.documentType}  Document By {document.uploaderDesignation + ', ' + document.uploaderName}</Typography>
 					</div>
 				)}
 

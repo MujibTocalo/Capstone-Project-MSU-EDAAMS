@@ -64,8 +64,6 @@ const CreateDocument = () => {
     handleSubmit();
   };
 
-  const socket = io('http://localhost:7000');
-
 
   const handleSubmit = async () => {
     try {
@@ -104,18 +102,6 @@ const CreateDocument = () => {
         })
           .then(res => {
             if (res.status === 201) {
-              socket.emit('createDocument', {
-                controlNumber,
-                collegeName,
-                documentType,
-                header,
-                subject,
-                content,
-                uploaderName,
-                uploaderSignature,
-                uploaderDesignation
-              })
-              socket.disconnect();
               toast.open(
                 <div className="flex gap-2 bg-green-500 text-white p-4 rounded-lg shadow-lg">
                   <LuAlertCircle size={40} />
