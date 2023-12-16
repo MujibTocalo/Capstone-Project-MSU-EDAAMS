@@ -85,6 +85,8 @@ export const DocumentsLists = () => {
   const [selectedDocumentId, setSelectedDocumentId] = useState(null);
   const [userAccess, setUserAccess] = useState()
 
+  var sortedDocuments;
+
   useEffect(() => {
     const fetchTableRows = async () => {
       try {
@@ -95,21 +97,40 @@ export const DocumentsLists = () => {
         const documentArray = responseData.document;
         const currentUserCollege = userDetail.office;
         const filteredDocuments = documentArray.filter(
-          (document) => document.collegeName === currentUserCollege
+          (document) => {
+            document.collegeName === currentUserCollege
+          }
         );
 
-        const sortedDocuments = documentArray
-          .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-          .filter(
-            (document) =>
-              document.documentStatus === "DeanApproved" ||
-              document.documentStatus === "Dean Endorsed" ||
-              document.documentStatus === "Endorsed" ||
-              document.documentStatus === "Dean Approved" ||
-              document.documentStatus === "Pending" ||
-              document.documentStatus === "OP Approved" ||
-              document.documentStatus === "Rejected"
-          );
+        if (currentUserCollege === 'RMO' || currentUserCollege === 'OVCAA' || currentUserCollege === 'OP') {
+          sortedDocuments = documentArray
+            .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+            .filter(
+              (document) =>
+                document.documentStatus === "DeanApproved" ||
+                document.documentStatus === "Dean Endorsed" ||
+                document.documentStatus === "Endorsed" ||
+                document.documentStatus === "Dean Approved" ||
+                document.documentStatus === "Pending" ||
+                document.documentStatus === "OP Approved" ||
+                document.documentStatus === "Rejected"
+            );
+        } else {
+          sortedDocuments = filteredDocuments
+            .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+            .filter(
+              (document) =>
+                document.documentStatus === "DeanApproved" ||
+                document.documentStatus === "Dean Endorsed" ||
+                document.documentStatus === "Endorsed" ||
+                document.documentStatus === "Dean Approved" ||
+                document.documentStatus === "Pending" ||
+                document.documentStatus === "OP Approved" ||
+                document.documentStatus === "Rejected"
+            );
+        }
+
+
 
         setTableRows(sortedDocuments);
         setFilteredTableRows(sortedDocuments);
@@ -256,11 +277,6 @@ export const DocumentsLists = () => {
                         {selectedDocument.uploaderName
                           ? selectedDocument.uploaderName
                           : "Pending"}{" "}
-                        <br />
-                        Remarks:{" "}
-                        {selectedDocument.remarks
-                          ? selectedDocument.remarks
-                          : ""}
                       </Typography>
                     </TimelineBody>
                   </TimelineItem>
@@ -292,10 +308,6 @@ export const DocumentsLists = () => {
                           ? selectedDocument.deanName
                           : "Pending"}{" "}
                         <br />
-                        Remarks:{" "}
-                        {selectedDocument.deanRemarks
-                          ? selectedDocument.deanRemarks
-                          : ""}
                       </Typography>
                     </TimelineBody>
                   </TimelineItem>
@@ -327,10 +339,7 @@ export const DocumentsLists = () => {
                           ? selectedDocument.endorserName
                           : "Pending"}{" "}
                         <br />
-                        Remarks:{" "}
-                        {selectedDocument.EndorserRemarks
-                          ? selectedDocument.EndorserRemarks
-                          : ""}
+
                       </Typography>
                     </TimelineBody>
                   </TimelineItem>
@@ -362,10 +371,6 @@ export const DocumentsLists = () => {
                           ? selectedDocument.approverName
                           : "Pending"}{" "}
                         <br />
-                        Remarks:{" "}
-                        {selectedDocument.EndorserRemarks
-                          ? selectedDocument.remarks
-                          : ""}
                       </Typography>
                     </TimelineBody>
                   </TimelineItem>
