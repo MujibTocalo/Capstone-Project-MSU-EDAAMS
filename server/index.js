@@ -84,6 +84,17 @@ io.on("connection", async (socket) => {
     }
   });
 
+  socket.on('opApproved', (documentDetails) => {
+    const { receiverType, ...restDetails } = documentDetails;
+
+    if (receiverType && userTypes.includes(receiverType)) {
+      // Emit the event to the specified userType room
+      io.to(receiverType).emit('opApproved', restDetails);
+    } else {
+      console.warn('Invalid receiverUserType or user not in the specified type.');
+    }
+  });
+
 
 
   app.use("/assets", express.static(path.join(__dirname, "/assets")));

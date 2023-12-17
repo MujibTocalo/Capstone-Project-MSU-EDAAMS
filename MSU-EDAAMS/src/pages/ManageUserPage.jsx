@@ -392,12 +392,15 @@ const ManageUsers = () => {
                       <Option value="Uploader">Department Chairperson</Option>
                       <Option value="Approver - Dean">College Dean</Option>
                       <Option value="Endorser - OVCAA">
-                        Office of the Vice Chancellor for Academic Affairs
+                        OVCAA - User
                       </Option>
                       <Option value="Approver - OP">
-                        Office of the President
+                        OP - User
                       </Option>
-                      <Option value='Administrator'>Administrator</Option>
+                      <Option value="Releaser">
+                        RMO - User
+                      </Option>
+                      {/* <Option value='Administrator'>Administrator</Option> */}
                     </Select>
 
                     <Select

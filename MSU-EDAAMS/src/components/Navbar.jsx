@@ -287,7 +287,7 @@ export const CustomNavbar = ({ setOpen, socket }) => {
             ...prevNotifications,
             {
               id: Date.now(),
-              message: `${documentDetails.designation}, ${documentDetails.senderName} submitted a document.`,
+              message: `${documentDetails.designation}, ${documentDetails.senderName} has submitted a document.`,
               document: `${documentDetails.documentType}`,
               isRead: false,
             },
@@ -308,7 +308,7 @@ export const CustomNavbar = ({ setOpen, socket }) => {
           ...prevNotifications,
           {
             id: Date.now(), // Unique identifier for each notification
-            message: `${documentDetails.designation}, ${documentDetails.senderName} approved and Endorsed a document.`,
+            message: `${documentDetails.designation}, ${documentDetails.senderName} has approved and Endorsed a document.`,
             isRead: false,
           },
         ]);
@@ -326,7 +326,24 @@ export const CustomNavbar = ({ setOpen, socket }) => {
           ...prevNotifications,
           {
             id: Date.now(), // Unique identifier for each notification
-            message: `${documentDetails.designation}, ${documentDetails.senderName} approved and Endorsed a document.`,
+            message: `${documentDetails.designation}, ${documentDetails.senderName} has approved and Endorsed a document.`,
+            isRead: false,
+          },
+        ]);
+        // Increment the unread notifications count
+        setUnreadCount((prevCount) => prevCount + 1);
+      }
+    })
+
+    socket?.on('opApproved', (documentDetails) => {
+      const hasUserType = userDetail.userType === 'Releaser';
+
+      if (hasUserType) {
+        setNotifications((prevNotifications) => [
+          ...prevNotifications,
+          {
+            id: Date.now(), // Unique identifier for each notification
+            message: `${documentDetails.designation}, ${documentDetails.senderName} has approved and Finalized a document.`,
             isRead: false,
           },
         ]);

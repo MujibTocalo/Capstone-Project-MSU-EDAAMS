@@ -183,6 +183,12 @@ export const approveDocument = async (req, res) => {
 
 		await document.save();
 
+		io.emit("opApproved", {
+			senderName: name,
+			designation: designation,
+			receiverType: 'Releaser',
+		});
+
 		res.json({
 			message: 'Success'
 		});
