@@ -70,6 +70,11 @@ export const deanEndorsement = async (req, res) => {
 			document.deanEndorsementDate = Date.now();
 			document.documentStatus = 'Dean Endorsed'
 
+			io.emit("deanEndorsedDocument", {
+				senderName: name,
+				receiverType: 'Endorser - OVCAA',
+			});
+
 		} else if (rejected === true) {
 			document.rejectedName = name;
 			document.rejectedDesignation = designation;
@@ -87,10 +92,7 @@ export const deanEndorsement = async (req, res) => {
 
 		await document.save();
 
-		io.emit("deanEndorsedDocument", {
-			senderName: name,
-			receiverType: 'Endorser - OVCAA',
-		});
+		
 
 		res.json({
 			message: 'Success'
@@ -123,6 +125,12 @@ export const ovcaaEndorsement = async (req, res) => {
 			document.endorsementDate = Date.now();
 			document.documentStatus = 'OVCAA Endorsed';
 
+			io.emit("ovcaaEndorsement", {
+				senderName: name,
+				designation: designation,
+				receiverType: 'Approver - OP',
+			});
+
 		} else if (rejected === true) {
 			document.rejectedName = name;
 			document.rejectedDesignation = designation;
@@ -135,11 +143,7 @@ export const ovcaaEndorsement = async (req, res) => {
 
 		await document.save();
 
-		io.emit("ovcaaEndorsement", {
-			senderName: name,
-			designation: designation,
-			receiverType: 'Approver - OP',
-		});
+		
 
 		res.json({
 			message: 'Success'
@@ -171,6 +175,12 @@ export const approveDocument = async (req, res) => {
 			document.approverSignature = signature;
 			document.documentStatus = 'OP Approved';
 
+			io.emit("opApproved", {
+				senderName: name,
+				designation: designation,
+				receiverType: 'Releaser',
+			});
+
 		} else if (rejected === true) {
 			document.rejectedName = name;
 			document.rejectedDesignation = designation;
@@ -183,11 +193,7 @@ export const approveDocument = async (req, res) => {
 
 		await document.save();
 
-		io.emit("opApproved", {
-			senderName: name,
-			designation: designation,
-			receiverType: 'Releaser',
-		});
+		
 
 		res.json({
 			message: 'Success'
@@ -208,7 +214,6 @@ export const releaseDocument = async (req, res) => {
 		if (!document) {
 			return res.status(404).json({ error: 'Document not found' });
 		}
-
 
 		document.releaserName = ReleaserName;
 		document.releaseDate = Date.now();
