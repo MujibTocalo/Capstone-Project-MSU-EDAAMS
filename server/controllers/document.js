@@ -265,8 +265,7 @@ export const createDocument = async (req, res) => {
 		// Emit a Socket.io event when a new document is created
 		io.emit("newDocument", {
 			senderName: uploaderName,
-			receiverType: receiver,
-			type: 1
+			receiverType: 'Approver - Dean',
 		});
 
 		res.status(201).json({ document });

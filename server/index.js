@@ -30,29 +30,25 @@ const io = new Server(server, {
   },
 });
 
-io.on("connection", (socket) => {
+io.on("connection", async (socket) => {
   console.log(`User Connected: ${socket.id}`);
 
   const userId = socket.handshake.query.userId;
+  let userTypes = [];
 
-  let userTypes
+  try {
+    const user = await User.findById(userId);
 
-  // Use async/await to handle the asynchronous findById operation
-  (async () => {
-    try {
-      const user = await User.findById(userId);
+    if (user) {
+      userTypes = user.userType || [];
 
-      if (user) {
-        userTypes = user.userType || [];
-
-        userTypes.forEach((type) => {
-          socket.join(type); // Join a room for each user type the user has
-        });
-      }
-    } catch (error) {
-      console.error('Error retrieving user:', error);
+      userTypes.forEach((type) => {
+        socket.join(type); // Join a room for each user type the user has
+      });
     }
-  })();
+  } catch (error) {
+    console.error('Error retrieving user:', error);
+  }
 
   socket.on('newDocument', (documentDetails) => {
     const { receiverType, ...restDetails } = documentDetails;

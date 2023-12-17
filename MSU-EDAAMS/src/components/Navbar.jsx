@@ -276,15 +276,19 @@ export const CustomNavbar = ({ setOpen, socket }) => {
 
     // Check if socket is valid before setting up the event listener
     if (socket) {
+      // Listen for 'newDocument' event
       socket.on('newDocument', (documentDetails) => {
+        // Check if the user has the 'Approver - Dean' userType
         const hasApproverDeanUserType = userDetail.userType === 'Approver - Dean';
 
         if (hasApproverDeanUserType) {
+          // Update notifications with the new document
           setNotifications((prevNotifications) => [
             ...prevNotifications,
             {
-              id: Date.now(),
+              id: Date.now(), // Unique identifier for each notification
               message: `${documentDetails.senderName} submitted a document.`,
+              document: `${documentDetails.documentType}`,
               isRead: false,
             },
           ]);
@@ -361,7 +365,7 @@ export const CustomNavbar = ({ setOpen, socket }) => {
                   >
                     <div className="flex flex-col flex-1">
                       <div className="font-semibold">{notification.message}</div>
-                      <div className="text-gray-500">{currentUser}</div>
+                      {/* <div className="text-gray-500">{}</div> */}
                     </div>
                     {!notification.isRead && (
                       <button

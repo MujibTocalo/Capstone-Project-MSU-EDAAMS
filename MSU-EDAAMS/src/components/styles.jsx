@@ -16,6 +16,7 @@ const styles = StyleSheet.create({
   },
   documentDate: {
     fontSize: 11.5,
+    marginTop: 5,
     marginLeft: 20,
     marginBottom: 5,
     fontWeight: "medium",
@@ -26,7 +27,7 @@ const styles = StyleSheet.create({
     // textIndent: 10,
     lineHeight: 2,
     marginLeft: 20,
-    marginTop: 10,
+    marginTop: 15,
     marginRight: 10,
     marginBottom: 5,
     fontWeight: "bold",
@@ -41,7 +42,7 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     marginRight: 10,
     marginBottom: 5,
-    marginTop: 5,
+    marginTop: 10,
     paddingRight: 20,
     textAlign: "justify",
   },
@@ -61,19 +62,19 @@ const styles = StyleSheet.create({
     height: 60,
     alignSelf: "center",
     paddingTop: 15,
-    marginLeft: 250,
+    marginLeft: 270,
   },
 
   name: {
     fontSize: 11.5,
     textAlign: "center",
-    marginLeft: 250,
+    marginLeft: 270,
     textDecoration: "underline",
   },
   designation: {
     fontSize: 11.5,
     textAlign: "center",
-    marginLeft: 250,
+    marginLeft: 270,
   },
   footer: {
     position: "absolute",

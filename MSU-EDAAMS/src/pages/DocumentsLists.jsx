@@ -130,10 +130,8 @@ export const DocumentsLists = () => {
           .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
           .filter(
             (document) =>
-              document.documentStatus === "DeanApproved" ||
               document.documentStatus === "Dean Endorsed" ||
-              document.documentStatus === "Endorsed" ||
-              document.documentStatus === "Dean Approved" ||
+              document.documentStatus === "OVCAA Endorsed" ||
               document.documentStatus === "Pending" ||
               document.documentStatus === "OP Approved" ||
               document.documentStatus === "Rejected"
