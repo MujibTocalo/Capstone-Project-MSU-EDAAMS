@@ -94,11 +94,12 @@ const MainRoutes = ({ socket }) => {
                 (userType === 'Approver - OP' || userType === 'Administrator') ?
                   (<OpApprovalPage />) : (<Navigate to="/restricted" />)} />
 
-            <Route
+            <Route path="/archive" element={<ArchivePage />} />
+            {/* <Route
               path="/archive"
               element={
                 (userType === 'Administrator' || userType === 'Releaser') ?
-                  (<ArchivePage />) : (<Navigate to='/restricted' />)} />
+                  (<ArchivePage />) : (<Navigate to='/restricted' />)} /> */}
 
             <Route
               path="/manageusers"
