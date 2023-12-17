@@ -263,7 +263,7 @@ const ProfileMenu = () => {
 
 export const CustomNavbar = ({ setOpen, socket }) => {
   const [currentUser, setCurrentUser] = useState();
-  const [userDesignation, setUserDesignation] = useState();
+  const [userType, setUserType] = useState();
   const [userCollege, setUserCollege] = useState();
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [notifications, setNotifications] = useState([]);
@@ -273,6 +273,7 @@ export const CustomNavbar = ({ setOpen, socket }) => {
   useEffect(() => {
     const userDetail = JSON.parse(localStorage.getItem("userDetails"));
     setCurrentUser(userDetail.firstName + " " + userDetail.lastName);
+    setUserType(userDetail.userType)
 
     // Check if socket is valid before setting up the event listener
     if (socket) {
@@ -406,58 +407,62 @@ export const CustomNavbar = ({ setOpen, socket }) => {
         <img src={msulogo} alt="logo" className="flex flex-row h-10" />
         MSU EDAAMS
       </Typography>
-
       <div className="flex flex-row items-center gap-1">
-        <div className="relative">
-          <div className={`flex flex-col ${!isNotificationVisible && 'hidden'} rounded-md w-[35vh] bg-white p-2 absolute -translate-x-64 shadow-md gap-2`} style={{ zIndex: 1 }}>
-            {notifications.length > 0 && (
-              <div className="top-0 right-0 flex flex-col items-center mt-2 mr-2 space-y-2">
-                {notifications.map((notification) => (
-                  <div
-                    key={notification.id}
-                    className={`flex bg-white text-xs font-light border rounded-md p-2 w-56 ${notification.isRead ? 'opacity-50' : ''}`}
-                  >
-                    <div className="flex flex-col flex-1">
-                      <div className="font-semibold">{notification.message}</div>
-                      {/* <div className="text-gray-500">{}</div> */}
+
+        {userType !== 'Uploader' && (
+
+          <div className="relative">
+            <div className={`flex flex-col ${!isNotificationVisible && 'hidden'} rounded-md w-[35vh] bg-white p-2 absolute -translate-x-64 shadow-md gap-2`} style={{ zIndex: 1 }}>
+              {notifications.length > 0 && (
+                <div className="top-0 right-0 flex flex-col items-center mt-2 mr-2 space-y-2">
+                  {notifications.map((notification) => (
+                    <div
+                      key={notification.id}
+                      className={`flex bg-white text-xs font-light border rounded-md p-2 w-56 ${notification.isRead ? 'opacity-50' : ''}`}
+                    >
+                      <div className="flex flex-col flex-1">
+                        <div className="font-semibold">{notification.message}</div>
+                        {/* <div className="text-gray-500">{}</div> */}
+                      </div>
+                      {!notification.isRead && (
+                        <button
+                          onClick={() => dismissNotification(notification.id)}
+                          className="text-blue-500 hover:underline"
+                        >
+                          Dismiss
+                        </button>
+                      )}
                     </div>
-                    {!notification.isRead && (
-                      <button
-                        onClick={() => dismissNotification(notification.id)}
-                        className="text-blue-500 hover:underline"
-                      >
-                        Dismiss
-                      </button>
-                    )}
-                  </div>
-                ))}
+                  ))}
+                </div>
+              )}
+
+              <div className="flex mx-auto p-1 gap-1.5">
+                <Button color="blue" onClick={markAllAsRead} size="sm">
+                  Mark All as Read
+                </Button>
+                <Button color="red" onClick={deleteReadNotifications} size="sm">
+                  Delete Read Notifications
+                </Button>
+              </div>
+            </div>
+
+            <RiNotification3Fill
+              className="cursor-pointer mr-4"
+              color="white"
+              size={28}
+              onClick={toggleNotificationVisibility}
+            />
+
+            {/* Display the notification counter */}
+            {unreadCount > 0 && (
+              <div className="absolute top-0 right-0 bg-red-500 text-white rounded-full h-4 w-4 flex items-center justify-center text-xs">
+                {unreadCount}
               </div>
             )}
-
-            <div className="flex mx-auto p-1 gap-1.5">
-              <Button color="blue" onClick={markAllAsRead} size="sm">
-                Mark All as Read
-              </Button>
-              <Button color="red" onClick={deleteReadNotifications} size="sm">
-                Delete Read Notifications
-              </Button>
-            </div>
           </div>
 
-          <RiNotification3Fill
-            className="cursor-pointer mr-4"
-            color="white"
-            size={28}
-            onClick={toggleNotificationVisibility}
-          />
-
-          {/* Display the notification counter */}
-          {unreadCount > 0 && (
-            <div className="absolute top-0 right-0 bg-red-500 text-white rounded-full h-4 w-4 flex items-center justify-center text-xs">
-              {unreadCount}
-            </div>
-          )}
-        </div>
+        )}
 
         <div className="flex flex-col justify-center items-center rounded-xl p-1 cursor-default">
           <Typography className="flex font-md text-md text-white">
@@ -466,6 +471,6 @@ export const CustomNavbar = ({ setOpen, socket }) => {
         </div>
         <ProfileMenu />
       </div>
-    </div >
+    </div>
   );
 };
