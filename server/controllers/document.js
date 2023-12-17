@@ -135,8 +135,11 @@ export const ovcaaEndorsement = async (req, res) => {
 
 		await document.save();
 
-		// Emit a socket event for Endorsement
-		io.emit("endorsementDocument", document);
+		io.emit("ovcaaEndorsement", {
+			senderName: name,
+			designation: designation,
+			receiverType: 'Approver - OP',
+		});
 
 		res.json({
 			message: 'Success'
@@ -249,7 +252,6 @@ export const createDocument = async (req, res) => {
 			uploaderDesignation,
 			uploaderName,
 			uploaderSignature,
-			receiver
 		} = req.body;
 
 		const document = await Document.create({
@@ -267,6 +269,7 @@ export const createDocument = async (req, res) => {
 		// Emit a Socket.io event when a new document is created
 		io.emit("newDocument", {
 			senderName: uploaderName,
+			designation: uploaderDesignation,
 			receiverType: 'Approver - Dean',
 		});
 

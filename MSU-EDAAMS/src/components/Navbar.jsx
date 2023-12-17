@@ -287,7 +287,7 @@ export const CustomNavbar = ({ setOpen, socket }) => {
             ...prevNotifications,
             {
               id: Date.now(),
-              message: `${documentDetails.senderName} submitted a document.`,
+              message: `${documentDetails.designation}, ${documentDetails.senderName} submitted a document.`,
               document: `${documentDetails.documentType}`,
               isRead: false,
             },
@@ -308,7 +308,25 @@ export const CustomNavbar = ({ setOpen, socket }) => {
           ...prevNotifications,
           {
             id: Date.now(), // Unique identifier for each notification
-            message: `Dean ${documentDetails.senderName} approved and Endorsed a document.`,
+            message: `${documentDetails.designation}, ${documentDetails.senderName} approved and Endorsed a document.`,
+            isRead: false,
+          },
+        ]);
+        // Increment the unread notifications count
+        setUnreadCount((prevCount) => prevCount + 1);
+      }
+    })
+
+    // OVCAA TO OP NOTIFICATION
+    socket?.on('ovcaaEndorsement', (documentDetails) => {
+      const hasUserType = userDetail.userType === 'Approver - OP';
+
+      if (hasUserType) {
+        setNotifications((prevNotifications) => [
+          ...prevNotifications,
+          {
+            id: Date.now(), // Unique identifier for each notification
+            message: `${documentDetails.designation}, ${documentDetails.senderName} approved and Endorsed a document.`,
             isRead: false,
           },
         ]);
