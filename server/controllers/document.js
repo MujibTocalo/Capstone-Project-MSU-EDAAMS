@@ -87,8 +87,10 @@ export const deanEndorsement = async (req, res) => {
 
 		await document.save();
 
-		// Emit a socket event for Dean Endorsement
-		io.emit("deanEndorsedDocument", document);
+		io.emit("deanEndorsedDocument", {
+			senderName: name,
+			receiverType: 'Endorser - OVCAA',
+		});
 
 		res.json({
 			message: 'Success'

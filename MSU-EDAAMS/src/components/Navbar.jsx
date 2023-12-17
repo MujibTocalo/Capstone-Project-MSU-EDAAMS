@@ -276,17 +276,17 @@ export const CustomNavbar = ({ setOpen, socket }) => {
 
     // Check if socket is valid before setting up the event listener
     if (socket) {
-      // Listen for 'newDocument' event
+
       socket.on('newDocument', (documentDetails) => {
-        // Check if the user has the 'Approver - Dean' userType
+
         const hasApproverDeanUserType = userDetail.userType === 'Approver - Dean';
 
         if (hasApproverDeanUserType) {
-          // Update notifications with the new document
+
           setNotifications((prevNotifications) => [
             ...prevNotifications,
             {
-              id: Date.now(), // Unique identifier for each notification
+              id: Date.now(),
               message: `${documentDetails.senderName} submitted a document.`,
               document: `${documentDetails.documentType}`,
               isRead: false,
@@ -297,6 +297,25 @@ export const CustomNavbar = ({ setOpen, socket }) => {
         }
       });
     }
+
+
+    // DEAN TO OVCAA NOTIFICATION
+    socket?.on('deanEndorsedDocument', (documentDetails) => {
+      const hasEndorserType = userDetail.userType === 'Endorser - OVCAA';
+
+      if (hasEndorserType) {
+        setNotifications((prevNotifications) => [
+          ...prevNotifications,
+          {
+            id: Date.now(), // Unique identifier for each notification
+            message: `Dean ${documentDetails.senderName} approved and Endorsed a document.`,
+            isRead: false,
+          },
+        ]);
+        // Increment the unread notifications count
+        setUnreadCount((prevCount) => prevCount + 1);
+      }
+    })
 
     // Clean up the socket connection when the component unmounts
     return () => {
