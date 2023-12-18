@@ -98,6 +98,8 @@ export const DocumentsLists = () => {
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
   const [selectedDocumentId, setSelectedDocumentId] = useState(null);
   const [userAccess, setUserAccess] = useState();
+  const [currentPage, setCurrentPage] = useState(1);
+  const documentsPerPage = 9;
 
   useEffect(() => {
     const fetchTableRows = async () => {
@@ -171,6 +173,19 @@ export const DocumentsLists = () => {
     setIsTimelineDialogOpen(!isTimelineDialogOpen);
   };
 
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage((prevPage) => prevPage - 1);
+    }
+  };
+
+  const handleNextPage = () => {
+    const totalPages = Math.ceil(filteredTableRows.length / documentsPerPage);
+    if (currentPage < totalPages) {
+      setCurrentPage((prevPage) => prevPage + 1);
+    }
+  };
+
   const deleteDocument = (documentId) => {
     axios
       .delete(`http://localhost:7000/document/delete/${documentId}`)
@@ -224,7 +239,7 @@ export const DocumentsLists = () => {
   const navigate = useNavigate();
 
   return (
-    <Card className="h-screen w-screen rounded-none bg-white">
+    <Card className="h-full w-screen px-12 mx-auto my-auto rounded-none bg-white">
       <div>
         <Dialog
           size="sm"
@@ -544,7 +559,7 @@ export const DocumentsLists = () => {
             </div>
           </div>
         </div>
-        <div className="flex mb-6 mt-4 whitespace-pre flex-col items-center justify-between gap-4 md:flex-row">
+        <div className="flex mt-4 whitespace-pre flex-col items-center justify-between gap-4 md:flex-row">
           {/* <Tabs value="all" className="w-full md:w-max whitespace-pre">
             <TabsHeader>
               {TABS.map(({ label, value }) => (
@@ -556,14 +571,14 @@ export const DocumentsLists = () => {
           </Tabs> */}
         </div>
       </CardHeader>
-      <CardBody className="overflow-scroll px-1 py-10">
+      <CardBody className="overflow-hidden px-1 py-4">
         <table className="min-w-max table-auto" style={{ width: "100%" }}>
           <thead>
             <tr>
               {TABLE_HEAD.map((head, index) => (
                 <th
                   key={head}
-                  className="border-y border-blue-gray-100 bg-indigo-50/50 p-4 transition-colors sticky -top-8 "
+                  className="border-y border-blue-gray-100 bg-indigo-50/50 p-4 transition-colors"
                 >
                   <Typography
                     variant="small"
@@ -577,164 +592,166 @@ export const DocumentsLists = () => {
             </tr>
           </thead>
           <tbody>
-            {filteredTableRows.map(
-              (
-                {
-                  _id,
-                  documentType,
-                  uploaderName,
-                  uploaderDesignation,
-                  controlNumber,
-                  documentStatus,
-                  collegeName,
-                  createdAt,
-                },
-                index
-              ) => {
-                const isLast = index === tableRows.length - 1;
-                const classes = isLast
-                  ? "p-2"
-                  : "p-2 border-b border-blue-gray-50";
+            {filteredTableRows
+              .slice((currentPage - 1) * documentsPerPage, currentPage * documentsPerPage)
+              .map(
+                (
+                  {
+                    _id,
+                    documentType,
+                    uploaderName,
+                    uploaderDesignation,
+                    controlNumber,
+                    documentStatus,
+                    collegeName,
+                    createdAt,
+                  },
+                  index
+                ) => {
+                  const isLast = index === tableRows.length - 1;
+                  const classes = isLast
+                    ? "p-2"
+                    : "p-2 border-b border-blue-gray-50";
 
-                return (
-                  <tr key={controlNumber}>
-                    <td className={classes}>
-                      <div className="flex flex-col items-start ml-4">
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-medium"
-                        >
-                          {documentType}
-                        </Typography>
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-normal opacity-80"
-                        >
-                          Control No. {controlNumber}
-                        </Typography>
-                      </div>
-                    </td>
-                    <td className={classes}>
-                      <div className="flex flex-col gap-1.5">
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-medium"
-                        >
-                          {uploaderName}
-                        </Typography>
+                  return (
+                    <tr key={controlNumber}>
+                      <td className={classes}>
+                        <div className="flex flex-col items-start ml-4">
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-medium"
+                          >
+                            {documentType}
+                          </Typography>
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-normal opacity-80"
+                          >
+                            Control No. {controlNumber}
+                          </Typography>
+                        </div>
+                      </td>
+                      <td className={classes}>
+                        <div className="flex flex-col gap-1.5">
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-medium"
+                          >
+                            {uploaderName}
+                          </Typography>
 
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-normal opacity-70"
-                        >
-                          {uploaderDesignation}
-                        </Typography>
-                      </div>
-                    </td>
-                    <td className={classes}>
-                      <div className="flex flex-col text-start">
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-bold"
-                        >
-                          {collegeName}
-                        </Typography>
-                        {/* <Typography
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-normal opacity-70"
+                          >
+                            {uploaderDesignation}
+                          </Typography>
+                        </div>
+                      </td>
+                      <td className={classes}>
+                        <div className="flex flex-col text-start">
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-bold"
+                          >
+                            {collegeName}
+                          </Typography>
+                          {/* <Typography
 													variant="small"
 													color="blue-gray"
 													className="font-normal opacity-70"
 												>
 													{designation}
 												</Typography> */}
-                      </div>
-                    </td>
-                    <td className={classes}>
-                      <div className="flex flex-row">
-                        <Chip
-                          variant="ghost"
-                          size="md"
-                          value={
-                            documentStatus === "Dean Approved"
-                              ? "Dean Approved"
-                              : documentStatus === "Dean Endorsed"
+                        </div>
+                      </td>
+                      <td className={classes}>
+                        <div className="flex flex-row">
+                          <Chip
+                            variant="ghost"
+                            size="md"
+                            value={
+                              documentStatus === "Dean Approved"
                                 ? "Dean Approved"
-                                : documentStatus === "OVCAA Endorsed"
-                                  ? "OVCAA Approved"
-                                  : documentStatus === "OP Approved"
-                                    ? "OP Approved"
-                                    : documentStatus === "Created"
-                                      ? "Created"
-                                      : documentStatus === "Pending"
-                                        ? "Pending"
-                                        : "Rejected"
-                          }
-                          color={
-                            documentStatus === "Rejected"
-                              ? "red"
-                              : documentStatus === "Pending"
-                                ? "orange"
-                                : "green"
-                          }
-                        />
-                      </div>
-                    </td>
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-medium"
-                      >
-                        {format(new Date(createdAt), "yyyy-MM-dd")}
-                      </Typography>
-                    </td>
-                    <td className={classes}>
-                      <div className="flex flex-row mx-auto gap-1 items-center cursor-pointer">
-                        {/* <BsCardChecklist
+                                : documentStatus === "Dean Endorsed"
+                                  ? "Dean Approved"
+                                  : documentStatus === "OVCAA Endorsed"
+                                    ? "OVCAA Approved"
+                                    : documentStatus === "OP Approved"
+                                      ? "OP Approved"
+                                      : documentStatus === "Created"
+                                        ? "Created"
+                                        : documentStatus === "Pending"
+                                          ? "Pending"
+                                          : "Rejected"
+                            }
+                            color={
+                              documentStatus === "Rejected"
+                                ? "red"
+                                : documentStatus === "Pending"
+                                  ? "orange"
+                                  : "green"
+                            }
+                          />
+                        </div>
+                      </td>
+                      <td className={classes}>
+                        <Typography
+                          variant="small"
+                          color="blue-gray"
+                          className="font-medium"
+                        >
+                          {format(new Date(createdAt), "yyyy-MM-dd")}
+                        </Typography>
+                      </td>
+                      <td className={classes}>
+                        <div className="flex flex-row mx-auto gap-1 items-center cursor-pointer">
+                          {/* <BsCardChecklist
                           size={20}
                           onClick={() => handleTimelineClick(index)}
                         /> */}
-                        <div className="flex w-max gap-4">
-                          <BsCardChecklist
-                            size={25}
-                            className="cursor-pointer hover:scale-110 hover:bg-lightgray hover:text-black"
-                            onClick={() => handleTimelineClick(index)}
-                            title="Track Document"
-                          />
-                        </div>
-                        {userAccess === "Uploader" &&
-                          documentStatus === "Pending" && (
-                            <BiTrash
-                              onClick={() => showConfirmationModal(_id)}
-                              size={34}
-                              className="flex text-gray-700 p-1 rounded-lg hover:scale-105"
+                          <div className="flex w-max gap-4">
+                            <BsCardChecklist
+                              size={25}
+                              className="cursor-pointer hover:scale-110 hover:bg-lightgray hover:text-black"
+                              onClick={() => handleTimelineClick(index)}
+                              title="Track Document"
                             />
-                          )}
-                      </div>
-                    </td>
-                  </tr>
-                );
-              }
-            )}
+                          </div>
+                          {userAccess === "Uploader" &&
+                            documentStatus === "Pending" && (
+                              <BiTrash
+                                onClick={() => showConfirmationModal(_id)}
+                                size={34}
+                                className="flex text-gray-700 p-1 rounded-lg hover:scale-105"
+                              />
+                            )}
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                }
+              )}
           </tbody>
         </table>
       </CardBody>
       <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
-        {/* <Typography variant="small" color="blue-gray" className="font-normal">
-					Page 1 of 10
-				</Typography>
-				<div className="flex gap-2">
-					<Button variant="outlined" size="sm">
-						Previous
-					</Button>
-					<Button variant="outlined" size="sm">
-						Next
-					</Button>
-				</div> */}
+        <Typography variant="small" color="blue-gray" className="font-normal">
+          Page {currentPage} of {Math.ceil(filteredTableRows.length / documentsPerPage)}
+        </Typography>
+        <div className="flex gap-2">
+          <Button variant="outlined" size="sm" onClick={handlePreviousPage}>
+            Previous
+          </Button>
+          <Button variant="outlined" size="sm" onClick={handleNextPage}>
+            Next
+          </Button>
+        </div>
       </CardFooter>
     </Card>
   );

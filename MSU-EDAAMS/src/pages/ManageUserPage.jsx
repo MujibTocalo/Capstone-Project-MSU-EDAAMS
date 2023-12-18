@@ -73,12 +73,28 @@ const ManageUsers = () => {
   const [confirmRegistrationDialog, setConfirmRegistrationDialog] =
     useState(false);
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const documentsPerPage = 9;
+
   const handleOpenRegistrationConfirmation = () => {
     setConfirmRegistrationDialog(true);
   };
 
   const handleCloseRegistrationConfirmation = () => {
     setConfirmRegistrationDialog(false);
+  };
+
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage((prevPage) => prevPage - 1);
+    }
+  };
+
+  const handleNextPage = () => {
+    const totalPages = Math.ceil(filteredTableRows.length / documentsPerPage);
+    if (currentPage < totalPages) {
+      setCurrentPage((prevPage) => prevPage + 1);
+    }
   };
 
   const [open, setOpen] = useState(false);
@@ -254,7 +270,7 @@ const ManageUsers = () => {
   };
 
   return (
-    <Card className="h-full w-screen rounded-lg bg-white">
+    <Card className="h-full w-screen px-12 mx-auto my-auto rounded-none bg-white ">
       <Dialog
         size="sm"
         open={confirmRegistrationDialog}
@@ -516,14 +532,14 @@ const ManageUsers = () => {
           </Tabs>
         </div> */}
       </CardHeader>
-      <CardBody className="overflow-scroll px-0">
+      <CardBody className="overflow-hidden px-0">
         <table className="w-full min-w-max table-auto text-left">
           <thead>
             <tr>
               {TABLE_HEAD.map((head) => (
                 <th
                   key={head}
-                  className="border-y border-blue-gray-100 bg-indigo-50/50 p-4 sticky -top-8"
+                  className="border-y border-blue-gray-100 bg-indigo-50/50 p-4"
                 >
                   <Typography
                     variant="small"
@@ -537,105 +553,120 @@ const ManageUsers = () => {
             </tr>
           </thead>
           <tbody>
-            {filteredTableRows.map(
-              (
-                {
-                  _id,
-                  userType,
-                  firstName,
-                  lastName,
-                  email,
-                  office,
-                  designation,
-                  status,
-                },
-                index
-              ) => {
-                const isLast = index === tableRows.length - 1;
-                const classes = isLast
-                  ? "p-2"
-                  : "p-2 border-b border-blue-gray-50";
+            {filteredTableRows
+              .slice((currentPage - 1) * documentsPerPage, currentPage * documentsPerPage)
+              .map(
+                (
+                  {
+                    _id,
+                    userType,
+                    firstName,
+                    lastName,
+                    email,
+                    office,
+                    designation,
+                    status,
+                  },
+                  index
+                ) => {
+                  const isLast = index === tableRows.length - 1;
+                  const classes = isLast
+                    ? "p-2"
+                    : "p-2 border-b border-blue-gray-50";
 
-                return (
-                  <tr key={_id}>
-                    <td className={classes}>
-                      <div className="flex flex-col">
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-normal"
-                        >
-                          {firstName + " " + lastName}
-                        </Typography>
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-normal opacity-70"
-                        >
-                          {email}
-                        </Typography>
-                      </div>
-                    </td>
-                    <td className={classes}>
-                      <div className="flex flex-col items-start gap-1">
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-light"
-                        >
-                          {userType}
-                        </Typography>
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-normal opacity-50"
-                        >
-                          ID: {_id}
-                        </Typography>
-                      </div>
-                    </td>
+                  return (
+                    <tr key={_id}>
+                      <td className={classes}>
+                        <div className="flex flex-col">
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-normal"
+                          >
+                            {firstName + " " + lastName}
+                          </Typography>
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-normal opacity-70"
+                          >
+                            {email}
+                          </Typography>
+                        </div>
+                      </td>
+                      <td className={classes}>
+                        <div className="flex flex-col items-start gap-1">
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-light"
+                          >
+                            {userType}
+                          </Typography>
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-normal opacity-50"
+                          >
+                            ID: {_id}
+                          </Typography>
+                        </div>
+                      </td>
 
-                    <td className={classes}>
-                      <div className="flex">
+                      <td className={classes}>
+                        <div className="flex">
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-medium"
+                          >
+                            {office}
+                          </Typography>
+                        </div>
+                      </td>
+                      <td className={classes}>
                         <Typography
                           variant="small"
                           color="blue-gray"
-                          className="font-medium"
+                          className="font-medium text-start"
                         >
-                          {office}
+                          {designation}
                         </Typography>
-                      </div>
-                    </td>
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-medium text-start"
-                      >
-                        {designation}
-                      </Typography>
-                    </td>
-                    <td className={classes}>
-                      <div className="flex gap-2 justify-start cursor pointer">
-                        <Button
-                          variant="outlined"
-                          size="md"
-                          onClick={() => handleToggleStatus(_id, status)}
-                          value={status === "Active" ? "Active" : "Inactive"}
-                          color={status === "Active" ? "green" : "red"}
-                          className="hover:scale-105"
-                        >
-                          {status === "Active" ? "Active" : "Inactive"}
-                        </Button>
-                      </div>
-                    </td>
-                  </tr>
-                );
-              }
-            )}
+                      </td>
+                      <td className={classes}>
+                        <div className="flex gap-2 justify-start cursor pointer">
+                          <Button
+                            variant="outlined"
+                            size="md"
+                            onClick={() => handleToggleStatus(_id, status)}
+                            value={status === "Active" ? "Active" : "Inactive"}
+                            color={status === "Active" ? "green" : "red"}
+                            className="hover:scale-105"
+                          >
+                            {status === "Active" ? "Active" : "Inactive"}
+                          </Button>
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                }
+              )}
           </tbody>
         </table>
       </CardBody>
+      <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
+        <Typography variant="small" color="blue-gray" className="font-normal">
+          Page {currentPage} of {Math.ceil(filteredTableRows.length / documentsPerPage)}
+        </Typography>
+        <div className="flex gap-2">
+          <Button variant="outlined" size="sm" onClick={handlePreviousPage}>
+            Previous
+          </Button>
+          <Button variant="outlined" size="sm" onClick={handleNextPage}>
+            Next
+          </Button>
+        </div>
+      </CardFooter>
     </Card>
   );
 };

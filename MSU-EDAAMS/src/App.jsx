@@ -80,7 +80,11 @@ const MainRoutes = ({ socket }) => {
             {/* <Route path="/dashboard" element={<Dashboard />} /> */}
             <Route path="/profilePage" element={<ProfilePage />} />
             <Route path="/documents" element={<DocumentsLists />} />
-            <Route path="/createDocument" element={<CreateDocument />} />
+            {/* <Route path="/createDocument" element={<CreateDocument />} /> */}
+
+            <Route path="/createDocument" element={
+              (userType === 'Approver - Dean' || userType === 'Administrator') ? (<CreateDocument />) : (<Navigate to='/restricted' />)} />
+
             <Route path="/newCreateDocument" element={<NewCreateDocument />} />
             <Route path="/approvedocument" element={<ApproveDocument />} />
             <Route
