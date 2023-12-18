@@ -20,12 +20,17 @@ const server = http.createServer(app);
 dotenv.config();
 
 // Middleware
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://127.0.0.1:4173",
+    credentials: true,
+  })
+);
 
 // Set up Socket.io
 const io = new Server(server, {
   cors: {
-    origin: "http://127.0.0.1:5173",
+    origin: "http://127.0.0.1:4173",
     credentials: true
   },
 });
