@@ -22,7 +22,7 @@ import RestrictedPage from "./pages/RestrictedPage";
 import NewCreateDocument from "./pages/NewCreateDocument";
 import DeanEndorsementPage from "./pages/Dean Endorsement Page/DeanEndorsementPage";
 import OVCAAEndorsementPage from "./pages/OVCAA Endorsement Page/OVCAAEndorsementPage";
-import OpApprovalPage from './pages/Approval Page/OpApprovalPage'
+import OpApprovalPage from "./pages/Approval Page/OpApprovalPage";
 
 // const socket = io.connect('ws://localhost:7000', {
 //   withCredentials: true
@@ -30,14 +30,13 @@ import OpApprovalPage from './pages/Approval Page/OpApprovalPage'
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [socket, setSocket] = useState()
+  const [socket, setSocket] = useState();
 
   useEffect(() => {
     setSocket(io.connect("ws://localhost:7000"), {
       withCredentials: true,
     });
-
-  }, [])
+  }, []);
 
   const handleLogin = () => {
     setIsLoggedIn(true);
@@ -48,7 +47,10 @@ const App = () => {
       {isLoggedIn && <Sidebar />}
       <Routes>
         <Route path="/" element={<LandingPage />} />
-        <Route path="/login" element={<Login socket={socket} onLogin={handleLogin} />} />
+        <Route
+          path="/login"
+          element={<Login socket={socket} onLogin={handleLogin} />}
+        />
         <Route path="/registration" element={<Registration />} />
         <Route path="/*" element={<MainRoutes socket={socket} />} />
       </Routes>
@@ -58,17 +60,16 @@ const App = () => {
 
 const MainRoutes = ({ socket }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [userType, setUserType] = useState('')
+  const [userType, setUserType] = useState("");
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
   useEffect(() => {
-    const userDetail = JSON.parse(localStorage.getItem('userDetails'))
+    const userDetail = JSON.parse(localStorage.getItem("userDetails"));
     setUserType(userDetail.userType);
   }, []);
-
 
   return (
     <div className="flex flex-row max-h-screen w-screen overflow-hidden">
@@ -86,14 +87,16 @@ const MainRoutes = ({ socket }) => {
               (userType === 'Approver - Dean' || userType === 'Administrator') ? (<CreateDocument />) : (<Navigate to='/restricted' />)} /> */}
 
             {/* <Route path="/newCreateDocument" element={<NewCreateDocument />} /> */}
-            <Route path="/deanEndorsement" element={<deanEndorsementPage />} />
+            <Route path="/deanEndorsement" element={<DeanEndorsementPage />} />
             {/* <Route
               path="/deanEndorsement"
               element={
                 (userType === 'Approver - Dean' || userType === 'Administrator') ? (<DeanEndorsementPage />) : (<Navigate to='/restricted' />)} /> */}
 
-
-            <Route path="/ovcaaEndorsement" element={<OVCAAEndorsementPage />} />
+            <Route
+              path="/ovcaaEndorsement"
+              element={<OVCAAEndorsementPage />}
+            />
 
             {/* <Route
               path="/ovcaaEndorsement"
@@ -119,20 +122,29 @@ const MainRoutes = ({ socket }) => {
             <Route
               path="/manageusers"
               element={
-                userType === 'Administrator' ?
-                  (<ManageUsers />) : (<Navigate to="/restricted" />)} />
+                userType === "Administrator" ? (
+                  <ManageUsers />
+                ) : (
+                  <Navigate to="/restricted" />
+                )
+              }
+            />
             <Route
               path="/releasedocument"
-              element=
-              {
-                (userType === 'Administrator' || userType === 'Releaser') ?
-                  (<ReleasingDocumentPage />) : (<Navigate to="/restricted" />)} />
+              element={
+                userType === "Administrator" || userType === "Releaser" ? (
+                  <ReleasingDocumentPage />
+                ) : (
+                  <Navigate to="/restricted" />
+                )
+              }
+            />
 
             <Route path="/restricted" element={<RestrictedPage />} />
           </Routes>
         </div>
       </div>
     </div>
-  )
+  );
 };
 export default App;

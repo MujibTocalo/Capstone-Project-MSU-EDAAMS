@@ -399,7 +399,7 @@ export const CustomNavbar = ({ setOpen, socket }) => {
   };
 
   return (
-    <div className="flex max-w-screen items-center bg-white justify-between p-1 relative">
+    <div className="flex max-w-screen items-center bg-white justify-between p-1 relative px-6">
       <Typography className="flex flex-row gap-4 items-center ml-2 text-lg p-0.5 pr-3 text-center font-semibold rounded-lg">
         <TiThMenuOutline
           onClick={() => setOpen((prevOpen) => !prevOpen)}
