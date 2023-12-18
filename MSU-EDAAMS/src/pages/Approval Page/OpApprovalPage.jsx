@@ -82,7 +82,7 @@ const OpApprovalPage = () => {
 				designation: documentDetail.designation,
 				signature: documentDetail.signature,
 				remarks: documentDetail.remarks,
-				rejected: true
+				rejected: false
 			})
 				.then(res => {
 					setEndorse(false)

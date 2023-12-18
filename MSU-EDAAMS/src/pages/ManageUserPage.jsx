@@ -415,6 +415,7 @@ const ManageUsers = () => {
                       <Option value="OVCAA">
                         Office of Vice Chancellor for Academic Affairs
                       </Option>
+                      <Option value="RMO">Record Management Office</Option>
                       <Option value="COA">College of Agriculture</Option>
                       <Option value="CBAA">
                         College of Business Administration and Accountancy

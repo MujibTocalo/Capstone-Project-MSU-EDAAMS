@@ -9,6 +9,7 @@ import image from "../pages/images/image3.png";
 import image1 from "../pages/images/asset 2@3x.png";
 import MSULogo from "../assets/msulogo.png";
 import CICSLogo from "../assets/CICS_Logo.png";
+import { useEffect } from "react";
 
 import {
   Button,
@@ -21,13 +22,18 @@ import {
   Input,
 } from "@material-tailwind/react";
 
-const LandingPage = () => {
+const LandingPage = ({ socket }) => {
   const toast = useToast();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
+  const [user, setUser] = useState();
+
+  useEffect(() => {
+    socket?.emit('newUser', user);
+  }, [user])
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -56,6 +62,7 @@ const LandingPage = () => {
           .then((userResponse) => {
             const userDetails = userResponse.data;
             localStorage.setItem("userDetails", JSON.stringify(userDetails));
+            setUser(email)
             toast.open(
               <div className="flex gap-2 bg-green-500 text-white p-4 rounded-lg shadow-lg">
                 <LuAlertCircle size={40} />
@@ -219,6 +226,8 @@ const LandingPage = () => {
                 size="lg"
               />
               <Typography className="-mb-2" variant="h6">
+                Your Password
+              </Typography>
                 Your Password
               </Typography>
               <Input

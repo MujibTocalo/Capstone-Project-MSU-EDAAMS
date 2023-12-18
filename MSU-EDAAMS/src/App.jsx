@@ -17,31 +17,20 @@ import { DocumentsLists } from "./pages/DocumentsLists";
 import TestingPage from "./pages/TestingPage";
 import ReleasingDocumentPage from "./pages/ReleasingDocumentPage";
 import { CustomNavbar } from "./components/Navbar";
-import { io } from "socket.io-client/dist/socket.io.js";
+import io from "socket.io-client/dist/socket.io.js";
 import RestrictedPage from "./pages/RestrictedPage";
 import NewCreateDocument from "./pages/NewCreateDocument";
 import DeanEndorsementPage from "./pages/Dean Endorsement Page/DeanEndorsementPage";
 import OVCAAEndorsementPage from "./pages/OVCAA Endorsement Page/OVCAAEndorsementPage";
 import OpApprovalPage from './pages/Approval Page/OpApprovalPage'
 
-const socket = io('http://localhost:7000')
-
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [socket, setSocket] = useState()
 
   useEffect(() => {
-    socket.on("newDocument", (newDocument) => {
-      // Handle the new document, e.g., update state
-      console.log("New Document Received:", newDocument);
-      // You might want to update the state or trigger a fetchDocuments function
-    });
-
-    // Cleanup the socket listener when the component unmounts
-    return () => {
-      socket.off("newDocument");
-    };
-  }, []);
-
+    setSocket(io("http://localhost:7000"));
+  }, [])
 
   const handleLogin = () => {
     setIsLoggedIn(true);
@@ -52,15 +41,15 @@ const App = () => {
       {isLoggedIn && <Sidebar />}
       <Routes>
         <Route path="/" element={<LandingPage />} />
-        <Route path="/login" element={<Login onLogin={handleLogin} />} />
+        <Route path="/login" element={<Login socket={socket} onLogin={handleLogin} />} />
         <Route path="/registration" element={<Registration />} />
-        <Route path="/*" element={<MainRoutes />} />
+        <Route path="/*" element={<MainRoutes socket={socket} />} />
       </Routes>
     </div>
   );
 };
 
-const MainRoutes = () => {
+const MainRoutes = ({ socket }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [userType, setUserType] = useState('')
 
@@ -76,10 +65,10 @@ const MainRoutes = () => {
 
   return (
     <div className="flex flex-col max-h-screen overflow-hidden">
-      <CustomNavbar setOpen={setIsSidebarOpen} />
+      <CustomNavbar socket={socket} setOpen={setIsSidebarOpen} />
       <div className="flex max-w-fit overflow-hidden">
         <Sidebar isOpen={isSidebarOpen} toggleSidebar={!toggleSidebar} style={{ zIndex: 1, position: 'relative' }} />
-        <div className="flex flex-col max-w-fit overflow-hidden flex-grow">
+        <div className="flex flex-col relative max-w-fit overflow-hidden flex-grow">
           <Routes>
             {/* <Route path="/dashboard" element={<Dashboard />} /> */}
             <Route path="/profilePage" element={<ProfilePage />} />

@@ -53,7 +53,6 @@ import {
   BsRecord2Fill,
 } from "react-icons/bs";
 import { HiOutlineDocumentAdd } from "react-icons/hi";
-import TrackDocumentContent from "../components/TrackingContent";
 
 const TABS = [
   {
@@ -110,8 +109,38 @@ export const DocumentsLists = () => {
         const documentArray = responseData.document;
         const currentUserCollege = userDetail.office;
         const filteredDocuments = documentArray.filter(
-          (document) => document.collegeName === currentUserCollege
+          (document) => {
+            document.collegeName === currentUserCollege
+          }
         );
+
+        // if (currentUserCollege === 'RMO' || currentUserCollege === 'OVCAA' || currentUserCollege === 'OP') {
+        //   sortedDocuments = documentArray
+        //     .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+        //     .filter(
+        //       (document) =>
+        //         document.documentStatus === "DeanApproved" ||
+        //         document.documentStatus === "Dean Endorsed" ||
+        //         document.documentStatus === "Endorsed" ||
+        //         document.documentStatus === "Dean Approved" ||
+        //         document.documentStatus === "Pending" ||
+        //         document.documentStatus === "OP Approved" ||
+        //         document.documentStatus === "Rejected"
+        //     );
+        // } else {
+        //   sortedDocuments = filteredDocuments
+        //     .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+        //     .filter(
+        //       (document) =>
+        //         document.documentStatus === "DeanApproved" ||
+        //         document.documentStatus === "Dean Endorsed" ||
+        //         document.documentStatus === "Endorsed" ||
+        //         document.documentStatus === "Dean Approved" ||
+        //         document.documentStatus === "Pending" ||
+        //         document.documentStatus === "OP Approved" ||
+        //         document.documentStatus === "Rejected"
+        //     );
+        // }
 
         const sortedDocuments = documentArray
           .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
@@ -125,6 +154,8 @@ export const DocumentsLists = () => {
               document.documentStatus === "OP Approved" ||
               document.documentStatus === "Rejected"
           );
+
+
 
         setTableRows(sortedDocuments);
         setFilteredTableRows(sortedDocuments);
@@ -187,7 +218,6 @@ export const DocumentsLists = () => {
   // Function to handle document deletion when confirmed
   const handleDeleteConfirmed = () => {
     if (selectedDocumentId) {
-      console.log(selectedDocumentId);
       deleteDocument(selectedDocumentId);
       hideConfirmationModal();
     }
@@ -227,7 +257,7 @@ export const DocumentsLists = () => {
                 >
                   Cancel
                 </Button>
-                <Button onClick={handleDeleteConfirmed} color="red" size="sm">
+                <Button onClick={handleDeleteConfirmed} color="green" size="sm">
                   Confirm Delete
                 </Button>
               </div>
@@ -278,11 +308,6 @@ export const DocumentsLists = () => {
                         {selectedDocument.uploaderName
                           ? selectedDocument.uploaderName
                           : "Pending"}{" "}
-                        <br />
-                        Remarks:{" "}
-                        {selectedDocument.remarks
-                          ? selectedDocument.remarks
-                          : ""}
                       </Typography>
                     </TimelineBody>
                   </TimelineItem>
@@ -314,10 +339,6 @@ export const DocumentsLists = () => {
                           ? selectedDocument.deanName
                           : "Pending"}{" "}
                         <br />
-                        Remarks:{" "}
-                        {selectedDocument.deanRemarks
-                          ? selectedDocument.deanRemarks
-                          : ""}
                       </Typography>
                     </TimelineBody>
                   </TimelineItem>
@@ -349,10 +370,7 @@ export const DocumentsLists = () => {
                           ? selectedDocument.endorserName
                           : "Pending"}{" "}
                         <br />
-                        Remarks:{" "}
-                        {selectedDocument.EndorserRemarks
-                          ? selectedDocument.EndorserRemarks
-                          : ""}
+
                       </Typography>
                     </TimelineBody>
                   </TimelineItem>
@@ -384,10 +402,6 @@ export const DocumentsLists = () => {
                           ? selectedDocument.approverName
                           : "Pending"}{" "}
                         <br />
-                        Remarks:{" "}
-                        {selectedDocument.EndorserRemarks
-                          ? selectedDocument.remarks
-                          : ""}
                       </Typography>
                     </TimelineBody>
                   </TimelineItem>

@@ -69,8 +69,6 @@ const DeanEndorsementPage = () => {
     decision: 'true'
   })
 
-  const socket = io('http://localhost:7000');
-
   useEffect(() => {
 
 
