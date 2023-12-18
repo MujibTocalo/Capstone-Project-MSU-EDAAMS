@@ -195,19 +195,23 @@ const LandingPage = () => {
               </Typography>
             </CardHeader> */}
             <CardBody className="flex flex-col gap-4">
-            <Typography className="flex flex-col align items-center" variant="h4" color="blue-gray">
-              Sign In
-            </Typography>
-            <Typography
-              className="mb-3 font-normal text-sm align items-center"
-              variant="paragraph"
-              color="gray"
-            >
-              Enter your email and password to Sign In.
-            </Typography>
-            <Typography className="-mb-2" variant="h6">
-              Your Email
-            </Typography>
+              <Typography
+                className="flex flex-col align items-center"
+                variant="h4"
+                color="blue-gray"
+              >
+                Sign In
+              </Typography>
+              <Typography
+                className="mb-3 font-normal text-sm align items-center"
+                variant="paragraph"
+                color="gray"
+              >
+                Enter your email and password to Sign In.
+              </Typography>
+              <Typography className="-mb-2" variant="h6">
+                Your Email
+              </Typography>
               <Input
                 value={email}
                 onChange={handleEmailChange}
@@ -215,8 +219,8 @@ const LandingPage = () => {
                 size="lg"
               />
               <Typography className="-mb-2" variant="h6">
-              Your Password
-            </Typography>
+                Your Password
+              </Typography>
               <Input
                 value={password}
                 onChange={handlePasswordChange}
@@ -226,13 +230,18 @@ const LandingPage = () => {
               />
             </CardBody>
             <CardFooter className="pt-0 hover:scale-105">
-              <Button variant="gradient" onClick={handleLogin} fullWidth>
+              <Button
+                color="indigo"
+                variant="gradient"
+                onClick={handleLogin}
+                fullWidth
+              >
                 Sign In
               </Button>
             </CardFooter>
             <Typography variant="small" className="mb-6 flex justify-center">
-              Don&apos;t have an account?
-              <Typography
+              {/* Don&apos;t have an account? */}
+              {/* <Typography
                 as="a"
                 href="#signup"
                 variant="small"
@@ -241,8 +250,8 @@ const LandingPage = () => {
                 onClick={handleOpen}
               >
                 Sign up
-              </Typography>
-              </Typography>
+              </Typography> */}
+            </Typography>
           </Card>
         </Dialog>
       </div>

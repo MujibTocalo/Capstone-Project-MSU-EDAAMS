@@ -18,8 +18,7 @@ import {
 } from "@react-pdf/renderer";
 import imageHeader from "../assets/ImageHeader.jpg";
 import styles from "../components/styles";
-import { convert } from 'html-to-text';
-
+import { convert } from "html-to-text";
 
 import {
   Card,
@@ -44,8 +43,8 @@ import {
   TimelineBody,
 } from "@material-tailwind/react";
 
-import { format } from 'date-fns'
-import html2pdf from 'html2pdf.js';
+import { format } from "date-fns";
+import html2pdf from "html2pdf.js";
 
 import { useNavigate } from "react-router-dom";
 import documentsStore from "../config/documentsStore";
@@ -58,12 +57,19 @@ import {
   LuTrash,
 } from "react-icons/lu";
 
-import { HomeIcon, BellIcon, UserCircleIcon, UserIcon, UsersIcon, UserGroupIcon } from "@heroicons/react/24/solid";
+import {
+  HomeIcon,
+  BellIcon,
+  UserCircleIcon,
+  UserIcon,
+  UsersIcon,
+  UserGroupIcon,
+} from "@heroicons/react/24/solid";
 import { HiOutlineDocumentAdd } from "react-icons/hi";
 
 import axios from "axios";
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 import { BsCardChecklist, BsDownload } from "react-icons/bs";
 
 const TABS = [
@@ -151,12 +157,10 @@ const ArchivePage = () => {
   //   return convert(htmlContent, options);
   // };
 
-
   const navigate = useNavigate();
 
   return (
     <Card className="h-screen w-screen rounded-none bg-white">
-
       <Dialog
         size="md"
         open={isTimelineDialogOpen}
@@ -170,7 +174,7 @@ const ArchivePage = () => {
             </Typography>
           </CardHeader>
           <CardBody className="flex flex-col h-96 overflow-y-scroll">
-            {selectedDocument.documentStatus === 'Released' && (
+            {selectedDocument.documentStatus === "Released" && (
               <Timeline>
                 <TimelineItem>
                   <TimelineConnector />
@@ -191,9 +195,9 @@ const ArchivePage = () => {
                       Date Uploaded:{" "}
                       {selectedDocument.createdAt
                         ? format(
-                          new Date(selectedDocument.createdAt),
-                          "yyyy-MM-dd"
-                        )
+                            new Date(selectedDocument.createdAt),
+                            "yyyy-MM-dd"
+                          )
                         : "Waiting"}{" "}
                       <br />
                       Uploaded By:{" "}
@@ -202,9 +206,7 @@ const ArchivePage = () => {
                         : "Pending"}{" "}
                       <br />
                       Remarks:{" "}
-                      {selectedDocument.remarks
-                        ? selectedDocument.remarks
-                        : ""}
+                      {selectedDocument.remarks ? selectedDocument.remarks : ""}
                     </Typography>
                   </TimelineBody>
                 </TimelineItem>
@@ -226,9 +228,9 @@ const ArchivePage = () => {
                       Date Approved:{" "}
                       {selectedDocument.deanEndorsementDate
                         ? format(
-                          new Date(selectedDocument.deanEndorsementDate),
-                          "yyyy-MM-dd"
-                        )
+                            new Date(selectedDocument.deanEndorsementDate),
+                            "yyyy-MM-dd"
+                          )
                         : "Waiting"}{" "}
                       <br />
                       Approved By:{" "}
@@ -261,9 +263,9 @@ const ArchivePage = () => {
                       Date Endorsed:{" "}
                       {selectedDocument.endorsementDate
                         ? format(
-                          new Date(selectedDocument.endorsementDate),
-                          "yyyy-MM-dd"
-                        )
+                            new Date(selectedDocument.endorsementDate),
+                            "yyyy-MM-dd"
+                          )
                         : `Waiting for ${selectedDocument.collegeName} Dean Endorsement`}{" "}
                       <br />
                       Endorsed By:{" "}
@@ -296,9 +298,9 @@ const ArchivePage = () => {
                       Final Approval Date:{" "}
                       {selectedDocument.approvalDate
                         ? format(
-                          new Date(selectedDocument.approvalDate),
-                          "yyyy-MM-dd"
-                        )
+                            new Date(selectedDocument.approvalDate),
+                            "yyyy-MM-dd"
+                          )
                         : "Waiting for OVCAA Endorsement"}{" "}
                       <br />
                       Approved By:{" "}
@@ -330,9 +332,9 @@ const ArchivePage = () => {
                       Release Date:{" "}
                       {selectedDocument.releaseDate
                         ? format(
-                          new Date(selectedDocument.releaseDate),
-                          "yyyy-MM-dd"
-                        )
+                            new Date(selectedDocument.releaseDate),
+                            "yyyy-MM-dd"
+                          )
                         : "Waiting for Office of the President Approval"}{" "}
                       <br />
                       {/* Released By: {selectedDocument.opApproverName ? selectedDocument.opApproverName : 'Pending'} <br />
@@ -342,7 +344,7 @@ const ArchivePage = () => {
                 </TimelineItem>
               </Timeline>
             )}
-            {selectedDocument.documentStatus === 'Rejected' && (
+            {selectedDocument.documentStatus === "Rejected" && (
               <Timeline>
                 <TimelineItem>
                   <TimelineConnector />
@@ -362,14 +364,17 @@ const ArchivePage = () => {
                       Date Rejected:{" "}
                       {selectedDocument.rejectedDate
                         ? format(
-                          new Date(selectedDocument.rejectedDate),
-                          "yyyy-MM-dd"
-                        )
+                            new Date(selectedDocument.rejectedDate),
+                            "yyyy-MM-dd"
+                          )
                         : "Waiting"}{" "}
                       <br />
                       Rejected By:{" "}
                       {selectedDocument.rejectedName
-                        ? selectedDocument.rejectedDesignation + " " + selectedDocument.rejectedName : "Pending"}{" "}
+                        ? selectedDocument.rejectedDesignation +
+                          " " +
+                          selectedDocument.rejectedName
+                        : "Pending"}{" "}
                       <br />
                       Remarks:{" "}
                       {selectedDocument.rejectedRemarks
@@ -393,7 +398,6 @@ const ArchivePage = () => {
           </CardFooter>
         </Card>
       </Dialog>
-
 
       <CardHeader
         floated={false}
@@ -459,7 +463,7 @@ const ArchivePage = () => {
                   approverContent,
                   approverName,
                   approverDesignation,
-                  approverSignature
+                  approverSignature,
                 },
                 index
               ) => {
@@ -526,23 +530,23 @@ const ArchivePage = () => {
                             documentStatus === "DeanApproved"
                               ? "Dean Approved"
                               : documentStatus === "Endorsed"
-                                ? "Endorsed"
-                                : documentStatus === "OP Approved"
-                                  ? "OP Approved"
-                                  : documentStatus === "Created"
-                                    ? "Created"
-                                    : documentStatus === "Pending"
-                                      ? "Pending"
-                                      : documentStatus === "Released"
-                                        ? "Released"
-                                        : "Rejected"
+                              ? "Endorsed"
+                              : documentStatus === "OP Approved"
+                              ? "OP Approved"
+                              : documentStatus === "Created"
+                              ? "Created"
+                              : documentStatus === "Pending"
+                              ? "Pending"
+                              : documentStatus === "Released"
+                              ? "Released"
+                              : "Rejected"
                           }
                           color={
                             documentStatus === "Rejected"
                               ? "red"
                               : documentStatus === "Pending"
-                                ? "orange"
-                                : "green"
+                              ? "orange"
+                              : "green"
                           }
                         />
                       </div>
@@ -559,11 +563,12 @@ const ArchivePage = () => {
                     <td className={classes}>
                       <div className="flex items-center justify-start gap-1.5">
                         <BsCardChecklist
-                          size={20}
+                          size={23}
                           onClick={() => handleTimelineClick(index)}
-                          className='cursor-pointer'
+                          className="cursor-pointer hover:scale-110 hover:bg lightgray hover:text-black"
+                          title="Track Document"
                         />
-                        {documentStatus === 'Released' && (
+                        {documentStatus === "Released" && (
                           <PDFDownloadLink
                             document={
                               <Document>
@@ -587,12 +592,17 @@ const ArchivePage = () => {
                                     Subject: {approverSubject}
                                   </Text>
                                   {/* <Text style={styles.content}> {convertHtmlToText(content)} </Text> */}
-                                  <Text style={styles.content}> {approverContent} </Text>
+                                  <Text style={styles.content}>
+                                    {" "}
+                                    {approverContent}{" "}
+                                  </Text>
                                   <Image
                                     src={`http://localhost:7000${approverSignature}`}
                                     style={styles.signature}
                                   />
-                                  <Text style={styles.name}>{approverName}</Text>
+                                  <Text style={styles.name}>
+                                    {approverName}
+                                  </Text>
                                   <Text style={styles.designation}>
                                     {approverDesignation}
                                   </Text>
@@ -602,9 +612,9 @@ const ArchivePage = () => {
                                       MSU-Tawi-Tawi College of Technology &
                                       Oceanology MSU-Maguindanao MSU-General
                                       Santos MSU-Sulu MSU-Naawan MSU-Lanao del
-                                      Norte National Agriculture College MSU-Maigo
-                                      School of Art & Trades MSU-Lanao National
-                                      College of Arts & Trades MSU-Buug
+                                      Norte National Agriculture College
+                                      MSU-Maigo School of Art & Trades MSU-Lanao
+                                      National College of Arts & Trades MSU-Buug
                                     </Text>
                                   </View>
                                 </Page>
@@ -623,8 +633,6 @@ const ArchivePage = () => {
                             }
                           </PDFDownloadLink>
                         )}
-
-
                       </div>
                     </td>
                   </tr>
@@ -635,7 +643,7 @@ const ArchivePage = () => {
         </table>
       </CardBody>
       <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4"></CardFooter>
-    </Card >
+    </Card>
   );
 };
 
