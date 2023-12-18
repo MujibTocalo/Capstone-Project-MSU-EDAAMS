@@ -228,8 +228,6 @@ const LandingPage = ({ socket }) => {
               <Typography className="-mb-2" variant="h6">
                 Your Password
               </Typography>
-                Your Password
-              </Typography>
               <Input
                 value={password}
                 onChange={handlePasswordChange}

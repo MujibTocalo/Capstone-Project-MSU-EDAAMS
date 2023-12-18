@@ -297,9 +297,9 @@ export const DocumentsLists = () => {
                         Date Uploaded:{" "}
                         {selectedDocument.createdAt
                           ? format(
-                              new Date(selectedDocument.createdAt),
-                              "yyyy-MM-dd"
-                            )
+                            new Date(selectedDocument.createdAt),
+                            "yyyy-MM-dd"
+                          )
                           : "Waiting"}{" "}
                         <br />
                         Uploaded By:{" "}
@@ -327,9 +327,9 @@ export const DocumentsLists = () => {
                         Date Approved:{" "}
                         {selectedDocument.deanEndorsementDate
                           ? format(
-                              new Date(selectedDocument.deanEndorsementDate),
-                              "yyyy-MM-dd"
-                            )
+                            new Date(selectedDocument.deanEndorsementDate),
+                            "yyyy-MM-dd"
+                          )
                           : "Waiting"}{" "}
                         <br />
                         Approved By:{" "}
@@ -358,9 +358,9 @@ export const DocumentsLists = () => {
                         Date Endorsed:{" "}
                         {selectedDocument.endorsementDate
                           ? format(
-                              new Date(selectedDocument.endorsementDate),
-                              "yyyy-MM-dd"
-                            )
+                            new Date(selectedDocument.endorsementDate),
+                            "yyyy-MM-dd"
+                          )
                           : `Waiting for ${selectedDocument.collegeName} Dean Endorsement`}{" "}
                         <br />
                         Endorsed By:{" "}
@@ -390,9 +390,9 @@ export const DocumentsLists = () => {
                         Final Approval Date:{" "}
                         {selectedDocument.approvalDate
                           ? format(
-                              new Date(selectedDocument.approvalDate),
-                              "yyyy-MM-dd"
-                            )
+                            new Date(selectedDocument.approvalDate),
+                            "yyyy-MM-dd"
+                          )
                           : "Waiting for OVCAA Endorsement"}{" "}
                         <br />
                         Approved By:{" "}
@@ -420,9 +420,9 @@ export const DocumentsLists = () => {
                         Release Date:{" "}
                         {selectedDocument.releaseDate
                           ? format(
-                              new Date(selectedDocument.releaseDate),
-                              "yyyy-MM-dd"
-                            )
+                            new Date(selectedDocument.releaseDate),
+                            "yyyy-MM-dd"
+                          )
                           : "Waiting for Office of the President Approval"}{" "}
                         <br />
                         {/* Released By: {selectedDocument.opApproverName ? selectedDocument.opApproverName : 'Pending'} <br />
@@ -452,16 +452,16 @@ export const DocumentsLists = () => {
                         Date Rejected:{" "}
                         {selectedDocument.rejectedDate
                           ? format(
-                              new Date(selectedDocument.rejectedDate),
-                              "yyyy-MM-dd"
-                            )
+                            new Date(selectedDocument.rejectedDate),
+                            "yyyy-MM-dd"
+                          )
                           : "Waiting"}{" "}
                         <br />
                         Rejected By:{" "}
                         {selectedDocument.rejectedName
                           ? selectedDocument.rejectedDesignation +
-                            " " +
-                            selectedDocument.rejectedName
+                          " " +
+                          selectedDocument.rejectedName
                           : "Pending"}{" "}
                         <br />
                         Remarks:{" "}
@@ -662,23 +662,23 @@ export const DocumentsLists = () => {
                             documentStatus === "Dean Approved"
                               ? "Dean Approved"
                               : documentStatus === "Dean Endorsed"
-                              ? "Dean Approved"
-                              : documentStatus === "OVCAA Endorsed"
-                              ? "OVCAA Approved"
-                              : documentStatus === "OP Approved"
-                              ? "OP Approved"
-                              : documentStatus === "Created"
-                              ? "Created"
-                              : documentStatus === "Pending"
-                              ? "Pending"
-                              : "Rejected"
+                                ? "Dean Approved"
+                                : documentStatus === "OVCAA Endorsed"
+                                  ? "OVCAA Approved"
+                                  : documentStatus === "OP Approved"
+                                    ? "OP Approved"
+                                    : documentStatus === "Created"
+                                      ? "Created"
+                                      : documentStatus === "Pending"
+                                        ? "Pending"
+                                        : "Rejected"
                           }
                           color={
                             documentStatus === "Rejected"
                               ? "red"
                               : documentStatus === "Pending"
-                              ? "orange"
-                              : "green"
+                                ? "orange"
+                                : "green"
                           }
                         />
                       </div>
@@ -710,8 +710,8 @@ export const DocumentsLists = () => {
                           documentStatus === "Pending" && (
                             <BiTrash
                               onClick={() => showConfirmationModal(_id)}
-                              size={30}
-                              className="flex bg-red-600 text-white p-1 rounded-lg hover:scale-105"
+                              size={34}
+                              className="flex text-gray-700 p-1 rounded-lg hover:scale-105"
                             />
                           )}
                       </div>

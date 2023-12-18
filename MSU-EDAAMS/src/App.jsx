@@ -24,12 +24,19 @@ import DeanEndorsementPage from "./pages/Dean Endorsement Page/DeanEndorsementPa
 import OVCAAEndorsementPage from "./pages/OVCAA Endorsement Page/OVCAAEndorsementPage";
 import OpApprovalPage from './pages/Approval Page/OpApprovalPage'
 
+// const socket = io.connect('ws://localhost:7000', {
+//   withCredentials: true
+// });
+
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [socket, setSocket] = useState()
 
   useEffect(() => {
-    setSocket(io("http://localhost:7000"));
+    setSocket(io.connect("ws://localhost:7000"), {
+      withCredentials: true,
+    });
+
   }, [])
 
   const handleLogin = () => {

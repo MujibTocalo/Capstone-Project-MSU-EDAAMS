@@ -22,7 +22,7 @@ dotenv.config();
 // Middleware
 app.use(
   cors({
-    origin: "http://127.0.0.1:4173",
+    origin: "http://127.0.0.1:5173",
     credentials: true,
   })
 );
@@ -30,7 +30,8 @@ app.use(
 // Set up Socket.io
 const io = new Server(server, {
   cors: {
-    origin: "http://127.0.0.1:4173",
+    origin: "http://127.0.0.1:5173",
+    methods: ["GET", "POST"],
     credentials: true
   },
 });
