@@ -10,6 +10,7 @@ import { BiLogOut, } from 'react-icons/bi'
 import { Link } from 'react-router-dom'
 import { Avatar, Typography } from '@material-tailwind/react'
 import { LuClipboardCheck } from 'react-icons/lu'
+import elogo from '../assets/edaams.png'
 
 
 const Sidebar = ({ isOpen, toggleSidebar }) => {
@@ -29,23 +30,31 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
 
 
   return (
-    <div className={`flex flex-col ${isOpen ? 'opacity-100' : '3s ease-in-out hidden'} bg-white duration-500`} >
-      <div className={`h-screen ${isOpen ? 'w-56' : 'w-14'} bg-gray-100 duration-500 p-1`}>
-        <div className='py-4 flex duration-500 justify-between'>
-          <h1 className={`${!open && '0.5s ease-in-out hidden'} flex 3s ease-in-out mx-auto bg-gray-600 text-white w-screen justify-center py-6 rounded-lg m-2 whitespace-pre font-semibold text-lg`}>MSU EDAAMS</h1>
+    <div className={`flex flex-col ${isOpen ? 'opacity-100' : '3s ease-in-out hidden'} bg-white  transition-all duration-500`} >
+      <div className={`h-screen ${isOpen ? 'w-64' : 'w-0'} bg-[#111927] duration-500 p-1 transition-all`}>
+        <img src={elogo} className='flex  w-28 p-4 -translate-x-6 -translate-y-4' />
+        <div className='py-2 flex flex-col duration-500 m-4 justify-between gap-2'>
+          <div className='flex flex-col rounded-lg p-2 bg-[#1C2536] -translate-y-14'>
+            <Typography className={`${!open && 'hidden'} flex 3s ease-in-out text-white text-start cursor-default rounded-lg whitespace-pre font-bold text-md`}>
+              EDAAMS</Typography>
+            <Typography className='flex text-xs text-gray-400'>
+              MSU - Marawi
+            </Typography>
+          </div>
+
           {/* < TiThMenuOutline size={23} className={`${!open && 'flex ml-2'} flex mr-2.5 cursor-pointer transition`} onClick={() => setOpen(!open)} /> */}
         </div>
-        <div className='mt-4 flex flex-col gap-3 relative'>
+        <div className='mt-4 border-t pt-6 border-gray-800 p-2 flex flex-col gap-3 -translate-y-12 relative'>
           {menus?.map((menu, i) => (
-            <Link to={menu?.link} key={i} className='group flex items-center text-sm gap-3.5 font-medium p-2 ml-3 hover:border hover:border-gray-400/50 hover:bg-gray-100 rounded-lg hover:scale-110'>
+            <Link to={menu?.link} key={i} className='group flex items-center text-white text-sm gap-5 font-medium p-1 ml-3  rounded-lg hover:scale-105'>
               <div>
-                {React.createElement(menu?.icon, { size: '20' })}
+                {React.createElement(menu?.icon, { size: '24' })}
               </div>
               <Typography
                 style={{
                   transitionDelay: `${i + 3}00ms`,
                 }}
-                className={`whitespace-pre text-sm duration-500 ${!isOpen && 'opacity-0 translate-x-28 overflow-hidden'}`}>
+                className={`whitespace-pre text-sm font-semibold duration-500 ${!isOpen && 'opacity-0 translate-x-28 overflow-hidden'}`}>
                 {menu?.name}
               </Typography>
               <Typography className={`${isOpen && 'hidden'} absolute text-sm left-24 bg-indigo-900 whitespace-pre text-white rounded-xl drop-shadow-lg px-0 py-0 w-0 overflow-hidden group-hover:px-2 group-hover:py-1 group-hover:left-14 group-hover:duration-300 group-hover:w-fit`}>

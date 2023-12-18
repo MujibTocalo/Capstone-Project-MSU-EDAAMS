@@ -16,7 +16,8 @@ const DocumentApproverDetail = ({ document }) => {
 	return (
 		<div key={document._id}
 			className='flex flex-col bg-white p-4 px-5 rounded-xl'>
-			<div className="flex flex-col flex-wrap items-center justify-start whitespace-pre">
+			<div className="flex flex-col flex-wrap  items-center justify-start whitespace-pre">
+				<img src={logo} className="flex w-16" />
 				<Typography
 					className='bg-yellow-500/80 font-semibold text-sm rounded-lg m-1 p-2 text-black'>
 					{document.documentType}
@@ -27,23 +28,18 @@ const DocumentApproverDetail = ({ document }) => {
 				</Typography>
 			</div>
 			<div className="flex flex-col rounded-lg text-start">
-				<Typography className='text-sm font-semibold py-1'>
+				{/* <Typography className='text-sm font-semibold py-1'>
 					Control Number :
 				</Typography>
 				<Typography className='text-sm '>
 					{document.controlNumber}
+				</Typography> */}
+				<Typography className='text-sm text-center py-1'>
+					Date : {format(new Date(document.createdAt), 'yyyy-MM-dd')}
 				</Typography>
-				<Typography className='text-sm py-1 font-semibold'>
-					Date :
-				</Typography>
-				<Typography className='text-sm'>
-					{format(new Date(document.createdAt), 'yyyy-MM-dd')}
-				</Typography>
-				<Typography className='text-sm py-1 font-semibold'>
-					Submitted By :
-				</Typography>
-				<Typography className='text-sm pb-1'>
-					{document.uploaderName}
+
+				<Typography className='text-sm text-center py-1'>
+					Submitted By : {document.uploaderName}
 				</Typography>
 			</div>
 		</div>

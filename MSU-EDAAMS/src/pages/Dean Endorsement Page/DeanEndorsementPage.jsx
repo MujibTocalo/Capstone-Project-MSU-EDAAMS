@@ -383,7 +383,7 @@ const DeanEndorsementPage = () => {
 
           <div className="flex flex-row items-center justify-center">
             <Button
-              className="flex flex-col whitespace-pre items-center text-black font-medium m-2 hover:font-semibold hover:scale-105 hover:text-blue-900"
+              className="flex justify-center whitespace-pre items-center text-black font-medium m-2 hover:font-semibold hover:scale-105 hover:text-blue-900"
               size="sm"
               color="white"
               variant="text"

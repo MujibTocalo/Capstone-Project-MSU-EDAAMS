@@ -86,7 +86,7 @@ const MainRoutes = ({ socket }) => {
               (userType === 'Approver - Dean' || userType === 'Administrator') ? (<CreateDocument />) : (<Navigate to='/restricted' />)} /> */}
 
             {/* <Route path="/newCreateDocument" element={<NewCreateDocument />} /> */}
-            <Route path="/deanEndorsement" element={<deanEndorsementPage />} />
+            <Route path="/deanEndorsement" element={<DeanEndorsementPage />} />
             {/* <Route
               path="/deanEndorsement"
               element={

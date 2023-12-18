@@ -86,7 +86,6 @@ const ProfileMenu = () => {
 
   useEffect(() => {
     const storedUserDetails = JSON.parse(localStorage.getItem("userDetails"));
-    console.log(storedUserDetails);
     setUserDetails(storedUserDetails);
     setProfileImage(storedUserDetails.profilePicture);
   }, []);
@@ -161,9 +160,10 @@ const ProfileMenu = () => {
         </MenuList>
       </Menu>
       <Dialog
+        size="md"
         open={isProfileDialogOpen}
         onClose={closeProfileDialog}
-        className="bg-transparent shadow-none"
+        className="flex bg-transparent shadow-none"
       >
         <Card className="mx-auto w-full max-w-[20rem] h-full max-h-[40rem]">
           <CardBody className="flex flex-col gap-4">
@@ -183,20 +183,6 @@ const ProfileMenu = () => {
                     className={`flex border border-blue-200 p-0.5`}
                   />
                 )}
-                <input
-                  type="file"
-                  id="profileImageInput"
-                  onChange={handleImageUpload}
-                  onClick={handleImageClick}
-                  className="hidden"
-                />
-                <Typography
-                  as="p"
-                  variant="sm"
-                  className="border-black p-3 rounded-md text-black-400 pb-2 font-bold text-lg"
-                >
-                  {userDetails.designation}
-                </Typography>
                 <div className="absolute bottom-0 right-0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
               </div>
             </label>
@@ -245,16 +231,39 @@ const ProfileMenu = () => {
                   {userDetails.lastName}
                 </Typography>
               </div>
-              <Typography as="p" variant="sm" className="text-black">
-                {userDetails.collegeOrOffice}
+              <Typography
+                variant="h7"
+                color="blue-gray"
+                className="mb-2 text-sm mt-2 text-blue-gray-400"
+              >
+                Office
               </Typography>
+              <div
+                style={{
+                  border: "1px solid #ccc",
+                  padding: "1px",
+                  borderRadius: "10px",
+                }}
+              >
+                <Typography
+                  as="p"
+                  variant="lg"
+                  className="border-black p-2 text-black-200 pb-2 text-md"
+                >
+                  {userDetails.office}
+                </Typography>
+              </div>
             </div>
-            <Button color="red" className="" onClick={closeProfileDialog}>
-              Close
-            </Button>
-            {/* <CardFooter className="flex flex-row justify-center mt-10">
-              
-            </CardFooter> */}
+            <CardFooter className="flex flex-row justify-center">
+              <div className="flex gap-2 mx-auto">
+                <Button color="red" className="" onClick={closeProfileDialog}>
+                  Close
+                </Button>
+                <Button color="green" className="" onClick={closeProfileDialog}>
+                  Update
+                </Button>
+              </div>
+            </CardFooter>
           </CardBody>
         </Card>
       </Dialog>
@@ -403,10 +412,10 @@ export const CustomNavbar = ({ setOpen, socket }) => {
       <Typography className="flex flex-row gap-4 items-center ml-2 text-lg p-0.5 pr-3 text-center font-semibold rounded-lg">
         <TiThMenuOutline
           onClick={() => setOpen((prevOpen) => !prevOpen)}
-          className="flex rounded-lg w-9 h-9 p-1 -translate-x-2 cursor-pointer hover:scale-110"
+          className="flex rounded-lg w-9 h-9 p-1 text-gray-700 -translate-x-2 cursor-pointer hover:scale-110"
         />
-        <img src={msulogo} alt="logo" className="flex flex-row h-10" />
-        MSU EDAAMS
+        {/* <img src={msulogo} alt="logo" className="flex flex-row h-10" /> */}
+
       </Typography>
       <div className="flex flex-row items-center gap-1">
 
@@ -467,11 +476,6 @@ export const CustomNavbar = ({ setOpen, socket }) => {
 
         )}
 
-        {/* <div className="flex flex-col justify-center items-center rounded-xl p-1 cursor-default">
-          <Typography className="flex font-md text-md text-black">
-            {currentUser}
-          </Typography>
-        </div> */}
         <ProfileMenu />
       </div>
     </div>
