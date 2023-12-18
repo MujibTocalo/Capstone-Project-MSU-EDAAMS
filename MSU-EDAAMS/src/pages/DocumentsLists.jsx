@@ -212,7 +212,6 @@ export const DocumentsLists = () => {
     const filteredRows = tableRows.filter((row) =>
       row.uploaderName.toLowerCase().includes(query.toLowerCase())
     );
-
     setFilteredTableRows(filteredRows);
   };
 
@@ -239,7 +238,9 @@ export const DocumentsLists = () => {
   const navigate = useNavigate();
 
   return (
-    <Card className="h-full w-screen px-12 mx-auto my-auto rounded-none bg-white">
+    <Card className="flex h-full w-screen px-12 mx-auto my-auto rounded-none overflow-hidden bg-white"
+      floated={true}
+      shadow={true}>
       <div>
         <Dialog
           size="sm"

@@ -148,8 +148,8 @@ const LandingPage = ({ socket }) => {
           </ul>
         </div>
         <div className="flex flex-row">
-          <div className="flex flex-col mt-8 ml-14 text-center gap-1.5">
-            <div className="flex flex-row mt-6 h-24 w-28 items-center justify-center mb-6 mx-auto">
+          <div className="flex flex-col mt-20 ml-14 text-center my-auto mx-auto gap-1.5">
+            <div className="flex flex-row my-auto h-24 w-28 items-center justify-center mb-6 mx-auto">
               <img
                 src={MSULogo}
                 alt="Logo"
@@ -181,7 +181,7 @@ const LandingPage = ({ socket }) => {
               Get Started
             </Button>
           </div>
-          <div className="flex p-8">
+          <div className="flex p-8 my-auto scale-90">
             <img src={image1} alt="image" />
           </div>
         </div>

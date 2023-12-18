@@ -31,6 +31,7 @@ import avatar from "../assets/profile icon.png";
 import Sidebar from "./Sidebar";
 import { TiThMenuOutline } from "react-icons/ti";
 import msulogo from "../assets/msulogo.png";
+import { BsMenuButtonWideFill } from "react-icons/bs";
 
 const profileMenuItems = [
   {
@@ -398,11 +399,11 @@ export const CustomNavbar = ({ setOpen, socket }) => {
   };
 
   return (
-    <div className="flex max-w-screen items-center bg-indigo-500 justify-between p-1 relative">
-      <Typography className="flex flex-row gap-4 items-center ml-2 text-lg p-0.5 pr-3 text-center font-semibold text-white rounded-lg">
+    <div className="flex max-w-screen items-center bg-white justify-between p-1 relative">
+      <Typography className="flex flex-row gap-4 items-center ml-2 text-lg p-0.5 pr-3 text-center font-semibold rounded-lg">
         <TiThMenuOutline
           onClick={() => setOpen((prevOpen) => !prevOpen)}
-          className="flex rounded-lg w-8 h-8 p-1 -translate-x-2 cursor-pointer hover:scale-110"
+          className="flex rounded-lg w-9 h-9 p-1 -translate-x-2 cursor-pointer hover:scale-110"
         />
         <img src={msulogo} alt="logo" className="flex flex-row h-10" />
         MSU EDAAMS
@@ -447,9 +448,11 @@ export const CustomNavbar = ({ setOpen, socket }) => {
               </div>
             </div>
 
+
+
             <RiNotification3Fill
               className="cursor-pointer mr-4"
-              color="white"
+              color="gray"
               size={28}
               onClick={toggleNotificationVisibility}
             />
@@ -464,11 +467,11 @@ export const CustomNavbar = ({ setOpen, socket }) => {
 
         )}
 
-        <div className="flex flex-col justify-center items-center rounded-xl p-1 cursor-default">
-          <Typography className="flex font-md text-md text-white">
+        {/* <div className="flex flex-col justify-center items-center rounded-xl p-1 cursor-default">
+          <Typography className="flex font-md text-md text-black">
             {currentUser}
           </Typography>
-        </div>
+        </div> */}
         <ProfileMenu />
       </div>
     </div>

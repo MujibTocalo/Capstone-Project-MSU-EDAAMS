@@ -71,39 +71,43 @@ const MainRoutes = ({ socket }) => {
 
 
   return (
-    <div className="flex flex-col max-h-screen overflow-hidden">
-      <CustomNavbar socket={socket} setOpen={setIsSidebarOpen} />
-      <div className="flex max-w-fit overflow-hidden">
-        <Sidebar isOpen={isSidebarOpen} toggleSidebar={!toggleSidebar} style={{ zIndex: 1, position: 'relative' }} />
-        <div className="flex flex-col relative max-w-fit overflow-hidden flex-grow">
+    <div className="flex flex-row max-h-screen w-screen overflow-hidden">
+      <Sidebar isOpen={isSidebarOpen} toggleSidebar={!toggleSidebar} />
+      <div className="flex flex-col w-screen overflow-hidden">
+        <CustomNavbar socket={socket} setOpen={setIsSidebarOpen} />
+        <div className="flex flex-col relative w-screen overflow-hidden">
           <Routes>
             {/* <Route path="/dashboard" element={<Dashboard />} /> */}
             <Route path="/profilePage" element={<ProfilePage />} />
             <Route path="/documents" element={<DocumentsLists />} />
-            {/* <Route path="/createDocument" element={<CreateDocument />} /> */}
+            <Route path="/createDocument" element={<CreateDocument />} />
 
-            <Route path="/createDocument" element={
-              (userType === 'Approver - Dean' || userType === 'Administrator') ? (<CreateDocument />) : (<Navigate to='/restricted' />)} />
+            {/* <Route path="/createDocument" element={
+              (userType === 'Approver - Dean' || userType === 'Administrator') ? (<CreateDocument />) : (<Navigate to='/restricted' />)} /> */}
 
-            <Route path="/newCreateDocument" element={<NewCreateDocument />} />
-            <Route path="/approvedocument" element={<ApproveDocument />} />
-            <Route
+            {/* <Route path="/newCreateDocument" element={<NewCreateDocument />} /> */}
+            <Route path="/deanEndorsement" element={<deanEndorsementPage />} />
+            {/* <Route
               path="/deanEndorsement"
               element={
-                (userType === 'Approver - Dean' || userType === 'Administrator') ? (<DeanEndorsementPage />) : (<Navigate to='/restricted' />)} />
-            {/* <Route path="/endorsedocument" element={<EndorseDocument />} /> */}
+                (userType === 'Approver - Dean' || userType === 'Administrator') ? (<DeanEndorsementPage />) : (<Navigate to='/restricted' />)} /> */}
 
-            <Route
+
+            <Route path="/ovcaaEndorsement" element={<OVCAAEndorsementPage />} />
+
+            {/* <Route
               path="/ovcaaEndorsement"
               element={
                 (userType === 'Endorser - OVCAA' || userType === 'Administrator') ?
-                  (<OVCAAEndorsementPage />) : (<Navigate to='/restricted' />)} />
+                  (<OVCAAEndorsementPage />) : (<Navigate to='/restricted' />)} /> */}
 
-            <Route
+            <Route path="/opapproval" element={<OpApprovalPage />} />
+
+            {/* <Route
               path="/opapproval"
               element={
                 (userType === 'Approver - OP' || userType === 'Administrator') ?
-                  (<OpApprovalPage />) : (<Navigate to="/restricted" />)} />
+                  (<OpApprovalPage />) : (<Navigate to="/restricted" />)} /> */}
 
             <Route path="/archive" element={<ArchivePage />} />
             {/* <Route

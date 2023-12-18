@@ -243,7 +243,7 @@ const DeanEndorsementPage = () => {
   }
 
   return (
-    <div className="grid grid-cols-4 w-screen overflow-y-scroll">
+    <div className="grid grid-cols-4 px-14 w-screen overflow-y-scroll">
       {pendingDocuments.map((document) => (
         <div
           key={document._id}

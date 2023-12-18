@@ -21,6 +21,7 @@ userRouter.get('/:id', fetchUser)
 userRouter.get('/', fetchUsers)
 userRouter.put('/:userId/toggle-status', updateUserStatus)
 
+
 userRouter.post('/login', login)
 userRouter.get('/logout', logout)
 
