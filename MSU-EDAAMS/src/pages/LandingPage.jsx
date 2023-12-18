@@ -202,7 +202,11 @@ const LandingPage = ({ socket }) => {
               </Typography>
             </CardHeader> */}
             <CardBody className="flex flex-col gap-4">
-              <Typography className="flex flex-col align items-center" variant="h4" color="blue-gray">
+              <Typography
+                className="flex flex-col align items-center"
+                variant="h4"
+                color="blue-gray"
+              >
                 Sign In
               </Typography>
               <Typography
@@ -224,6 +228,8 @@ const LandingPage = ({ socket }) => {
               <Typography className="-mb-2" variant="h6">
                 Your Password
               </Typography>
+                Your Password
+              </Typography>
               <Input
                 value={password}
                 onChange={handlePasswordChange}
@@ -233,13 +239,18 @@ const LandingPage = ({ socket }) => {
               />
             </CardBody>
             <CardFooter className="pt-0 hover:scale-105">
-              <Button variant="gradient" onClick={handleLogin} fullWidth>
+              <Button
+                color="indigo"
+                variant="gradient"
+                onClick={handleLogin}
+                fullWidth
+              >
                 Sign In
               </Button>
             </CardFooter>
             <Typography variant="small" className="mb-6 flex justify-center">
-              Don&apos;t have an account?
-              <Typography
+              {/* Don&apos;t have an account? */}
+              {/* <Typography
                 as="a"
                 href="#signup"
                 variant="small"
@@ -248,7 +259,7 @@ const LandingPage = ({ socket }) => {
                 onClick={handleOpen}
               >
                 Sign up
-              </Typography>
+              </Typography> */}
             </Typography>
           </Card>
         </Dialog>

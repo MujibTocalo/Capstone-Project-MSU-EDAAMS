@@ -26,7 +26,17 @@ import {
   TimelineBody,
 } from "@material-tailwind/react";
 
-import { UserIcon, UsersIcon, UserGroupIcon, DocumentPlusIcon } from "@heroicons/react/24/solid";
+import {
+  HomeIcon,
+  BellIcon,
+  UserCircleIcon,
+  UserIcon,
+  UsersIcon,
+  UserGroupIcon,
+  PlusIcon,
+  ArchiveBoxIcon,
+  DocumentPlusIcon,
+} from "@heroicons/react/24/solid";
 
 import { format } from "date-fns";
 
@@ -36,6 +46,12 @@ import React, { useEffect, useState } from "react";
 
 import axios from "axios";
 import { BiDetail, BiEdit, BiTrash } from "react-icons/bi";
+import {
+  BsAppIndicator,
+  BsCardChecklist,
+  BsPlus,
+  BsRecord2Fill,
+} from "react-icons/bs";
 import { HiOutlineDocumentAdd } from "react-icons/hi";
 
 const TABS = [
@@ -81,13 +97,13 @@ export const DocumentsLists = () => {
 
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
   const [selectedDocumentId, setSelectedDocumentId] = useState(null);
-  const [userAccess, setUserAccess] = useState()
+  const [userAccess, setUserAccess] = useState();
 
   useEffect(() => {
     const fetchTableRows = async () => {
       try {
-        const userDetail = JSON.parse(localStorage.getItem('userDetails'))
-        setUserAccess(userDetail.userType)
+        const userDetail = JSON.parse(localStorage.getItem("userDetails"));
+        setUserAccess(userDetail.userType);
         const response = await axios.get("http://localhost:7000/document");
         const responseData = response.data;
         const documentArray = responseData.document;
@@ -156,10 +172,11 @@ export const DocumentsLists = () => {
   };
 
   const deleteDocument = (documentId) => {
-    axios.delete(`http://localhost:7000/document/delete/${documentId}`)
+    axios
+      .delete(`http://localhost:7000/document/delete/${documentId}`)
       .then((res) => {
         console.log(res);
-        if (res.data.success === 'Document Deleted') {
+        if (res.data.success === "Document Deleted") {
           store.fetchDocuments();
         }
       })
@@ -204,13 +221,11 @@ export const DocumentsLists = () => {
     }
   };
 
-
   const navigate = useNavigate();
 
   return (
     <Card className="h-screen w-screen rounded-none bg-white">
       <div>
-
         <Dialog
           size="sm"
           open={showDeleteConfirmation}
@@ -224,11 +239,20 @@ export const DocumentsLists = () => {
               </Typography>
             </CardHeader>
             <CardBody className="flex flex-col items-center justify-center h-32">
-              <Typography variant="body" color="blue-gray" className="text-center">
+              <Typography
+                variant="body"
+                color="blue-gray"
+                className="text-center"
+              >
                 Are you sure you want to delete this document?
               </Typography>
               <div className="flex mt-4 gap-4">
-                <Button onClick={hideConfirmationModal} color="red" size="sm">
+                <Button
+                  onClick={hideConfirmationModal}
+                  color="indigo"
+                  variant="outlined"
+                  size="sm"
+                >
                   Cancel
                 </Button>
                 <Button onClick={handleDeleteConfirmed} color="green" size="sm">
@@ -238,7 +262,6 @@ export const DocumentsLists = () => {
             </CardBody>
           </Card>
         </Dialog>
-
 
         <Dialog
           size="md"
@@ -253,7 +276,7 @@ export const DocumentsLists = () => {
               </Typography>
             </CardHeader>
             <CardBody className="flex flex-col h-96 overflow-y-scroll">
-              {selectedDocument.documentStatus !== 'Rejected' && (
+              {selectedDocument.documentStatus !== "Rejected" && (
                 <Timeline>
                   <TimelineItem>
                     <TimelineConnector />
@@ -274,9 +297,9 @@ export const DocumentsLists = () => {
                         Date Uploaded:{" "}
                         {selectedDocument.createdAt
                           ? format(
-                            new Date(selectedDocument.createdAt),
-                            "yyyy-MM-dd"
-                          )
+                              new Date(selectedDocument.createdAt),
+                              "yyyy-MM-dd"
+                            )
                           : "Waiting"}{" "}
                         <br />
                         Uploaded By:{" "}
@@ -304,9 +327,9 @@ export const DocumentsLists = () => {
                         Date Approved:{" "}
                         {selectedDocument.deanEndorsementDate
                           ? format(
-                            new Date(selectedDocument.deanEndorsementDate),
-                            "yyyy-MM-dd"
-                          )
+                              new Date(selectedDocument.deanEndorsementDate),
+                              "yyyy-MM-dd"
+                            )
                           : "Waiting"}{" "}
                         <br />
                         Approved By:{" "}
@@ -335,9 +358,9 @@ export const DocumentsLists = () => {
                         Date Endorsed:{" "}
                         {selectedDocument.endorsementDate
                           ? format(
-                            new Date(selectedDocument.endorsementDate),
-                            "yyyy-MM-dd"
-                          )
+                              new Date(selectedDocument.endorsementDate),
+                              "yyyy-MM-dd"
+                            )
                           : `Waiting for ${selectedDocument.collegeName} Dean Endorsement`}{" "}
                         <br />
                         Endorsed By:{" "}
@@ -367,9 +390,9 @@ export const DocumentsLists = () => {
                         Final Approval Date:{" "}
                         {selectedDocument.approvalDate
                           ? format(
-                            new Date(selectedDocument.approvalDate),
-                            "yyyy-MM-dd"
-                          )
+                              new Date(selectedDocument.approvalDate),
+                              "yyyy-MM-dd"
+                            )
                           : "Waiting for OVCAA Endorsement"}{" "}
                         <br />
                         Approved By:{" "}
@@ -397,9 +420,9 @@ export const DocumentsLists = () => {
                         Release Date:{" "}
                         {selectedDocument.releaseDate
                           ? format(
-                            new Date(selectedDocument.releaseDate),
-                            "yyyy-MM-dd"
-                          )
+                              new Date(selectedDocument.releaseDate),
+                              "yyyy-MM-dd"
+                            )
                           : "Waiting for Office of the President Approval"}{" "}
                         <br />
                         {/* Released By: {selectedDocument.opApproverName ? selectedDocument.opApproverName : 'Pending'} <br />
@@ -409,7 +432,7 @@ export const DocumentsLists = () => {
                   </TimelineItem>
                 </Timeline>
               )}
-              {selectedDocument.documentStatus === 'Rejected' && (
+              {selectedDocument.documentStatus === "Rejected" && (
                 <Timeline>
                   <TimelineItem>
                     <TimelineConnector />
@@ -429,14 +452,17 @@ export const DocumentsLists = () => {
                         Date Rejected:{" "}
                         {selectedDocument.rejectedDate
                           ? format(
-                            new Date(selectedDocument.rejectedDate),
-                            "yyyy-MM-dd"
-                          )
+                              new Date(selectedDocument.rejectedDate),
+                              "yyyy-MM-dd"
+                            )
                           : "Waiting"}{" "}
                         <br />
                         Rejected By:{" "}
                         {selectedDocument.rejectedName
-                          ? selectedDocument.rejectedDesignation + " " + selectedDocument.rejectedName : "Pending"}{" "}
+                          ? selectedDocument.rejectedDesignation +
+                            " " +
+                            selectedDocument.rejectedName
+                          : "Pending"}{" "}
                         <br />
                         Remarks:{" "}
                         {selectedDocument.rejectedRemarks
@@ -457,7 +483,11 @@ export const DocumentsLists = () => {
                       </Typography>
                     </TimelineHeader>
                     <TimelineBody className="pb-4">
-                      <Button color="green" variant="outlined" onClick={handleCreateNewDocument}>
+                      <Button
+                        color="green"
+                        variant="outlined"
+                        onClick={handleCreateNewDocument}
+                      >
                         Create New Document
                       </Button>
                     </TimelineBody>
@@ -569,7 +599,7 @@ export const DocumentsLists = () => {
                 return (
                   <tr key={controlNumber}>
                     <td className={classes}>
-                      <div className="flex flex-col items-start ml-2">
+                      <div className="flex flex-col items-start ml-4">
                         <Typography
                           variant="small"
                           color="blue-gray"
@@ -632,23 +662,23 @@ export const DocumentsLists = () => {
                             documentStatus === "Dean Approved"
                               ? "Dean Approved"
                               : documentStatus === "Dean Endorsed"
-                                ? "Dean Approved"
-                                : documentStatus === "OVCAA Endorsed"
-                                  ? "OVCAA Approved"
-                                  : documentStatus === "OP Approved"
-                                    ? "OP Approved"
-                                    : documentStatus === "Created"
-                                      ? "Created"
-                                      : documentStatus === "Pending"
-                                        ? "Pending"
-                                        : "Rejected"
+                              ? "Dean Approved"
+                              : documentStatus === "OVCAA Endorsed"
+                              ? "OVCAA Approved"
+                              : documentStatus === "OP Approved"
+                              ? "OP Approved"
+                              : documentStatus === "Created"
+                              ? "Created"
+                              : documentStatus === "Pending"
+                              ? "Pending"
+                              : "Rejected"
                           }
                           color={
                             documentStatus === "Rejected"
                               ? "red"
                               : documentStatus === "Pending"
-                                ? "orange"
-                                : "green"
+                              ? "orange"
+                              : "green"
                           }
                         />
                       </div>
@@ -664,18 +694,26 @@ export const DocumentsLists = () => {
                     </td>
                     <td className={classes}>
                       <div className="flex flex-row mx-auto gap-1 items-center cursor-pointer">
-
                         {/* <BsCardChecklist
                           size={20}
                           onClick={() => handleTimelineClick(index)}
                         /> */}
-                        <button className="flex bg-green-600 text-white text-sm p-1.5 rounded-lg shadow-md hover:scale-105"
-                          onClick={() => handleTimelineClick(index)}>
-                          Track Document</button>
-
-                        {userAccess === 'Uploader' && documentStatus === 'Pending' && (
-                          <BiTrash onClick={() => showConfirmationModal(_id)} size={30} className='flex bg-red-600 text-white p-1 rounded-lg hover:scale-105' />
-                        )}
+                        <div className="flex w-max gap-4">
+                          <BsCardChecklist
+                            size={25}
+                            className="cursor-pointer hover:scale-110 hover:bg-lightgray hover:text-black"
+                            onClick={() => handleTimelineClick(index)}
+                            title="Track Document"
+                          />
+                        </div>
+                        {userAccess === "Uploader" &&
+                          documentStatus === "Pending" && (
+                            <BiTrash
+                              onClick={() => showConfirmationModal(_id)}
+                              size={30}
+                              className="flex bg-red-600 text-white p-1 rounded-lg hover:scale-105"
+                            />
+                          )}
                       </div>
                     </td>
                   </tr>
