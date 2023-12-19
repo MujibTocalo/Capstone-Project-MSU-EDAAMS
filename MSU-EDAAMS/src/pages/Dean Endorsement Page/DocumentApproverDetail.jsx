@@ -16,16 +16,16 @@ const DocumentApproverDetail = ({ document }) => {
 	return (
 		<div key={document._id}
 			className='flex flex-col bg-white p-4 px-5 rounded-xl'>
-			<div className="flex flex-col flex-wrap  items-center justify-start whitespace-pre">
+			<div className="flex flex-col items-center justify-start whitespace-pre">
 				<img src={logo} className="flex w-16" />
 				<Typography
 					className='bg-yellow-500/80 font-semibold text-sm rounded-lg m-1 p-2 text-black'>
 					{document.documentType}
 				</Typography>
-				<Typography
+				{/* <Typography
 					className='text-md rounded-lg p-1 font-bold '>
 					{document.collegeName}
-				</Typography>
+				</Typography> */}
 			</div>
 			<div className="flex flex-col rounded-lg text-start">
 				{/* <Typography className='text-sm font-semibold py-1'>

@@ -30,14 +30,14 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
 
 
   return (
-    <div className={`flex flex-col ${isOpen ? 'opacity-100' : '3s ease-in-out hidden'} bg-white  transition-all duration-500`} >
+    <div className={`flex flex-col ${isOpen ? 'opacity-100' : '3s ease-in-out -translate-x-64'} bg-white  transition-all duration-500`} >
       <div className={`h-screen ${isOpen ? 'w-64' : 'w-0'} bg-[#111927] duration-500 p-1 transition-all`}>
         <img src={elogo} className='flex  w-28 p-4 -translate-x-6 -translate-y-4' />
         <div className='py-2 flex flex-col duration-500 m-4 justify-between gap-2'>
           <div className='flex flex-col rounded-lg p-2 bg-[#1C2536] -translate-y-14'>
-            <Typography className={`${!open && 'hidden'} flex 3s ease-in-out text-white text-start cursor-default rounded-lg whitespace-pre font-bold text-md`}>
+            <Typography className={`${!open && 'hidden'} flex 3s ease-in-out text-white text-start cursor-default rounded-lg whitespace-pre font-bold text-md ml-2`}>
               EDAAMS</Typography>
-            <Typography className='flex text-xs text-gray-400'>
+            <Typography className='flex ml-2 text-xs text-gray-400'>
               MSU - Marawi
             </Typography>
           </div>

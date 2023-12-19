@@ -243,9 +243,9 @@ const OVCAAEndorsementPage = () => {
 
 
 	return (
-		<div className='grid grid-cols-4 w-screen overflow-y-scroll'>
+		<div className='grid grid-cols-4 px-14 w-screen overflow-y-scroll'>
 			{deanEndorsedDocuments.map((document) => (
-				<div key={document._id} className='flex flex-col bg-indigo-50/50 p-1.5 m-2 rounded-lg shadow-md hover:scale-105'>
+				<div key={document._id} className='flex flex-col bg-gray-300/80 m-4 p-3 rounded-xl shadow-lg hover:scale-105'>
 					<DocumentEndorsementDetail document={document} />
 
 					<Dialog
@@ -355,7 +355,7 @@ const OVCAAEndorsementPage = () => {
 					</Dialog>
 
 
-					<div className='flex content-start whitespace-pre '>
+					<div className='flex items-center justify-center whitespace-pre '>
 						<Button className='flex flex-row text-black font-medium items-center m-2 hover:font-semibold hover:scale-105' size='sm' color='white' variant='text'
 							onClick={() => handleOpen(document)}>
 							Read More{" "}

@@ -92,7 +92,7 @@ export const deanEndorsement = async (req, res) => {
 
 		await document.save();
 
-		
+
 
 		res.json({
 			message: 'Success'
@@ -127,7 +127,7 @@ export const ovcaaEndorsement = async (req, res) => {
 
 			io.emit("ovcaaEndorsement", {
 				senderName: name,
-				designation: designation,
+				designation,
 				receiverType: 'Approver - OP',
 			});
 
@@ -143,7 +143,7 @@ export const ovcaaEndorsement = async (req, res) => {
 
 		await document.save();
 
-		
+
 
 		res.json({
 			message: 'Success'
@@ -193,7 +193,7 @@ export const approveDocument = async (req, res) => {
 
 		await document.save();
 
-		
+
 
 		res.json({
 			message: 'Success'

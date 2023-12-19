@@ -33,9 +33,7 @@ const App = () => {
   const [socket, setSocket] = useState();
 
   useEffect(() => {
-    setSocket(io.connect("ws://localhost:7000"), {
-      withCredentials: true,
-    });
+    setSocket(io("http://localhost:7000"));
   }, []);
 
   const handleLogin = () => {
@@ -86,7 +84,7 @@ const MainRoutes = ({ socket }) => {
             {/* <Route path="/createDocument" element={
               (userType === 'Approver - Dean' || userType === 'Administrator') ? (<CreateDocument />) : (<Navigate to='/restricted' />)} /> */}
 
-            {/* <Route path="/newCreateDocument" element={<NewCreateDocument />} /> */}
+            <Route path="/newCreateDocument" element={<NewCreateDocument />} />
             <Route path="/deanEndorsement" element={<DeanEndorsementPage />} />
             {/* <Route
               path="/deanEndorsement"
@@ -129,7 +127,9 @@ const MainRoutes = ({ socket }) => {
                 )
               }
             />
-            <Route
+            <Route path="/releaseDocument" element={<ReleasingDocumentPage />} />
+
+            {/* <Route
               path="/releasedocument"
               element={
                 userType === "Administrator" || userType === "Releaser" ? (
@@ -138,7 +138,7 @@ const MainRoutes = ({ socket }) => {
                   <Navigate to="/restricted" />
                 )
               }
-            />
+            /> */}
 
             <Route path="/restricted" element={<RestrictedPage />} />
           </Routes>

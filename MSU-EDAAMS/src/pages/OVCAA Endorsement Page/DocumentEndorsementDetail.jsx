@@ -3,6 +3,8 @@ import documentsStore from "../../config/documentsStore";
 import { Avatar, Typography } from "@material-tailwind/react";
 import { format } from "date-fns";
 
+import logo from '../../assets/msulogo.png'
+
 const DocumentEndorsementDetail = ({ document }) => {
 
 	const store = documentsStore();
@@ -13,10 +15,11 @@ const DocumentEndorsementDetail = ({ document }) => {
 
 	return (
 		<div key={document._id}
-			className='flex flex-col bg-white p-1 px-4 rounded-md'>
+			className='flex flex-col bg-white p-4 px-5 rounded-xl'>
 			<div className="flex flex-col items-center justify-start whitespace-pre">
+				<img src={logo} className="flex w-16" />
 				<Typography
-					className='bg-indigo-500/80 font-semibold text-sm rounded-lg m-1 p-1 text-white'>
+					className='bg-yellow-500/80 font-semibold text-sm rounded-lg m-1 p-2 text-black'>
 					{document.documentType}
 				</Typography>
 				<Typography
@@ -25,23 +28,11 @@ const DocumentEndorsementDetail = ({ document }) => {
 				</Typography>
 			</div>
 			<div className="flex flex-col rounded-lg text-center">
-				<Typography className='text-sm font-semibold py-1'>
-					Control Number
+				<Typography className='text-sm py-1'>
+					Date Endorsed: {format(new Date(document.deanEndorsementDate), 'yyyy-MM-dd')}
 				</Typography>
-				<Typography className='text-sm '>
-					{document.controlNumber}
-				</Typography>
-				<Typography className='text-sm py-1 font-semibold'>
-					Date Endorsed
-				</Typography>
-				<Typography className='text-sm'>
-					{format(new Date(document.deanEndorsementDate), 'yyyy-MM-dd')}
-				</Typography>
-				<Typography className='text-sm py-1 font-semibold'>
-					Endorsed By
-				</Typography>
-				<Typography className='text-sm pb-1'>
-					{document.deanName}
+				<Typography className='text-sm py-1 '>
+					Endorsed By: {document.deanDesignation}, {document.deanName}
 				</Typography>
 			</div>
 		</div>

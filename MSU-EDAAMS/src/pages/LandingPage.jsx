@@ -21,6 +21,7 @@ import {
   Typography,
   Input,
 } from "@material-tailwind/react";
+import Typed from 'react-typed';
 
 const LandingPage = ({ socket }) => {
   const toast = useToast();
@@ -163,9 +164,18 @@ const LandingPage = ({ socket }) => {
             <Typography className="text-lg whitespace-pre mb-2 rounded-lg text-gray-900 tracking-tight font-medium">
               College of Information and Computing Sciences
             </Typography>
-            <Typography className="flex flex-col text-8xl mb-5 text-indigo-600 font-extrabold">
+            {/* <Typography className="flex flex-col text-8xl mb-5 text-indigo-600 font-extrabold">
               EDAAMS
-            </Typography>
+            </Typography> */}
+            <Typed
+              className="flex flex-row text-7xl items-center content-center justify-center mb-5 text-indigo-600 font-extrabold "
+              strings={['EDAAMS', 'DOCUMENT', 'ARCHIVE', 'TRACKING', 'APPROVAL']}
+              typeSpeed={120}
+              backSpeed={140}
+              loop
+            />
+
+
             <Typography className="font-semibold text-lg whitespace-pre text-gray-800">
               " Electronic Document Approval & Archive Management System "
             </Typography>

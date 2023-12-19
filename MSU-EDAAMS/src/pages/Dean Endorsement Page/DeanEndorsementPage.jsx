@@ -3,16 +3,9 @@ import documentsStore from "../../config/documentsStore";
 import { useToast } from "../../components/ToastService";
 import DocumentApproverDetail from "./DocumentApproverDetail";
 
-import ReactQuill from "react-quill";
-import EditorToolbar, {
-  modules,
-  formats,
-} from "../../components/EditorToolbar";
 import "react-quill/dist/quill.snow.css";
 import "../../components/TextEditor.css";
 import { LuAlertCircle } from "react-icons/lu";
-
-import { io } from "socket.io-client";
 
 import {
   Button,

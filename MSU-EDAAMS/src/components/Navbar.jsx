@@ -17,21 +17,17 @@ import {
 import {
   UserCircleIcon,
   ChevronDownIcon,
-  Cog6ToothIcon,
-  PowerIcon,
 } from "@heroicons/react/24/outline";
 import {
-  RiMenuLine,
-  RiMenuUnfoldFill,
   RiNotification3Fill,
 } from "react-icons/ri";
 import logo from "../assets/msulogo.png";
 import Notification from "../assets/notification.svg";
-import avatar from "../assets/profile icon.png";
-import Sidebar from "./Sidebar";
 import { TiThMenuOutline } from "react-icons/ti";
 import msulogo from "../assets/msulogo.png";
-import { BsMenuButtonWideFill } from "react-icons/bs";
+
+import Typed from 'react-typed';
+
 
 const profileMenuItems = [
   {
@@ -408,12 +404,21 @@ export const CustomNavbar = ({ setOpen, socket }) => {
   };
 
   return (
-    <div className="flex max-w-screen items-center bg-white justify-between p-1 relative px-6">
+    <div className="flex max-w-screen items-center bg-transparent justify-between p-1 relative px-6">
       <Typography className="flex flex-row gap-4 items-center ml-2 text-lg p-0.5 pr-3 text-center font-semibold rounded-lg">
         <TiThMenuOutline
           onClick={() => setOpen((prevOpen) => !prevOpen)}
           className="flex rounded-lg w-9 h-9 p-1 text-gray-700 -translate-x-2 cursor-pointer hover:scale-110"
         />
+
+        <Typed
+          className="text-xl items-center text-black"
+          strings={['DOCUMENT', 'ARCHIVE', 'TRACKING', 'APPROVAL']}
+          typeSpeed={120}
+          backSpeed={140}
+          loop
+        />
+
         {/* <img src={msulogo} alt="logo" className="flex flex-row h-10" /> */}
 
       </Typography>
@@ -422,7 +427,7 @@ export const CustomNavbar = ({ setOpen, socket }) => {
         {userType !== 'Uploader' && (
 
           <div className="relative">
-            <div className={`flex flex-col ${!isNotificationVisible && 'hidden'} rounded-md w-[35vh] bg-white p-2 absolute -translate-x-64 shadow-md gap-2`} style={{ zIndex: 1 }}>
+            <div className={`flex flex-col ${!isNotificationVisible && 'hidden'} rounded-md w-[35vh] bg-white p-2 absolute -translate-x-64 translate-y-10 shadow-md gap-2`} style={{ zIndex: 1 }}>
               {notifications.length > 0 && (
                 <div className="top-0 right-0 flex flex-col items-center mt-2 mr-2 space-y-2">
                   {notifications.map((notification) => (

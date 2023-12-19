@@ -113,14 +113,6 @@ const CreateDocument = () => {
                   </div>
                 </div>
               );
-              // setDocumentDetail({
-              //   controlNumber: documentDetail.controlNumber,
-              //   collegeName: documentDetail.collegeName,
-              //   documentType: documentDetail.documentType,
-              //   header: documentDetail.header,
-              //   subject: documentDetail.subject,
-              //   content: documentDetail.content,
-              // })
             } else {
               toast.open(
                 <div className='flex gap-2 bg-red-500 text-white p-4 rounded-lg shadow-lg'>
@@ -150,105 +142,6 @@ const CreateDocument = () => {
       throw error;
     }
   }
-
-
-
-
-
-  const handleSubmit1 = async () => {
-    // Check if any of the required fields are empty
-    if (
-      !controlNumber ||
-      !collegeName ||
-      !documentType ||
-      !header ||
-      !subject ||
-      !content ||
-      !uploaderName
-    ) {
-      toast.open(
-        <div className="flex gap-2 bg-red-500 text-white p-4 rounded-lg shadow-lg">
-          <LuAlertCircle size={40} />
-          <div>
-            <Typography variant="h4">Incomplete Detail!</Typography>
-            <Typography variant="paragraph">
-              Please fill in all necessary details.
-            </Typography>
-          </div>
-        </div>
-      );
-      return; // Prevent form submission
-    }
-
-    const data = {
-      controlNumber,
-      collegeName,
-      documentType,
-      header,
-      subject,
-      content,
-      uploaderName,
-      uploaderDesignation,
-      uploaderSignature
-    };
-
-    try {
-      const response = await fetch(
-        "http://localhost:7000/document/createDocument",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        }
-      );
-
-      if (response.ok) {
-        toast.open(
-          <div className="flex gap-2 bg-green-500 text-white p-4 rounded-lg shadow-lg">
-            <LuAlertCircle size={40} />
-            <div>
-              <Typography variant="h5">Success!</Typography>
-              <Typography variant="paragraph">
-                Document Submittion Successful
-              </Typography>
-            </div>
-          </div>
-        );
-        setDocumentType("");
-        setCollegeName("");
-        setControlNumber("");
-        setHeader("");
-        setSubject("");
-        setContent("");
-
-      } else {
-        toast.open(
-          <div className='flex gap-2 bg-red-500 text-white p-4 rounded-lg shadow-lg'>
-            <LuAlertCircle size={40} />
-            <div>
-              <Typography variant='h5'>Failed!</Typography>
-              <Typography variant='paragraph'>Document Submittion Failed</Typography>
-            </div>
-
-          </div>
-        )
-      }
-    } catch (error) {
-      toast.open(
-        <div className='flex gap-2 bg-red-800 text-white p-4 rounded-lg shadow-lg'>
-          <LuAlertCircle size={40} />
-          <div>
-            <Typography variant='h5'>Error!</Typography>
-            <Typography variant='paragraph'>Document Submittion Error</Typography>
-          </div>
-
-        </div>
-      )
-      console.error(error);
-    }
-  };
 
   useEffect(() => {
     const userDetail = JSON.parse(localStorage.getItem('userDetails'));
