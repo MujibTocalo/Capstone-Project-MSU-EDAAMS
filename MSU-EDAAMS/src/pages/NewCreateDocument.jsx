@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import axios from 'axios'
 import ReactQuill from 'react-quill'
 import EditorToolbar, { modules, formats } from '../components/EditorToolbar'
@@ -23,8 +23,7 @@ import { useToast } from '../components/ToastService';
 
 const NewCreateDocument = () => {
 	const uploaderDetail = JSON.parse(localStorage.getItem('userDetails'))
-
-
+	const quillRef = useRef(null);
 
 	const [confirmationOpen, setConfirmationOpen] = React.useState(false);
 
@@ -251,6 +250,7 @@ const NewCreateDocument = () => {
 			<div>
 				<EditorToolbar toolbarId={'t1'} />
 				<ReactQuill
+					ref={quillRef}
 					theme="snow"
 					value={documentDetail.content}
 					onChange={onContent}

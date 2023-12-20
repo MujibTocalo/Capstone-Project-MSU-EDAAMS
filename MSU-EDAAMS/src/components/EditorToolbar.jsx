@@ -114,21 +114,20 @@ export const QuillToolbar = (props) => {
             <option value="Inter" >Inter</option>
             <option value="lucida">Lucida</option>
           </select>
-          <select className="ql-size">
+          {/* <select className="ql-size">
             <option value="extra-small">Extra Small</option>
             <option value="small">Small</option>
             <option value="medium" selected>Medium</option>
             <option value="large">Large</option>
-          </select>
-          <select className="ql-header">
+          </select> */}
+          {/* <select className="ql-header">
             <option value="1">Heading 1</option>
             <option value="2">Heading 2</option>
-            <option value="3">Heading 3</option>
+            <option value="3" selected>Heading 3</option>
             <option value="4">Heading 4</option>
             <option value="5">Heading 5</option>
             <option value="6">Heading 6</option>
-            <option value="" selected>Normal</option>
-          </select>
+          </select> */}
         </span>
         <span className="ql-formats">
           <button className="ql-list" value="ordered" />
@@ -156,15 +155,15 @@ export const QuillToolbar = (props) => {
           </button>
         </span>
         {/* <span className="ql-formats">
-      <button className="ql-link" />
-      <button className="ql-image" />
-      <button className="ql-video" />
-    </span> */}
+          <button className="ql-link" />
+          <button className="ql-image" />
+          <button className="ql-video" />
+        </span> */}
         {/* <span className="ql-formats">
-      <button className="ql-formula" />
-      <button className="ql-code-block" />
-      <button className="ql-clean" />
-    </span> */}
+          <button className="ql-formula" />
+          <button className="ql-code-block" />
+          <button className="ql-clean" />
+        </span> */}
 
       </div>
     }

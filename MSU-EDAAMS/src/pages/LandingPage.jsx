@@ -165,7 +165,7 @@ const LandingPage = ({ socket }) => {
               College of Information and Computing Sciences
             </Typography>
             {/* <Typography className="flex flex-col text-8xl mb-5 text-indigo-600 font-extrabold">
-              EDAAMS
+              EDAAMS  
             </Typography> */}
             <Typed
               className="flex flex-row text-7xl items-center content-center justify-center mb-5 text-indigo-600 font-extrabold "
