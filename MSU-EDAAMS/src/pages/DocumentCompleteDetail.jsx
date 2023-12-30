@@ -4,6 +4,9 @@ import logo from '../assets/msulogo.png'
 import { Avatar, Typography } from "@material-tailwind/react";
 import { format } from "date-fns";
 import ReactQuill from "react-quill";
+import 'react-quill/dist/quill.snow.css';
+
+
 
 const DocumentCompleteDetail = ({ document }) => {
 	const currentUser = JSON.parse(localStorage.getItem('userDetails'))
@@ -14,8 +17,6 @@ const DocumentCompleteDetail = ({ document }) => {
 	const [endorserSignature, setEndorserSignature] = useState()
 	const [opSignature, setOPSignature] = useState()
 	const [userAccess, setUserAccess] = useState(currentUser.userType)
-
-
 
 	useEffect(() => {
 		setUserAccess(currentUser.userType)
@@ -151,6 +152,14 @@ const DocumentCompleteDetail = ({ document }) => {
 						</div>
 						<div className="flex flex-col border border-gray-400 p-2 my-2 shadow-md">
 							<Typography variant='paragraph' className='font-medium text-justify whitespace-break-spaces' style={{ textIndent: '3em', lineHeight: 2 }}>{document.content}</Typography>
+						</div>
+						<div >
+							<ReactQuill
+								value={document.content}
+								readOnly={true}
+								modules={{ toolbar: false }}
+								className="shadow-md"
+								style={{ lineHeight: 2 }} />
 						</div>
 					</div>
 				</div>
