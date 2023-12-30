@@ -8,17 +8,17 @@ import { PencilIcon, UserPlusIcon } from "@heroicons/react/24/solid";
 import {
   Card,
   Dialog,
-
   CardHeader,
   Input,
   Typography,
   Button,
   CardBody,
-
   CardFooter,
   Option,
   Select,
+  Avatar,
 } from "@material-tailwind/react";
+import profileIcon from "../pages/images/profile icon.png";
 
 const TABS = [
   {
@@ -387,12 +387,23 @@ const ManageUsers = () => {
                     color="white"
                     className="flex flex-col h-96 gap-5 overflow-auto"
                   >
-                    <Input
-                      label="Profile Picture"
-                      type="file"
-                      size="lg"
-                      onChange={handleProfilePicture}
-                    />
+                    <div className="flex flex-row items-center justify-center">
+                      <div className="relative rounded-full overflow-hidden w-24 h-24">
+                        <Avatar
+                          src={profileIcon} // Replace with the actual path to your initial image
+                          alt="Initial Image"
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-transparent via-transparent to-black opacity-30">
+                          <Input
+                            type="file"
+                            size="lg"
+                            onChange={handleProfilePicture}
+                            className="opacity-0 items-center hover:cursor-pointer object-cover mt-6"
+                          />
+                        </div>
+                      </div>
+                    </div>
 
                     <Select
                       className="h-10"
@@ -407,15 +418,9 @@ const ManageUsers = () => {
                     >
                       <Option value="Uploader">Department Chairperson</Option>
                       <Option value="Approver - Dean">College Dean</Option>
-                      <Option value="Endorser - OVCAA">
-                        OVCAA - User
-                      </Option>
-                      <Option value="Approver - OP">
-                        OP - User
-                      </Option>
-                      <Option value="Releaser">
-                        RMO - User
-                      </Option>
+                      <Option value="Endorser - OVCAA">OVCAA - User</Option>
+                      <Option value="Approver - OP">OP - User</Option>
+                      <Option value="Releaser">RMO - User</Option>
                       {/* <Option value='Administrator'>Administrator</Option> */}
                     </Select>
 
@@ -435,29 +440,49 @@ const ManageUsers = () => {
                         Office of Vice Chancellor for Academic Affairs
                       </Option>
                       <Option value="RMO">Record Management Office</Option>
+
+                      {/* MSU COLLEGES */}
                       <Option value="COA">College of Agriculture</Option>
                       <Option value="CBAA">
                         College of Business Administration and Accountancy
                       </Option>
                       <Option value="CED">College of Education</Option>
                       <Option value="COE">College of Engineering</Option>
+                      <Option value="DET">
+                        Division of Engineering Technology
+                      </Option>
                       <Option value="CFAS">
                         College of Fisheries and Aquatic Sciences
                       </Option>
                       <Option value="CFES">
                         College of Forestry and Environmental Sciences
                       </Option>
+                      <Option value="CHS">College of Health Sciences</Option>
                       <Option value="CHARM">
-                        College of Hotel and Restaurant Management
+                        College of Hospitality and Tourism Management
                       </Option>
                       <Option value="CICS">
                         College of Information and Computing Sciences
                       </Option>
-                      <Option value="CSPEAR">CSPEAR</Option>
+                      <Option value="ISE">
+                        Institute of Scince Education (Graduate)
+                      </Option>
+                      <Option value="CKFIS">
+                        College of King Faisal Center for Islamic, Arabic and
+                        Asian Studies
+                      </Option>
+                      <Option value="COL">College of Law</Option>
+                      <Option value="COM">College of Medicine</Option>
                       <Option value="CNSM">
-                        College of Natural Science and Mathematics
+                        College of Natural Sciences and Mathematics
                       </Option>
                       <Option value="CPA">College of Public Affairs</Option>
+                      <Option value="SSH">
+                        College of Social Sciences and Humanities
+                      </Option>
+                      <Option value="CSPEAR">
+                        College of Sport Physical Education And Recreation
+                      </Option>
                     </Select>
 
                     <Input
@@ -539,7 +564,7 @@ const ManageUsers = () => {
               {TABLE_HEAD.map((head) => (
                 <th
                   key={head}
-                  className="border-y border-blue-gray-100 bg-indigo-50/50 p-4"
+                  className="border-y border-blue-gray-100 bg-blue-gray-100 p-4"
                 >
                   <Typography
                     variant="small"
@@ -554,7 +579,10 @@ const ManageUsers = () => {
           </thead>
           <tbody>
             {filteredTableRows
-              .slice((currentPage - 1) * documentsPerPage, currentPage * documentsPerPage)
+              .slice(
+                (currentPage - 1) * documentsPerPage,
+                currentPage * documentsPerPage
+              )
               .map(
                 (
                   {
@@ -656,7 +684,8 @@ const ManageUsers = () => {
       </CardBody>
       <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
         <Typography variant="small" color="blue-gray" className="font-normal">
-          Page {currentPage} of {Math.ceil(filteredTableRows.length / documentsPerPage)}
+          Page {currentPage} of{" "}
+          {Math.ceil(filteredTableRows.length / documentsPerPage)}
         </Typography>
         <div className="flex gap-2">
           <Button variant="outlined" size="sm" onClick={handlePreviousPage}>

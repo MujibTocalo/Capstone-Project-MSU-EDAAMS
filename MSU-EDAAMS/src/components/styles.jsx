@@ -8,8 +8,8 @@ const styles = StyleSheet.create({
   },
   documentDetailText: {
     fontSize: 11.5,
-    marginTop: 25,
-    marginLeft: 20,
+    marginTop: 40,
+    marginLeft: 80,
     marginBottom: 5,
     fontWeight: "medium",
     flexDirection: 'column'
@@ -17,16 +17,16 @@ const styles = StyleSheet.create({
   documentDate: {
     fontSize: 11.5,
     marginTop: 5,
-    marginLeft: 20,
+    marginLeft: 80,
     marginBottom: 5,
     fontWeight: "medium",
     flexDirection: 'column'
   },
   headerText: {
     fontSize: 11.5,
-    // textIndent: 10,
+    textIndent: 10,
     lineHeight: 2,
-    marginLeft: 20,
+    marginLeft: 70,
     marginTop: 15,
     marginRight: 10,
     marginBottom: 5,
@@ -36,10 +36,10 @@ const styles = StyleSheet.create({
   },
   subjectText: {
     fontSize: 11.5,
-    // textIndent: 10,
+    textIndent: 10,
     lineHeight: 2,
     fontWeight: "bold",
-    marginLeft: 20,
+    marginLeft: 70,
     marginRight: 10,
     marginBottom: 5,
     marginTop: 10,
@@ -48,13 +48,13 @@ const styles = StyleSheet.create({
   },
   content: {
     fontSize: 11,
-    marginRight: 10,
-    textIndent: 20,
+    marginRight: 50,
+    textIndent: 70,
     textAlign: 'justify',
     marginTop: 10,
     lineHeight: 2,
     paddingRight: 20,
-    marginLeft: 30,
+    marginLeft: 80,
     pageBreak: 'auto'
   },
   signature: {
@@ -62,23 +62,24 @@ const styles = StyleSheet.create({
     height: 60,
     alignSelf: "center",
     paddingTop: 15,
-    marginLeft: 270,
+    marginLeft: 300,
   },
 
   name: {
     fontSize: 11.5,
     textAlign: "center",
     marginLeft: 270,
+    textDecorationStyle:"bold",
     textDecoration: "underline",
   },
   designation: {
-    fontSize: 11.5,
+    fontSize: 11.5, 
     textAlign: "center",
     marginLeft: 270,
   },
   footer: {
     position: "absolute",
-    bottom: 50,
+    bottom: 30,
     left: 40,
     right: 40,
     textAlign: "center",
