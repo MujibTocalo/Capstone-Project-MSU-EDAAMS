@@ -135,7 +135,7 @@ const LandingPage = ({ socket }) => {
   return (
     <div className="relative h-screen bg-indigo-50/50 overflow-x-hidden overflow-y-scroll flex flex-col">
       <div className="flex flex-col items-start">
-        <div className="flex mx-auto bg-indigo-700 h-14 items-center w-screen justify-end">
+        <div className="flex mx-auto bg-indigo-800 h-14 items-center w-screen justify-end">
           <ul className="flex flex-row gap-6 text-white font-medium mr-16">
             {/* <li className="hover:cursor-pointer hover:scale-105">Documents</li>
             <li className="hover:cursor-pointer hover:scale-105">Memorandum</li>
@@ -161,7 +161,7 @@ const LandingPage = ({ socket }) => {
             <Typography className="text-4xl whitespace-pre rounded-lg text-gray-900 tracking-tight font-semibold">
               Mindanao State University
             </Typography>{" "}
-            <Typography className="text-lg whitespace-pre mb-2 rounded-lg text-gray-900 tracking-tight font-medium">
+            <Typography className="text-lg whitespace-pre mb-2 rounded-lg text-gray-600 tracking-tight font-medium">
               College of Information and Computing Sciences
             </Typography>
             {/* <Typography className="flex flex-col text-8xl mb-5 text-indigo-600 font-extrabold">
@@ -169,7 +169,7 @@ const LandingPage = ({ socket }) => {
             </Typography> */}
             <Typed
               className="flex flex-row text-7xl items-center content-center justify-center mb-5 text-indigo-600 font-extrabold "
-              strings={['EDAAMS', 'DOCUMENT', 'ARCHIVE', 'TRACKING', 'APPROVAL']}
+              strings={['EDAAMS']}
               typeSpeed={120}
               backSpeed={140}
               loop

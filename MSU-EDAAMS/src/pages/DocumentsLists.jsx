@@ -110,11 +110,9 @@ export const DocumentsLists = () => {
         const responseData = response.data;
         const documentArray = responseData.document;
         const currentUserCollege = userDetail.office;
-        const filteredDocuments = documentArray.filter(
-          (document) => {
-            document.collegeName === currentUserCollege
-          }
-        );
+        const filteredDocuments = documentArray.filter((document) => {
+          document.collegeName === currentUserCollege;
+        });
 
         // if (currentUserCollege === 'RMO' || currentUserCollege === 'OVCAA' || currentUserCollege === 'OP') {
         //   sortedDocuments = documentArray
@@ -154,8 +152,6 @@ export const DocumentsLists = () => {
               document.documentStatus === "OP Approved" ||
               document.documentStatus === "Rejected"
           );
-
-
 
         setTableRows(sortedDocuments);
         setFilteredTableRows(sortedDocuments);
@@ -238,9 +234,11 @@ export const DocumentsLists = () => {
   const navigate = useNavigate();
 
   return (
-    <Card className="flex h-full w-screen px-12 mx-auto my-auto rounded-none overflow-hidden bg-white"
+    <Card
+      className="flex h-full w-screen px-12 mx-auto my-auto rounded-none overflow-hidden bg-white"
       floated={true}
-      shadow={true}>
+      shadow={true}
+    >
       <div>
         <Dialog
           size="sm"
@@ -313,9 +311,9 @@ export const DocumentsLists = () => {
                         Date Uploaded:{" "}
                         {selectedDocument.createdAt
                           ? format(
-                            new Date(selectedDocument.createdAt),
-                            "yyyy-MM-dd"
-                          )
+                              new Date(selectedDocument.createdAt),
+                              "yyyy-MM-dd"
+                            )
                           : "Waiting"}{" "}
                         <br />
                         Uploaded By:{" "}
@@ -343,9 +341,9 @@ export const DocumentsLists = () => {
                         Date Approved:{" "}
                         {selectedDocument.deanEndorsementDate
                           ? format(
-                            new Date(selectedDocument.deanEndorsementDate),
-                            "yyyy-MM-dd"
-                          )
+                              new Date(selectedDocument.deanEndorsementDate),
+                              "yyyy-MM-dd"
+                            )
                           : "Waiting"}{" "}
                         <br />
                         Approved By:{" "}
@@ -374,9 +372,9 @@ export const DocumentsLists = () => {
                         Date Endorsed:{" "}
                         {selectedDocument.endorsementDate
                           ? format(
-                            new Date(selectedDocument.endorsementDate),
-                            "yyyy-MM-dd"
-                          )
+                              new Date(selectedDocument.endorsementDate),
+                              "yyyy-MM-dd"
+                            )
                           : `Waiting for ${selectedDocument.collegeName} Dean Endorsement`}{" "}
                         <br />
                         Endorsed By:{" "}
@@ -384,7 +382,6 @@ export const DocumentsLists = () => {
                           ? selectedDocument.endorserName
                           : "Pending"}{" "}
                         <br />
-
                       </Typography>
                     </TimelineBody>
                   </TimelineItem>
@@ -406,9 +403,9 @@ export const DocumentsLists = () => {
                         Final Approval Date:{" "}
                         {selectedDocument.approvalDate
                           ? format(
-                            new Date(selectedDocument.approvalDate),
-                            "yyyy-MM-dd"
-                          )
+                              new Date(selectedDocument.approvalDate),
+                              "yyyy-MM-dd"
+                            )
                           : "Waiting for OVCAA Endorsement"}{" "}
                         <br />
                         Approved By:{" "}
@@ -436,9 +433,9 @@ export const DocumentsLists = () => {
                         Release Date:{" "}
                         {selectedDocument.releaseDate
                           ? format(
-                            new Date(selectedDocument.releaseDate),
-                            "yyyy-MM-dd"
-                          )
+                              new Date(selectedDocument.releaseDate),
+                              "yyyy-MM-dd"
+                            )
                           : "Waiting for Office of the President Approval"}{" "}
                         <br />
                         {/* Released By: {selectedDocument.opApproverName ? selectedDocument.opApproverName : 'Pending'} <br />
@@ -468,16 +465,16 @@ export const DocumentsLists = () => {
                         Date Rejected:{" "}
                         {selectedDocument.rejectedDate
                           ? format(
-                            new Date(selectedDocument.rejectedDate),
-                            "yyyy-MM-dd"
-                          )
+                              new Date(selectedDocument.rejectedDate),
+                              "yyyy-MM-dd"
+                            )
                           : "Waiting"}{" "}
                         <br />
                         Rejected By:{" "}
                         {selectedDocument.rejectedName
                           ? selectedDocument.rejectedDesignation +
-                          " " +
-                          selectedDocument.rejectedName
+                            " " +
+                            selectedDocument.rejectedName
                           : "Pending"}{" "}
                         <br />
                         Remarks:{" "}
@@ -538,28 +535,31 @@ export const DocumentsLists = () => {
               See all information about documents
             </Typography>
           </div>
-          <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-            <div className="flex gap-2 -translate-x-12">
-              <Button
-                className="flex gap-2 hover:scale-105"
-                color="green"
-                onClick={handleCreateNewDocument}
-              >
-                <HiOutlineDocumentAdd size={16} /> Create Document
-              </Button>
-            </div>
-
-            {/* search bar */}
-            <div className="w-screen -translate-x-12 md:w-72">
-              <Input
-                label="Search by Uploader Detail"
-                icon={<MagnifyingGlassIcon className="h-5 w-5" />}
-                onChange={handleSearch}
-                value={searchQuery}
-              />
-            </div>
-          </div>
+          {/* <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
+            
+          </div> */}
         </div>
+        {/* ADD DOCUMENT BUTTON */}
+        <div className=" flex flex-row justify-end pr-4">
+          <Button
+            className="flex gap-2 hover:scale-110"
+            color="blue"
+            onClick={handleCreateNewDocument}
+          >
+            <HiOutlineDocumentAdd size={16} /> Create Document
+          </Button>
+        </div>
+
+        {/* SEARCH BAR */}
+        <div className="w-screen md:w-72">
+          <Input
+            label="Search by Uploader Detail"
+            icon={<MagnifyingGlassIcon className="h-5 w-5" />}
+            onChange={handleSearch}
+            value={searchQuery}
+          />
+        </div>
+
         <div className="flex mt-4 whitespace-pre flex-col items-center justify-between gap-4 md:flex-row">
           {/* <Tabs value="all" className="w-full md:w-max whitespace-pre">
             <TabsHeader>
@@ -579,12 +579,12 @@ export const DocumentsLists = () => {
               {TABLE_HEAD.map((head, index) => (
                 <th
                   key={head}
-                  className="border-y border-blue-gray-100 bg-indigo-50/50 p-4 transition-colors"
+                  className="border-y border-blue-gray-100 bg-blue-gray-100 p-4 transition-colors"
                 >
                   <Typography
                     variant="small"
                     color="blue-gray"
-                    className="flex items-center justify-between gap-2 font-bold leading-none"
+                    className="flex items-center justify-between gap-4 font-bold leading-none"
                   >
                     {head} {index !== TABLE_HEAD.length - 1}
                   </Typography>
@@ -594,7 +594,10 @@ export const DocumentsLists = () => {
           </thead>
           <tbody>
             {filteredTableRows
-              .slice((currentPage - 1) * documentsPerPage, currentPage * documentsPerPage)
+              .slice(
+                (currentPage - 1) * documentsPerPage,
+                currentPage * documentsPerPage
+              )
               .map(
                 (
                   {
@@ -680,23 +683,23 @@ export const DocumentsLists = () => {
                               documentStatus === "Dean Approved"
                                 ? "Dean Approved"
                                 : documentStatus === "Dean Endorsed"
-                                  ? "Dean Approved"
-                                  : documentStatus === "OVCAA Endorsed"
-                                    ? "OVCAA Approved"
-                                    : documentStatus === "OP Approved"
-                                      ? "OP Approved"
-                                      : documentStatus === "Created"
-                                        ? "Created"
-                                        : documentStatus === "Pending"
-                                          ? "Pending"
-                                          : "Rejected"
+                                ? "Dean Approved"
+                                : documentStatus === "OVCAA Endorsed"
+                                ? "OVCAA Approved"
+                                : documentStatus === "OP Approved"
+                                ? "OP Approved"
+                                : documentStatus === "Created"
+                                ? "Created"
+                                : documentStatus === "Pending"
+                                ? "Pending"
+                                : "Rejected"
                             }
                             color={
                               documentStatus === "Rejected"
                                 ? "red"
                                 : documentStatus === "Pending"
-                                  ? "orange"
-                                  : "green"
+                                ? "orange"
+                                : "green"
                             }
                           />
                         </div>
@@ -743,13 +746,24 @@ export const DocumentsLists = () => {
       </CardBody>
       <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
         <Typography variant="small" color="blue-gray" className="font-normal">
-          Page {currentPage} of {Math.ceil(filteredTableRows.length / documentsPerPage)}
+          Page {currentPage} of{" "}
+          {Math.ceil(filteredTableRows.length / documentsPerPage)}
         </Typography>
         <div className="flex gap-2">
-          <Button variant="outlined" size="sm" onClick={handlePreviousPage}>
+          <Button
+            variant="outlined"
+            className="border-gray-400"
+            size="sm"
+            onClick={handlePreviousPage}
+          >
             Previous
           </Button>
-          <Button variant="outlined" size="sm" onClick={handleNextPage}>
+          <Button
+            variant="outlined"
+            className="border-gray-400"
+            size="sm"
+            onClick={handleNextPage}
+          >
             Next
           </Button>
         </div>

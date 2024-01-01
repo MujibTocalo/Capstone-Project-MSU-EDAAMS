@@ -25,7 +25,6 @@ import logo from "../assets/msulogo.png";
 import Notification from "../assets/notification.svg";
 import { TiThMenuOutline } from "react-icons/ti";
 import msulogo from "../assets/msulogo.png";
-
 import Typed from 'react-typed';
 
 
@@ -112,7 +111,7 @@ const ProfileMenu = () => {
                 )}
                 <ChevronDownIcon
                   strokeWidth={2.5}
-                  className={`h-3 w-3 transition-transform ${isMenuOpen ? "rotate-180" : ""
+                  className={`h-4 w-8 transition-transform ${isMenuOpen ? "rotate-180" : ""
                     }`}
                 />
               </Button>
@@ -134,7 +133,7 @@ const ProfileMenu = () => {
                   }
                 }}
                 className={`flex items-center gap-2 rounded ${isLastItem
-                  ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
+                  ? "hover:bg-blue-500/10 focus:bg-blue-gray-500/10 active:bg-gray-500/10"
                   : ""
                   }`}
               >
@@ -176,10 +175,11 @@ const ProfileMenu = () => {
                     size="xxl"
                     src={`http://localhost:7000${profileImage}`}
                     alt="profile"
-                    className={`flex border border-blue-200 p-0.5`}
+                    className={`flex border border-blue-gray-200 p-0.5`}
                   />
                 )}
-                <div className="absolute bottom-0 right-0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                <div className="absolute bottom-0 right-0 opacity-0 group-hover:opacity-100 transition-opacity">
+                </div>
               </div>
             </label>
             <div className="mb-1text-start">
@@ -405,19 +405,20 @@ export const CustomNavbar = ({ setOpen, socket }) => {
 
   return (
     <div className="flex max-w-screen items-center bg-transparent justify-between p-1 relative px-6">
-      <Typography className="flex flex-row gap-4 items-center ml-2 text-lg p-0.5 pr-3 text-center font-semibold rounded-lg">
+      <Typography className="flex flex-row gap-4 items-center ml-10 text-lg p-0.5 pr-3 text-center font-semibold rounded-lg">
         <TiThMenuOutline
           onClick={() => setOpen((prevOpen) => !prevOpen)}
-          className="flex rounded-lg w-9 h-9 p-1 text-gray-700 -translate-x-2 cursor-pointer hover:scale-110"
+
+          className="flex rounded-lg w-9 h-9 p-1 text-gray-800 -translate-x-2 cursor-pointer hover:scale-110"
         />
 
-        <Typed
+        {/* <Typed
           className="text-xl items-center text-black"
           strings={['DOCUMENT', 'ARCHIVE', 'TRACKING', 'APPROVAL']}
           typeSpeed={120}
           backSpeed={140}
           loop
-        />
+        /> */}
 
         {/* <img src={msulogo} alt="logo" className="flex flex-row h-10" /> */}
 
@@ -433,7 +434,7 @@ export const CustomNavbar = ({ setOpen, socket }) => {
                   {notifications.map((notification) => (
                     <div
                       key={notification.id}
-                      className={`flex bg-white text-xs font-light border rounded-md p-2 w-56 ${notification.isRead ? 'opacity-50' : ''}`}
+                      className={`flex text-xs font-light border rounded-md p-2 w-56 ${notification.isRead ? 'opacity-50' : ''}`}
                     >
                       <div className="flex flex-col flex-1">
                         <div className="font-semibold">{notification.message}</div>
@@ -452,11 +453,11 @@ export const CustomNavbar = ({ setOpen, socket }) => {
                 </div>
               )}
 
-              <div className="flex mx-auto p-1 gap-1.5">
-                <Button color="blue" onClick={markAllAsRead} size="sm">
+              <div className="flex mx-auto p-1 gap-2">
+                <Button className="bg-transparent text-blue-500 hover:bg-blue-100" onClick={markAllAsRead} size="sm">
                   Mark All as Read
                 </Button>
-                <Button color="red" onClick={deleteReadNotifications} size="sm">
+                <Button className="bg-trasparent text-red-500 hover:bg-red-100" onClick={deleteReadNotifications} size="sm">
                   Delete Read Notifications
                 </Button>
               </div>
@@ -467,7 +468,7 @@ export const CustomNavbar = ({ setOpen, socket }) => {
             <RiNotification3Fill
               className="cursor-pointer mr-4"
               color="gray"
-              size={28}
+              size={23}
               onClick={toggleNotificationVisibility}
             />
 

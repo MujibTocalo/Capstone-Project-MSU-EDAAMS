@@ -430,7 +430,7 @@ const ArchivePage = () => {
               {TABLE_HEAD.map((head, index) => (
                 <th
                   key={head}
-                  className="border-y border-blue-gray-100 bg-indigo-50/50  p-4 transition-colors sticky -top-8"
+                  className="border-y border-blue-gray-100 bg-blue-gray-100  p-4 transition-colors sticky -top-8"
                 >
                   <Typography
                     variant="small"

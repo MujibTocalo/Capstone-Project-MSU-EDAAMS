@@ -16,8 +16,8 @@ import elogo from '../assets/edaams.png'
 const Sidebar = ({ isOpen, toggleSidebar }) => {
 
   const menus = [
-    // { name: 'Dashboard', link: '/dashboard', icon: RiDashboardLine },
-    { name: 'Dashboard', link: '/documents', icon: HiOutlineDocumentText },
+    { name: 'Dashboard', link: '/dashboard', icon: RiDashboardLine },
+    { name: 'All Documents', link: '/documents', icon: HiOutlineDocumentText },
     { name: 'Dean', link: '/deanEndorsement', icon: LuClipboardCheck },
     { name: 'Endorsement', link: '/ovcaaEndorsement', icon: RiAttachment2 },
     { name: 'Approval', link: '/opapproval', icon: HiOutlineDocumentText },
@@ -31,13 +31,13 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
 
   return (
     <div className={`flex flex-col ${isOpen ? 'opacity-100' : '3s ease-in-out -translate-x-64'} bg-white  transition-all duration-500`} >
-      <div className={`h-screen ${isOpen ? 'w-64' : 'w-0'} bg-[#111927] duration-500 p-1 transition-all`}>
-        <img src={elogo} className='flex  w-28 p-4 -translate-x-6 -translate-y-4' />
+      <div className={`h-screen ${isOpen ? 'w-64' : 'w-0'} bg-[#182440] duration-500 p-1 transition-all`}>
+        <img src={elogo} alt='edaams logo' className='flex  w-28 p-4 -translate-x-6 -translate-y-4' />
         <div className='py-2 flex flex-col duration-500 m-4 justify-between gap-2'>
-          <div className='flex flex-col rounded-lg p-2 bg-[#1C2536] -translate-y-14'>
+          <div className='flex flex-col rounded-lg p-2 bg-[#7b7b995f] -translate-y-14'>
             <Typography className={`${!open && 'hidden'} flex 3s ease-in-out text-white text-start cursor-default rounded-lg whitespace-pre font-bold text-md ml-2`}>
               EDAAMS</Typography>
-            <Typography className='flex ml-2 text-xs text-gray-400'>
+            <Typography className='flex ml-2 text-xs text-gray-300'>
               MSU - Marawi
             </Typography>
           </div>
