@@ -38,6 +38,7 @@ import {
   DocumentPlusIcon,
 } from "@heroicons/react/24/solid";
 
+
 import { format } from "date-fns";
 
 import { useNavigate } from "react-router-dom";
@@ -197,7 +198,7 @@ export const DocumentsLists = () => {
   };
 
   const handleCreateNewDocument = () => {
-    navigate("/createDocument");
+    navigate("/newCreateDocument");
   };
 
   const handleSearch = (e) => {
@@ -228,6 +229,19 @@ export const DocumentsLists = () => {
     if (selectedDocumentId) {
       deleteDocument(selectedDocumentId);
       hideConfirmationModal();
+    }
+  };
+
+  const handleEditDocument = (documentId) => {
+    // Find the selected document based on the documentId
+    const selectedDocument = filteredTableRows.find((doc) => doc._id === documentId);
+
+    // Display a confirmation prompt
+    const isConfirmed = window.confirm("Are you sure you want to edit this document?");
+
+    if (isConfirmed) {
+      // Redirect to the NewCreateDocument page with the selected document data
+      navigate("/newCreateDocument", { state: { document: selectedDocument } });
     }
   };
 
@@ -311,9 +325,9 @@ export const DocumentsLists = () => {
                         Date Uploaded:{" "}
                         {selectedDocument.createdAt
                           ? format(
-                              new Date(selectedDocument.createdAt),
-                              "yyyy-MM-dd"
-                            )
+                            new Date(selectedDocument.createdAt),
+                            "yyyy-MM-dd"
+                          )
                           : "Waiting"}{" "}
                         <br />
                         Uploaded By:{" "}
@@ -341,9 +355,9 @@ export const DocumentsLists = () => {
                         Date Approved:{" "}
                         {selectedDocument.deanEndorsementDate
                           ? format(
-                              new Date(selectedDocument.deanEndorsementDate),
-                              "yyyy-MM-dd"
-                            )
+                            new Date(selectedDocument.deanEndorsementDate),
+                            "yyyy-MM-dd"
+                          )
                           : "Waiting"}{" "}
                         <br />
                         Approved By:{" "}
@@ -372,9 +386,9 @@ export const DocumentsLists = () => {
                         Date Endorsed:{" "}
                         {selectedDocument.endorsementDate
                           ? format(
-                              new Date(selectedDocument.endorsementDate),
-                              "yyyy-MM-dd"
-                            )
+                            new Date(selectedDocument.endorsementDate),
+                            "yyyy-MM-dd"
+                          )
                           : `Waiting for ${selectedDocument.collegeName} Dean Endorsement`}{" "}
                         <br />
                         Endorsed By:{" "}
@@ -403,9 +417,9 @@ export const DocumentsLists = () => {
                         Final Approval Date:{" "}
                         {selectedDocument.approvalDate
                           ? format(
-                              new Date(selectedDocument.approvalDate),
-                              "yyyy-MM-dd"
-                            )
+                            new Date(selectedDocument.approvalDate),
+                            "yyyy-MM-dd"
+                          )
                           : "Waiting for OVCAA Endorsement"}{" "}
                         <br />
                         Approved By:{" "}
@@ -433,9 +447,9 @@ export const DocumentsLists = () => {
                         Release Date:{" "}
                         {selectedDocument.releaseDate
                           ? format(
-                              new Date(selectedDocument.releaseDate),
-                              "yyyy-MM-dd"
-                            )
+                            new Date(selectedDocument.releaseDate),
+                            "yyyy-MM-dd"
+                          )
                           : "Waiting for Office of the President Approval"}{" "}
                         <br />
                         {/* Released By: {selectedDocument.opApproverName ? selectedDocument.opApproverName : 'Pending'} <br />
@@ -465,16 +479,16 @@ export const DocumentsLists = () => {
                         Date Rejected:{" "}
                         {selectedDocument.rejectedDate
                           ? format(
-                              new Date(selectedDocument.rejectedDate),
-                              "yyyy-MM-dd"
-                            )
+                            new Date(selectedDocument.rejectedDate),
+                            "yyyy-MM-dd"
+                          )
                           : "Waiting"}{" "}
                         <br />
                         Rejected By:{" "}
                         {selectedDocument.rejectedName
                           ? selectedDocument.rejectedDesignation +
-                            " " +
-                            selectedDocument.rejectedName
+                          " " +
+                          selectedDocument.rejectedName
                           : "Pending"}{" "}
                         <br />
                         Remarks:{" "}
@@ -683,23 +697,23 @@ export const DocumentsLists = () => {
                               documentStatus === "Dean Approved"
                                 ? "Dean Approved"
                                 : documentStatus === "Dean Endorsed"
-                                ? "Dean Approved"
-                                : documentStatus === "OVCAA Endorsed"
-                                ? "OVCAA Approved"
-                                : documentStatus === "OP Approved"
-                                ? "OP Approved"
-                                : documentStatus === "Created"
-                                ? "Created"
-                                : documentStatus === "Pending"
-                                ? "Pending"
-                                : "Rejected"
+                                  ? "Dean Approved"
+                                  : documentStatus === "OVCAA Endorsed"
+                                    ? "OVCAA Approved"
+                                    : documentStatus === "OP Approved"
+                                      ? "OP Approved"
+                                      : documentStatus === "Created"
+                                        ? "Created"
+                                        : documentStatus === "Pending"
+                                          ? "Pending"
+                                          : "Rejected"
                             }
                             color={
                               documentStatus === "Rejected"
                                 ? "red"
                                 : documentStatus === "Pending"
-                                ? "orange"
-                                : "green"
+                                  ? "orange"
+                                  : "green"
                             }
                           />
                         </div>
@@ -727,14 +741,22 @@ export const DocumentsLists = () => {
                               title="Track Document"
                             />
                           </div>
-                          {userAccess === "Uploader" &&
-                            documentStatus === "Pending" && (
+                          {userAccess === "Uploader" && documentStatus === "Pending" && (
+                            <>
+                              {/* Add the Edit button here */}
+                              <BiEdit
+                                size={25}
+                                className="cursor-pointer hover:scale-110 hover:bg-lightgray hover:text-black"
+                                onClick={() => handleEditDocument(_id)}
+                                title="Edit Document"
+                              />
                               <BiTrash
                                 onClick={() => showConfirmationModal(_id)}
                                 size={34}
                                 className="flex text-gray-700 p-1 rounded-lg hover:scale-105"
                               />
-                            )}
+                            </>
+                          )}
                         </div>
                       </td>
                     </tr>

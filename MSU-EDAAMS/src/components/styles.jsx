@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
   content: {
     fontSize: 11,
     marginRight: 50,
-    textIndent: 70,
+    textIndent: 20,
     textAlign: 'justify',
     marginTop: 10,
     lineHeight: 2,
@@ -57,6 +57,25 @@ const styles = StyleSheet.create({
     marginLeft: 80,
     pageBreak: 'auto'
   },
+  // content: {
+  //   fontSize: 11,
+  //   marginRight: 50,
+  //   textAlign: 'justify',
+  //   marginTop: 10,
+  //   lineHeight: 2,
+  //   paddingRight: 20,
+  //   marginLeft: 80,
+  //   pageBreak: 'auto',
+  //   '& > p': {
+  //     // Styles for the first line of each paragraph
+  //     textIndent: 20,
+  //     // Additional styles for subsequent lines of each paragraph
+  //     '&:not(:first-child)': {
+  //       marginLeft: 0, // Adjust as needed
+  //     },
+  //   },
+  // },
+
   signature: {
     width: 100,
     height: 60,
@@ -69,11 +88,11 @@ const styles = StyleSheet.create({
     fontSize: 11.5,
     textAlign: "center",
     marginLeft: 270,
-    textDecorationStyle:"bold",
+    textDecorationStyle: "bold",
     textDecoration: "underline",
   },
   designation: {
-    fontSize: 11.5, 
+    fontSize: 11.5,
     textAlign: "center",
     marginLeft: 270,
   },

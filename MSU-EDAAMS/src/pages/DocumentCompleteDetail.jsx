@@ -4,7 +4,10 @@ import logo from '../assets/msulogo.png'
 import { Avatar, Typography } from "@material-tailwind/react";
 import { format } from "date-fns";
 import ReactQuill from "react-quill";
+import { formats } from "../components/EditorToolbar";
 import 'react-quill/dist/quill.snow.css';
+import '../components/TextEditor.css';
+
 
 
 
@@ -20,7 +23,6 @@ const DocumentCompleteDetail = ({ document }) => {
 
 	useEffect(() => {
 		setUserAccess(currentUser.userType)
-		console.log(userAccess)
 		store.fetchDocuments();
 		setSignature(document.uploaderSignature);
 		setDeanSignature(document.deanSignature);
@@ -33,7 +35,7 @@ const DocumentCompleteDetail = ({ document }) => {
 		<div className="text-black">
 			<div key={document._id} className="p-2">
 				<div className="flex flex-col border border-gray-400 p-2 mx-2 justify-between shadow-md">
-					<Typography className='font-semibold'>{document.collegeName}</Typography>
+					{/* <Typography className='font-semibold'>{document.collegeName}</Typography> */}
 					<div className="flex">
 						<Typography variant='paragraph'>Control No. </Typography>
 						<Typography variant='paragraph' className='font-semibold' style={{ textIndent: '.5em' }}>{document.controlNumber}</Typography>
@@ -59,6 +61,25 @@ const DocumentCompleteDetail = ({ document }) => {
 							</div>
 							<div className="flex flex-col border border-gray-400 p-2 my-2 shadow-md">
 								<Typography variant='paragraph' className='font-medium text-justify whitespace-break-spaces' style={{ textIndent: '3em', lineHeight: 2 }}>{document.approverContent}</Typography>
+							</div>
+							<div className="flex flex-col border border-gray-400 p-2 my-2 shadow-md">
+								{document.approverContent.split('\n').map((paragraph, index) => (
+									<Typography
+										key={index}
+										variant='paragraph'
+										className='font-medium text-justify whitespace-break-spaces'
+										style={{ textIndent: index === 0 ? '3em' : 0, lineHeight: 2 }}
+									>
+										{paragraph}
+									</Typography>
+								))}
+							</div>
+							<div >
+								<ReactQuill
+									value={document.approverContent}
+									readOnly={true}
+									modules={{ toolbar: false }}
+									className="shadow-md" />
 							</div>
 						</div>
 						<div className="flex flex-row mr-12 justify-end">
@@ -90,6 +111,13 @@ const DocumentCompleteDetail = ({ document }) => {
 							</div>
 							<div className="flex flex-col border border-gray-400 p-2 my-2 shadow-md">
 								<Typography variant='paragraph' className='font-medium text-justify whitespace-break-spaces' style={{ textIndent: '3em', lineHeight: 2 }}>{document.endorsementContent}</Typography>
+							</div>
+							<div>
+								<ReactQuill
+									value={document.endorsementContent}
+									readOnly={true}
+									modules={{ toolbar: false }}
+									className="shadow-md" />
 							</div>
 						</div>
 						<div className="flex flex-row mr-12 justify-end">
@@ -123,6 +151,13 @@ const DocumentCompleteDetail = ({ document }) => {
 							<div className="flex flex-col border border-gray-400 p-2 my-2 shadow-md">
 								<Typography variant='paragraph' className='font-medium text-justify whitespace-break-spaces' style={{ textIndent: '3em', lineHeight: 2 }}>{document.deanEndorsementContent}</Typography>
 							</div>
+							<div >
+								<ReactQuill
+									value={document.deanEndorsementContent}
+									readOnly={true}
+									modules={{ toolbar: false }}
+									className="shadow-md" />
+							</div>
 						</div>
 						<div className="flex flex-row mr-12 justify-end">
 							<div className="flex flex-col">
@@ -155,9 +190,12 @@ const DocumentCompleteDetail = ({ document }) => {
 						</div>
 						<div >
 							<ReactQuill
+								theme="snow"
 								value={document.content}
 								readOnly={true}
+								// modules={{ toolbar: false }}
 								modules={{ toolbar: false }}
+								formats={formats}
 								className="shadow-md"
 								style={{ lineHeight: 2 }} />
 						</div>

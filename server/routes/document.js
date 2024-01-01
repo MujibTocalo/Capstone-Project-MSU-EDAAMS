@@ -5,7 +5,7 @@ import {
 	fetchDocument,
 	deleteDocument,
 	updateDocument,
-	createDocument,
+	createOrUpdateDocument,
 	totalDocuments,
 	deanEndorsement,
 	ovcaaEndorsement,
@@ -19,9 +19,10 @@ const documentRouter = express.Router()
 
 documentRouter.get('/', fetchDocuments)
 documentRouter.get('/:id', fetchDocument)
-documentRouter.post('/createDocument', createDocument)
+documentRouter.put('/updateDocument/:id', updateDocument)
+documentRouter.post('/createDocument', createOrUpdateDocument)
 documentRouter.delete('/delete/:id', deleteDocument)
-documentRouter.put('/:id', updateDocument)
+// documentRouter.put('/:id', updateDocument)
 
 documentRouter.get('/total', totalDocuments)
 

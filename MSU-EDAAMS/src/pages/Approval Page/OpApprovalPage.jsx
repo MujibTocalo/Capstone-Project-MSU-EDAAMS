@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import documentsStore from '../../config/documentsStore'
 import { useToast } from '../../components/ToastService'
 
@@ -30,7 +30,7 @@ const OpApprovalPage = () => {
 	const userDetail = JSON.parse(localStorage.getItem('userDetails'))
 	const store = documentsStore()
 	const toast = useToast()
-
+	const quillRef = useRef(null);
 	const [endorse, setEndorse] = useState(false)
 	const [endorseSelectedDocument, setEndorseSelectedDocument] = useState(null);
 
@@ -299,6 +299,16 @@ const OpApprovalPage = () => {
 													value={documentDetail.subject}
 													onChange={onSubject}
 												/>
+												{/* <EditorToolbar toolbarId={"t1"} /> */}
+												{/* <ReactQuill
+													ref={quillRef}
+													theme="snow"
+													value={documentDetail.content}
+													onChange={onContent}
+													placeholder={"Write the Document Content Here..."}
+													modules={modules("t1")}
+													formats={formats}
+												/> */}
 												<Textarea
 													color='cyan'
 													label="Content"

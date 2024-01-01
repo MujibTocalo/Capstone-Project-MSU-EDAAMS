@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import documentsStore from "../../config/documentsStore";
 import { useToast } from "../../components/ToastService";
 import DocumentApproverDetail from "./DocumentApproverDetail";
 
+import ReactQuill from "react-quill";
+import EditorToolbar, { modules, formats } from "../../components/EditorToolbar";
 import "react-quill/dist/quill.snow.css";
 import "../../components/TextEditor.css";
 import { LuAlertCircle } from "react-icons/lu";
@@ -25,6 +27,7 @@ const DeanEndorsementPage = () => {
   const userDetail = JSON.parse(localStorage.getItem("userDetails"));
   const store = documentsStore();
   const toast = useToast();
+  const quillRef = useRef(null);
   const [documents, setDocuments] = useState([]);
 
   const [endorse, setEndorse] = useState(false);
@@ -221,10 +224,10 @@ const DeanEndorsementPage = () => {
     });
   };
 
-  const onContent = (e) => {
+  const onContent = (value) => {
     setDocumentDetail({
       ...documentDetail,
-      content: e.target.value
+      content: value
     })
   }
 
@@ -300,12 +303,22 @@ const DeanEndorsementPage = () => {
                           value={documentDetail.subject}
                           onChange={onSubject}
                         />
-                        <Textarea
+                        {/* <Textarea
                           color='cyan'
                           label="Content"
                           value={documentDetail.content}
                           onChange={onContent}
                           className="flex h-screen"
+                        /> */}
+                        <EditorToolbar toolbarId={"t1"} />
+                        <ReactQuill
+                          ref={quillRef}
+                          theme="snow"
+                          value={documentDetail.content}
+                          onChange={onContent}
+                          placeholder={"Write the Document Content Here..."}
+                          modules={modules("t1")}
+                          formats={formats}
                         />
                       </div>
                     </div>

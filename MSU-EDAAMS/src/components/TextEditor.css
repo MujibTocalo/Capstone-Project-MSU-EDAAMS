@@ -49,6 +49,8 @@
 .ql-editor {
   min-height: 50vh; 
   font-size: 17px;
+  line-height: 2;
+  text-decoration: black;
 }
 .App .ql-snow .ql-tooltip.ql-flip {
   width: auto;
@@ -63,6 +65,7 @@
 @media print {
   body {
     background: none;
+
   }
   .container .ql-editor {
     width: 6.5in;
@@ -70,10 +73,11 @@
     padding: 0;
     margin: 0;
     box-shadow: none;
-    border: none;
     align-self: flex-start;
+    
   }
   .container .ql-toolbar.ql-snow {
     display: none;
+    
   }
 } 

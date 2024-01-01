@@ -21,10 +21,16 @@ import {
 } from "@material-tailwind/react";
 import { useToast } from "../components/ToastService";
 
-const NewCreateDocument = () => {
-	const uploaderDetail = JSON.parse(localStorage.getItem('userDetails'))
-	const quillRef = useRef(null);
+import { useLocation } from "react-router-dom";
 
+const NewCreateDocument = () => {
+  const uploaderDetail = JSON.parse(localStorage.getItem('userDetails'))
+  const quillRef = useRef(null);
+
+  const location = useLocation();
+  const { document } = location.state || {};
+
+  const [isEditing, setIsEditing] = useState(false);
   const [confirmationOpen, setConfirmationOpen] = React.useState(false);
 
   const handleConfirmationOpen = () => setConfirmationOpen(true);
@@ -47,6 +53,18 @@ const NewCreateDocument = () => {
     uploaderSignature: uploaderDetail.signature,
   });
 
+  const generateControlNumber = (collegeName) => {
+    const currentDate = new Date();
+    const year = currentDate.getFullYear();
+    const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+    const day = String(currentDate.getDate()).padStart(2, '0');
+
+    // Combine the components to form the control number
+    const controlNumber = `${year}-${month}${day} ${collegeName}`;
+
+    return controlNumber;
+  };
+
   const [open, setOpen] = React.useState(false);
 
   const handleOpen = () => setOpen(!open);
@@ -59,17 +77,21 @@ const NewCreateDocument = () => {
     });
   };
 
-  const onControlNumber = (e) => {
-    setDocumentDetail({
-      ...documentDetail,
-      controlNumber: e.target.value,
-    });
-  };
+  // const onControlNumber = (e) => {
+  //   setDocumentDetail({
+  //     ...documentDetail,
+  //     controlNumber: e.target.value,
+  //   });
+  // };
 
+
+
+  // When the collegeName is selected, call the generateControlNumber function
   const onCollegeName = (value) => {
     setDocumentDetail({
       ...documentDetail,
       collegeName: value,
+      controlNumber: generateControlNumber(value),
     });
   };
 
@@ -90,98 +112,140 @@ const NewCreateDocument = () => {
   const onContent = (value) => {
     setDocumentDetail({
       ...documentDetail,
-      content: value,
+      content: value
     });
   };
 
+  useEffect(() => {
+    if (document) {
+      setDocumentDetail({
+        controlNumber: document.controlNumber || "",
+        collegeName: document.collegeName || "",
+        documentType: document.documentType || "",
+        header: document.header || "",
+        subject: document.subject || "",
+        content: document.content || "",
+        uploaderName: document.uploaderName || uploaderDetail.firstName + " " + uploaderDetail.lastName,
+        uploaderDesignation: document.uploaderDesignation || uploaderDetail.designation,
+        uploaderSignature: document.uploaderSignature || uploaderDetail.signature,
+      });
+      setIsEditing(true);
+    } else {
+      // Reset state when creating a new document
+      setDocumentDetail({
+        controlNumber: "",
+        collegeName: "",
+        documentType: "",
+        header: "",
+        subject: "",
+        content: "",
+        uploaderName: uploaderDetail.firstName + " " + uploaderDetail.lastName,
+        uploaderDesignation: uploaderDetail.designation,
+        uploaderSignature: uploaderDetail.signature,
+      });
+      setIsEditing(false);
+    }
+  }, [document]);
+
+
+  const confirmEdit = () => {
+    // Check if all required fields are filled
+    const requiredFields = ['header', 'subject', 'content'];
+    const missingFields = requiredFields.filter(field => !documentDetail[field]);
+
+    if (missingFields.length === 0) {
+      // All required fields are filled, proceed with the edit confirmation
+      setIsEditing(true);
+      handleConfirmationOpen();
+    } else {
+      // Show an alert or prevent submission due to missing fields
+      alert(`Please fill in the following fields: ${missingFields.join(', ')}`);
+      // You can customize this alert or implement your preferred way of handling missing fields
+    }
+  };
+
+
   const addDocument = async () => {
     try {
-      if (
-        !documentDetail.controlNumber ||
-        !documentDetail.collegeName ||
-        !documentDetail.documentType ||
-        !documentDetail.header ||
-        !documentDetail.subject ||
-        !documentDetail.content
-      ) {
-        handleOpen();
+      const apiUrl = isEditing
+        ? `http://localhost:7000/document/updateDocument/${document._id}`
+        : "http://localhost:7000/document/createDocument";
+
+      const requestData = isEditing
+        ? {
+          header: documentDetail.header,
+          subject: documentDetail.subject,
+          content: documentDetail.content,
+        }
+        : {
+          controlNumber: documentDetail.controlNumber,
+          collegeName: documentDetail.collegeName,
+          documentType: documentDetail.documentType,
+          header: documentDetail.header,
+          subject: documentDetail.subject,
+          content: documentDetail.content,
+          uploaderName: documentDetail.uploaderName,
+          uploaderDesignation: documentDetail.uploaderDesignation,
+          uploaderSignature: documentDetail.uploaderSignature,
+        };
+
+      const response = isEditing
+        ? await axios.put(apiUrl, requestData)
+        : await axios.post(apiUrl, requestData);
+
+      if (response.status === 201 || response.status === 200) {
+        // Your success logic
         toast.open(
-          <div className="flex gap-2 bg-red-500 text-white p-4 rounded-lg shadow-lg">
+          <div className={`flex gap-2 bg-${isEditing ? "yellow" : "green"}-500 text-white p-4 rounded-lg shadow-lg`}>
             <LuAlertCircle size={40} />
             <div>
-              <Typography variant="h4">Incomplete Detail!</Typography>
+              <Typography variant="h5">{isEditing ? "Edit" : "Success"}!</Typography>
               <Typography variant="paragraph">
-                Please fill in all necessary details.
+                Document {isEditing ? "Updated" : "Submission Successful"}
               </Typography>
             </div>
           </div>
         );
-        return;
+
+        // Reset the form or handle any other necessary actions after submission
+        setDocumentDetail({
+          collegeName: null,
+          documentType: null,
+          header: null,
+          subject: null,
+          content: "",
+        });
       } else {
-        axios
-          .post("http://localhost:7000/document/createDocument", {
-            controlNumber: documentDetail.controlNumber,
-            collegeName: documentDetail.collegeName,
-            documentType: documentDetail.documentType,
-            header: documentDetail.header,
-            subject: documentDetail.subject,
-            content: documentDetail.content,
-            uploaderName: documentDetail.uploaderName,
-            uploaderDesignation: documentDetail.uploaderDesignation,
-            uploaderSignature: documentDetail.uploaderSignature,
-          })
-          .then((res) => {
-            console.log(res);
-            if (res.status === 201) {
-              toast.open(
-                <div className="flex gap-2 bg-green-500 text-white p-4 rounded-lg shadow-lg">
-                  <LuAlertCircle size={40} />
-                  <div>
-                    <Typography variant="h5">Success!</Typography>
-                    <Typography variant="paragraph">
-                      Document Submittion Successful
-                    </Typography>
-                  </div>
-                </div>
-              );
-              setDocumentDetail({
-                controlNumber: documentDetail.controlNumber,
-                collegeName: documentDetail.collegeName,
-                documentType: documentDetail.documentType,
-                header: documentDetail.header,
-                subject: documentDetail.subject,
-                content: documentDetail.content,
-              });
-            } else {
-              toast.open(
-                <div className="flex gap-2 bg-red-500 text-white p-4 rounded-lg shadow-lg">
-                  <LuAlertCircle size={40} />
-                  <div>
-                    <Typography variant="h5">Failed!</Typography>
-                    <Typography variant="paragraph">
-                      Document Submittion Failed
-                    </Typography>
-                  </div>
-                </div>
-              );
-            }
-          });
+        // Your failure logic
+        toast.open(
+          <div className="flex gap-2 bg-red-500 text-white p-4 rounded-lg shadow-lg">
+            <LuAlertCircle size={40} />
+            <div>
+              <Typography variant="h5">Failed!</Typography>
+              <Typography variant="paragraph">
+                Document {isEditing ? "Update" : "Submission"} Failed
+              </Typography>
+            </div>
+          </div>
+        );
       }
     } catch (error) {
+      // Your error handling logic
       toast.open(
         <div className="flex gap-2 bg-red-800 text-white p-4 rounded-lg shadow-lg">
           <LuAlertCircle size={40} />
           <div>
             <Typography variant="h5">Error!</Typography>
             <Typography variant="paragraph">
-              Document Submittion Error
+              Document {isEditing ? "Update" : "Submission"} Error
             </Typography>
           </div>
         </div>
       );
-      throw error;
+      console.error(error);
     }
   };
+
 
   return (
     <div className="flex flex-col mt-4 px-10 rounded-xl w-screen overflow-y-scroll">
@@ -197,18 +261,19 @@ const NewCreateDocument = () => {
             mount: { y: 0 },
             unmount: { y: 25 },
           }}
+          disabled={isEditing}
         >
           <Option value="Memorandum">Memorandum</Option>
           <Option value="Special Order">Special Order</Option>
         </Select>
 
-        <Input
+        {/* <Input
           color="cyan"
           variant="standard"
           label="Control Number"
           value={documentDetail.controlNumber}
           onChange={onControlNumber}
-        />
+        /> */}
         <Select
           color="cyan"
           variant="outlined"
@@ -219,19 +284,20 @@ const NewCreateDocument = () => {
             mount: { y: 0 },
             unmount: { y: 25 },
           }}
+          disabled={isEditing}
         >
           {/* MSU COLLEGES */}
           <Option value="COA">
-			College of Agriculture</Option>
+            College of Agriculture</Option>
           <Option value="CBAA">
             College of Business Administration and Accountancy
           </Option>
           <Option value="CED">
-			College of Education</Option>
+            College of Education</Option>
           <Option value="COE">
-			College of Engineering</Option>
+            College of Engineering</Option>
           <Option value="DET">
-			Division of Engineering Technology</Option>
+            Division of Engineering Technology</Option>
           <Option value="CFAS">
             College of Fisheries and Aquatic Sciences
           </Option>
@@ -255,11 +321,11 @@ const NewCreateDocument = () => {
             College of Natural Sciences and Mathematics
           </Option>
           <Option value="CPA">
-			College of Public Affairs
-			</Option>
+            College of Public Affairs
+          </Option>
           <Option value="SSH">
-			College of Social Sciences and Humanities
-			</Option>
+            College of Social Sciences and Humanities
+          </Option>
           <Option value="CSPEAR">
             College of Sport Physical Education And Recreation
           </Option>
@@ -283,24 +349,23 @@ const NewCreateDocument = () => {
         />
       </div>
       <div>
-        <EditorToolbar toolbarId={"t1"} />
+        <EditorToolbar toolbarId={'t1'} />
         <ReactQuill
-					ref={quillRef}
+          ref={quillRef}
           theme="snow"
           value={documentDetail.content}
           onChange={onContent}
           placeholder={"Write the Document Content Here..."}
-          modules={modules("t1")}
+          modules={modules('t1')}
           formats={formats}
         />
       </div>
       <div className="flex col-sm-12 text-right">
         <button
-          onClick={handleConfirmationOpen}
-          className="flex mx-auto bg-green-400 border border-black p-2 px-8 m-4 rounded-xl font-semibold"
+          onClick={isEditing ? confirmEdit : confirmSubmission}
+          className={`flex mx-auto bg-${isEditing ? 'yellow' : 'green'}-400 border border-black p-2 px-8 m-4 rounded-xl font-semibold`}
         >
-          {" "}
-          Submit{" "}
+          {isEditing ? "Edit" : "Submit"}
         </button>
         <Dialog
           open={confirmationOpen}

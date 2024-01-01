@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import documentsStore from '../../config/documentsStore'
 import { useToast } from '../../components/ToastService'
 
@@ -28,7 +28,7 @@ const OVCAAEndorsementPage = () => {
 	const userDetail = JSON.parse(localStorage.getItem('userDetails'))
 	const store = documentsStore()
 	const toast = useToast()
-
+	const quillRef = useRef(null);
 	const [endorse, setEndorse] = useState(false)
 	const [endorseSelectedDocument, setEndorseSelectedDocument] = useState(null);
 
@@ -206,7 +206,7 @@ const OVCAAEndorsementPage = () => {
 	const onContent = (e) => {
 		setDocumentDetail({
 			...documentDetail,
-			content: e.target.value
+			content: e
 		})
 	}
 
@@ -298,13 +298,23 @@ const OVCAAEndorsementPage = () => {
 													value={documentDetail.subject}
 													onChange={onSubject}
 												/>
-												<Textarea
+												<EditorToolbar toolbarId={"t1"} />
+												<ReactQuill
+													ref={quillRef}
+													theme="snow"
+													value={documentDetail.content}
+													onChange={onContent}
+													placeholder={"Write the Document Content Here..."}
+													modules={modules("t1")}
+													formats={formats}
+												/>
+												{/* <Textarea
 													color='cyan'
 													label="Content"
 													value={documentDetail.content}
 													onChange={onContent}
 													className="flex h-screen"
-												/>
+												/> */}
 											</div>
 										</div>
 									</DialogBody>

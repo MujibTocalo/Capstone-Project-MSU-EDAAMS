@@ -230,28 +230,28 @@ export const releaseDocument = async (req, res) => {
 
 export const updateDocument = async (req, res) => {
 	try {
-		const id = req.params.id
-
-		const { header, subject, content } = req.body
+		const id = req.params.id;
+		const { header, subject, content } = req.body;
 
 		await Document.findByIdAndUpdate(id, {
+			
 			header,
 			subject,
 			content,
-			modifiedDate: Date.now()
-		})
+			modifiedDate: Date.now(),
+		});
 
-		const document = await Document.findById(id)
+		const updatedDocument = await Document.findById(id);
 
-		res.json({ document })
-		console.log("update pa nga")
+		res.json({ document: updatedDocument });
+		console.log("Document updated successfully");
 	} catch (error) {
-		res.json(error)
+		console.error(error);
+		res.status(500).json({ error: "Internal Server Error" });
 	}
 }
 
-
-export const createDocument = async (req, res) => {
+export const createOrUpdateDocument = async (req, res) => {
 	try {
 		const {
 			controlNumber,
@@ -265,30 +265,94 @@ export const createDocument = async (req, res) => {
 			uploaderSignature,
 		} = req.body;
 
-		const document = await Document.create({
-			controlNumber,
-			collegeName,
-			documentType,
-			header,
-			subject,
-			content,
-			uploaderDesignation,
-			uploaderName,
-			uploaderSignature,
-		});
+		const id = req.params.id;
 
-		io.emit("newDocument", {
-			senderName: uploaderName,
-			designation: uploaderDesignation,
-			receiverType: 'Approver - Dean',
-		});
+		if (id) {
+			// If id is provided, update the existing document
+			await Document.findByIdAndUpdate(id, {
+				controlNumber,
+				collegeName,
+				documentType,
+				header,
+				subject,
+				content,
+				uploaderDesignation,
+				uploaderName,
+				uploaderSignature,
+				modifiedDate: Date.now(),
+			});
 
-		res.status(201).json({ document });
+			const updatedDocument = await Document.findById(id);
+			res.json({ document: updatedDocument });
+			console.log("Document updated successfully");
+		} else {
+			// If id is not provided, create a new document
+			const document = await Document.create({
+				controlNumber,
+				collegeName,
+				documentType,
+				header,
+				subject,
+				content,
+				uploaderDesignation,
+				uploaderName,
+				uploaderSignature,
+			});
+
+			io.emit("newDocument", {
+				senderName: uploaderName,
+				designation: uploaderDesignation,
+				receiverType: 'Approver - Dean',
+			});
+
+			res.status(201).json({ document });
+			console.log("Document created successfully");
+		}
 	} catch (error) {
 		console.error(error);
 		res.status(500).json({ error: "Internal Server Error" });
 	}
 };
+
+
+// export const createDocument = async (req, res) => {
+// 	try {
+// 		const {
+// 			controlNumber,
+// 			collegeName,
+// 			documentType,
+// 			header,
+// 			subject,
+// 			content,
+// 			uploaderDesignation,
+// 			uploaderName,
+// 			uploaderSignature,
+// 		} = req.body;
+
+// 		const document = await Document.create({
+// 			controlNumber,
+// 			collegeName,
+// 			documentType,
+// 			header,
+// 			subject,
+// 			content,
+// 			uploaderDesignation,
+// 			uploaderName,
+// 			uploaderSignature,
+// 		});
+
+// 		io.emit("newDocument", {
+// 			senderName: uploaderName,
+// 			designation: uploaderDesignation,
+// 			receiverType: 'Approver - Dean',
+// 		});
+
+// 		res.status(201).json({ document });
+// 	} catch (error) {
+// 		console.error(error);
+// 		res.status(500).json({ error: "Internal Server Error" });
+// 	}
+// };
 
 
 
