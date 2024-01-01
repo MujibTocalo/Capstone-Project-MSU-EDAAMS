@@ -45,7 +45,7 @@ io.on("connection", async (socket) => {
       userTypes = user.userType || [];
 
       userTypes.forEach((type) => {
-        socket.join(type); // Join a room for each user type the user has
+        socket.join(type); 
       });
     }
   } catch (error) {

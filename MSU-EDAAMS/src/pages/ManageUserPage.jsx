@@ -416,7 +416,7 @@ const ManageUsers = () => {
                       <Option value="Releaser">
                         RMO - User
                       </Option>
-                      {/* <Option value='Administrator'>Administrator</Option> */}
+                      <Option value='Administrator'>Administrator</Option>
                     </Select>
 
                     <Select

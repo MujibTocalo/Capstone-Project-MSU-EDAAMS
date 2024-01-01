@@ -277,7 +277,6 @@ export const createDocument = async (req, res) => {
 			uploaderSignature,
 		});
 
-		// Emit a Socket.io event when a new document is created
 		io.emit("newDocument", {
 			senderName: uploaderName,
 			designation: uploaderDesignation,
