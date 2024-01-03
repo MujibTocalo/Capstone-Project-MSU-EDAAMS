@@ -234,7 +234,7 @@ export const updateDocument = async (req, res) => {
 		const { header, subject, content } = req.body;
 
 		await Document.findByIdAndUpdate(id, {
-			
+
 			header,
 			subject,
 			content,
@@ -265,49 +265,28 @@ export const createOrUpdateDocument = async (req, res) => {
 			uploaderSignature,
 		} = req.body;
 
-		const id = req.params.id;
+		const document = await Document.create({
+			controlNumber,
+			collegeName,
+			documentType,
+			header,
+			subject,
+			content,
+			uploaderDesignation,
+			uploaderName,
+			uploaderSignature,
+		});
 
-		if (id) {
-			// If id is provided, update the existing document
-			await Document.findByIdAndUpdate(id, {
-				controlNumber,
-				collegeName,
-				documentType,
-				header,
-				subject,
-				content,
-				uploaderDesignation,
-				uploaderName,
-				uploaderSignature,
-				modifiedDate: Date.now(),
-			});
+		io.emit("newDocument", {
+			senderName: uploaderName,
+			designation: uploaderDesignation,
+			receiverType: 'Approver - Dean',
+		});
 
-			const updatedDocument = await Document.findById(id);
-			res.json({ document: updatedDocument });
-			console.log("Document updated successfully");
-		} else {
-			// If id is not provided, create a new document
-			const document = await Document.create({
-				controlNumber,
-				collegeName,
-				documentType,
-				header,
-				subject,
-				content,
-				uploaderDesignation,
-				uploaderName,
-				uploaderSignature,
-			});
+		res.status(201).json({ document });
+		console.log("Document created successfully");
 
-			io.emit("newDocument", {
-				senderName: uploaderName,
-				designation: uploaderDesignation,
-				receiverType: 'Approver - Dean',
-			});
 
-			res.status(201).json({ document });
-			console.log("Document created successfully");
-		}
 	} catch (error) {
 		console.error(error);
 		res.status(500).json({ error: "Internal Server Error" });

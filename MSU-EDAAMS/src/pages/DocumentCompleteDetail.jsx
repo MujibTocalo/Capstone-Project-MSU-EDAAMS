@@ -59,9 +59,9 @@ const DocumentCompleteDetail = ({ document }) => {
 								<Typography variant='paragraph'>Subject: </Typography>
 								<Typography variant='paragraph' className='font-semibold' style={{ textIndent: '1em' }}>{document.approverSubject}</Typography>
 							</div>
-							<div className="flex flex-col border border-gray-400 p-2 my-2 shadow-md">
+							{/* <div className="flex flex-col border border-gray-400 p-2 my-2 shadow-md">
 								<Typography variant='paragraph' className='font-medium text-justify whitespace-break-spaces' style={{ textIndent: '3em', lineHeight: 2 }}>{document.approverContent}</Typography>
-							</div>
+							</div> */}
 							<div className="flex flex-col border border-gray-400 p-2 my-2 shadow-md">
 								{document.approverContent.split('\n').map((paragraph, index) => (
 									<Typography
@@ -109,9 +109,9 @@ const DocumentCompleteDetail = ({ document }) => {
 								<Typography variant='paragraph'>Subject: </Typography>
 								<Typography variant='paragraph' className='font-semibold' style={{ textIndent: '1em' }}>{document.endorsementSubject}</Typography>
 							</div>
-							<div className="flex flex-col border border-gray-400 p-2 my-2 shadow-md">
+							{/* <div className="flex flex-col border border-gray-400 p-2 my-2 shadow-md">
 								<Typography variant='paragraph' className='font-medium text-justify whitespace-break-spaces' style={{ textIndent: '3em', lineHeight: 2 }}>{document.endorsementContent}</Typography>
-							</div>
+							</div> */}
 							<div>
 								<ReactQuill
 									value={document.endorsementContent}
@@ -148,9 +148,9 @@ const DocumentCompleteDetail = ({ document }) => {
 								<Typography variant='paragraph'>Subject: </Typography>
 								<Typography variant='paragraph' className='font-semibold' style={{ textIndent: '1em' }}>{document.deanEndorsementSubject}</Typography>
 							</div>
-							<div className="flex flex-col border border-gray-400 p-2 my-2 shadow-md">
+							{/* <div className="flex flex-col border border-gray-400 p-2 my-2 shadow-md">
 								<Typography variant='paragraph' className='font-medium text-justify whitespace-break-spaces' style={{ textIndent: '3em', lineHeight: 2 }}>{document.deanEndorsementContent}</Typography>
-							</div>
+							</div> */}
 							<div >
 								<ReactQuill
 									value={document.deanEndorsementContent}
@@ -185,9 +185,9 @@ const DocumentCompleteDetail = ({ document }) => {
 							<Typography variant='paragraph'>Subject: </Typography>
 							<Typography variant='paragraph' className='font-semibold' style={{ textIndent: '1em' }}>{document.subject}</Typography>
 						</div>
-						<div className="flex flex-col border border-gray-400 p-2 my-2 shadow-md">
+						{/* <div className="flex flex-col border border-gray-400 p-2 my-2 shadow-md">
 							<Typography variant='paragraph' className='font-medium text-justify whitespace-break-spaces' style={{ textIndent: '3em', lineHeight: 2 }}>{document.content}</Typography>
-						</div>
+						</div> */}
 						<div >
 							<ReactQuill
 								theme="snow"

@@ -85,42 +85,46 @@ const MainRoutes = ({ socket }) => {
             {/* <Route path="/createDocument" element={
               (userType === 'Approver - Dean' || userType === 'Administrator') ? (<CreateDocument />) : (<Navigate to='/restricted' />)} /> */}
 
-            <Route path="/newCreateDocument" element={<NewCreateDocument />} />
-            <Route path="/deanEndorsement" element={<DeanEndorsementPage />} />
-            {/* <Route
+            {/* <Route path="/newCreateDocument" element={<NewCreateDocument />} /> */}
+
+            <Route path="/newCreateDocument" element={
+              (userType === 'Approver - Dean' || userType === 'Administrator') ? (<newCreateDocument />) : (<Navigate to='/restricted' />)} />
+
+            {/* <Route path="/deanEndorsement" element={<DeanEndorsementPage />} /> */}
+            <Route
               path="/deanEndorsement"
               element={
-                (userType === 'Approver - Dean' || userType === 'Administrator') ? (<DeanEndorsementPage />) : (<Navigate to='/restricted' />)} /> */}
+                (userType === 'Approver - Dean' || userType === 'Administrator') ? (<DeanEndorsementPage />) : (<Navigate to='/restricted' />)} />
+
+            {/* <Route
+              path="/ovcaaEndorsement"
+              element={<OVCAAEndorsementPage />}
+            /> */}
 
             <Route
               path="/ovcaaEndorsement"
-              element={<OVCAAEndorsementPage />}
-            />
-
-            {/* <Route
-              path="/ovcaaEndorsement"
               element={
                 (userType === 'Endorser - OVCAA' || userType === 'Administrator') ?
-                  (<OVCAAEndorsementPage />) : (<Navigate to='/restricted' />)} /> */}
+                  (<OVCAAEndorsementPage />) : (<Navigate to='/restricted' />)} />
 
-            <Route path="/opapproval" element={<OpApprovalPage />} />
+            {/* <Route path="/opapproval" element={<OpApprovalPage />} /> */}
 
-            {/* <Route
+            <Route
               path="/opapproval"
               element={
                 (userType === 'Approver - OP' || userType === 'Administrator') ?
-                  (<OpApprovalPage />) : (<Navigate to="/restricted" />)} /> */}
+                  (<OpApprovalPage />) : (<Navigate to="/restricted" />)} />
 
-            <Route path="/archive" element={<ArchivePage />} />
-            {/* <Route
+            {/* <Route path="/archive" element={<ArchivePage />} /> */}
+            <Route
               path="/archive"
               element={
                 (userType === 'Administrator' || userType === 'Releaser') ?
-                  (<ArchivePage />) : (<Navigate to='/restricted' />)} /> */}
+                  (<ArchivePage />) : (<Navigate to='/restricted' />)} />
 
-            <Route path="/manageusers" element={<ManageUsers />} />
+            {/* <Route path="/manageusers" element={<ManageUsers />} /> */}
 
-            {/* <Route
+            <Route
               path="/manageusers"
               element={
                 userType === "Administrator" ? (
@@ -129,10 +133,10 @@ const MainRoutes = ({ socket }) => {
                   <Navigate to="/restricted" />
                 )
               }
-            /> */}
-            <Route path="/releaseDocument" element={<ReleasingDocumentPage />} />
+            />
+            {/* <Route path="/releaseDocument" element={<ReleasingDocumentPage />} /> */}
 
-            {/* <Route
+            <Route
               path="/releasedocument"
               element={
                 userType === "Administrator" || userType === "Releaser" ? (
@@ -141,7 +145,7 @@ const MainRoutes = ({ socket }) => {
                   <Navigate to="/restricted" />
                 )
               }
-            /> */}
+            />
 
             <Route path="/restricted" element={<RestrictedPage />} />
           </Routes>
