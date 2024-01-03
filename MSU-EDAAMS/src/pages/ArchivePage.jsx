@@ -163,7 +163,7 @@ const ArchivePage = () => {
   const navigate = useNavigate();
 
   return (
-    <Card className="h-screen w-screen rounded-none bg-white">
+    <Card className="h-screen w-screen rounded-none bg-white px-12 mx-auto my-auto overflow-hidden">
       <Dialog
         size="md"
         open={isTimelineDialogOpen}
