@@ -71,11 +71,11 @@ const MainRoutes = ({ socket }) => {
   }, []);
 
   return (
-    <div className="flex flex-row max-h-screen w-screen overflow-hidden">
+    <div className="flex flex-row max-h-screen max-w-screen overflow-hidden">
       <Sidebar isOpen={isSidebarOpen} toggleSidebar={!toggleSidebar} />
-      <div className="flex flex-col w-screen overflow-hidden">
+      <div className="flex flex-col h-screen w-screen overflow-hidden">
         <CustomNavbar socket={socket} setOpen={setIsSidebarOpen} />
-        <div className="flex flex-col relative w-screen overflow-hidden">
+        <div>
           <Routes>
             {/* <Route path="/dashboard" element={<Dashboard />} /> */}
             <Route path="/profilePage" element={<ProfilePage />} />
@@ -88,7 +88,7 @@ const MainRoutes = ({ socket }) => {
             {/* <Route path="/newCreateDocument" element={<NewCreateDocument />} /> */}
 
             <Route path="/newCreateDocument" element={
-              (userType === 'Approver - Dean' || userType === 'Administrator') ? (<newCreateDocument />) : (<Navigate to='/restricted' />)} />
+              (userType === 'Uploader' || userType === 'Administrator') ? (<NewCreateDocument />) : (<Navigate to='/restricted' />)} />
 
             {/* <Route path="/deanEndorsement" element={<DeanEndorsementPage />} /> */}
             <Route
@@ -151,7 +151,7 @@ const MainRoutes = ({ socket }) => {
           </Routes>
         </div>
       </div>
-    </div>
+    </div >
   );
 };
 export default App;

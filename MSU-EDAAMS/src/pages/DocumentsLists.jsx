@@ -249,7 +249,7 @@ export const DocumentsLists = () => {
 
   return (
     <Card
-      className="flex h-full w-screen px-12 mx-auto my-auto rounded-none overflow-hidden bg-white"
+      className="flex h-full max-w-screen px-12 mx-auto my-auto rounded-none overflow-hidden bg-white"
       floated={true}
       shadow={true}
     >
