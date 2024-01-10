@@ -244,7 +244,7 @@ const OpApprovalPage = () => {
 		: [];
 
 	return (
-		<div className='grid grid-cols-4 px-14 p-2 w-screen overflow-y-scroll'>
+		<div className='grid grid-cols-4 px-14 p-2 max-w-screen'>
 			{endorsedDocuments.map((document) => (
 				<div key={document._id} className='flex flex-col bg-gray-300/80 m-4 p-3 rounded-xl shadow-lg hover:scale-105'>
 					<DocumentOPDetail document={document} />
@@ -278,7 +278,7 @@ const OpApprovalPage = () => {
 										<DialogHeader className='flex w-[100%] bg-indigo-900 '>
 											<Typography
 												className='flex mx-auto font-semibold text-2xl text-white'
-											> Dean Endorsement
+											> Final Document
 											</Typography>
 										</DialogHeader>
 									</div>

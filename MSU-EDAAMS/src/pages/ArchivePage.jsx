@@ -161,9 +161,8 @@ const ArchivePage = () => {
 
 
   const navigate = useNavigate();
-
   return (
-    <Card className="h-screen w-screen rounded-none bg-white px-12 mx-auto my-auto overflow-hidden">
+    <Card className="flex h-full max-w-screen px-12 py-8 mx-auto my-auto rounded-none overflow-hidden bg-white">
       <Dialog
         size="md"
         open={isTimelineDialogOpen}
@@ -426,7 +425,7 @@ const ArchivePage = () => {
           </div>
         </div>
       </CardHeader>
-      <CardBody className="overflow-scroll px-0">
+      <CardBody className="overflow-y-scroll px-0">
         <table className="w-full min-w-max table-auto text-left">
           <thead>
             <tr>
@@ -582,7 +581,7 @@ const ArchivePage = () => {
                                   />
                                   <Text style={styles.documentDetailText}>
                                     Control No.{" "}
-                                    {controlNumber + " - " + collegeName}
+                                    {controlNumber}
                                   </Text>
                                   <Text style={styles.documentDate}>
                                     Date:{" "}
@@ -646,7 +645,9 @@ const ArchivePage = () => {
           </tbody>
         </table>
       </CardBody>
-      <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4"></CardFooter>
+      <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
+
+      </CardFooter>
     </Card>
   );
 };

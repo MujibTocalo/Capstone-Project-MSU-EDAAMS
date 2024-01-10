@@ -83,8 +83,8 @@ const ReleasingDocumentPage = () => {
 
   const endorseDocument = documents
     ? documents
-        .filter((document) => document.documentStatus === "OP Approved")
-        .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
+      .filter((document) => document.documentStatus === "OP Approved")
+      .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
     : [];
 
   const handleReleaseDocument = async (e, documentId) => {
@@ -125,7 +125,7 @@ const ReleasingDocumentPage = () => {
             );
           }
         });
-    } catch (error) {}
+    } catch (error) { }
   };
 
   const handleRejectDocument = async (e, documentId) => {
@@ -163,7 +163,7 @@ const ReleasingDocumentPage = () => {
   };
 
   return (
-    <div className="grid grid-cols-4 px-14 w-screen overflow-y-scroll">
+    <div className="grid grid-cols-4 px-14 max-w-screen ">
       {/* <Typography className='flex justify-center p-2 rounded-md font-semibold text-xl bg-indigo-800 text-white'>
 				Releasing Page
 			</Typography> */}

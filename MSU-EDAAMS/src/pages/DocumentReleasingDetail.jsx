@@ -32,18 +32,15 @@ const DocumentReleasingDetail = ({ document }) => {
 			{document.documentStatus === 'OP Approved' && (
 				<div className="flex flex-col py-2 rounded-lg text-center">
 					<Typography className='text-sm pl-2 py-1'>
-						<b>Date: </b> {format(new Date(document.createdAt), 'yyyy-MM-dd')}
+						<b>Date: </b> {format(new Date(document.approvalDate), 'yyyy-MM-dd')}
 					</Typography>
-					<Typography className='text-sm pl-2 py-1'>
-						Approved By: {document.approverName}
-					</Typography>
-					<Typography className='text-sm pl-2 py-1'>
-						<b>Date Approved: </b> {format(new Date(document.approvalDate), 'yyyy-MM-dd')}
-					</Typography>
+					{/* <Typography className='text-sm pl-2 py-1'>
+						Approved By: {document.approverDesignation}
+					</Typography> */}
 				</div>
 			)}
 
-			{document.documentStatus === 'Rejected' && (
+			{/* {document.documentStatus === 'Rejected' && (
 				<div className="flex flex-col py-2 rounded-lg text-center">
 					<Typography className='text-sm pl-2 py-1'>
 						Control No. {document.controlNumber}
@@ -58,7 +55,7 @@ const DocumentReleasingDetail = ({ document }) => {
 						<b>Date Rejected: </b> {format(new Date(document.rejectedDate), 'yyyy-MM-dd')}
 					</Typography>
 				</div>
-			)}
+			)} */}
 
 		</div>
 	)

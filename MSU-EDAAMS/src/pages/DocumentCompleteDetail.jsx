@@ -62,7 +62,7 @@ const DocumentCompleteDetail = ({ document }) => {
 							{/* <div className="flex flex-col border border-gray-400 p-2 my-2 shadow-md">
 								<Typography variant='paragraph' className='font-medium text-justify whitespace-break-spaces' style={{ textIndent: '3em', lineHeight: 2 }}>{document.approverContent}</Typography>
 							</div> */}
-							<div className="flex flex-col border border-gray-400 p-2 my-2 shadow-md">
+							{/* <div className="flex flex-col border border-gray-400 p-2 my-2 shadow-md">
 								{document.approverContent.split('\n').map((paragraph, index) => (
 									<Typography
 										key={index}
@@ -73,7 +73,7 @@ const DocumentCompleteDetail = ({ document }) => {
 										{paragraph}
 									</Typography>
 								))}
-							</div>
+							</div> */}
 							<div >
 								<ReactQuill
 									value={document.approverContent}
@@ -97,7 +97,7 @@ const DocumentCompleteDetail = ({ document }) => {
 				)}
 
 				{/* OFFICE OF THE PRESIDENT DOCUMENT ACCESS	 */}
-				{(userAccess === 'Approver - OP' || userAccess === 'Administrator') && (
+				{(userAccess === 'Approver - OP' || userAccess === 'Administrator' || userAccess === 'Releaser') && (
 					<div className="p-2">
 						<div className="gap-3.5">
 							<Typography className='text-center font-semibold bg-indigo-800 text-white p-1 mt-4 rounded-md shadow-lg'>{document.documentType} Endorsement By {document.endorserDesignation + ', ' + document.endorserName} From OVCAA</Typography>
@@ -137,7 +137,7 @@ const DocumentCompleteDetail = ({ document }) => {
 
 
 				{/* DEAN ENDORSEMENT FOR OVCAA */}
-				{(userAccess === "Endorser - OVCAA" || userAccess === 'Approver - OP' || userAccess === 'Administrator') && (
+				{(userAccess === "Endorser - OVCAA" || userAccess === 'Approver - OP' || userAccess === 'Administrator' || userAccess === 'Releaser') && (
 					<div className="p-2">
 						<div className="gap-3.5">
 							<div className="flex flex-col border border-gray-400 p-2 my-2 shadow-md">

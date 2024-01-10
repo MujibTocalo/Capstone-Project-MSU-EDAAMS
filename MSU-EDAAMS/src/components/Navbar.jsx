@@ -315,7 +315,7 @@ export const CustomNavbar = ({ setOpen, socket }) => {
           ...prevNotifications,
           {
             id: Date.now(), // Unique identifier for each notification
-            message: `${documentDetails.designation}, ${documentDetails.senderName} has approved and Endorsed a document.`,
+            message: `${documentDetails.designation}, ${documentDetails.senderName} has Approved and Endorsed a document.`,
             isRead: false,
           },
         ]);
@@ -333,7 +333,7 @@ export const CustomNavbar = ({ setOpen, socket }) => {
           ...prevNotifications,
           {
             id: Date.now(), // Unique identifier for each notification
-            message: `${documentDetails.designation}, ${documentDetails.senderName} has approved and Endorsed a document.`,
+            message: `${documentDetails.designation}, ${documentDetails.senderName} has Approved and Endorsed a document.`,
             isRead: false,
           },
         ]);
@@ -350,7 +350,7 @@ export const CustomNavbar = ({ setOpen, socket }) => {
           ...prevNotifications,
           {
             id: Date.now(), // Unique identifier for each notification
-            message: `${documentDetails.designation}, ${documentDetails.senderName} has approved and Finalized a document.`,
+            message: `${documentDetails.designation}, ${documentDetails.senderName} has Approved and Finalized a document.`,
             isRead: false,
           },
         ]);

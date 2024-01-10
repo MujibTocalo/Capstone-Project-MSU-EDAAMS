@@ -72,6 +72,7 @@ export const deanEndorsement = async (req, res) => {
 
 			io.emit("deanEndorsedDocument", {
 				senderName: name,
+				designation: designation,
 				receiverType: 'Endorser - OVCAA',
 			});
 
@@ -127,7 +128,7 @@ export const ovcaaEndorsement = async (req, res) => {
 
 			io.emit("ovcaaEndorsement", {
 				senderName: name,
-				designation,
+				designation: designation,
 				receiverType: 'Approver - OP',
 			});
 

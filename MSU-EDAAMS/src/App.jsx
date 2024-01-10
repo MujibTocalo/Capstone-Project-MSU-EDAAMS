@@ -71,11 +71,11 @@ const MainRoutes = ({ socket }) => {
   }, []);
 
   return (
-    <div className="flex flex-row max-h-screen max-w-screen overflow-hidden">
+    <div className="flex flex-row h-screen w-screen overflow-hidden">
       <Sidebar isOpen={isSidebarOpen} toggleSidebar={!toggleSidebar} />
       <div className="flex flex-col h-screen w-screen overflow-hidden">
         <CustomNavbar socket={socket} setOpen={setIsSidebarOpen} />
-        <div>
+        <div className="overflow-y-scroll">
           <Routes>
             {/* <Route path="/dashboard" element={<Dashboard />} /> */}
             <Route path="/profilePage" element={<ProfilePage />} />

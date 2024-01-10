@@ -29,13 +29,10 @@ const DocumentOPDetail = ({ document }) => {
 			</div>
 			<div className="flex flex-col py-2 rounded-lg text-center">
 				<Typography className='text-sm pl-2 py-1'>
-					<b>Date: </b> {format(new Date(document.createdAt), 'yyyy-MM-dd')}
-				</Typography>
-				<Typography className='text-sm pl-2 py-1'>
-					Endorsed By: {document.endorserName}
-				</Typography>
-				<Typography className='text-sm pl-2 py-1'>
 					<b>Date Endorsed: </b> {format(new Date(document.endorsementDate), 'yyyy-MM-dd')}
+				</Typography>
+				<Typography className='text-sm pl-2 py-1'>
+					Endorsed By: {document.endorserDesignation}
 				</Typography>
 			</div>
 		</div>

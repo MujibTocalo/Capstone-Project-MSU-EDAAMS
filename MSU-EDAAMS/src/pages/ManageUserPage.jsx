@@ -73,8 +73,8 @@ const ManageUsers = () => {
   const [confirmRegistrationDialog, setConfirmRegistrationDialog] =
     useState(false);
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const documentsPerPage = 9;
+  // const [currentPage, setCurrentPage] = useState(1);
+  // const documentsPerPage = 9;
 
   const handleOpenRegistrationConfirmation = () => {
     setConfirmRegistrationDialog(true);
@@ -84,18 +84,18 @@ const ManageUsers = () => {
     setConfirmRegistrationDialog(false);
   };
 
-  const handlePreviousPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage((prevPage) => prevPage - 1);
-    }
-  };
+  // const handlePreviousPage = () => {
+  //   if (currentPage > 1) {
+  //     setCurrentPage((prevPage) => prevPage - 1);
+  //   }
+  // };
 
-  const handleNextPage = () => {
-    const totalPages = Math.ceil(filteredTableRows.length / documentsPerPage);
-    if (currentPage < totalPages) {
-      setCurrentPage((prevPage) => prevPage + 1);
-    }
-  };
+  // const handleNextPage = () => {
+  //   const totalPages = Math.ceil(filteredTableRows.length / documentsPerPage);
+  //   if (currentPage < totalPages) {
+  //     setCurrentPage((prevPage) => prevPage + 1);
+  //   }
+  // };
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
@@ -220,13 +220,13 @@ const ManageUsers = () => {
           )
         );
       } else {
-        // Handle the case where the response indicates an error
+
         console.error("Error toggling user status:", response.status);
       }
     } catch (error) {
       console.error("Error toggling user status:", error);
     } finally {
-      // Close the confirmation dialog
+
       setConfirmDialog({
         open: false,
         userId: null,
@@ -260,8 +260,8 @@ const ManageUsers = () => {
 
       if (response.status === 200) {
         console.log("User registered successfully");
-        setOpen(false); // Close the registration dialog
-        handleOpenRegistrationConfirmation(); // Open the confirmation dialog
+        setOpen(false);
+        handleOpenRegistrationConfirmation();
       }
     } catch (error) {
       console.log("Error:", error.response?.data || "Something went wrong");
@@ -270,7 +270,7 @@ const ManageUsers = () => {
   };
 
   return (
-    <Card className="h-full w-screen px-12 mx-auto my-auto rounded-none bg-white ">
+    <Card className="flex h-full max-w-screen px-12 py-8 mx-auto my-auto rounded-none overflow-hidden bg-white">
       <Dialog
         size="sm"
         open={confirmRegistrationDialog}
@@ -563,7 +563,7 @@ const ManageUsers = () => {
           </Tabs>
         </div> */}
       </CardHeader>
-      <CardBody className="overflow-hidden px-0">
+      <CardBody className="overflow-y-scroll px-0">
         <table className="w-full min-w-max table-auto text-left">
           <thead>
             <tr>
@@ -585,10 +585,6 @@ const ManageUsers = () => {
           </thead>
           <tbody>
             {filteredTableRows
-              .slice(
-                (currentPage - 1) * documentsPerPage,
-                currentPage * documentsPerPage
-              )
               .map(
                 (
                   {
@@ -689,7 +685,7 @@ const ManageUsers = () => {
         </table>
       </CardBody>
       <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
-        <Typography variant="small" color="blue-gray" className="font-normal">
+        {/* <Typography variant="small" color="blue-gray" className="font-normal">
           Page {currentPage} of{" "}
           {Math.ceil(filteredTableRows.length / documentsPerPage)}
         </Typography>
@@ -700,7 +696,7 @@ const ManageUsers = () => {
           <Button variant="outlined" size="sm" onClick={handleNextPage}>
             Next
           </Button>
-        </div>
+        </div> */}
       </CardFooter>
     </Card>
   );

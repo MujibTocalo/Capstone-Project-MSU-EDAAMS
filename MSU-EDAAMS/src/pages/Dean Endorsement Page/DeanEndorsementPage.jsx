@@ -239,181 +239,184 @@ const DeanEndorsementPage = () => {
   }
 
   return (
-    <div className="grid grid-cols-4 px-14 w-screen overflow-y-scroll">
-      {pendingDocuments.map((document) => (
-        <div
-          key={document._id}
-          className="flex flex-col flex-wrap bg-gray-300/80 m-4 p-3 rounded-xl shadow-lg hover:scale-105"
-        >
-          <DocumentApproverDetail document={document} />
-
-          <Dialog
-            className="flex flex-col overflow-y-scroll bg-white rounded-t-xl max-h-[100vh]"
-            size="lg"
-            open={
-              open && selectedDocument && selectedDocument._id === document._id
-            }
-            handler={() => setOpen(false)}
-            animate={{
-              mount: { scale: 1, y: 0 },
-              unmount: { scale: 0.9, y: -100 },
-            }}
+    <div className="flex flex-col px-14">
+      <h3 className='flex bg-deep-purple-900 text-xl shadow-lg p-3 text-white font-bold rounded-xl justify-center'>Document Creation Page</h3>
+      <div className="grid grid-cols-4 max-w-screen">
+        {pendingDocuments.map((document) => (
+          <div
+            key={document._id}
+            className="flex flex-col flex-wrap bg-gray-300/80 m-4 p-3 rounded-xl shadow-lg hover:scale-105"
           >
-            <DialogHeader>{document.documentType}</DialogHeader>
-            <DialogBody divider>
-              <DocumentCompleteDetail document={document} />
-            </DialogBody>
-            <DialogFooter>
-              <div className="flex gap-4">
-                <Button
-                  variant="standard"
-                  color="green"
-                  onClick={() => handleOpenEndorsement(document)}
-                >
-                  Make Endorsement
-                </Button>
+            <DocumentApproverDetail document={document} />
 
-                <Dialog
-                  size='xl'
-                  open={endorse && endorseSelectedDocument && endorseSelectedDocument._id === document._id}
-                  handler={() => setEndorse(false)}>
-                  <div className="flex items-center justify-between"
+            <Dialog
+              className="flex flex-col overflow-y-scroll bg-white rounded-t-xl max-h-[100vh]"
+              size="lg"
+              open={
+                open && selectedDocument && selectedDocument._id === document._id
+              }
+              handler={() => setOpen(false)}
+              animate={{
+                mount: { scale: 1, y: 0 },
+                unmount: { scale: 0.9, y: -100 },
+              }}
+            >
+              <DialogHeader>{document.documentType}</DialogHeader>
+              <DialogBody divider>
+                <DocumentCompleteDetail document={document} />
+              </DialogBody>
+              <DialogFooter>
+                <div className="flex gap-4">
+                  <Button
+                    variant="standard"
+                    color="green"
+                    onClick={() => handleOpenEndorsement(document)}
                   >
-                    <DialogHeader className='flex w-[100%] bg-indigo-900 '>
-                      <Typography
-                        className='flex mx-auto font-semibold text-2xl text-white'
-                      > Dean Endorsement
-                      </Typography>
-                    </DialogHeader>
-                  </div>
-                  <DialogBody className='overflow-y-scroll'>
-                    <div className="flex flex-col gap-1.5 h-[70vh]">
-                      <div className="flex flex-col gap-2 ">
-                        <Textarea
-                          color='cyan'
-                          variant="standard"
-                          label="Header"
-                          value={documentDetail.header}
-                          onChange={onHeader}
-                        />
-                        <Textarea
-                          color='cyan'
-                          variant="standard"
-                          label="Subject"
-                          value={documentDetail.subject}
-                          onChange={onSubject}
-                        />
-                        {/* <Textarea
+                    Make Endorsement
+                  </Button>
+
+                  <Dialog
+                    size='xl'
+                    open={endorse && endorseSelectedDocument && endorseSelectedDocument._id === document._id}
+                    handler={() => setEndorse(false)}>
+                    <div className="flex items-center justify-between"
+                    >
+                      <DialogHeader className='flex w-[100%] bg-indigo-900 '>
+                        <Typography
+                          className='flex mx-auto font-semibold text-2xl text-white'
+                        > Endorsement Detail
+                        </Typography>
+                      </DialogHeader>
+                    </div>
+                    <DialogBody className='overflow-y-scroll'>
+                      <div className="flex flex-col gap-1.5 h-[70vh]">
+                        <div className="flex flex-col gap-2 ">
+                          <Textarea
+                            color='cyan'
+                            variant="standard"
+                            label="Header"
+                            value={documentDetail.header}
+                            onChange={onHeader}
+                          />
+                          <Textarea
+                            color='cyan'
+                            variant="standard"
+                            label="Subject"
+                            value={documentDetail.subject}
+                            onChange={onSubject}
+                          />
+                          {/* <Textarea
                           color='cyan'
                           label="Content"
                           value={documentDetail.content}
                           onChange={onContent}
                           className="flex h-screen"
                         /> */}
-                        <EditorToolbar toolbarId={"t1"} />
-                        <ReactQuill
-                          ref={quillRef}
-                          theme="snow"
-                          value={documentDetail.content}
-                          onChange={onContent}
-                          placeholder={"Write the Document Content Here..."}
-                          modules={modules("t1")}
-                          formats={formats}
-                        />
+                          <EditorToolbar toolbarId={"t1"} />
+                          <ReactQuill
+                            ref={quillRef}
+                            theme="snow"
+                            value={documentDetail.content}
+                            onChange={onContent}
+                            placeholder={"Write the Document Content Here..."}
+                            modules={modules("t1")}
+                            formats={formats}
+                          />
+                        </div>
                       </div>
+                    </DialogBody>
+                    <DialogFooter className="space-x-2">
+                      <Button variant="standard" color="green" onClick={(e) => EndorseDocument(e, document._id) && setEndorse(false) && setOpen(false)}>
+                        Endorse Document To OVCAA
+                      </Button>
+                      <Button variant="outlined" color="red" onClick={() => setEndorse(false) && setOpen(false)}>
+                        close
+                      </Button>
+                    </DialogFooter>
+                  </Dialog>
+
+                  <Button
+                    size="sm"
+                    variant="standard"
+                    color="red"
+                    onClick={() => handleRejectOpen(document)}
+                  >
+                    Reject Document
+                  </Button>
+
+                  <Dialog
+                    open={
+                      reject &&
+                      rejectSelected &&
+                      rejectSelected._id === document._id
+                    }
+                    handler={() => setReject(false)}
+                  >
+                    <div className="flex items-center justify-between">
+                      <DialogHeader>Remarks</DialogHeader>
                     </div>
-                  </DialogBody>
-                  <DialogFooter className="space-x-2">
-                    <Button variant="standard" color="green" onClick={(e) => EndorseDocument(e, document._id) && setEndorse(false) && setOpen(false)}>
-                      Endorse Document To OVCAA
-                    </Button>
-                    <Button variant="outlined" color="red" onClick={() => setEndorse(false) && setOpen(false)}>
-                      close
-                    </Button>
-                  </DialogFooter>
-                </Dialog>
+                    <DialogBody divider>
+                      <div className="flex h-72">
+                        <Textarea label="Message" onChange={onRemarks} />
+                      </div>
+                    </DialogBody>
+                    <DialogFooter className="space-x-2">
+                      <Button
+                        variant="gradient"
+                        color="red"
+                        onClick={(e) =>
+                          RejectDocument(e, document._id) &&
+                          setReject(false) &&
+                          setOpen(false)
+                        }
+                      >
+                        Reject Document
+                      </Button>
+                      <Button
+                        variant="outlined"
+                        color="red"
+                        onClick={() => setReject(false)}
+                      >
+                        close
+                      </Button>
+                    </DialogFooter>
+                  </Dialog>
 
-                <Button
-                  size="sm"
-                  variant="standard"
-                  color="red"
-                  onClick={() => handleRejectOpen(document)}
-                >
-                  Reject Document
-                </Button>
+                  <Button size="sm" variant="text" onClick={() => setOpen(false)}>
+                    <span>Close</span>
+                  </Button>
+                </div>
+              </DialogFooter>
+            </Dialog>
 
-                <Dialog
-                  open={
-                    reject &&
-                    rejectSelected &&
-                    rejectSelected._id === document._id
-                  }
-                  handler={() => setReject(false)}
-                >
-                  <div className="flex items-center justify-between">
-                    <DialogHeader>Remarks</DialogHeader>
-                  </div>
-                  <DialogBody divider>
-                    <div className="flex h-72">
-                      <Textarea label="Message" onChange={onRemarks} />
-                    </div>
-                  </DialogBody>
-                  <DialogFooter className="space-x-2">
-                    <Button
-                      variant="gradient"
-                      color="red"
-                      onClick={(e) =>
-                        RejectDocument(e, document._id) &&
-                        setReject(false) &&
-                        setOpen(false)
-                      }
-                    >
-                      Reject Document
-                    </Button>
-                    <Button
-                      variant="outlined"
-                      color="red"
-                      onClick={() => setReject(false)}
-                    >
-                      close
-                    </Button>
-                  </DialogFooter>
-                </Dialog>
-
-                <Button size="sm" variant="text" onClick={() => setOpen(false)}>
-                  <span>Close</span>
-                </Button>
-              </div>
-            </DialogFooter>
-          </Dialog>
-
-          <div className="flex flex-row items-center justify-center">
-            <Button
-              className="flex justify-center whitespace-pre items-center text-black font-medium m-2 hover:font-semibold hover:scale-105 hover:text-blue-900"
-              size="sm"
-              color="white"
-              variant="text"
-              onClick={() => handleOpen(document)}
-            >
-              Read more{" "}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="h-5 w-5"
+            <div className="flex flex-row items-center justify-center">
+              <Button
+                className="flex justify-center whitespace-pre items-center text-black font-medium m-2 hover:font-semibold hover:scale-105 hover:text-blue-900"
+                size="sm"
+                color="white"
+                variant="text"
+                onClick={() => handleOpen(document)}
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
-                />
-              </svg>
-            </Button>
+                Read more{" "}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="h-5 w-5"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
+                  />
+                </svg>
+              </Button>
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 };

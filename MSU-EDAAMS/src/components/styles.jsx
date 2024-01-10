@@ -2,6 +2,7 @@ import { StyleSheet } from "@react-pdf/renderer";
 
 const styles = StyleSheet.create({
   page: {
+    position: "relative",
     flexDirection: "column",
     justifyContent: "flex-start",
 
@@ -81,7 +82,7 @@ const styles = StyleSheet.create({
     height: 60,
     alignSelf: "center",
     paddingTop: 15,
-    marginLeft: 300,
+    marginLeft: 270,
   },
 
   name: {

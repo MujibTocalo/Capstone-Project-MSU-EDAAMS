@@ -99,8 +99,8 @@ export const DocumentsLists = () => {
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
   const [selectedDocumentId, setSelectedDocumentId] = useState(null);
   const [userAccess, setUserAccess] = useState();
-  const [currentPage, setCurrentPage] = useState(1);
-  const documentsPerPage = 9;
+  // const [currentPage, setCurrentPage] = useState(1);
+  // const documentsPerPage = 5;
 
   useEffect(() => {
     const fetchTableRows = async () => {
@@ -170,18 +170,24 @@ export const DocumentsLists = () => {
     setIsTimelineDialogOpen(!isTimelineDialogOpen);
   };
 
-  const handlePreviousPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage((prevPage) => prevPage - 1);
-    }
-  };
+  // const handlePreviousPage = () => {
+  //   setCurrentPage((prevPage) => (prevPage > 1 ? prevPage - 1 : prevPage));
+  //   updateDisplayedDocuments();
+  // };
 
-  const handleNextPage = () => {
-    const totalPages = Math.ceil(filteredTableRows.length / documentsPerPage);
-    if (currentPage < totalPages) {
-      setCurrentPage((prevPage) => prevPage + 1);
-    }
-  };
+  // const handleNextPage = () => {
+  //   const totalPages = Math.ceil(filteredTableRows.length / documentsPerPage);
+  //   setCurrentPage((prevPage) => (prevPage < totalPages ? prevPage + 1 : 1));
+  //   updateDisplayedDocuments();
+  // };
+
+  // const updateDisplayedDocuments = () => {
+  //   const startIndex = (currentPage - 1) * documentsPerPage;
+  //   const endIndex = startIndex + documentsPerPage;
+  //   setTableRows(filteredTableRows.slice(startIndex, endIndex));
+  // };
+
+
 
   const deleteDocument = (documentId) => {
     axios
@@ -574,7 +580,7 @@ export const DocumentsLists = () => {
           />
         </div>
 
-        <div className="flex mt-4 whitespace-pre flex-col items-center justify-between gap-4 md:flex-row">
+        <div className="flex mt-64 whitespace-pre flex-col items-center justify-between gap-4 md:flex-row">
           {/* <Tabs value="all" className="w-full md:w-max whitespace-pre">
             <TabsHeader>
               {TABS.map(({ label, value }) => (
@@ -586,7 +592,7 @@ export const DocumentsLists = () => {
           </Tabs> */}
         </div>
       </CardHeader>
-      <CardBody className="overflow-hidden px-1 py-4">
+      <CardBody className="overflow-y-scroll px-1">
         <table className="min-w-max table-auto" style={{ width: "100%" }}>
           <thead>
             <tr>
@@ -608,10 +614,6 @@ export const DocumentsLists = () => {
           </thead>
           <tbody>
             {filteredTableRows
-              .slice(
-                (currentPage - 1) * documentsPerPage,
-                currentPage * documentsPerPage
-              )
               .map(
                 (
                   {
@@ -767,7 +769,7 @@ export const DocumentsLists = () => {
         </table>
       </CardBody>
       <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
-        <Typography variant="small" color="blue-gray" className="font-normal">
+        {/* <Typography variant="small" color="blue-gray" className="font-normal">
           Page {currentPage} of{" "}
           {Math.ceil(filteredTableRows.length / documentsPerPage)}
         </Typography>
@@ -788,7 +790,7 @@ export const DocumentsLists = () => {
           >
             Next
           </Button>
-        </div>
+        </div> */}
       </CardFooter>
     </Card>
   );

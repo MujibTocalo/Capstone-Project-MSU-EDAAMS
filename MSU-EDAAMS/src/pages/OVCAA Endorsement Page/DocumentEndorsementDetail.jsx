@@ -32,7 +32,7 @@ const DocumentEndorsementDetail = ({ document }) => {
 					Date Endorsed: {format(new Date(document.deanEndorsementDate), 'yyyy-MM-dd')}
 				</Typography>
 				<Typography className='text-sm py-1 '>
-					Endorsed By: {document.deanDesignation}, {document.deanName}
+					Endorsed By: {document.deanDesignation}
 				</Typography>
 			</div>
 		</div>

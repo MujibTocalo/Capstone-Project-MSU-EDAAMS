@@ -39,7 +39,7 @@ const DocumentApproverDetail = ({ document }) => {
 				</Typography>
 
 				<Typography className='text-sm text-center py-1'>
-					Submitted By : {document.uploaderName}
+					Submitted By : {document.uploaderDesignation}
 				</Typography>
 			</div>
 		</div>
