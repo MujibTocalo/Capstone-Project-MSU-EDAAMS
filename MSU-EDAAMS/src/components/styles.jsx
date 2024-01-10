@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
   documentDetailText: {
     fontSize: 11.5,
     marginTop: 40,
-    marginLeft: 80,
+    marginLeft: 50,
     marginBottom: 5,
     fontWeight: "medium",
     flexDirection: 'column'
@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
   documentDate: {
     fontSize: 11.5,
     marginTop: 5,
-    marginLeft: 80,
+    marginLeft: 50,
     marginBottom: 5,
     fontWeight: "medium",
     flexDirection: 'column'
@@ -27,21 +27,22 @@ const styles = StyleSheet.create({
     fontSize: 11.5,
     textIndent: 10,
     lineHeight: 2,
-    marginLeft: 70,
+    marginLeft: 50,
     marginTop: 15,
-    marginRight: 10,
+    marginRight: 25,
     marginBottom: 5,
-    fontWeight: "bold",
+    textDecorationStyle: 'bold',
     paddingRight: 20,
     textAlign: "justify",
+    wordwrap: 130
   },
   subjectText: {
     fontSize: 11.5,
     textIndent: 10,
     lineHeight: 2,
-    fontWeight: "bold",
-    marginLeft: 70,
-    marginRight: 10,
+    textDecorationStyle: 'bold',
+    marginLeft: 50,
+    marginRight: 25,
     marginBottom: 5,
     marginTop: 10,
     paddingRight: 20,
@@ -49,39 +50,21 @@ const styles = StyleSheet.create({
   },
   content: {
     fontSize: 11,
-    marginRight: 50,
+    marginRight: 25,
     textIndent: 20,
     textAlign: 'justify',
     marginTop: 10,
     lineHeight: 2,
     paddingRight: 20,
-    marginLeft: 80,
+    marginLeft: 50,
     pageBreak: 'auto'
   },
-  // content: {
-  //   fontSize: 11,
-  //   marginRight: 50,
-  //   textAlign: 'justify',
-  //   marginTop: 10,
-  //   lineHeight: 2,
-  //   paddingRight: 20,
-  //   marginLeft: 80,
-  //   pageBreak: 'auto',
-  //   '& > p': {
-  //     // Styles for the first line of each paragraph
-  //     textIndent: 20,
-  //     // Additional styles for subsequent lines of each paragraph
-  //     '&:not(:first-child)': {
-  //       marginLeft: 0, // Adjust as needed
-  //     },
-  //   },
-  // },
 
   signature: {
     width: 100,
     height: 60,
     alignSelf: "center",
-    paddingTop: 15,
+    paddingTop: 10,
     marginLeft: 270,
   },
 
@@ -91,6 +74,7 @@ const styles = StyleSheet.create({
     marginLeft: 270,
     textDecorationStyle: "bold",
     textDecoration: "underline",
+
   },
   designation: {
     fontSize: 11.5,

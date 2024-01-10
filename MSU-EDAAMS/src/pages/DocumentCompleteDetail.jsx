@@ -62,6 +62,19 @@ const DocumentCompleteDetail = ({ document }) => {
 							{/* <div className="flex flex-col border border-gray-400 p-2 my-2 shadow-md">
 								<Typography variant='paragraph' className='font-medium text-justify whitespace-break-spaces' style={{ textIndent: '3em', lineHeight: 2 }}>{document.approverContent}</Typography>
 							</div> */}
+							<div className="flex flex-col border border-gray-400 p-2 my-2 shadow-md">
+								{document.approverContent.split('\n').map((paragraph, index) => (
+									<Typography
+										key={index}
+										variant='paragraph'
+										className='font-medium text-justify whitespace-break-spaces'
+										style={{ textIndent: '3em', lineHeight: 2 }}
+									>
+										{paragraph}
+									</Typography>
+								))}
+							</div>
+
 							{/* <div className="flex flex-col border border-gray-400 p-2 my-2 shadow-md">
 								{document.approverContent.split('\n').map((paragraph, index) => (
 									<Typography
@@ -74,13 +87,13 @@ const DocumentCompleteDetail = ({ document }) => {
 									</Typography>
 								))}
 							</div> */}
-							<div >
+							{/* <div >
 								<ReactQuill
 									value={document.approverContent}
 									readOnly={true}
 									modules={{ toolbar: false }}
 									className="shadow-md" />
-							</div>
+							</div> */}
 						</div>
 						<div className="flex flex-row mr-12 justify-end">
 							<div className="flex flex-col">
@@ -197,7 +210,7 @@ const DocumentCompleteDetail = ({ document }) => {
 								modules={{ toolbar: false }}
 								formats={formats}
 								className="shadow-md text-justify"
-								style={{ lineHeight: 2}} />
+								style={{ lineHeight: 2 }} />
 						</div>
 					</div>
 				</div>

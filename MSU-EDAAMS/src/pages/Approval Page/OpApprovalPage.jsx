@@ -286,17 +286,17 @@ const OpApprovalPage = () => {
 										</div>
 										<DialogBody className='overflow-y-scroll'>
 											<div className="flex flex-col gap-1.5 h-[70vh]">
-												<div className="flex flex-col gap-2 ">
+												<div className="flex flex-col gap-2" style={{ lineHeight: 2 }}>
 													<Textarea
 														color='cyan'
-														variant="standard"
+
 														label="Header"
 														value={documentDetail.header}
 														onChange={onHeader}
 													/>
 													<Textarea
 														color='cyan'
-														variant="standard"
+
 														label="Subject"
 														value={documentDetail.subject}
 														onChange={onSubject}
@@ -313,11 +313,15 @@ const OpApprovalPage = () => {
 												/> */}
 													<Textarea
 														color='cyan'
+
 														label="Content"
 														value={documentDetail.content}
 														onChange={onContent}
-														className="flex h-screen"
+														className="flex h-[50vh]"
 													/>
+													{/* <textarea
+														placeholder='Content'
+														className='border font-medium text-sm border-gray-400 rounded-md h-[40vh] p-2 w-[146.5vh]' /> */}
 												</div>
 
 											</div>
