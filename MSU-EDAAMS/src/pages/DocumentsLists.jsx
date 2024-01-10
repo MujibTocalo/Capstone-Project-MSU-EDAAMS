@@ -571,7 +571,7 @@ export const DocumentsLists = () => {
         </div>
 
         {/* SEARCH BAR */}
-        <div className="w-screen md:w-72">
+        <div className="w-screen md:w-72 -translate-y-4">
           <Input
             label="Search by Uploader Detail"
             icon={<MagnifyingGlassIcon className="h-5 w-5" />}

@@ -162,7 +162,7 @@ const ArchivePage = () => {
 
   const navigate = useNavigate();
   return (
-    <Card className="flex h-full max-w-screen px-12 py-8 mx-auto my-auto rounded-none overflow-hidden bg-white">
+    <Card className="flex h-full max-w-screen px-12 mx-auto my-auto rounded-none overflow-hidden bg-white">
       <Dialog
         size="md"
         open={isTimelineDialogOpen}
@@ -408,7 +408,7 @@ const ArchivePage = () => {
       >
         <div className="mb-2 flex items-center justify-between gap-8">
           <div>
-            <Typography variant="h5" color="blue-gray">
+            <Typography variant="h4" color="blue-gray">
               Document Archive
             </Typography>
             <Typography color="gray" className="mt-1 font-normal">

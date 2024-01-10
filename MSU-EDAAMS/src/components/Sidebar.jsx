@@ -16,7 +16,7 @@ import elogo from '../assets/edaams.png'
 const Sidebar = ({ isOpen, toggleSidebar }) => {
 
   const menus = [
-    { name: 'Dashboard', link: '/dashboard', icon: RiDashboardLine },
+    // { name: 'Dashboard', link: '/dashboard', icon: RiDashboardLine },
     { name: 'All Documents', link: '/documents', icon: HiOutlineDocumentText },
     { name: 'Dean', link: '/deanEndorsement', icon: LuClipboardCheck },
     { name: 'Endorsement', link: '/ovcaaEndorsement', icon: RiAttachment2 },

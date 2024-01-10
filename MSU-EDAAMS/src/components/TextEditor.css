@@ -51,6 +51,9 @@
   font-size: 17px;
   line-height: 2;
   text-decoration: black;
+  text-indent: 3em;
+  text-align: justify;
+
 }
 .App .ql-snow .ql-tooltip.ql-flip {
   width: auto;

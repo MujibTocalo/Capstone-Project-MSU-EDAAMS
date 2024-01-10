@@ -163,47 +163,46 @@ const ReleasingDocumentPage = () => {
   };
 
   return (
-    <div className="grid grid-cols-4 px-14 max-w-screen ">
-      {/* <Typography className='flex justify-center p-2 rounded-md font-semibold text-xl bg-indigo-800 text-white'>
-				Releasing Page
-			</Typography> */}
-      {endorseDocument.map((document) => (
-        <div
-          key={document._id}
-          className="flex flex-col bg-gray-300/80 p-3 m-4 rounded-xl shadow-lg hover:scale-105"
-        >
-          <DocumentReleasingDetail document={document} />
-          <Dialog
-            className="flex flex-col overflow-y-scroll bg-white rounded-t-xl max-h-screen"
-            size="lg"
-            open={
-              open && selectedDocument && selectedDocument._id === document._id
-            }
-            handler={() => setOpen(false)}
-            animate={{
-              mount: { scale: 1, y: 0 },
-              unmount: { scale: 0.9, y: -100 },
-            }}
+    <div className="flex flex-col px-14">
+      <h3 className='flex bg-[#182440] text-xl shadow-lg p-3 mx-4 text-white font-bold rounded-xl justify-center'>RMO Release Marking Page</h3>
+      <div className="grid grid-cols-4 max-w-screen ">
+        {endorseDocument.map((document) => (
+          <div
+            key={document._id}
+            className="flex flex-col bg-gray-300/80 p-3 m-4 rounded-xl shadow-lg hover:scale-105"
           >
-            <DialogHeader className="bg-[#23074d] text-white">
-              {document.documentType}
-            </DialogHeader>
-            <DialogBody divider>
-              <DocumentCompleteDetail document={document} />
-            </DialogBody>
-            <DialogFooter>
-              <div className="flex gap-4">
-                <Button
-                  variant="standard"
-                  color="green"
-                  onClick={(e) =>
-                    handleReleaseDocument(e, document._id) && setOpen(false)
-                  }
-                >
-                  Mark As Released
-                </Button>
+            <DocumentReleasingDetail document={document} />
+            <Dialog
+              className="flex flex-col overflow-y-scroll bg-white rounded-t-xl max-h-screen"
+              size="lg"
+              open={
+                open && selectedDocument && selectedDocument._id === document._id
+              }
+              handler={() => setOpen(false)}
+              animate={{
+                mount: { scale: 1, y: 0 },
+                unmount: { scale: 0.9, y: -100 },
+              }}
+            >
+              <DialogHeader className="bg-[#23074d] text-white">
+                {document.documentType}
+              </DialogHeader>
+              <DialogBody divider>
+                <DocumentCompleteDetail document={document} />
+              </DialogBody>
+              <DialogFooter>
+                <div className="flex gap-4">
+                  <Button
+                    variant="standard"
+                    color="green"
+                    onClick={(e) =>
+                      handleReleaseDocument(e, document._id) && setOpen(false)
+                    }
+                  >
+                    Mark As To Be Released
+                  </Button>
 
-                {/* <Button size='sm' variant='standard' color='red' onClick={() => handleRejectOpen(document)}>
+                  {/* <Button size='sm' variant='standard' color='red' onClick={() => handleRejectOpen(document)}>
 										Reject Release
 									</Button>
 
@@ -231,40 +230,41 @@ const ReleasingDocumentPage = () => {
 										</DialogFooter>
 									</Dialog> */}
 
-                <Button size="sm" variant="text" onClick={() => setOpen(false)}>
-                  <span>Close</span>
-                </Button>
-              </div>
-            </DialogFooter>
-          </Dialog>
-          <div className="flex content-start whitespace-pre justify-center items-center ">
-            <Button
-              className="flex flex-row text-black font-medium items-center m-2 hover:font-semibold hover:scale-105 hover:text-blue-900"
-              size="sm"
-              color="white"
-              variant="text"
-              onClick={() => handleOpen(document)}
-            >
-              Review{" "}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="h-5 w-5"
+                  <Button size="sm" variant="text" onClick={() => setOpen(false)}>
+                    <span>Close</span>
+                  </Button>
+                </div>
+              </DialogFooter>
+            </Dialog>
+            <div className="flex content-start whitespace-pre justify-center items-center ">
+              <Button
+                className="flex flex-row text-black font-medium items-center m-2 hover:font-semibold hover:scale-105 hover:text-blue-900"
+                size="sm"
+                color="white"
+                variant="text"
+                onClick={() => handleOpen(document)}
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
-                />
-              </svg>
-            </Button>
-            {/* <HiDownload size={20} className='flex mr-4' /> */}
+                Review{" "}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="h-5 w-5"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
+                  />
+                </svg>
+              </Button>
+              {/* <HiDownload size={20} className='flex mr-4' /> */}
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 };

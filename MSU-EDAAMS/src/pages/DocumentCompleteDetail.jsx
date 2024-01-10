@@ -196,8 +196,8 @@ const DocumentCompleteDetail = ({ document }) => {
 								// modules={{ toolbar: false }}
 								modules={{ toolbar: false }}
 								formats={formats}
-								className="shadow-md"
-								style={{ lineHeight: 2 }} />
+								className="shadow-md text-justify"
+								style={{ lineHeight: 2}} />
 						</div>
 					</div>
 				</div>
