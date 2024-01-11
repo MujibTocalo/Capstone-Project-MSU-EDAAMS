@@ -38,7 +38,6 @@ import {
   DocumentPlusIcon,
 } from "@heroicons/react/24/solid";
 
-
 import { format } from "date-fns";
 
 import { useNavigate } from "react-router-dom";
@@ -187,8 +186,6 @@ export const DocumentsLists = () => {
   //   setTableRows(filteredTableRows.slice(startIndex, endIndex));
   // };
 
-
-
   const deleteDocument = (documentId) => {
     axios
       .delete(`http://localhost:7000/document/delete/${documentId}`)
@@ -240,10 +237,14 @@ export const DocumentsLists = () => {
 
   const handleEditDocument = (documentId) => {
     // Find the selected document based on the documentId
-    const selectedDocument = filteredTableRows.find((doc) => doc._id === documentId);
+    const selectedDocument = filteredTableRows.find(
+      (doc) => doc._id === documentId
+    );
 
     // Display a confirmation prompt
-    const isConfirmed = window.confirm("Are you sure you want to edit this document?");
+    const isConfirmed = window.confirm(
+      "Are you sure you want to edit this document?"
+    );
 
     if (isConfirmed) {
       // Redirect to the NewCreateDocument page with the selected document data
@@ -331,9 +332,9 @@ export const DocumentsLists = () => {
                         Date Uploaded:{" "}
                         {selectedDocument.createdAt
                           ? format(
-                            new Date(selectedDocument.createdAt),
-                            "yyyy-MM-dd"
-                          )
+                              new Date(selectedDocument.createdAt),
+                              "yyyy-MM-dd"
+                            )
                           : "Waiting"}{" "}
                         <br />
                         Uploaded By:{" "}
@@ -361,9 +362,9 @@ export const DocumentsLists = () => {
                         Date Approved:{" "}
                         {selectedDocument.deanEndorsementDate
                           ? format(
-                            new Date(selectedDocument.deanEndorsementDate),
-                            "yyyy-MM-dd"
-                          )
+                              new Date(selectedDocument.deanEndorsementDate),
+                              "yyyy-MM-dd"
+                            )
                           : "Waiting"}{" "}
                         <br />
                         Approved By:{" "}
@@ -392,9 +393,9 @@ export const DocumentsLists = () => {
                         Date Endorsed:{" "}
                         {selectedDocument.endorsementDate
                           ? format(
-                            new Date(selectedDocument.endorsementDate),
-                            "yyyy-MM-dd"
-                          )
+                              new Date(selectedDocument.endorsementDate),
+                              "yyyy-MM-dd"
+                            )
                           : `Waiting for ${selectedDocument.collegeName} Dean Endorsement`}{" "}
                         <br />
                         Endorsed By:{" "}
@@ -423,9 +424,9 @@ export const DocumentsLists = () => {
                         Final Approval Date:{" "}
                         {selectedDocument.approvalDate
                           ? format(
-                            new Date(selectedDocument.approvalDate),
-                            "yyyy-MM-dd"
-                          )
+                              new Date(selectedDocument.approvalDate),
+                              "yyyy-MM-dd"
+                            )
                           : "Waiting for OVCAA Endorsement"}{" "}
                         <br />
                         Approved By:{" "}
@@ -453,9 +454,9 @@ export const DocumentsLists = () => {
                         Release Date:{" "}
                         {selectedDocument.releaseDate
                           ? format(
-                            new Date(selectedDocument.releaseDate),
-                            "yyyy-MM-dd"
-                          )
+                              new Date(selectedDocument.releaseDate),
+                              "yyyy-MM-dd"
+                            )
                           : "Waiting for Office of the President Approval"}{" "}
                         <br />
                         {/* Released By: {selectedDocument.opApproverName ? selectedDocument.opApproverName : 'Pending'} <br />
@@ -485,16 +486,16 @@ export const DocumentsLists = () => {
                         Date Rejected:{" "}
                         {selectedDocument.rejectedDate
                           ? format(
-                            new Date(selectedDocument.rejectedDate),
-                            "yyyy-MM-dd"
-                          )
+                              new Date(selectedDocument.rejectedDate),
+                              "yyyy-MM-dd"
+                            )
                           : "Waiting"}{" "}
                         <br />
                         Rejected By:{" "}
                         {selectedDocument.rejectedName
                           ? selectedDocument.rejectedDesignation +
-                          " " +
-                          selectedDocument.rejectedName
+                            " " +
+                            selectedDocument.rejectedName
                           : "Pending"}{" "}
                         <br />
                         Remarks:{" "}
@@ -592,7 +593,7 @@ export const DocumentsLists = () => {
           </Tabs> */}
         </div>
       </CardHeader>
-      <CardBody className="overflow-y-scroll px-1">
+      <CardBody className="overflow-y-scroll h-screen -translate-y-16 px-1">
         <table className="min-w-max table-auto" style={{ width: "100%" }}>
           <thead>
             <tr>
@@ -613,137 +614,137 @@ export const DocumentsLists = () => {
             </tr>
           </thead>
           <tbody>
-            {filteredTableRows
-              .map(
-                (
-                  {
-                    _id,
-                    documentType,
-                    uploaderName,
-                    uploaderDesignation,
-                    controlNumber,
-                    documentStatus,
-                    collegeName,
-                    createdAt,
-                  },
-                  index
-                ) => {
-                  const isLast = index === tableRows.length - 1;
-                  const classes = isLast
-                    ? "p-2"
-                    : "p-2 border-b border-blue-gray-50";
+            {filteredTableRows.map(
+              (
+                {
+                  _id,
+                  documentType,
+                  uploaderName,
+                  uploaderDesignation,
+                  controlNumber,
+                  documentStatus,
+                  collegeName,
+                  createdAt,
+                },
+                index
+              ) => {
+                const isLast = index === tableRows.length - 1;
+                const classes = isLast
+                  ? "p-2"
+                  : "p-2 border-b border-blue-gray-50";
 
-                  return (
-                    <tr key={controlNumber}>
-                      <td className={classes}>
-                        <div className="flex flex-col items-start ml-4">
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="font-medium"
-                          >
-                            {documentType}
-                          </Typography>
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="font-normal opacity-80"
-                          >
-                            Control No. {controlNumber}
-                          </Typography>
-                        </div>
-                      </td>
-                      <td className={classes}>
-                        <div className="flex flex-col gap-1.5">
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="font-medium"
-                          >
-                            {uploaderName}
-                          </Typography>
+                return (
+                  <tr key={controlNumber}>
+                    <td className={classes}>
+                      <div className="flex flex-col items-start ml-4">
+                        <Typography
+                          variant="small"
+                          color="blue-gray"
+                          className="font-medium"
+                        >
+                          {documentType}
+                        </Typography>
+                        <Typography
+                          variant="small"
+                          color="blue-gray"
+                          className="font-normal opacity-80"
+                        >
+                          Control No. {controlNumber}
+                        </Typography>
+                      </div>
+                    </td>
+                    <td className={classes}>
+                      <div className="flex flex-col gap-1.5">
+                        <Typography
+                          variant="small"
+                          color="blue-gray"
+                          className="font-medium"
+                        >
+                          {uploaderName}
+                        </Typography>
 
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="font-normal opacity-70"
-                          >
-                            {uploaderDesignation}
-                          </Typography>
-                        </div>
-                      </td>
-                      <td className={classes}>
-                        <div className="flex flex-col text-start">
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="font-bold"
-                          >
-                            {collegeName}
-                          </Typography>
-                          {/* <Typography
+                        <Typography
+                          variant="small"
+                          color="blue-gray"
+                          className="font-normal opacity-70"
+                        >
+                          {uploaderDesignation}
+                        </Typography>
+                      </div>
+                    </td>
+                    <td className={classes}>
+                      <div className="flex flex-col text-start">
+                        <Typography
+                          variant="small"
+                          color="blue-gray"
+                          className="font-bold"
+                        >
+                          {collegeName}
+                        </Typography>
+                        {/* <Typography
 													variant="small"
 													color="blue-gray"
 													className="font-normal opacity-70"
 												>
 													{designation}
 												</Typography> */}
-                        </div>
-                      </td>
-                      <td className={classes}>
-                        <div className="flex flex-row">
-                          <Chip
-                            variant="ghost"
-                            size="md"
-                            value={
-                              documentStatus === "Dean Approved"
-                                ? "Dean Approved"
-                                : documentStatus === "Dean Endorsed"
-                                  ? "Dean Approved"
-                                  : documentStatus === "OVCAA Endorsed"
-                                    ? "OVCAA Approved"
-                                    : documentStatus === "OP Approved"
-                                      ? "OP Approved"
-                                      : documentStatus === "Created"
-                                        ? "Created"
-                                        : documentStatus === "Pending"
-                                          ? "Pending"
-                                          : "Rejected"
-                            }
-                            color={
-                              documentStatus === "Rejected"
-                                ? "red"
-                                : documentStatus === "Pending"
-                                  ? "orange"
-                                  : "green"
-                            }
-                          />
-                        </div>
-                      </td>
-                      <td className={classes}>
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-medium"
-                        >
-                          {format(new Date(createdAt), "yyyy-MM-dd")}
-                        </Typography>
-                      </td>
-                      <td className={classes}>
-                        <div className="flex flex-row mx-auto gap-1 items-center cursor-pointer">
-                          {/* <BsCardChecklist
+                      </div>
+                    </td>
+                    <td className={classes}>
+                      <div className="flex flex-row">
+                        <Chip
+                          variant="ghost"
+                          size="md"
+                          value={
+                            documentStatus === "Dean Approved"
+                              ? "Dean Approved"
+                              : documentStatus === "Dean Endorsed"
+                              ? "Dean Approved"
+                              : documentStatus === "OVCAA Endorsed"
+                              ? "OVCAA Approved"
+                              : documentStatus === "OP Approved"
+                              ? "OP Approved"
+                              : documentStatus === "Created"
+                              ? "Created"
+                              : documentStatus === "Pending"
+                              ? "Pending"
+                              : "Rejected"
+                          }
+                          color={
+                            documentStatus === "Rejected"
+                              ? "red"
+                              : documentStatus === "Pending"
+                              ? "orange"
+                              : "green"
+                          }
+                        />
+                      </div>
+                    </td>
+                    <td className={classes}>
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-medium"
+                      >
+                        {format(new Date(createdAt), "yyyy-MM-dd")}
+                      </Typography>
+                    </td>
+                    <td className={classes}>
+                      <div className="flex flex-row mx-auto gap-1 items-center cursor-pointer">
+                        {/* <BsCardChecklist
                           size={20}
                           onClick={() => handleTimelineClick(index)}
                         /> */}
-                          <div className="flex w-max gap-4">
-                            <BsCardChecklist
-                              size={25}
-                              className="cursor-pointer hover:scale-110 hover:bg-lightgray hover:text-black"
-                              onClick={() => handleTimelineClick(index)}
-                              title="Track Document"
-                            />
-                          </div>
-                          {userAccess === "Uploader" && documentStatus === "Pending" && (
+                        <div className="flex w-max gap-4">
+                          <BsCardChecklist
+                            size={25}
+                            className="cursor-pointer hover:scale-110 hover:bg-lightgray hover:text-black"
+                            onClick={() => handleTimelineClick(index)}
+                            title="Track Document"
+                          />
+                        </div>
+                        {userAccess === "Uploader" &&
+                          documentStatus === "Pending" && (
                             <>
                               {/* Add the Edit button here */}
                               <BiEdit
@@ -759,12 +760,12 @@ export const DocumentsLists = () => {
                               />
                             </>
                           )}
-                        </div>
-                      </td>
-                    </tr>
-                  );
-                }
-              )}
+                      </div>
+                    </td>
+                  </tr>
+                );
+              }
+            )}
           </tbody>
         </table>
       </CardBody>

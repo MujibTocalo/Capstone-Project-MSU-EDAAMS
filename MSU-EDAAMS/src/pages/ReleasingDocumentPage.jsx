@@ -83,8 +83,8 @@ const ReleasingDocumentPage = () => {
 
   const endorseDocument = documents
     ? documents
-      .filter((document) => document.documentStatus === "OP Approved")
-      .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
+        .filter((document) => document.documentStatus === "OP Approved")
+        .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
     : [];
 
   const handleReleaseDocument = async (e, documentId) => {
@@ -125,7 +125,7 @@ const ReleasingDocumentPage = () => {
             );
           }
         });
-    } catch (error) { }
+    } catch (error) {}
   };
 
   const handleRejectDocument = async (e, documentId) => {
@@ -166,8 +166,12 @@ const ReleasingDocumentPage = () => {
     <div className="flex flex-col px-14">
       {/* <h3 className='flex bg-[#182440] text-xl shadow-lg p-3 mx-4 text-white font-bold rounded-xl justify-center'>RMO Release Marking Page</h3> */}
       <div className="flex flex-col p-3">
-        <Typography className="text-2xl font-semibold">RMO Release Marking</Typography>
-        <Typography className='text-gray-700'>See all Document For Releasing</Typography>
+        <Typography className="text-2xl font-semibold">
+          RMO Release Marking
+        </Typography>
+        <Typography className="text-gray-700">
+          See all Document For Releasing
+        </Typography>
       </div>
       <div className="grid grid-cols-4 max-w-screen ">
         {endorseDocument.map((document) => (
@@ -180,7 +184,9 @@ const ReleasingDocumentPage = () => {
               className="flex flex-col overflow-y-scroll bg-white rounded-t-xl max-h-screen"
               size="lg"
               open={
-                open && selectedDocument && selectedDocument._id === document._id
+                open &&
+                selectedDocument &&
+                selectedDocument._id === document._id
               }
               handler={() => setOpen(false)}
               animate={{
@@ -203,7 +209,7 @@ const ReleasingDocumentPage = () => {
                       handleReleaseDocument(e, document._id) && setOpen(false)
                     }
                   >
-                    Mark As To Be Released
+                    Mark As Processed
                   </Button>
 
                   {/* <Button size='sm' variant='standard' color='red' onClick={() => handleRejectOpen(document)}>
@@ -234,7 +240,11 @@ const ReleasingDocumentPage = () => {
 										</DialogFooter>
 									</Dialog> */}
 
-                  <Button size="sm" variant="text" onClick={() => setOpen(false)}>
+                  <Button
+                    size="sm"
+                    variant="text"
+                    onClick={() => setOpen(false)}
+                  >
                     <span>Close</span>
                   </Button>
                 </div>

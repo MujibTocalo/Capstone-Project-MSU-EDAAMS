@@ -152,13 +152,10 @@ const ArchivePage = () => {
   const convertHtmlToText = (htmlContent) => {
     // Specify options if needed, see the html-to-text documentation for details
     const options = {
-      wordwrap: 130
+      wordwrap: 130,
     };
     return convert(htmlContent, options);
   };
-
-
-
 
   const navigate = useNavigate();
   return (
@@ -197,9 +194,9 @@ const ArchivePage = () => {
                       Date Uploaded:{" "}
                       {selectedDocument.createdAt
                         ? format(
-                          new Date(selectedDocument.createdAt),
-                          "yyyy-MM-dd"
-                        )
+                            new Date(selectedDocument.createdAt),
+                            "yyyy-MM-dd"
+                          )
                         : "Waiting"}{" "}
                       <br />
                       Uploaded By:{" "}
@@ -230,9 +227,9 @@ const ArchivePage = () => {
                       Date Approved:{" "}
                       {selectedDocument.deanEndorsementDate
                         ? format(
-                          new Date(selectedDocument.deanEndorsementDate),
-                          "yyyy-MM-dd"
-                        )
+                            new Date(selectedDocument.deanEndorsementDate),
+                            "yyyy-MM-dd"
+                          )
                         : "Waiting"}{" "}
                       <br />
                       Approved By:{" "}
@@ -265,9 +262,9 @@ const ArchivePage = () => {
                       Date Endorsed:{" "}
                       {selectedDocument.endorsementDate
                         ? format(
-                          new Date(selectedDocument.endorsementDate),
-                          "yyyy-MM-dd"
-                        )
+                            new Date(selectedDocument.endorsementDate),
+                            "yyyy-MM-dd"
+                          )
                         : `Waiting for ${selectedDocument.collegeName} Dean Endorsement`}{" "}
                       <br />
                       Endorsed By:{" "}
@@ -300,9 +297,9 @@ const ArchivePage = () => {
                       Final Approval Date:{" "}
                       {selectedDocument.approvalDate
                         ? format(
-                          new Date(selectedDocument.approvalDate),
-                          "yyyy-MM-dd"
-                        )
+                            new Date(selectedDocument.approvalDate),
+                            "yyyy-MM-dd"
+                          )
                         : "Waiting for OVCAA Endorsement"}{" "}
                       <br />
                       Approved By:{" "}
@@ -334,9 +331,9 @@ const ArchivePage = () => {
                       Release Date:{" "}
                       {selectedDocument.releaseDate
                         ? format(
-                          new Date(selectedDocument.releaseDate),
-                          "yyyy-MM-dd"
-                        )
+                            new Date(selectedDocument.releaseDate),
+                            "yyyy-MM-dd"
+                          )
                         : "Waiting for Office of the President Approval"}{" "}
                       <br />
                       {/* Released By: {selectedDocument.opApproverName ? selectedDocument.opApproverName : 'Pending'} <br />
@@ -366,16 +363,16 @@ const ArchivePage = () => {
                       Date Rejected:{" "}
                       {selectedDocument.rejectedDate
                         ? format(
-                          new Date(selectedDocument.rejectedDate),
-                          "yyyy-MM-dd"
-                        )
+                            new Date(selectedDocument.rejectedDate),
+                            "yyyy-MM-dd"
+                          )
                         : "Waiting"}{" "}
                       <br />
                       Rejected By:{" "}
                       {selectedDocument.rejectedName
                         ? selectedDocument.rejectedDesignation +
-                        " " +
-                        selectedDocument.rejectedName
+                          " " +
+                          selectedDocument.rejectedName
                         : "Pending"}{" "}
                       <br />
                       Remarks:{" "}
@@ -532,23 +529,23 @@ const ArchivePage = () => {
                             documentStatus === "DeanApproved"
                               ? "Dean Approved"
                               : documentStatus === "Endorsed"
-                                ? "Endorsed"
-                                : documentStatus === "OP Approved"
-                                  ? "OP Approved"
-                                  : documentStatus === "Created"
-                                    ? "Created"
-                                    : documentStatus === "Pending"
-                                      ? "Pending"
-                                      : documentStatus === "Released"
-                                        ? "Released"
-                                        : "Rejected"
+                              ? "Endorsed"
+                              : documentStatus === "OP Approved"
+                              ? "OP Approved"
+                              : documentStatus === "Created"
+                              ? "Created"
+                              : documentStatus === "Pending"
+                              ? "Pending"
+                              : documentStatus === "Released"
+                              ? "Processed"
+                              : "Rejected"
                           }
                           color={
                             documentStatus === "Rejected"
                               ? "red"
                               : documentStatus === "Pending"
-                                ? "orange"
-                                : "green"
+                              ? "orange"
+                              : "green"
                           }
                         />
                       </div>
@@ -580,8 +577,7 @@ const ArchivePage = () => {
                                     style={styles.ImageHeader}
                                   />
                                   <Text style={styles.documentDetailText}>
-                                    Control No.{" "}
-                                    {controlNumber}
+                                    Control No. {controlNumber}
                                   </Text>
                                   <Text style={styles.documentDate}>
                                     Date:{" "}
@@ -645,9 +641,7 @@ const ArchivePage = () => {
           </tbody>
         </table>
       </CardBody>
-      <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
-
-      </CardFooter>
+      <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4"></CardFooter>
     </Card>
   );
 };
