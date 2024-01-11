@@ -164,7 +164,11 @@ const ReleasingDocumentPage = () => {
 
   return (
     <div className="flex flex-col px-14">
-      <h3 className='flex bg-[#182440] text-xl shadow-lg p-3 mx-4 text-white font-bold rounded-xl justify-center'>RMO Release Marking Page</h3>
+      {/* <h3 className='flex bg-[#182440] text-xl shadow-lg p-3 mx-4 text-white font-bold rounded-xl justify-center'>RMO Release Marking Page</h3> */}
+      <div className="flex flex-col p-3">
+        <Typography className="text-2xl font-semibold">RMO Release Marking</Typography>
+        <Typography className='text-gray-700'>See all Document For Releasing</Typography>
+      </div>
       <div className="grid grid-cols-4 max-w-screen ">
         {endorseDocument.map((document) => (
           <div

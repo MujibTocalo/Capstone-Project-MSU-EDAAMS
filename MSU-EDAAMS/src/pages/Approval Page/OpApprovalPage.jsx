@@ -245,7 +245,11 @@ const OpApprovalPage = () => {
 
 	return (
 		<div className="flex flex-col px-14">
-			<h3 className='flex bg-[#182440] text-xl shadow-lg p-3 mx-4 text-white font-bold rounded-xl justify-center'>OP Approval & Endorsement Page</h3>
+			{/* <h3 className='flex bg-[#182440] text-xl shadow-lg p-3 mx-4 text-white font-bold rounded-xl justify-center'>OP Approval & Endorsement Page</h3> */}
+			<div className="flex flex-col p-3">
+				<Typography className="text-2xl font-semibold">OP Approval & Endorsement</Typography>
+				<Typography className='text-gray-700'>See all Document Pending for Approval and Endorsement</Typography>
+			</div>
 			<div className='grid grid-cols-4 p-2 max-w-screen'>
 				{endorsedDocuments.map((document) => (
 					<div key={document._id} className='flex flex-col bg-gray-300/80 m-4 p-3 rounded-xl shadow-lg hover:scale-105'>

@@ -62,18 +62,21 @@ const DocumentCompleteDetail = ({ document }) => {
 							{/* <div className="flex flex-col border border-gray-400 p-2 my-2 shadow-md">
 								<Typography variant='paragraph' className='font-medium text-justify whitespace-break-spaces' style={{ textIndent: '3em', lineHeight: 2 }}>{document.approverContent}</Typography>
 							</div> */}
-							<div className="flex flex-col border border-gray-400 p-2 my-2 shadow-md">
-								{document.approverContent.split('\n').map((paragraph, index) => (
-									<Typography
-										key={index}
-										variant='paragraph'
-										className='font-medium text-justify whitespace-break-spaces'
-										style={{ textIndent: '3em', lineHeight: 2 }}
-									>
-										{paragraph}
-									</Typography>
-								))}
-							</div>
+							{document.approverContent && (
+								<div className="flex flex-col border border-gray-400 p-2 my-2 shadow-md">
+									{document.approverContent.split('\n').map((paragraph, index) => (
+										<Typography
+											key={index}
+											variant='paragraph'
+											className='font-medium text-justify whitespace-break-spaces'
+											style={{ textIndent: '3em', lineHeight: 2 }}
+										>
+											{paragraph}
+										</Typography>
+									))}
+								</div>
+							)}
+
 
 							{/* <div className="flex flex-col border border-gray-400 p-2 my-2 shadow-md">
 								{document.approverContent.split('\n').map((paragraph, index) => (
