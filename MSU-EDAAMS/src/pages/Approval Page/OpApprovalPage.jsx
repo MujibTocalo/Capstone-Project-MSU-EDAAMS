@@ -321,7 +321,7 @@ const OpApprovalPage = () => {
 														label="Content"
 														value={documentDetail.content}
 														onChange={onContent}
-														className="flex h-[50vh]"
+														className="flex h-screen"
 													/>
 													{/* <textarea
 														placeholder='Content'

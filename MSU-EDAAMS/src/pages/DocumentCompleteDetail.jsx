@@ -44,6 +44,10 @@ const DocumentCompleteDetail = ({ document }) => {
 						<Typography variant='paragraph'>Date: </Typography>
 						<Typography variant='paragraph' style={{ textIndent: '.5em' }} className='font-semibold'>{format(new Date(document.createdAt), 'yyyy-MM-dd')}</Typography>
 					</div>
+					<div className="flex">
+						<Typography variant='paragraph'>Time: </Typography>
+						<Typography variant='paragraph' style={{ textIndent: '.5em' }} className='font-semibold'>{format(new Date(document.createdAt), 'hh:mm a')}</Typography>
+					</div>
 				</div>
 
 				{/* RMO DOCUMENT ACCESS */}

@@ -21,15 +21,20 @@ dotenv.config();
 
 // Middleware
 app.use(
-  cors(
+  cors({
+    origin: "*",
+    credentials: true
+  }
   )
 )
 
 
 const io = new Server(server, {
   cors: {
-    origin: "http://127.0.0.1:4173",
+    // origin: "http://127.0.0.1:4173",
+    // origin: "https://6v2nzgb7-4173.asse.devtunnels.ms/",
     origin: "http://127.0.0.1:5173",
+    // origin: "*",
     credentials: true
   },
 });
@@ -166,6 +171,6 @@ mongoose
     useUnifiedTopology: true,
   })
   .then(() => {
-    server.listen(PORT, () => console.log(`Server Port: ${PORT}`));
+    server.listen(PORT, "0.0.0.0", () => console.log(`Server Port: ${PORT}`));
   })
   .catch((error) => console.log(`${error} did not connect`));
