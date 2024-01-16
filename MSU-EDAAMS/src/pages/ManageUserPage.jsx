@@ -409,7 +409,7 @@ const ManageUsers = () => {
                       className="h-10"
                       variant="outlined"
                       label="Select User Type"
-                      onChange={(e) => handleUserType(e)}
+                      onChange={(e) => handleUserType(e)} 
                       value={userType}
                       animate={{
                         mount: { y: 0 },

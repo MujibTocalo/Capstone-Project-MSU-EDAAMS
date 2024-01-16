@@ -86,6 +86,8 @@ const TABLE_HEAD = [
   "Action",
 ];
 
+const PAGE_SIZE = 7;
+
 export const DocumentsLists = () => {
   const store = documentsStore();
 
@@ -98,8 +100,81 @@ export const DocumentsLists = () => {
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
   const [selectedDocumentId, setSelectedDocumentId] = useState(null);
   const [userAccess, setUserAccess] = useState();
-  // const [currentPage, setCurrentPage] = useState(1);
-  // const documentsPerPage = 5;
+
+  // SORTING BASED ON TABLE HEAD CATEGORY
+  const [sortOrder, setSortOrder] = useState("asc"); // "asc" or "desc"
+  const [sortedColumn, setSortedColumn] = useState(null);
+
+  const handleSort = (column) => {
+    // Toggle sort order if clicking on the same column
+    if (column === sortedColumn) {
+      setSortOrder(sortOrder === "asc" ? "desc" : "asc");
+    } else {
+      setSortedColumn(column);
+      setSortOrder("asc");
+    }
+
+    // Sort the tableRows based on the selected column and order
+    const sortedRows = filteredTableRows.slice().sort((a, b) => {
+      let valueA, valueB;
+
+      switch (column) {
+        case "College / Office":
+          valueA = a.collegeName ? a.collegeName.toLowerCase() : "";
+          valueB = b.collegeName ? b.collegeName.toLowerCase() : "";
+          break;
+        case "Document Status":
+          valueA = a.documentStatus ? a.documentStatus.toLowerCase() : "";
+          valueB = b.documentStatus ? b.documentStatus.toLowerCase() : "";
+          break;
+        case "Document Type":
+          valueA = a.documentType ? a.documentType.toLowerCase() : "";
+          valueB = b.documentType ? b.documentType.toLowerCase() : "";
+          break;
+        case "Uploader Detail":
+          valueA = a.uploaderName ? a.uploaderName.toLowerCase() : "";
+          valueB = b.uploaderName ? b.uploaderName.toLowerCase() : "";
+          break;
+        case "Date Uploaded":
+          valueA = a.createdAt ? new Date(a.createdAt) : 0;
+          valueB = b.createdAt ? new Date(b.createdAt) : 0;
+          break;
+        default:
+          // Default handling for other columns
+          valueA = a[column] ? a[column].toLowerCase() : "";
+          valueB = b[column] ? b[column].toLowerCase() : "";
+      }
+
+      if (valueA < valueB) return sortOrder === "asc" ? -1 : 1;
+      if (valueA > valueB) return sortOrder === "asc" ? 1 : -1;
+      return 0;
+    });
+
+    setFilteredTableRows(sortedRows);
+  };
+
+  // PAGINATION
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const totalPageCount = Math.ceil(filteredTableRows.length / PAGE_SIZE);
+
+  const paginatedTableRows = filteredTableRows.slice(
+    (currentPage - 1) * PAGE_SIZE,
+    currentPage * PAGE_SIZE
+  );
+
+  const handleNextPage = () => {
+    if (currentPage < totalPageCount) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
 
   useEffect(() => {
     const fetchTableRows = async () => {
@@ -110,37 +185,10 @@ export const DocumentsLists = () => {
         const responseData = response.data;
         const documentArray = responseData.document;
         const currentUserCollege = userDetail.office;
-        const filteredDocuments = documentArray.filter((document) => {
-          document.collegeName === currentUserCollege;
-        });
-
-        // if (currentUserCollege === 'RMO' || currentUserCollege === 'OVCAA' || currentUserCollege === 'OP') {
-        //   sortedDocuments = documentArray
-        //     .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-        //     .filter(
-        //       (document) =>
-        //         document.documentStatus === "DeanApproved" ||
-        //         document.documentStatus === "Dean Endorsed" ||
-        //         document.documentStatus === "Endorsed" ||
-        //         document.documentStatus === "Dean Approved" ||
-        //         document.documentStatus === "Pending" ||
-        //         document.documentStatus === "OP Approved" ||
-        //         document.documentStatus === "Rejected"
-        //     );
-        // } else {
-        //   sortedDocuments = filteredDocuments
-        //     .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-        //     .filter(
-        //       (document) =>
-        //         document.documentStatus === "DeanApproved" ||
-        //         document.documentStatus === "Dean Endorsed" ||
-        //         document.documentStatus === "Endorsed" ||
-        //         document.documentStatus === "Dean Approved" ||
-        //         document.documentStatus === "Pending" ||
-        //         document.documentStatus === "OP Approved" ||
-        //         document.documentStatus === "Rejected"
-        //     );
-        // }
+        const filteredDocuments = documentArray
+          .filter((document) => {
+            document.collegeName === currentUserCollege;
+          });
 
         const sortedDocuments = documentArray
           .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
@@ -154,6 +202,8 @@ export const DocumentsLists = () => {
           );
 
         setTableRows(sortedDocuments);
+        // setTableRows(documentArray);
+        // setFilteredTableRows(documentArray);
         setFilteredTableRows(sortedDocuments);
       } catch (error) {
         console.log(error);
@@ -169,28 +219,11 @@ export const DocumentsLists = () => {
     setIsTimelineDialogOpen(!isTimelineDialogOpen);
   };
 
-  // const handlePreviousPage = () => {
-  //   setCurrentPage((prevPage) => (prevPage > 1 ? prevPage - 1 : prevPage));
-  //   updateDisplayedDocuments();
-  // };
-
-  // const handleNextPage = () => {
-  //   const totalPages = Math.ceil(filteredTableRows.length / documentsPerPage);
-  //   setCurrentPage((prevPage) => (prevPage < totalPages ? prevPage + 1 : 1));
-  //   updateDisplayedDocuments();
-  // };
-
-  // const updateDisplayedDocuments = () => {
-  //   const startIndex = (currentPage - 1) * documentsPerPage;
-  //   const endIndex = startIndex + documentsPerPage;
-  //   setTableRows(filteredTableRows.slice(startIndex, endIndex));
-  // };
 
   const deleteDocument = (documentId) => {
     axios
       .delete(`http://localhost:7000/document/delete/${documentId}`)
       .then((res) => {
-        console.log(res);
         if (res.data.success === "Document Deleted") {
           store.fetchDocuments();
         }
@@ -209,9 +242,10 @@ export const DocumentsLists = () => {
     setSearchQuery(query);
 
     // Filter the tableRows based on the uploader's detail (uploaderName)
-    const filteredRows = tableRows.filter((row) =>
+    const filteredRows = filteredTableRows.filter((row) =>
       row.uploaderName.toLowerCase().includes(query.toLowerCase())
     );
+
     setFilteredTableRows(filteredRows);
   };
 
@@ -235,6 +269,10 @@ export const DocumentsLists = () => {
     }
   };
 
+  // const formattedDate = selectedDocument.createdAt
+  //   ? format(new Date(selectedDocument.createdAt), "yyyy-MM-dd hh:mm:ss a")
+  //   : "N/A";
+
   const handleEditDocument = (documentId) => {
     // Find the selected document based on the documentId
     const selectedDocument = filteredTableRows.find(
@@ -255,10 +293,9 @@ export const DocumentsLists = () => {
   const navigate = useNavigate();
 
   return (
-    <Card
-      className="flex h-full max-w-screen px-12 mx-auto my-auto rounded-none overflow-hidden bg-white"
-      floated={true}
-      shadow={true}
+    <Card className="flex h-full max-w-screen px-12 mx-auto my-auto rounded-none overflow-hidden bg-white"
+      floated="true"
+      shadow="true"
     >
       <div>
         <Dialog
@@ -332,9 +369,9 @@ export const DocumentsLists = () => {
                         Date Uploaded:{" "}
                         {selectedDocument.createdAt
                           ? format(
-                              new Date(selectedDocument.createdAt),
-                              "yyyy-MM-dd"
-                            )
+                            new Date(selectedDocument.createdAt),
+                            "yyyy-MM-dd"
+                          )
                           : "Waiting"}{" "}
                         <br />
                         Uploaded By:{" "}
@@ -362,9 +399,9 @@ export const DocumentsLists = () => {
                         Date Approved:{" "}
                         {selectedDocument.deanEndorsementDate
                           ? format(
-                              new Date(selectedDocument.deanEndorsementDate),
-                              "yyyy-MM-dd"
-                            )
+                            new Date(selectedDocument.deanEndorsementDate),
+                            "yyyy-MM-dd"
+                          )
                           : "Waiting"}{" "}
                         <br />
                         Approved By:{" "}
@@ -393,9 +430,9 @@ export const DocumentsLists = () => {
                         Date Endorsed:{" "}
                         {selectedDocument.endorsementDate
                           ? format(
-                              new Date(selectedDocument.endorsementDate),
-                              "yyyy-MM-dd"
-                            )
+                            new Date(selectedDocument.endorsementDate),
+                            "yyyy-MM-dd"
+                          )
                           : `Waiting for ${selectedDocument.collegeName} Dean Endorsement`}{" "}
                         <br />
                         Endorsed By:{" "}
@@ -424,9 +461,9 @@ export const DocumentsLists = () => {
                         Final Approval Date:{" "}
                         {selectedDocument.approvalDate
                           ? format(
-                              new Date(selectedDocument.approvalDate),
-                              "yyyy-MM-dd"
-                            )
+                            new Date(selectedDocument.approvalDate),
+                            "yyyy-MM-dd"
+                          )
                           : "Waiting for OVCAA Endorsement"}{" "}
                         <br />
                         Approved By:{" "}
@@ -454,9 +491,9 @@ export const DocumentsLists = () => {
                         Release Date:{" "}
                         {selectedDocument.releaseDate
                           ? format(
-                              new Date(selectedDocument.releaseDate),
-                              "yyyy-MM-dd"
-                            )
+                            new Date(selectedDocument.releaseDate),
+                            "yyyy-MM-dd"
+                          )
                           : "Waiting for Office of the President Approval"}{" "}
                         <br />
                         {/* Released By: {selectedDocument.opApproverName ? selectedDocument.opApproverName : 'Pending'} <br />
@@ -486,16 +523,16 @@ export const DocumentsLists = () => {
                         Date Rejected:{" "}
                         {selectedDocument.rejectedDate
                           ? format(
-                              new Date(selectedDocument.rejectedDate),
-                              "yyyy-MM-dd"
-                            )
+                            new Date(selectedDocument.rejectedDate),
+                            "yyyy-MM-dd"
+                          )
                           : "Waiting"}{" "}
                         <br />
                         Rejected By:{" "}
                         {selectedDocument.rejectedName
                           ? selectedDocument.rejectedDesignation +
-                            " " +
-                            selectedDocument.rejectedName
+                          " " +
+                          selectedDocument.rejectedName
                           : "Pending"}{" "}
                         <br />
                         Remarks:{" "}
@@ -594,27 +631,38 @@ export const DocumentsLists = () => {
         </div>
       </CardHeader>
       <CardBody className="overflow-y-scroll h-screen -translate-y-16 px-1">
-        <table className="min-w-max table-auto" style={{ width: "100%" }}>
+        <table className="min-w-max table-auto text-left" style={{ width: "100%" }}>
           <thead>
             <tr>
               {TABLE_HEAD.map((head, index) => (
                 <th
                   key={head}
-                  className="border-y border-blue-gray-100 bg-blue-gray-100 p-4 transition-colors"
+                  className="border-y border-blue-gray-100 bg-blue-gray-100  p-4 transition-colors sticky -top-8"
+                  onClick={() => handleSort(head)}
                 >
                   <Typography
                     variant="small"
                     color="blue-gray"
-                    className="flex items-center justify-between gap-4 font-bold leading-none"
+                    className="flex font-bold leading-none cursor-pointer"
                   >
-                    {head} {index !== TABLE_HEAD.length - 1}
+                    {head} {index !== TABLE_HEAD.length - 1 && (
+                      <ChevronUpDownIcon
+                        className={`h-4 w-4 ml-1 transition-transform transform ${sortedColumn === head
+                            ? sortOrder === "asc"
+                              ? "-rotate-180"
+                              : "rotate-180"
+                            : ""
+                          }`}
+                      />
+                    )}
                   </Typography>
                 </th>
               ))}
+
             </tr>
           </thead>
           <tbody>
-            {filteredTableRows.map(
+            {paginatedTableRows.map(
               (
                 {
                   _id,
@@ -699,23 +747,23 @@ export const DocumentsLists = () => {
                             documentStatus === "Dean Approved"
                               ? "Dean Approved"
                               : documentStatus === "Dean Endorsed"
-                              ? "Dean Approved"
-                              : documentStatus === "OVCAA Endorsed"
-                              ? "OVCAA Approved"
-                              : documentStatus === "OP Approved"
-                              ? "OP Approved"
-                              : documentStatus === "Created"
-                              ? "Created"
-                              : documentStatus === "Pending"
-                              ? "Pending"
-                              : "Rejected"
+                                ? "Dean Approved"
+                                : documentStatus === "OVCAA Endorsed"
+                                  ? "OVCAA Approved"
+                                  : documentStatus === "OP Approved"
+                                    ? "OP Approved"
+                                    : documentStatus === "Created"
+                                      ? "Created"
+                                      : documentStatus === "Pending"
+                                        ? "Pending"
+                                        : "Rejected"
                           }
                           color={
                             documentStatus === "Rejected"
                               ? "red"
                               : documentStatus === "Pending"
-                              ? "orange"
-                              : "green"
+                                ? "orange"
+                                : "green"
                           }
                         />
                       </div>
@@ -769,17 +817,16 @@ export const DocumentsLists = () => {
           </tbody>
         </table>
       </CardBody>
-      <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
-        {/* <Typography variant="small" color="blue-gray" className="font-normal">
-          Page {currentPage} of{" "}
-          {Math.ceil(filteredTableRows.length / documentsPerPage)}
+      <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4 -translate-y-4">
+        <Typography variant="small" color="blue-gray" className="font-normal">
+          Page {currentPage} of {totalPageCount}
         </Typography>
         <div className="flex gap-2">
           <Button
             variant="outlined"
             className="border-gray-400"
             size="sm"
-            onClick={handlePreviousPage}
+            onClick={handlePrevPage}
           >
             Previous
           </Button>
@@ -791,7 +838,7 @@ export const DocumentsLists = () => {
           >
             Next
           </Button>
-        </div> */}
+        </div>
       </CardFooter>
     </Card>
   );

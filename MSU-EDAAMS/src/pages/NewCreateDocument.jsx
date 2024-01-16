@@ -37,8 +37,24 @@ const NewCreateDocument = () => {
   const handleConfirmationClose = () => setConfirmationOpen(false);
 
   const confirmSubmission = () => {
-    addDocument();
-    handleConfirmationClose();
+    // Show a confirmation dialog
+    handleConfirmationOpen();
+  };
+
+  const submitDocument = () => {
+    // Check if all required fields are filled
+    const requiredFields = ['header', 'subject', 'content'];
+    const missingFields = requiredFields.filter(field => !documentDetail[field]);
+
+    if (missingFields.length === 0) {
+      // All required fields are filled, proceed with the submission
+      addDocument();
+      handleConfirmationClose();
+    } else {
+      // Show an alert or prevent submission due to missing fields
+      alert(`Please fill in the following fields: ${missingFields.join(', ')}`);
+      // You can customize this alert or implement your preferred way of handling missing fields
+    }
   };
 
   const [documentDetail, setDocumentDetail] = useState({
@@ -58,9 +74,11 @@ const NewCreateDocument = () => {
     const year = currentDate.getFullYear();
     const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Months are zero-based
     const day = String(currentDate.getDate()).padStart(2, '0');
+    const hours = String(currentDate.getHours()).padStart(2, '0');
+    const minutes = String(currentDate.getMinutes()).padStart(2, '0');
+    const seconds = String(currentDate.getSeconds()).padStart(2, '0');
 
-    // Combine the components to form the control number
-    const controlNumber = `${year}-${month}${day} ${collegeName}`;
+    const controlNumber = `${year}${month}${day}-${hours}${minutes}${seconds}`;
 
     return controlNumber;
   };
@@ -248,7 +266,7 @@ const NewCreateDocument = () => {
 
 
   return (
-    <div className="flex flex-col mt-4 px-24 rounded-xl max-w-screen overflow-hidden">
+    <div className="flex flex-col mt-4 px-24 rounded-xl max-w-screen">
       <h3 className='flex bg-[#182440] text-xl shadow-lg p-3 text-white font-bold rounded-xl justify-center'>Document Creation Page</h3>
       <div className="flex gap-14 my-4">
         <Select
@@ -368,20 +386,33 @@ const NewCreateDocument = () => {
           {isEditing ? "Edit" : "Submit"}
         </button>
         <Dialog
+          className="flex flex-col h-screen overflow-y-scroll"
           open={confirmationOpen}
           handler={handleConfirmationClose}
-          animate={{
-            mount: { scale: 1, y: 0 },
-            unmount: { scale: 0.9, y: -100 },
-          }}
+          size="lg"
+          animate={{ mount: { scale: 1, y: 0 }, unmount: { scale: 0.9, y: -100 } }}
         >
-          <DialogHeader>Confirm Submittion.</DialogHeader>
+          <DialogHeader>Make sure all the details entered are correct.</DialogHeader>
           <DialogBody>
-            Make sure all the details entered are correct.
+            <div className="mb-4">
+              <Typography variant="h6">Preview:</Typography>
+              <div className="border p-4 rounded-lg">
+                <Typography className='mb-2 border border-gray-500 p-2' variant="h6">Header: {documentDetail.header}</Typography>
+                <Typography className='mb-2 border border-gray-500 p-2' variant="subtitle1">Subject: {documentDetail.subject}</Typography>
+                <div>
+                  <ReactQuill
+                    value={documentDetail.content}
+                    readOnly={true}
+                    modules={{ toolbar: false }}
+                    className="shadow-md" />
+                </div>
+                {/* <Typography variant="body">{documentDetail.content}</Typography> */}
+              </div>
+            </div>
           </DialogBody>
-          <DialogFooter className="flex gap-3">
+          <DialogFooter className="flex gap-3 space-x-2 mb-4 ">
             <button
-              onClick={confirmSubmission}
+              onClick={submitDocument}
               className="flex border border-green-700 rounded-lg p-1 px-4 text-md text-black hover:bg-green-400"
             >
               <span>Confirm</span>

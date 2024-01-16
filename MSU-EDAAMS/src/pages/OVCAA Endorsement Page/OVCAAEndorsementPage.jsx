@@ -39,6 +39,13 @@ const OVCAAEndorsementPage = () => {
 	const [open, setOpen] = useState(false);
 	const [documents, setDocuments] = useState([]);
 
+	const [confirmEndorseDialog, setConfirmEndorseDialog] = useState(false);
+	const [previewDocument, setPreviewDocument] = useState(null);
+
+	const handleOpenConfirmEndorseDialog = () => {
+		setConfirmEndorseDialog(true);
+	};
+
 	const handleOpenEndorsement = (document) => {
 		setEndorseSelectedDocument(document)
 		setEndorse(true)
@@ -246,9 +253,9 @@ const OVCAAEndorsementPage = () => {
 		<div className="flex flex-col px-14">
 			{/* <h3 className='flex bg-[#182440] text-xl shadow-lg p-3 mx-4 text-white font-bold rounded-xl justify-center'>OVCAA Approval & Endorsement Page</h3> */}
 			<div className="flex flex-col p-3">
-        <Typography className="text-2xl font-semibold">OVCAA Approval & Endorsement</Typography>
-        <Typography className='text-gray-700'>See all Document Pending for Approval and Endorsement</Typography>
-      </div>
+				<Typography className="text-2xl font-semibold">OVCAA Approval & Endorsement</Typography>
+				<Typography className='text-gray-700'>See all Document Pending for Approval and Endorsement</Typography>
+			</div>
 			<div className='grid grid-cols-4 max-w-screen'>
 				{deanEndorsedDocuments.map((document) => (
 					<div key={document._id} className='flex flex-col bg-gray-300/80 m-4 p-3 rounded-xl shadow-lg hover:scale-105'>
@@ -325,9 +332,61 @@ const OVCAAEndorsementPage = () => {
 											</div>
 										</DialogBody>
 										<DialogFooter className="space-x-2">
-											<Button variant="standard" color="green" onClick={(e) => EndorseDocument(e, document._id) && setEndorse(false) && setOpen(false)}>
+											<Button
+												variant="standard"
+												color="green"
+												onClick={() => {
+													setPreviewDocument({
+														header: documentDetail.header,
+														subject: documentDetail.subject,
+														content: documentDetail.content,
+													});
+													handleOpenConfirmEndorseDialog();
+												}}
+											>
 												Endorse Document To OP
 											</Button>
+
+											<Dialog
+												className="h-screen overflow-y-scroll"
+												open={confirmEndorseDialog}
+												size="lg"
+												handler={() => setConfirmEndorseDialog(false)}
+											>
+												<DialogHeader>Make sure all the details entered are correct.</DialogHeader>
+												<DialogBody>
+													{previewDocument && (
+														<div>
+															<Typography className='mb-2 border border-gray-500 p-2' variant="h6">{previewDocument.header}</Typography>
+															<Typography className='mb-2 border border-gray-500 p-2'>{previewDocument.subject}</Typography>
+
+															<div className='mb-2 border border-gray-500 p-2' dangerouslySetInnerHTML={{ __html: previewDocument.content }} />
+														</div>
+													)}
+												</DialogBody>
+												<DialogFooter className="space-x-2 mb-4">
+													<Button
+														variant="standard"
+														color="green"
+														onClick={(e) => {
+															EndorseDocument(e, document._id);
+															setEndorse(false);
+															setOpen(false);
+															setConfirmEndorseDialog(false);
+														}}
+													>
+														Yes, Endorse
+													</Button>
+													<Button
+														variant="outlined"
+														color="red"
+														onClick={() => setConfirmEndorseDialog(false)}
+													>
+														No, Cancel
+													</Button>
+												</DialogFooter>
+											</Dialog>
+
 											<Button variant="outlined" color="red" onClick={() => setEndorse(false) && setOpen(false)}>
 												close
 											</Button>

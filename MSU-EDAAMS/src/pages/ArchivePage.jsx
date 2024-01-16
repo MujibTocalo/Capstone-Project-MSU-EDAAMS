@@ -95,6 +95,9 @@ const TABLE_HEAD = [
   "Date Uploaded",
   "Action",
 ];
+
+const PAGE_SIZE = 7;
+
 const ArchivePage = () => {
   const store = documentsStore();
 
@@ -103,6 +106,82 @@ const ArchivePage = () => {
   const [filteredTableRows, setFilteredTableRows] = useState([]);
   const [isTimelineDialogOpen, setIsTimelineDialogOpen] = useState(false);
   const [selectedDocument, setSelectedDocument] = useState(false);
+
+
+  const [sortedColumn, setSortedColumn] = useState("Date Uploaded");
+  const [sortOrder, setSortOrder] = useState("desc");
+
+  const handleSort = (column) => {
+    // Toggle sort order if clicking on the same column
+    if (column === sortedColumn) {
+      setSortOrder(sortOrder === "asc" ? "desc" : "asc");
+    } else {
+      setSortedColumn(column);
+      setSortOrder("asc");
+    }
+
+    // Sort the tableRows based on the selected column and order
+    const sortedRows = filteredTableRows.slice().sort((a, b) => {
+      let valueA, valueB;
+
+      switch (column) {
+        case "Document Type":
+          valueA = a.documentType ? a.documentType.toLowerCase() : "";
+          valueB = b.documentType ? b.documentType.toLowerCase() : "";
+          break;
+        case "User Detail":
+          valueA = a.uploaderName ? a.uploaderName.toLowerCase() : "";
+          valueB = b.uploaderName ? b.uploaderName.toLowerCase() : "";
+          break;
+        case "College/Office":
+          valueA = a.collegeName ? a.collegeName.toLowerCase() : "";
+          valueB = b.collegeName ? b.collegeName.toLowerCase() : "";
+          break;
+        case "Document Status":
+          valueA = a.documentStatus ? a.documentStatus.toLowerCase() : "";
+          valueB = b.documentStatus ? b.documentStatus.toLowerCase() : "";
+          break;
+        case "Date Uploaded":
+          valueA = a.createdAt ? new Date(a.createdAt) : 0;
+          valueB = b.createdAt ? new Date(b.createdAt) : 0;
+          break;
+        default:
+          // Default handling for other columns
+          valueA = a[column] ? a[column].toLowerCase() : "";
+          valueB = b[column] ? b[column].toLowerCase() : "";
+      }
+
+      if (valueA < valueB) return sortOrder === "asc" ? -1 : 1;
+      if (valueA > valueB) return sortOrder === "asc" ? 1 : -1;
+      return 0;
+    });
+
+    setFilteredTableRows(sortedRows);
+  };
+
+
+
+  // pagination
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const totalPageCount = Math.ceil(filteredTableRows.length / PAGE_SIZE);
+
+  const paginatedTableRows = filteredTableRows.slice(
+    (currentPage - 1) * PAGE_SIZE,
+    currentPage * PAGE_SIZE
+  );
+
+  const handleNextPage = () => {
+    if (currentPage < totalPageCount) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
 
   useEffect(() => {
     const fetchTableRows = async () => {
@@ -115,7 +194,6 @@ const ArchivePage = () => {
         const sortedDocuments = documentArray
           .filter(
             (document) =>
-              document.documentStatus === "Rejected" ||
               document.documentStatus === "Released"
           )
           .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
@@ -194,9 +272,9 @@ const ArchivePage = () => {
                       Date Uploaded:{" "}
                       {selectedDocument.createdAt
                         ? format(
-                            new Date(selectedDocument.createdAt),
-                            "yyyy-MM-dd"
-                          )
+                          new Date(selectedDocument.createdAt),
+                          "yyyy-MM-dd"
+                        )
                         : "Waiting"}{" "}
                       <br />
                       Uploaded By:{" "}
@@ -227,9 +305,9 @@ const ArchivePage = () => {
                       Date Approved:{" "}
                       {selectedDocument.deanEndorsementDate
                         ? format(
-                            new Date(selectedDocument.deanEndorsementDate),
-                            "yyyy-MM-dd"
-                          )
+                          new Date(selectedDocument.deanEndorsementDate),
+                          "yyyy-MM-dd"
+                        )
                         : "Waiting"}{" "}
                       <br />
                       Approved By:{" "}
@@ -262,9 +340,9 @@ const ArchivePage = () => {
                       Date Endorsed:{" "}
                       {selectedDocument.endorsementDate
                         ? format(
-                            new Date(selectedDocument.endorsementDate),
-                            "yyyy-MM-dd"
-                          )
+                          new Date(selectedDocument.endorsementDate),
+                          "yyyy-MM-dd"
+                        )
                         : `Waiting for ${selectedDocument.collegeName} Dean Endorsement`}{" "}
                       <br />
                       Endorsed By:{" "}
@@ -297,9 +375,9 @@ const ArchivePage = () => {
                       Final Approval Date:{" "}
                       {selectedDocument.approvalDate
                         ? format(
-                            new Date(selectedDocument.approvalDate),
-                            "yyyy-MM-dd"
-                          )
+                          new Date(selectedDocument.approvalDate),
+                          "yyyy-MM-dd"
+                        )
                         : "Waiting for OVCAA Endorsement"}{" "}
                       <br />
                       Approved By:{" "}
@@ -331,9 +409,9 @@ const ArchivePage = () => {
                       Release Date:{" "}
                       {selectedDocument.releaseDate
                         ? format(
-                            new Date(selectedDocument.releaseDate),
-                            "yyyy-MM-dd"
-                          )
+                          new Date(selectedDocument.releaseDate),
+                          "yyyy-MM-dd"
+                        )
                         : "Waiting for Office of the President Approval"}{" "}
                       <br />
                       {/* Released By: {selectedDocument.opApproverName ? selectedDocument.opApproverName : 'Pending'} <br />
@@ -363,16 +441,16 @@ const ArchivePage = () => {
                       Date Rejected:{" "}
                       {selectedDocument.rejectedDate
                         ? format(
-                            new Date(selectedDocument.rejectedDate),
-                            "yyyy-MM-dd"
-                          )
+                          new Date(selectedDocument.rejectedDate),
+                          "yyyy-MM-dd"
+                        )
                         : "Waiting"}{" "}
                       <br />
                       Rejected By:{" "}
                       {selectedDocument.rejectedName
                         ? selectedDocument.rejectedDesignation +
-                          " " +
-                          selectedDocument.rejectedName
+                        " " +
+                        selectedDocument.rejectedName
                         : "Pending"}{" "}
                       <br />
                       Remarks:{" "}
@@ -430,20 +508,30 @@ const ArchivePage = () => {
                 <th
                   key={head}
                   className="border-y border-blue-gray-100 bg-blue-gray-100  p-4 transition-colors sticky -top-8"
+                  onClick={() => handleSort(head)}
                 >
                   <Typography
                     variant="small"
                     color="blue-gray"
-                    className="flex font-bold leading-none"
+                    className="flex font-bold leading-none cursor-pointer"
                   >
-                    {head} {index !== TABLE_HEAD.length - 1}
+                    {head} {index !== TABLE_HEAD.length - 1 && (
+                      <ChevronUpDownIcon
+                        className={`h-4 w-4 ml-1 transition-transform transform ${sortedColumn === head
+                            ? sortOrder === "asc"
+                              ? "-rotate-180"
+                              : "rotate-180"
+                            : ""
+                          }`}
+                      />
+                    )}
                   </Typography>
                 </th>
               ))}
             </tr>
           </thead>
           <tbody>
-            {filteredTableRows.map(
+            {paginatedTableRows.map(
               (
                 {
                   documentType,
@@ -529,23 +617,23 @@ const ArchivePage = () => {
                             documentStatus === "DeanApproved"
                               ? "Dean Approved"
                               : documentStatus === "Endorsed"
-                              ? "Endorsed"
-                              : documentStatus === "OP Approved"
-                              ? "OP Approved"
-                              : documentStatus === "Created"
-                              ? "Created"
-                              : documentStatus === "Pending"
-                              ? "Pending"
-                              : documentStatus === "Released"
-                              ? "Processed"
-                              : "Rejected"
+                                ? "Endorsed"
+                                : documentStatus === "OP Approved"
+                                  ? "OP Approved"
+                                  : documentStatus === "Created"
+                                    ? "Created"
+                                    : documentStatus === "Pending"
+                                      ? "Pending"
+                                      : documentStatus === "Released"
+                                        ? "Processed"
+                                        : "Rejected"
                           }
                           color={
                             documentStatus === "Rejected"
                               ? "red"
                               : documentStatus === "Pending"
-                              ? "orange"
-                              : "green"
+                                ? "orange"
+                                : "green"
                           }
                         />
                       </div>
@@ -641,7 +729,29 @@ const ArchivePage = () => {
           </tbody>
         </table>
       </CardBody>
-      <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4"></CardFooter>
+      <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4 -translate-y-4">
+        <Typography variant="small" color="blue-gray" className="font-normal">
+          Page {currentPage} of {totalPageCount}
+        </Typography>
+        <div className="flex gap-2">
+          <Button
+            variant="outlined"
+            className="border-gray-400"
+            size="sm"
+            onClick={handlePrevPage}
+          >
+            Previous
+          </Button>
+          <Button
+            variant="outlined"
+            className="border-gray-400"
+            size="sm"
+            onClick={handleNextPage}
+          >
+            Next
+          </Button>
+        </div>
+      </CardFooter>
     </Card>
   );
 };

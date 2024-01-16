@@ -15,18 +15,25 @@ import elogo from '../assets/edaams.png'
 
 const Sidebar = ({ isOpen, toggleSidebar }) => {
 
-  const menus = [
-    // { name: 'Dashboard', link: '/dashboard', icon: RiDashboardLine },
-    { name: 'All Documents', link: '/documents', icon: HiOutlineDocumentText },
-    { name: 'Dean', link: '/deanEndorsement', icon: LuClipboardCheck },
-    { name: 'Endorsement', link: '/ovcaaEndorsement', icon: RiAttachment2 },
-    { name: 'Approval', link: '/opapproval', icon: HiOutlineDocumentText },
-    { name: 'Release', link: '/releasedocument', icon: HiUpload },
-    { name: 'Archive', link: '/archive', icon: HiOutlineArchive },
-    { name: 'Users', link: '/manageusers', icon: HiOutlineUsers },
-    { name: 'Logout', link: '/', icon: BiLogOut },
+  const [userType, setUserType] = useState();
 
-  ]
+  useEffect(() => {
+    const userDetail = JSON.parse(localStorage.getItem("userDetails"));
+    setUserType(userDetail.userType);
+  }, []);
+
+  const menus = [
+    { name: 'Pending Documents', link: '/documents', icon: HiOutlineDocumentText, roles: ['Uploader', 'Approver - Dean', 'Endorser - OVCAA', 'Approver - OP', 'Administrator', 'Releaser'] },
+    { name: 'College Dean', link: '/deanEndorsement', icon: LuClipboardCheck, roles: ['Approver - Dean', 'Administrator'] },
+    { name: 'OVCAA', link: '/ovcaaEndorsement', icon: RiAttachment2, roles: ['Endorser - OVCAA', 'Administrator'] },
+    { name: 'Office of the President', link: '/opapproval', icon: HiOutlineDocumentText, roles: ['Approver - OP', 'Administrator'] },
+    { name: 'RMO', link: '/releasedocument', icon: HiUpload, roles: ['Administrator', 'Releaser'] },
+    { name: 'Document Archive', link: '/archive', icon: HiOutlineArchive, roles: ['Administrator', 'Releaser'] },
+    { name: 'Users', link: '/manageusers', icon: HiOutlineUsers, roles: ['Administrator'] },
+    { name: 'Logout', link: '/', icon: BiLogOut, roles: ['Uploader', 'Approver - Dean', 'Endorser - OVCAA', 'Approver - OP', 'Administrator', 'Releaser'] },
+  ];
+
+  const filteredMenus = menus.filter(menu => menu.roles.includes(userType));
 
 
   return (
@@ -45,7 +52,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
           {/* < TiThMenuOutline size={23} className={`${!open && 'flex ml-2'} flex mr-2.5 cursor-pointer transition`} onClick={() => setOpen(!open)} /> */}
         </div>
         <div className='mt-4 border-t pt-6 border-gray-800 p-2 flex flex-col gap-3 -translate-y-12 relative'>
-          {menus?.map((menu, i) => (
+          {filteredMenus?.map((menu, i) => (
             <Link to={menu?.link} key={i} className='group flex items-center text-white text-sm gap-5 font-medium p-1 ml-3  rounded-lg hover:scale-105'>
               <div>
                 {React.createElement(menu?.icon, { size: '24' })}

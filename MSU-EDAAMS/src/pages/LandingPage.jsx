@@ -188,7 +188,7 @@ const LandingPage = ({ socket }) => {
               className="flex mx-auto rounded-3xl mt-6 bg-indigo-500 hover:bg-indigo-900 hover:scale-110 text-sm"
               onClick={handleOpen}
             >
-              Get Started
+              LOGIN TO EDAAMS
             </Button>
           </div>
           <div className="flex p-8 my-auto scale-90">

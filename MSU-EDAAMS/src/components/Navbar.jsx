@@ -272,6 +272,7 @@ export const CustomNavbar = ({ setOpen, socket }) => {
   const [userType, setUserType] = useState();
   const [userCollege, setUserCollege] = useState();
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [userDesignation, setUserDesignation] = useState();
   const [notifications, setNotifications] = useState([]);
   const [isNotificationVisible, setIsNotificationVisible] = useState(false);
   const [unreadCount, setUnreadCount] = useState(0);
@@ -280,6 +281,7 @@ export const CustomNavbar = ({ setOpen, socket }) => {
     const userDetail = JSON.parse(localStorage.getItem("userDetails"));
     setCurrentUser(userDetail.firstName + " " + userDetail.lastName);
     setUserType(userDetail.userType)
+    setUserDesignation(userDetail.designation)
 
     // Check if socket is valid before setting up the event listener
     if (socket) {
@@ -423,6 +425,7 @@ export const CustomNavbar = ({ setOpen, socket }) => {
         {/* <img src={msulogo} alt="logo" className="flex flex-row h-10" /> */}
 
       </Typography>
+
       <div className="flex flex-row items-center gap-1">
 
         {userType !== 'Uploader' && (
@@ -464,7 +467,6 @@ export const CustomNavbar = ({ setOpen, socket }) => {
             </div>
 
 
-
             <RiNotification3Fill
               className="cursor-pointer mr-4"
               color="gray"
@@ -472,7 +474,7 @@ export const CustomNavbar = ({ setOpen, socket }) => {
               onClick={toggleNotificationVisibility}
             />
 
-            {/* Display the notification counter */}
+
             {unreadCount > 0 && (
               <div className="absolute top-0 right-0 bg-red-500 text-white rounded-full h-4 w-4 flex items-center justify-center text-xs">
                 {unreadCount}
@@ -481,6 +483,9 @@ export const CustomNavbar = ({ setOpen, socket }) => {
           </div>
 
         )}
+
+        <Typography className="flex text-xs font-md pr-2 items-center bg-gray-600 p-1.5 text-white rounded-lg mr-4 border">Logged in as {userDesignation}, {currentUser}</Typography>
+
 
         <ProfileMenu />
       </div>
