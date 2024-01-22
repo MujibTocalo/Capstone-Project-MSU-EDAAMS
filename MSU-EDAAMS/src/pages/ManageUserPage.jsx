@@ -372,7 +372,7 @@ const ManageUsers = () => {
               </Button>
 
               <Dialog
-                size="sm"
+                size="md"
                 open={open}
                 handler={handleOpen}
                 className="bg-transparent shadow-none"
@@ -409,7 +409,7 @@ const ManageUsers = () => {
                       className="h-10"
                       variant="outlined"
                       label="Select User Type"
-                      onChange={(e) => handleUserType(e)} 
+                      onChange={(e) => handleUserType(e)}
                       value={userType}
                       animate={{
                         mount: { y: 0 },
@@ -441,11 +441,6 @@ const ManageUsers = () => {
                         unmount: { y: -25 },
                       }}
                     >
-                      <Option value="OP">Office of the President</Option>
-                      <Option value="OVCAA">
-                        Office of Vice Chancellor for Academic Affairs
-                      </Option>
-                      <Option value="RMO">Record Management Office</Option>
 
                       {/* MSU COLLEGES */}
                       <Option value="COA">College of Agriculture</Option>
@@ -489,6 +484,12 @@ const ManageUsers = () => {
                       <Option value="CSPEAR">
                         College of Sport Physical Education And Recreation
                       </Option>
+                      <Option value="OP">Office of the President</Option>
+                      <Option value="OVCAA">
+                        Office of Vice Chancellor for Academic Affairs
+                      </Option>
+                      <Option value="RMO">Record Management Office</Option>
+
                     </Select>
 
                     <Input
