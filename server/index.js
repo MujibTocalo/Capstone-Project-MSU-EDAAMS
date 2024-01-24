@@ -165,8 +165,19 @@ const upload = multer({ storage });
 const PORT = process.env.PORT || 2300;
 
 
+// mongoose
+//   .connect(process.env.MONGODB_URI, {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+//   })
+//   .then(() => {
+//     server.listen(PORT, "0.0.0.0", () => console.log(`Server Port: ${PORT}`));
+//   })
+//   .catch((error) => console.log(`${error} did not connect`));
+
+
 mongoose
-  .connect(process.env.MONGODB_URI, {
+  .connect(process.env.DB_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
