@@ -45,7 +45,7 @@ const App = () => {
       {isLoggedIn && <Sidebar />}
       <Routes>
         <Route path="/" element={<LandingPage />} />
-        {/* <Route path="/manageusers" element={<ManageUsers />} /> */}
+        <Route path="/manageusers" element={<ManageUsers />} />
         <Route
           path="/login"
           element={<Login socket={socket} onLogin={handleLogin} />}
@@ -124,7 +124,7 @@ const MainRoutes = ({ socket }) => {
 
             {/* <Route path="/manageusers" element={<ManageUsers />} /> */}
 
-            <Route
+            {/* <Route
               path="/manageusers"
               element={
                 userType === "Administrator" ? (
@@ -133,7 +133,7 @@ const MainRoutes = ({ socket }) => {
                   <Navigate to="/restricted" />
                 )
               }
-            />
+            /> */}
             {/* <Route path="/releaseDocument" element={<ReleasingDocumentPage />} /> */}
 
             <Route
